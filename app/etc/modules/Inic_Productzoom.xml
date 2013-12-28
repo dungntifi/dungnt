@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Inic_Productzoom>
+            <active>true</active>
+            <codePool>community</codePool>
+        </Inic_Productzoom>
+    </modules>
+</config> 

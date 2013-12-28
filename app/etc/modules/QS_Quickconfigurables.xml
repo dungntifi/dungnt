@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!-- 
+/**
+ * Automatic Configurables Extension
+ *
+ * @category   QS
+ * @package    QS_Quickconfigurables
+ * @author     Quart-soft Magento Team <magento@quart-soft.com> 
+ * @copyright  Copyright (c) 2010 Quart-soft Ltd http://quart-soft.com
+ */
+-->
+<config>
+    <modules>
+        <QS_Quickconfigurables>
+            <active>true</active>
+            <codePool>community</codePool>
+        </QS_Quickconfigurables>
+    </modules>
+</config> 

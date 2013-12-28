@@ -1,0 +1,27 @@
+<?php if (!Mage::getStoreConfig('ajax_pro/general/enabled')
+       || !Mage::getStoreConfig('ajax_pro/general/enabled_overlay')
+       || TM_AjaxPro_Model_Action::isSearchBot()
+) {
+    return;
+}?>
+<div class="ajaxpro-overlay" id="ajaxpro-overlay"></div>
+<script type="text/javascript">
+//<![CDATA[
+AjaxPro.observe('onLoading', function() {
+    AjaxPro.effect.overlay.setElementId('ajaxpro-overlay').show();
+});
+
+var hideOverlay = function () {
+    var buttons = $$('.ajaxpro-continue-button').findAll(function(el) {
+        return el.up().visible();
+    });
+    if (!buttons.size()) {
+        AjaxPro.effect.overlay.hide();
+    }
+}
+
+AjaxPro.observe('message:hide', hideOverlay);
+AjaxPro.observe('onFailure', hideOverlay);
+AjaxPro.observe('onComplete', hideOverlay);
+//]]>
+</script>

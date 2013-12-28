@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config>
+    <menu>
+        <sales>
+            <children>
+                <amomanager translate="title">
+                    <title>Order Manager</title>
+                    <sort_order>19</sort_order>
+                    <children>
+                        <amorderattach translate="title">
+                            <title>Notes and Files</title>
+                            <action>amorderattach/adminhtml_field</action>
+                            <sort_order>20</sort_order>
+                        </amorderattach>
+                    </children>
+                </amomanager>
+            </children>
+        </sales>
+    </menu>
+
+    <translate>
+        <modules>
+            <Amasty_Orderattach>
+                <files>
+                    <default>Amasty_Orderattach.csv</default>
+                </files>
+            </Amasty_Orderattach>
+        </modules>
+    </translate>
+
+    <acl>
+        <resources>
+            <admin>
+                <children>
+                    <sales>
+                        <children>
+                            <amomanager translate="title">
+                                <title>Order Manager</title>
+                                <sort_order>19</sort_order>
+                                <children>
+                                    <edit_memos translate="title" module="amorderattach">
+                                        <title>Notes and Files</title>
+                                    </edit_memos>
+                                </children>
+                            </amomanager>
+                        </children>
+                    </sales>
+                    <system>
+                        <children>
+                            <config>
+                                <children>
+                                    <amorderattach translate="title" module="amorderattach">
+                                        <title>Order Manager: Notes and Files</title>
+                                    </amorderattach>
+                                </children>
+                            </config>
+                        </children>
+                    </system>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+
+    <layout>
+        <updates>
+            <amorderattach module="Amasty_Orderattach">
+                <file>amorderattach.xml</file>
+            </amorderattach>
+        </updates>
+    </layout>
+
+    <events>
+        <model_save_commit_after>
+            <observers>
+                <amorderattach>
+                    <type>singleton</type>
+                    <class>amorderattach/observer</class>
+                    <method>onModelSaveCommitAfter</method>
+                </amorderattach>
+            </observers>
+        </model_save_commit_after>
+    </events>
+</config>

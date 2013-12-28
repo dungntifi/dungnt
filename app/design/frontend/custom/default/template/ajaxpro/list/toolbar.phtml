@@ -1,0 +1,91 @@
+<?php if (   !Mage::getStoreConfig('ajax_pro/general/enabled')
+          || !Mage::getStoreConfig('ajax_pro/addScrolling/enabled')
+          || TM_AjaxPro_Model_Action::isSearchBot()
+) {
+    return;
+}?>
+<?php $toolbarPagerBlock  = $this->getLayout()->getBlock('product_list_toolbar_pager');
+
+    if (!$toolbarPagerBlock || !$toolbarPagerBlock->getCollection()) {
+        return;
+    }
+
+    $_url = $toolbarPagerBlock->getUrl('ajaxpro/catalog/view', array(
+        '_current' => true,
+        '_escape'  => false,
+//        '_use_rewrite' => true,
+        '_query'   => array($toolbarPagerBlock->getPageVarName() => '.page.')
+    ));
+?>
+<script type="text/javascript">
+//<![CDATA[
+
+    currentPage = <?php echo $toolbarPagerBlock->getCurrentPage();?>;
+
+    <?php if ('scroll' === Mage::getStoreConfig('ajax_pro/addScrolling/type')) :?>
+
+    Event.observe(window, 'scroll', function() {
+
+        var scrollOffsets = document.viewport.getScrollOffsets(),
+        dimensions = document.viewport.getDimensions();
+
+        var currentTopPosition = scrollOffsets[1] + dimensions.height,
+        elementTopPosition = $$('.toolbar-bottom').last().offsetTop;
+
+        if (elementTopPosition > currentTopPosition || Ajax.activeRequestCount > 0) {
+
+            return;
+        }
+
+        if (<?php echo $toolbarPagerBlock->getTotalNum()?> < <?php echo $toolbarPagerBlock->getLimit();?>*currentPage) {
+            return;
+        }
+        currentPage++;
+        var url = "<?php echo $_url;?>".replace('.page.', currentPage);
+
+        AjaxPro.request({
+            'url'    : url,
+            'method' : 'get'
+        });
+    });
+    <?php else : $title = $this->__('More Products');?>
+    Event.observe(window, 'load', function(){
+
+        $$('.toolbar-bottom').last().insert({
+            'before': '<button id="ajaxpro-scrolling-button" type="button" title="<?php echo $title ?>" class="button"><span><span><?php echo $title ?></span></span></button>'
+        });
+
+        Event.observe($('ajaxpro-scrolling-button'), 'click', function(){
+            if (<?php echo $toolbarPagerBlock->getTotalNum()?> < <?php echo $toolbarPagerBlock->getLimit();?>*currentPage) {
+                return;
+            }
+            currentPage++;
+            var url = "<?php echo $_url;?>".replace('.page.', currentPage);
+            AjaxPro.request({
+                'url'    : url,
+                'method' : 'get'
+            });
+        });
+
+    });
+    <?php endif?>
+
+    AjaxPro.observe('onComplete:ajaxpro:catalog:view', function(e) {
+        var r = e.memo.response;
+        if (!r.catalogCategoryView) {
+            return false;
+        }
+        var el = $('ajaxpro-scrolling-button');
+        if (!el) {
+            el = $$('.toolbar-bottom').last();
+        }
+        if (el) {
+            var html = r.catalogCategoryView;
+            el.insert({'before': html});
+            html.extractScripts().map(function(script) {
+                return window.eval(script);
+            });
+        }
+    });
+//]]>
+</script>

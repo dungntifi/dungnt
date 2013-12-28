@@ -1,0 +1,64 @@
+<?php
+if (!Mage::getStoreConfig('ajax_pro/general/enabled')
+    || TM_AjaxPro_Model_Action::isSearchBot()) {
+
+    return;
+}
+
+$isShowMessageForm = Mage::getStoreConfigFlag('ajax_pro/general/enabledNoticeForm');
+if ($isShowMessageForm) { ?>
+<div id ="ajaxpro-notice-form" class="ajaxpro-form" style="display:none">
+    <div class="ajaxpro-message"></div>
+    <button class="ajaxpro-continue-button ajaxpro-button button">
+        <span><span>
+            <?php echo Mage::helper('ajaxpro')->__('Continue shopping')?>
+        </span></span>
+    </button>
+    <!--
+    <p class="ajaxpro-or"><?php echo Mage::helper('ajaxpro')->__('or')?></p>
+    <a class="ajaxpro-button button" href="#"><span><?php echo Mage::helper('ajaxpro')->__('Redirect') ?></span></a>
+    -->
+</div>
+<?php } ?>
+
+<script type="text/javascript">
+//<![CDATA[
+AjaxPro.observe('onFailure', function(e) {
+    var r = e.memo.response;
+    function _redirect() {
+        if (r.redirectUrl == window.location.href) {
+            return;
+        }
+        if (r.redirectUrl) {
+            window.location.href = r.redirectUrl;
+            return;
+        }
+        <?php if ($isShowMessageForm) :?>window.location.reload(); <?php endif;?>
+    }
+    <?php if ($isShowMessageForm) :?>
+    if (r.messages) {
+        if ($('ajaxpro-notice-form')) {
+            AjaxPro.effect.message
+                .setElementId('ajaxpro-notice-form')
+                .setMessages(r.messages)
+                .show()
+            ;
+            $('ajaxpro-notice-form').select('.ajaxpro-button').each(function(element){
+                element.observe('click', _redirect);
+            });
+            return;
+        }
+        var _messages = r.messages, message = '';
+        for(var code in _messages) {
+            var temp = _messages[code], length = temp.length;
+            for(var i = length; i--;) {
+                message += '\n' + code + ' : ' + temp[i];
+            }
+        }
+        alert(message);
+    }
+    <?php endif;?>
+    _redirect();
+});
+//]]>
+</script>

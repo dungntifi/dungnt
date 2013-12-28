@@ -1,0 +1,23 @@
+<?php if (!Mage::getStoreConfig('ajax_pro/general/enabled')
+        || TM_AjaxPro_Model_Action::isSearchBot()
+) {
+    return;
+}?>
+<div class="ajaxpro-message" id="ajaxpro-spinner" style="display: none;opacity: <?php echo Mage::getStoreConfig('ajax_pro/general/opacity')?>">
+    <p><?php echo Mage::getStoreConfig('ajax_pro/general/text')?></p>
+</div>
+<script type="text/javascript">
+
+AjaxPro.observe('onLoading', function() {
+    AjaxPro.effect.spinner.setElementId('ajaxpro-spinner').show();
+});
+
+AjaxPro.observe('onFailure', function() {
+    AjaxPro.effect.spinner.hide();
+});
+
+AjaxPro.observe('onComplete', function() {
+    AjaxPro.effect.spinner.hide();
+});
+//]]>
+</script>

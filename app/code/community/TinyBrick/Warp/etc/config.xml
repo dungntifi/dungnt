@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+/**
+ * TinyBrick Commercial Extension
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the TinyBrick Commercial Extension License
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://store.delorumcommerce.com/license/commercial-extension
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@tinybrick.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this package to newer
+ * versions in the future. 
+ *
+ * @category   TinyBrick
+ * @package    TinyBrick_Warp
+ * @copyright  Copyright (c) 2010 TinyBrick
+ * @license    http://www.tinybrick.com/license/commercial-extension
+ */
+ -->
+<config>
+    <modules>
+		<TinyBrick_Warp>
+			<version>2.1.0</version>
+		</TinyBrick_Warp>
+	</modules>
+	<frontend>
+                <translate>
+                    <modules>
+                        <tinybrick_warp>
+                            <files>
+                                <default>TinyBrick_Warp.csv</default>
+                            </files>
+                        </tinybrick_warp>
+                    </modules>
+                </translate>
+		<layout>
+			<updates>
+				<warp>
+					<file>warp.xml</file>
+				</warp>
+			</updates>
+		</layout>
+	</frontend>
+        <admin>
+            <routers>
+                <warp>
+                    <use>admin</use>
+                    <args>
+                        <module>TinyBrick_Warp</module>
+                        <frontName>warp</frontName>
+                    </args>
+                </warp>
+            </routers>
+        </admin>
+	<global>
+		<blocks>
+			<page>
+				<rewrite>
+					<html>TinyBrick_Warp_Block_Page_Html</html>
+				</rewrite>
+			</page>
+			<core>
+				<rewrite>
+					<messages>TinyBrick_Warp_Block_Core_Messages</messages>
+				</rewrite>
+			</core>
+                        <warp>
+                            <class>TinyBrick_Warp_Block</class>
+                        </warp>
+		</blocks>
+		<models>
+			<warp>
+				<class>TinyBrick_Warp_Model</class>
+			</warp>
+                        <warp>
+                                <class>TinyBrick_Warp_Model</class>
+                                <resourceModel>warp_mysql4</resourceModel>
+                        </warp>
+                        <warp_mysql4>
+                                <class>TinyBrick_Warp_Model_Mysql4</class>
+                                <entities>
+                                        <warp><table>tinybrick_warp_cached_pages</table></warp>
+                                </entities>
+                        </warp_mysql4>
+		</models>
+		<helpers>
+			<warp>
+				<class>TinyBrick_Warp_Helper</class>
+			</warp>
+		</helpers>
+		<events>
+			<application_clean_cache>
+				<observers>
+					<clean_cached_page>
+						<type>singleton</type>
+						<class>warp/app_cache_observer</class>
+						<method>cleanWarp</method>
+					</clean_cached_page>
+				</observers>
+			</application_clean_cache>
+                        <cataloginventory_stock_item_save_after>
+                            <observers>
+                                <clean_inventory>
+                                        <type>singleton</type>
+                                        <class>warp/app_cache_observer</class>
+                                        <method>cleanInventory</method>
+                                </clean_inventory>
+                            </observers>
+                        </cataloginventory_stock_item_save_after>
+		</events>
+		<cache>
+			<types>
+				<warp>
+					<label>Warp</label>
+                                        <description>Warp Whole Page Cache</description>
+				</warp>
+			</types>
+			<expires>
+				<warp>
+					<label>Whole Page</label>
+				</warp>
+			</expires>
+		</cache>
+                <resources>
+                        <warp_setup>
+                                <setup>
+                                        <module>TinyBrick_Warp</module>
+                                </setup>
+                                <connection>
+                                        <use>core_setup</use>
+                                </connection>
+                        </warp_setup>
+                        <warp_write>
+                                <connection>
+                                         <use>core_write</use>
+                                </connection>
+                        </warp_write>
+                        <warp_read>
+                                <connection>
+                                        <use>core_read</use>
+                                </connection>
+                        </warp_read>
+                </resources>
+	</global>
+	
+  	<crontab>
+        <jobs>
+            <warp_warmcache>
+                <run><model>warp/cron::warmcache</model></run>
+            </warp_warmcache>
+            <warp_flushcms>
+            	<schedule><cron_expr>10 * * * *</cron_expr></schedule>
+            	<run><model>warp/cron::cms</model></run>
+            </warp_flushcms>
+            <warp_flushcat>
+            	<schedule><cron_expr>10 * * * *</cron_expr></schedule>
+            	<run><model>warp/cron::catalog</model></run>
+            </warp_flushcat>
+            <warp_flushprod>
+            	<schedule><cron_expr>10 * * * *</cron_expr></schedule>
+            	<run><model>warp/cron::product</model></run>
+            </warp_flushprod>
+        </jobs>
+    </crontab>
+	
+	<adminhtml>
+		<acl>
+			<resources>
+				<admin>
+					<children>
+						<system>
+							<children>
+								<config>
+									<children>
+										<dfv translate="title">
+											<title>Page Cache Registration</title>
+										</dfv>
+                                                                                <punch translate="title">
+                                                                                        <title>Hole Punch Configuration</title>
+                                                                                </punch>
+									</children>
+								</config>
+							</children>
+						</system>
+					</children>
+				</admin>
+			</resources>
+		</acl>
+                <translate>
+                    <modules>
+                        <tinybrick_warp>
+                            <files>
+                                <default>TinyBrick_Warp.csv</default>
+                            </files>
+                        </tinybrick_warp>
+                    </modules>
+                </translate>
+                <layout>
+                        <updates>
+                                <warp>
+                                     <file>warp.xml</file>
+                                </warp>
+                        </updates>
+                </layout>
+	</adminhtml>
+        <default>
+            <dfv>
+                <files>
+                    <path>var/warp</path>
+                </files>
+                <dbfiles>
+                    <path>var/session</path>
+                </dbfiles>
+                <session>
+                	<files>1</files>
+                	<memcached>0</memcached>
+                	<database>0</database>
+                </session>
+                <dbfiles>
+                	<path>var/session</path>
+                </dbfiles>
+                <crawler>
+                	<crawlerenabled>1</crawlerenabled>
+                	<timeout>0</timeout>
+                </crawler>
+            </dfv>
+            <punch>
+                <toplinks>
+                    <welcomecss>.welcome-msg</welcomecss>
+                    <cartcss>.top-link-cart</cartcss>
+                    <logoutcss>a:contains('Log')</logoutcss>
+                    <loginlink>customer/account/login/</loginlink>
+                    <logoutlink>customer/account/logout/</logoutlink>
+                </toplinks>
+                <cart>
+                    <amountcss>.amount</amountcss>
+                    <pricecss>.price</pricecss>
+                </cart>
+            </punch>
+        </default>
+</config>

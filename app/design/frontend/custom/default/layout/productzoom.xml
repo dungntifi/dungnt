@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <default>
+    </default>
+    <productzoom_index_index>
+        <reference name="content">
+            <block type="productzoom/productzoom" name="productzoom" template="productzoom/productzoom.phtml" />
+        </reference>
+    </productzoom_index_index>
+	
+	<catalog_product_view>						
+		<reference name="head">
+			<action method="addJs"><script>productzoom/jquery-1.7.2.js</script></action>				
+			<!--for newarrivals-->						 			
+			<action method="addJs"><script>productzoom/jquery.carouFredSel-2.6.0.js</script></action>
+			<!--product zoom-->										 
+			<action method="addJs"><script>productzoom/jquery.jqzoom-core.js</script></action>
+			<action method="addCss"><stylesheet>productzoom/jquery.jqzoom.css</stylesheet></action>
+			<action method="addCss"><stylesheet>productzoom/carosal.css</stylesheet></action>
+		</reference>
+		<reference name="product.info"> 
+        	<block type="catalog/product_view_media" name="product.info.media" as="media" template="productzoom/media.phtml" />
+    	</reference>
+	</catalog_product_view>	
+</layout> 

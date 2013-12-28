@@ -1,0 +1,31 @@
+<?php
+if (!Mage::getStoreConfig('ajax_pro/general/enabled')
+    || TM_AjaxPro_Model_Action::isSearchBot()
+) {
+    return;
+}
+
+$isMobile = TM_AjaxPro_Model_Action::isMobile();
+if ($isMobile && Mage::getStoreConfig('ajax_pro/general/disabledOnMobileDevice')) {
+    return;
+}?>
+<script type="text/javascript">
+//<![CDATA[
+document.observe("dom:loaded", function (){
+
+    AjaxPro.init({
+        handles : <?php echo Zend_Json::encode($this->getLayout()->getUpdate()->getHandles());?>,
+        baseUrl : "<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_LINK, $this->getRequest()->isSecure()); ?>"
+    });
+
+    AjaxPro.effect.init({
+        location : "<?php echo Mage::getStoreConfig('ajax_pro/general/location')?>",
+        opacity  : <?php echo Mage::getStoreConfig('ajax_pro/general/opacity')?>,
+        overlay  : <?php echo Mage::getStoreConfig('ajax_pro/general/overlay_opacity')?>,
+        isMobile : <?php echo $isMobile ? 'true' : 'false'?>,
+        duration : <?php echo Mage::getStoreConfig('ajax_pro/general/duration')?>
+    });
+});
+
+//]]>
+</script>

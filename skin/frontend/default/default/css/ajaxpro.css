@@ -1,0 +1,85 @@
+.ajaxpro-form {
+    background: #FFF;
+    border: 1px solid #AAA;
+    top:0;
+    left:0;
+    width:350px;
+    margin-left: -180px;
+    z-index:999;
+    text-align:center;
+    position: absolute;
+    padding: 10px;
+}
+#ajaxpro-spinner {
+    background: #fff url(../images/ajaxpro_loader_animation.gif) no-repeat 50% 50%;
+    border: 1px solid #aaa;
+    position: absolute;
+    top:0;
+    left:0;
+    width:300px;
+    height:135px;
+    z-index:998;
+    margin-left: -150px;
+}
+
+.ajaxpro-message { margin: 10px 0px 10px 0px; font-weight: bold; }
+.ajaxpro-message p { margin: 10px 0px 10px 0px; text-align: center; }
+
+.ajaxpro-or { margin: 0px; }
+.ajaxpro-continue-button,
+.ajaxpro-continue-button:hover { text-decoration:none; color: #fff; }
+
+#ajaxpro-addcustomproduct-form { z-index:997; }
+#ajaxpro-addcustomproduct-form .product-view { width: 340px; padding: 10px; border: none; }
+
+.form-button, .form-button-alt {}
+.form-button span, .form-button-alt span {}
+.form-button-alt {}
+
+.ajaxpro-overlay {
+    width: 100%;
+    height: 100%;
+    background: black;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 997;
+    display: none;
+}
+
+#ajaxpro-scrolling-button {margin: 5px auto; text-align: center;   display: block;}
+#ajaxpro-scrolling-button  span{padding: 5px auto;}
+
+.ajaxpro-header-cart { width: 200px; float: right; }
+#ajaxpro-header-cart-content, .ajaxpro-login {
+    background: #FFF;
+    border: 5px solid #D9E5EE;
+    position: absolute;
+    right: 10px;
+    padding: 10px;
+    width: 250px;
+}
+
+.ajaxpro-login { width: auto; padding: 0px; }
+.ajaxpro-login .content { min-height: 75px!important; padding: 10px!important; }
+.header-container .top-container .ajaxpro-login a { color: #1E7EC8!important; padding-right: 5px; }
+#ajaxpro-login-form .buttons-set {padding: 5px; margin: 0px;}
+
+#ajaxpro-header-cart-content .btn-remove,
+#ajaxpro-header-cart-content .btn-edit { float: right; margin: 1px 0 2px 5px; }
+#ajaxpro-header-cart-content li { margin: 0 0 5px; clear: both; }
+#ajaxpro-header-cart-content .product-name,
+#ajaxpro-header-cart-content .product-details { text-align: left; }
+#ajaxpro-content-toggler { color: #1E7EC8; }
+.header-container .top-container .ajaxpro-header-cart a { color: #1E7EC8; }
+
+/* clearer */
+#ajaxpro-header-cart-content li { zoom: 1; }
+#ajaxpro-header-cart-content li:after {
+    content: '.';
+    display: block;
+    clear: both;
+    visibility: hidden;
+    font-size: 0;
+    height: 0;
+}

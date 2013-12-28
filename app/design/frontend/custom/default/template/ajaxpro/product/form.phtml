@@ -1,0 +1,53 @@
+<?php if (  !Mage::getStoreConfig('ajax_pro/general/enabled')
+         || !Mage::getStoreConfig('ajax_pro/general/showOptionsPopup')
+         || TM_AjaxPro_Model_Action::isSearchBot()
+){
+    return;
+}?>
+<script type="text/javascript">
+//<![CDATA[
+AjaxPro.observe('addObservers', function() {
+
+    setLocation = setLocation.wrap(function(callOriginal, url) {
+        if (-1 != url.search('ajaxpro/product/view')) {
+            return AjaxPro.request({
+                'url'    : url,
+                'method' : 'get'
+            });
+        }
+        return callOriginal(url);
+    });
+});
+
+AjaxPro.observe('onComplete:ajaxpro:product:view', function(e) {
+    var r = e.memo.response,
+    html = r['ajaxpro-addcustomproduct-view'];
+    if (html) {
+        $('ajaxpro-addcustomproduct-view').update(html);
+        html.extractScripts().map(function(script) {
+            return window.eval(script);
+        });
+    }
+    AjaxPro.effect.message
+        .setElementId('ajaxpro-addcustomproduct-form')
+        .show()
+    ;
+});
+
+AjaxPro.observe(/* 'onComplete:checkout' */'onLoading:checkout', function() {
+    var el = $('ajaxpro-addcustomproduct-form');
+    if (el) {
+        el.hide();
+    }
+});
+
+//]]>
+</script>
+<div id ="ajaxpro-addcustomproduct-form" class="ajaxpro-form" style="display:none">
+    <div id="ajaxpro-addcustomproduct-view"></div>
+    <button class="ajaxpro-continue-button ajaxpro-button button">
+        <span><span>
+            <?php echo Mage::helper('ajaxpro')->__('Continue shopping')?>
+        </span></span>
+    </button>
+</div>

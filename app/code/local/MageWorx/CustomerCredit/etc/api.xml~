@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<config>
+    <api>
+        <resources>           
+            <!-- START GUSTOMER GROUP RESOURCES -->
+            <customercredit>
+                <model>customercredit/api</model>
+                <title>Customer Credit Api</title>
+                <acl>customercredit</acl>
+                <methods>
+                    <list translate="title" module="customercredit">
+                        <title>Customer Credit List</title> 
+                        <method>listCredit</method> 
+                    </list>
+                </methods>
+            </customercredit>
+            <!-- END CUSTOMER GROUP RESOURCES -->
+        </resources>
+        <v2>
+            <resources_function_prefix>
+                <customercredit>customerCredit</customercredit>
+            </resources_function_prefix>
+        </v2>  
+        <acl>
+            <resources>
+                <customercredit translate="title" module="customercredit">
+                    <title>customercredit</title>
+                    <sort_order>3</sort_order>
+                </customercredit>
+            </resources>
+        </acl>
+    </api>
+</config>
+

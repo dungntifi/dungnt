@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <menu>
+        <tinybrick translate="title" module="warp">
+            <title>TinyBrick</title>
+            <sort_order>15</sort_order>
+            <children>
+                <warp translate="title" module="warp">
+                    <title>Warp</title>
+                    <sort_order>1</sort_order>
+                    <children>
+                        <cache module="warp">
+                            <title>View Cached Pages</title>
+                            <sort_order>1</sort_order>
+                            <action>warp/adminhtml_index/index</action>
+                        </cache>
+                        <config>
+                            <title>Warp Configuration</title>
+                            <sort_order>2</sort_order>
+                            <action>adminhtml/system_config/edit/section/dfv</action>  
+                        </config>
+						<htaccess>
+                            <title>htaccess configuration</title>
+                            <sort_order>3</sort_order>
+                            <action>warp/adminhtml_index/htaccess</action>  
+                        </htaccess>
+                    </children>
+                </warp>
+            </children>
+        </tinybrick>
+    </menu>
+</config>

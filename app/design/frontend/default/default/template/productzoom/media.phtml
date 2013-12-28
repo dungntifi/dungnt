@@ -1,0 +1,106 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2012 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+
+/**
+ * Product media data template
+ *
+ * @see Mage_Catalog_Block_Product_View_Media
+ */
+ if(Mage::getStoreConfig('productzoom/columns/zoomwidth'))
+{
+	$zoomwidth=Mage::getStoreConfig('productzoom/columns/zoomwidth');
+}
+else
+{
+	$zoomwidth='350';
+}
+if(Mage::getStoreConfig('productzoom/columns/zoomheight'))
+{
+	$zoomheight=Mage::getStoreConfig('productzoom/columns/zoomheight');
+}
+else
+{
+	$zoomheight='350';
+}
+?>
+<script type="text/javascript">
+
+jQuery(window).load(function() {		
+		//jQuery('ul#basic_config').carouFredSel();
+		jQuery('ul#thumblist').carouFredSel({
+			height: 80,
+			items : 4,		
+			scroll:{duration:800},				
+			auto: {play:false,duration:800,pauseOnHover:true},
+			prev: "#prev1",
+			next: "#next1"
+		});
+		jQuery('.jqzoom').jqzoom({
+            zoomType: 'standard',
+            lens:true,
+            preloadImages: false,
+            alwaysOn:false,
+			zoomWidth:<?php echo $zoomwidth; ?>,
+			zoomHeight:<?php echo $zoomheight; ?>
+        });
+	});
+</script>
+<?php
+    $_product = $this->getProduct();
+    $_helper = $this->helper('catalog/output');
+?>
+<div class="clearfix" id="content" style="position:relative;" >
+    <div class="clearfix">
+        <a href="<?php echo $this->helper('catalog/image')->init($_product, 'image')?>" class="jqzoom" rel='gal1'  title="<?php echo $_product->getName();?>" >
+            <img src="<?php echo $this->helper('catalog/image')->init($_product, 'image')->resize(350)?>"  title="<?php echo $_product->getName();?>"  style="border: 1px solid #666;">
+        </a>	
+    </div>
+    <p id="mouse-hover-massage" style=" "><span style="">Rollover Mouse To Zoom</span></p>
+	<br/>
+<?php if (count($this->getGalleryImages()) > 0): ?>
+<div class="clearfix" >
+ <div id="wrapper">
+    <div id="content">												
+        <div class="list_carousel">
+            <ul id="thumblist" class="clearfix" >
+                <?php foreach ($this->getGalleryImages() as $_image): ?>
+                <li>        	
+                    <a class="" href='javascript:void(0);' rel="{gallery: 'gal1', smallimage: '<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'thumbnail', $_image->getFile())->resize(350); ?>',largeimage: '<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'thumbnail', $_image->getFile()); ?>'}">
+                        <img src='<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'thumbnail', $_image->getFile())->resize(70); ?>'>
+                    </a>
+                </li>
+                <?php endforeach; ?>				
+            </ul>
+            <div class="clearfix"></div>
+            <a id="prev1" href="#">&lt;</a>
+            <a id="next1" href="#">&gt;</a>
+	</div>
+    </div>
+    </div>
+</div>
+    
+<?php endif; ?>
+</div>

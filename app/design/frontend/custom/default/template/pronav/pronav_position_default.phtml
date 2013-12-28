@@ -1,0 +1,11 @@
+<?php
+	$pronavStatus = Mage::getStoreConfig('pronav/pronavconfig/pronav_status');
+	$posSelected = Mage::getStoreConfig('pronav/pronavstyle/pronav_position');
+	
+	if ($pronavStatus) {
+		if ($posSelected == "default") {
+			//echo $this->getLayout()->createBlock('page/html_topmenu')->setTemplate('pronav/navigation_top.phtml')->toHtml();
+			echo $this->getLayout()->getBlock('catalog.topnav.default')->setTemplate('pronav/navigation_top.phtml')->toHtml();
+		}	
+	}
+?>

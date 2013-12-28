@@ -1,0 +1,39 @@
+# BEGIN HGDENY
+#order deny,allow
+#allow from 99.67.114.27
+#allow from 24.46.206.11
+#allow from 47.23.22.214
+#allow from 24.46.203.182
+#allow from 175.44.48.16
+#allow from 74.90.222.87
+#allow from 36.248.181.56
+#deny from all
+# END HGDENY
+
+
+##
+## Default Magento .htaccess. Modify RewriteBase as needed to point to installed magento script directory
+##
+
+Options +FollowSymLinks
+
+RewriteEngine On
+
+RewriteBase /
+
+RewriteCond %{REQUEST_URI} !^/media/
+RewriteCond %{REQUEST_URI} !^/skin/
+RewriteCond %{REQUEST_URI} !^/js/
+RewriteCond %{REQUEST_URI} !^/var/
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-l
+
+RewriteRule . index.php [L]
+
+
+<Files 403.shtml>
+order allow,deny
+allow from all
+</Files>

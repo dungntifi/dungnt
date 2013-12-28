@@ -1,0 +1,282 @@
+<?php if(   !Mage::getStoreConfig('ajax_pro/general/enabled')
+         || !Mage::getStoreConfig('ajax_pro/addToCart/enabled')
+         || TM_AjaxPro_Model_Action::isSearchBot()
+) {
+    return;
+}
+
+$_isCartPage = false;
+if (('checkout' === $this->getRequest()->getModuleName()
+    && 'cart' === $this->getRequest()->getControllerName()
+    && 'index' === $this->getRequest()->getActionName())
+    ||
+    ('suggest' === $this->getRequest()->getModuleName())) {
+
+    $_isCartPage = true;
+}
+?>
+<script type="text/javascript">
+//<![CDATA[
+AjaxPro.observe('addObservers', function() {
+
+    setLocation = setLocation.wrap(function(callOriginal, url) {
+        if (-1 != url.search('checkout/cart/add')) {
+            return AjaxPro.request({
+                'url'    : url,
+                'method' : 'get'
+            });
+        }
+        return callOriginal(url);
+    });
+
+//    setPLocation = setPLocation.wrap(function(callOriginal, url, setFocus) {
+//        if (-1 == url.search('checkout/cart/add')) {
+//            return callOriginal(url, setFocus);
+//        }
+//        AjaxPro.request({
+//            'url'    : url,
+//            'method' : 'get'
+//        });
+//        if (window.opener) {
+//            window.opener.location.reload(false);
+//        }
+//    });
+
+    /**
+     * redeclare submit form function on product page
+     *  add product action checkout/cart/add
+     */
+    var submit = function() {
+        var url = this.form.action;
+        var isUploadFile = $(this.form).select('input[type=file]').length;
+        if (isUploadFile) {
+            var template = '<iframe id="product_addtocart_form_frame" name="product_addtocart_form_frame" style="width:0; height:0; border:0;display:none;"><\/iframe>';
+            Element.insert($('product_addtocart_form'), {after: template});
+            this.form.setAttribute('target', 'product_addtocart_form_frame');
+            //add product
+            this.form.submit();
+
+            var interval = window.setInterval(function() {
+
+                var iframe = $('product_addtocart_form_frame');
+                if ('undefined' == typeof iframe) {
+                    return;
+                }
+
+                var isAfterSubmit = false;
+                try {
+
+                    if (iframe.contentDocument) {
+                         isAfterSubmit = iframe.contentDocument.body.innerHTML.length > 1 ? true : false;
+                    } else if (iframe.contentWindow) {
+                         isAfterSubmit = iframe.contentWindow.document.body.innerHTML.length > 1 ? true : false;
+                    } else if (iframe.document) {
+                         isAfterSubmit = iframe.document.body.innerHTML.length > 1 ? true : false;
+                    }
+
+                } catch (exception) {
+                    console.log(exception);
+                }
+
+                if(!isAfterSubmit) {
+                    return;
+                }
+                AjaxPro.request({
+                    'url'      : url,
+                    parameters : {'onlyblocks': 1}
+                });
+                Element.remove(iframe);
+                window.clearInterval(interval);
+            }, 1000);
+            this.form.removeAttribute('target');
+            return false;
+        }
+        var params = this.form.serialize(true);
+        if(this.validator && this.validator.validate()){
+            AjaxPro.request({
+                'url'      : url,
+                parameters : params
+            });
+        }
+
+        return false;
+    };
+
+    if (typeof productAddToCartFormOld != 'undefined') {
+
+        productAddToCartForm.submit = submit.bind(productAddToCartFormOld);
+
+    } else if(typeof productAddToCartForm != 'undefined') {
+
+        productAddToCartForm.submit = submit;
+        //
+        if($('qty')){
+            $('qty').observe('keypress', function(e){
+                if (13 === e.keyCode) {
+                    Event.stop(e);
+                    productAddToCartForm.submit();
+                }
+            });
+        }
+    }
+
+    /**
+     * redeclare submit form function on shopping cart page
+     * update action checkout/cart/updatePost
+     */
+    var shoppingCartTable = $('shopping-cart-table');
+    if (shoppingCartTable) {
+        var shoppingCartForm = shoppingCartTable.up('form');
+        if(typeof shoppingCartForm != 'undefined'){
+
+            //prototype  multiple submit bugfix
+            //http://www.developpez.net/forums/d577369/webmasters-developpement-web/javascript/bibliotheques-frameworks/prototype-script-aculo-us/prototype-serialize-multiple-submit/
+            shoppingCartForm.select(':submit').each(function(submitInput){
+                submitInput._submitted = false;
+                submitInput.onclick = function(){
+                    submitInput._submitted = true;
+                }.bind(this);
+            }.bind(this));
+
+            shoppingCartForm.observe('submit', function(e) {
+                var el = Event.element(e);
+                el.stopObserving('submit');
+                Event.stop(e);
+                var params = el.serialize(true);
+
+                shoppingCartForm.select(':submit').each(function(_el){
+                    if (_el._submitted === true){
+                        params[_el.name] = _el.value;
+                    }
+                    _el._submitted = false;
+                }.bind(this));
+
+                var url = el.action;
+
+                AjaxPro.request({
+                    'url'      : url,
+                    parameters : params
+                });
+
+                return false;
+            });
+        }
+    }
+
+    $$('a').each(function(element){
+        var url = element.getAttribute('href');
+
+        if (url == '#') {
+            var onclickHandler = element.getAttribute('onclick');
+            if (
+                onclickHandler
+                && typeof onclickHandler == 'string'
+                && onclickHandler != ''
+                && onclickHandler.search('setLocation') != -1
+                && onclickHandler.search('checkout/cart/add') != -1
+            ) {
+
+                element.stopObserving('click');
+                element.observe('click', function(e) {
+                    Event.stop(e);
+                });
+            }
+        }
+        if (url && url.search('checkout/cart/delete') != -1) {
+            element.stopObserving('click');
+            element.setAttribute('onclick', '');
+            element.observe('click', function(e) {
+                Event.stop(e);
+                <?php if (Mage::getStoreConfig('ajax_pro/addToCart/enabledDeleteConfirm')) :?>
+                if(!confirm('<?php echo Mage::helper('ajaxpro')->__('Are you sure you would like to remove this item from the shopping cart?')?>')) {
+                    return false;
+                }
+                <?php endif;?>
+                AjaxPro.request({
+                    'url' : url
+                });
+                return false;
+            });
+            return false;
+        }
+    });
+});
+AjaxPro.observe('onLoading:checkout', function() {
+
+    AjaxPro.effect.opacity
+        .setSelector('.block-cart')
+        .show(0.5)
+    ;
+});
+
+AjaxPro.observe('onFailure:checkout', function() {
+    AjaxPro.effect.opacity
+        .setSelector('.block-cart')
+        .hide();
+});
+
+AjaxPro.observe('onComplete:checkout', function(e) {
+    var r = e.memo.response;
+
+    // suggestpage integration
+    var form = $('ajaxpro-addtocart-form');
+    if (form) {
+        var viewCartBtn = form.down('.ajaxpro-viewcart-button');
+        if (viewCartBtn) {
+            viewCartBtn.stopObserving('click');
+            viewCartBtn.observe('click', function(e) {
+                e.stop();
+                <?php if ($_isCartPage) : ?>
+                    var location = "<?php echo Mage::helper('checkout/url')->getCheckoutUrl() ?>";
+                <?php else : ?>
+                    var location = r.viewCartUrl ?
+                        r.viewCartUrl : "<?php echo Mage::helper('checkout/url')->getCartUrl() ?>";
+                <?php endif; ?>
+
+                setLocation(location);
+            });
+        }
+    }
+
+    if (r.messages) {
+        AjaxPro.effect.message
+            .setElementId('ajaxpro-addtocart-form')
+            .setMessages(r.messages)
+            .show();
+    }
+
+    if (typeof truncateOptions === 'function') {
+        truncateOptions();
+    }
+});
+
+//]]>
+</script>
+<?php
+if (!Mage::getStoreConfig('ajax_pro/addToCart/enabledForm'))  {
+    return;
+}
+
+if ($_isCartPage) {
+    $continueUrl2 = Mage::helper('checkout/url')->getCheckoutUrl();
+    $label2  = Mage::helper('ajaxpro')->__('Proceed to Checkout');
+} else {
+    $continueUrl2 = Mage::getUrl('checkout/cart/');
+    $label2  = Mage::helper('ajaxpro')->__('View cart & checkout');
+}
+
+?>
+<div id="ajaxpro-addtocart-form" class="ajaxpro-form" style="display:none">
+    <div class="ajaxpro-message"></div>
+    <button class="ajaxpro-continue-button ajaxpro-button button">
+        <span><span>
+            <?php echo Mage::helper('ajaxpro')->__('Continue shopping')?>
+        </span></span>
+    </button>
+    <p class="ajaxpro-or"><?php echo Mage::helper('ajaxpro')->__('or')?></p>
+    <button class="ajaxpro-viewcart-button ajaxpro-button button">
+        <span><span>
+            <?php echo $label2;?>
+        </span></span>
+    </button>
+</div>

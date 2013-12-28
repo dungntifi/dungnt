@@ -1,0 +1,630 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+/**
+ * TinyBrick Commercial Extension
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the TinyBrick Commercial Extension License
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://store.delorumcommerce.com/license/commercial-extension
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@tinybrick.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this package to newer
+ * versions in the future. 
+ *
+ * @category   TinyBrick
+ * @package    TinyBrick_Warp
+ * @copyright  Copyright (c) 2010 TinyBrick
+ * @license    http://www.tinybrick.com/license/commercial-extension
+ */
+ -->
+<config>
+    <tabs>
+        <tinybrick  translate="label" module="warp">
+            <label>TinyBrick</label>
+            <sort_order>1</sort_order>
+        </tinybrick>
+    </tabs>
+   <sections>
+        <dfv translate="label" module="warp">
+            <label>Warp Page Cache</label>
+            <tab>tinybrick</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>701</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+            	<oej translate="label">
+                    <label>Registration</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>1</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <version>
+                            <label>Version</label>
+                            <comment>If enabled, it will allow the Top Links Hole Punch to appear</comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>warp/adminhtml_config_version</source_model>
+                            <sort_order>0</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </version>
+                        <nfg translate="label">
+                        	<label>Registered Domain</label>
+                        	<note>test</note>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </nfg>
+                        <wdf translate="label">
+                        	<label>License</label>
+                        	<frontend_type>text</frontend_type>
+                        	<sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </wdf>
+                        <ntr translate="label">
+                        	<label>Install Key</label>
+                        	<frontend_type>text</frontend_type>
+                        	<sort_order>3</sort_order>
+                        	<show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </ntr>
+                    </fields>
+                </oej>
+                <cache translate="label">
+                    <label>Cache Configuration</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>2</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields translate="label">
+                        <type>
+                            <label>Cache Save Type</label>
+                            <comment>How would you like to save the cache?</comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>warp/system_configuration_warp_type</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </type>
+                        <params>
+                            <label>Parameters to Exclude</label>
+                            <comment>URL params to exlude. Separate by comma, no spaces. Be careful here as you can overwrite your pages with unexpected content. (example: exluding search parameters)</comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </params>
+                        <excludeuri>
+                            <label>URI to Exclude</label>
+                            <comment>URI to exlude. Separate by comma</comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>3</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </excludeuri>
+                        <multicurrency>
+                            <label>Multicurrency Enabled</label>
+                            <comment>If enabled, it will allow use of multicurrency</comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>5</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </multicurrency>
+                        <multistore>
+                            <label>Multi Store Enabled</label>
+                            <comment>If enabled, it will allow use of multi store</comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>6</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </multistore>
+                        <sagepay>
+                            <label>SagePay Checkout Enabled</label>
+                            <comment>If enabled, Warp will work with SagePay. With disabled, it will not.</comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>7</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </sagepay>
+                    </fields>
+                </cache>
+                <files translate="label">
+                    <label>Files Configuration</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>3</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields translate="label">
+                        <path>
+                            <label>Path</label>
+                            <comment>Path you want your cache to be stored in. Must be writeable/readable</comment>
+                            <frontend_type>text</frontend_type>
+                            <default>/var/warp</default>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </path>
+                        <gzip>
+                            <label>Gzip Compression</label>
+                            <comment>If enabled, it will compress the cached files and uncompress them when page is hit.</comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>warp/adminhtml_config_config</source_model>
+                            <sort_order>2</sort_order>
+                            <show_in_default>2</show_in_default>
+                            <show_in_website>2</show_in_website>
+                            <show_in_store>2</show_in_store>
+                        </gzip>
+                    </fields>
+                </files>
+                <memcached translate="label">
+                    <label>Memcached Configuration</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>4</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields translate="label">
+                        <host>
+                            <label>Host</label>
+                            <comment>url/path to memcache</comment>
+                            <frontend_type>text</frontend_type>
+                            <default>/var/warp</default>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </host>
+                        <port>
+                            <label>Port</label>
+                            <comment>port for memcache</comment>
+                            <frontend_type>text</frontend_type>
+                            <default>/var/warp</default>
+                            <sort_order>2</sort_order>
+                            <show_in_default>2</show_in_default>
+                            <show_in_website>2</show_in_website>
+                            <show_in_store>2</show_in_store>
+                        </port>
+                        <persistence>
+                            <label>Persistence</label>
+                            <comment>memcache persistance</comment>
+                            <frontend_type>text</frontend_type>
+                            <default>/var/warp</default>
+                            <sort_order>3</sort_order>
+                            <show_in_default>3</show_in_default>
+                            <show_in_website>3</show_in_website>
+                            <show_in_store>3</show_in_store>
+                        </persistence>
+                    </fields>
+                </memcached>
+                <redis translate="label"> 
+                    <label>Redis Configuration</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>4</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields translate="label">
+                        <host>
+                            <label>Host</label>
+                            <comment>url/path to redis</comment>
+                            <frontend_type>text</frontend_type>
+                            <default></default>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </host>
+                        <port>
+                            <label>Port</label>
+                            <comment>port for redis</comment>
+                            <frontend_type>text</frontend_type>
+                            <default></default>
+                            <sort_order>2</sort_order>
+                            <show_in_default>2</show_in_default>
+                            <show_in_website>2</show_in_website>
+                            <show_in_store>2</show_in_store>
+                        </port>
+                        <database>
+                            <label>Database</label>
+                            <comment>Redis Database</comment>
+                            <frontend_type>text</frontend_type>
+                            <default></default>
+                            <sort_order>3</sort_order>
+                            <show_in_default>3</show_in_default>
+                            <show_in_website>3</show_in_website>
+                            <show_in_store>3</show_in_store>
+                        </database>
+                        <cleaning>
+                            <label>Automatic Cleaning</label>
+                            <comment>Redis Cleaning, default is 20,000. 0 is off. </comment>
+                            <frontend_type>text</frontend_type>
+                            <default>20000</default>
+                            <sort_order>4</sort_order>
+                            <show_in_default>4</show_in_default>
+                            <show_in_website>4</show_in_website>
+                            <show_in_store>4</show_in_store>
+                        </cleaning>
+                        <timeout>
+                            <label>Timeout</label>
+                            <comment>Redis timeout, How long until it times out. </comment>
+                            <frontend_type>text</frontend_type>
+                            <default>180</default>
+                            <sort_order>5</sort_order>
+                            <show_in_default>5</show_in_default>
+                            <show_in_website>5</show_in_website>
+                            <show_in_store>5</show_in_store>
+                        </timeout>
+                        <standalone>
+                            <label>Force Standalone</label>
+                            <comment> </comment>
+                            <frontend_type>text</frontend_type>
+                            <default>0</default>
+                            <sort_order>6</sort_order>
+                            <show_in_default>6</show_in_default>
+                            <show_in_website>6</show_in_website>
+                            <show_in_store>6</show_in_store>
+                        </standalone>
+                    </fields>
+                </redis>
+                <session translate="label">
+                    <label>Session Configuration</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>6</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields translate="label">
+                        <files>
+                            <label>Files</label>
+                            <comment>If enabled, it will use files</comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </files>
+                        <memcached>
+                            <label>Memcached</label>
+                            <comment>If enabled, it will use Memcached</comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>2</sort_order>
+                            <show_in_default>2</show_in_default>
+                            <show_in_website>2</show_in_website>
+                            <show_in_store>2</show_in_store>
+                        </memcached>
+                        <database>
+                            <label>Database</label>
+                            <comment>If enabled, it will use your Database. Best if more than 1 server. It will automatically get it from the local.xml file</comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>3</sort_order>
+                            <show_in_default>3</show_in_default>
+                            <show_in_website>3</show_in_website>
+                            <show_in_store>3</show_in_store>
+                        </database>
+                    </fields>
+                </session>
+                <dbfiles translate="label">
+                    <label>Session Files Configuration</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>7</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields translate="label">
+                        <path>
+                            <label>Path</label>
+                            <comment>Path you want your database to be stored in. Must be writeable/readable. Default is /var/session</comment>
+                            <frontend_type>text</frontend_type>
+                            <default>/var/session</default>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </path>
+                    </fields>
+                </dbfiles>
+                <dbmemcached translate="label">
+                    <label>Session Memcached Configuration</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>8</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields translate="label">
+                        <host>
+                            <label>Host</label>
+                            <comment>url/path to memcache</comment>
+                            <frontend_type>text</frontend_type>
+                            <default>/var/warp</default>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </host>
+                        <port>
+                            <label>Port</label>
+                            <comment>port for memcache</comment>
+                            <frontend_type>text</frontend_type>
+                            <default>/var/warp</default>
+                            <sort_order>2</sort_order>
+                            <show_in_default>2</show_in_default>
+                            <show_in_website>2</show_in_website>
+                            <show_in_store>2</show_in_store>
+                        </port>
+                        <persistence>
+                            <label>Persistence</label>
+                            <comment>memcache persistance</comment>
+                            <frontend_type>text</frontend_type>
+                            <default>/var/warp</default>
+                            <sort_order>3</sort_order>
+                            <show_in_default>3</show_in_default>
+                            <show_in_website>3</show_in_website>
+                            <show_in_store>3</show_in_store>
+                        </persistence>
+                    </fields>
+                </dbmemcached>
+                <crawler translate="label">
+                    <label>Crawler Configuration</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>9</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields translate="label">
+                        <crawlerenabled>
+                            <label>Enable</label>
+                            <comment>If enabled, Crawler will run. If disabled, Crawler will not</comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </crawlerenabled>
+                        <timeout>
+                            <label>Timeout</label>
+                            <comment>How long until the crawler times out. Default is 0 (forever). Set this in seconds.</comment>
+                            <frontend_type>text</frontend_type>
+                            <default></default>
+                            <sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </timeout>
+                    </fields>
+                </crawler>
+				<cron translate="label">
+                    <label>Cron Flush Configuration</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>10</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields translate="label">
+                        <cms>
+                            <label>CMS Flush Enable</label>
+                            <comment>If enabled, CMS Pages will flush every day at 1am</comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </cms>
+                        <cat>
+                            <label>Category Flush Enable</label>
+                            <comment>If enabled, Category Pages will flush every day at 1am</comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </cat>
+                        <prod>
+                            <label>Product Flush Enable</label>
+                            <comment>If enabled, Product Pages will flush every day at 1am</comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>3</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </prod>
+                    </fields>
+                </cron>
+            </groups>
+        </dfv>
+        <punch translate="label" module="warp">
+            <label>Hole Punch Configuration</label>
+            <tab>tinybrick</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>702</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+            	<hpconfiguration translate="label">
+                    <label>Enabled/Disabled Hole Punches</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>10</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                    	<note>
+                            <label></label>
+                            <comment>This will only work if you are subscribed to the Advanced version</comment>
+                            <frontend_type>note</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                    	</note>
+                        <hpenabled>
+                            <label>Hole Punch Enabled</label>
+                            <comment>If enabled, it will allow the Hole Punches to appear in general!</comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>warp/adminhtml_config_holepunch</source_model>
+                            <sort_order>15</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </hpenabled>
+                        <compare>
+                            <label>Compare Hole Punch</label>
+                            <comment>If enabled, it will allow the Compare Hole Punch to appear</comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>warp/adminhtml_config_holepunch</source_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </compare>
+                        <cart>
+                            <label>Cart Hole Punch</label>
+                            <comment>If enabled, it will allow the Cart Hole Punch to appear</comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>warp/adminhtml_config_holepunch</source_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </cart>
+                        <toplinks>
+                            <label>Top Links Hole Punch</label>
+                            <comment>If enabled, it will allow the Top Links Hole Punch to appear</comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>warp/adminhtml_config_holepunch</source_model>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </toplinks>
+                    </fields>
+                </hpconfiguration>
+                <toplinks>
+                    <label>Top Links hole punch configuration</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>20</sort_order>
+                    <show_in_default>5</show_in_default>
+                    <show_in_website>5</show_in_website>
+                    <show_in_store>5</show_in_store>
+                    <fields>
+                        <welcomecss>
+                            <label>Header - Welcome CSS Class/ID </label>
+                            <comment>Use . for Class, # for ID</comment>
+                            <frontend_type>text</frontend_type>
+                            <default></default>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </welcomecss>
+                        <cartcss>
+                            <label>Header - Top Links Cart CSS Class/ID </label>
+                            <comment>Use . for Class, # for ID</comment>
+                            <frontend_type>text</frontend_type>
+                            <default></default>
+                            <sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </cartcss>
+                        <logoutcss>
+                            <label>Header - Top Links Login/Logout Button CSS Class/ID </label>
+                            <comment>Use . for Class, # for ID</comment>
+                            <frontend_type>text</frontend_type>
+                            <default></default>
+                            <sort_order>3</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </logoutcss>
+                        <loginlink>
+                            <label>Header - Top Links Login Link</label>
+                            <comment>Login link</comment>
+                            <frontend_type>text</frontend_type>
+                            <default></default>
+                            <sort_order>4</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </loginlink>
+                        <logoutlink>
+                            <label>Header - Top Links Logout Link</label>
+                            <comment>Logout Link</comment>
+                            <frontend_type>text</frontend_type>
+                            <default></default>
+                            <sort_order>4</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </logoutlink>
+                    </fields>
+                </toplinks>
+                <cart>
+                    <label>Cart hole punch configuration</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>30</sort_order>
+                    <show_in_default>5</show_in_default>
+                    <show_in_website>5</show_in_website>
+                    <show_in_store>5</show_in_store>
+                    <fields>
+                        <amountcss>
+                            <label>Amount CSS Class/ID </label>
+                            <comment>Use . for Class, # for ID</comment>
+                            <frontend_type>text</frontend_type>
+                            <default></default>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </amountcss>
+                        <pricecss>
+                            <label>Price CSS Class/ID </label>
+                            <comment>Use . for Class, # for ID</comment>
+                            <frontend_type>text</frontend_type>
+                            <default></default>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </pricecss>
+                    </fields>
+                </cart>
+            </groups>
+        </punch>
+	</sections>
+</config>
