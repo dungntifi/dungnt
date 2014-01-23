@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Amasty_Scheckout>
-            <active>true</active>
+            <active>false</active>
             <codePool>local</codePool>
         </Amasty_Scheckout>
     </modules>
