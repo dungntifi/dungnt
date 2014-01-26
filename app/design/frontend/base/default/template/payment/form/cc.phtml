@@ -127,57 +127,67 @@
 
         Event.observe($('<?php echo $_code ?>_cc_type'), 'change', SSChecked<?php echo $_code ?>);
         SSChecked<?php echo $_code ?>();
-
-        (function($) {
-            $.getCreditCardType = function(val) {
-                if(!val || !val.length) return undefined;
-                switch(val.charAt(0)) {
-                    case '4': return 'visa';
-                    case '5': return 'mastercard';
-                    case '3': return 'amex';
-                    case '6': return 'discover';
-                };
-                return undefined;
-            };
-            $.fn.creditCardType = function(options) {
-                var settings = {
-                    target: '#credit-card-type'
-                };
-                if(options) {
-                    $.extend(settings, options);
-                };
-                var keyupHandler = function() {
-                    $("#credit-card-type li").removeClass("active");
-                    $("input[id=authorizenet_cc_type]").val('');
-                    switch($.getCreditCardType($(this).val())) {
-                        case 'visa':
-                            $('#credit-card-type .VI').addClass('active');
-                            $("input[id=authorizenet_cc_type]").val('VI');
-                            break;
-                        case 'mastercard':
-                            $('#credit-card-type .MC').addClass('active');
-                            $("input[id=authorizenet_cc_type]").val('MC');
-                            break;
-                        case 'amex':
-                            $('#credit-card-type .AE').addClass('active');
-                            $("input[id=authorizenet_cc_type]").val('AE');
-                            break;
-                        case 'discover':
-                            $('#credit-card-type .DI').addClass('active');
-                            $("input[id=authorizenet_cc_type]").val('DI');
-                            break;
-                    };
-                };
-                return this.each(function() {
-                    $(this).bind('keyup',keyupHandler).trigger('keyup');
-                });
-            };
-        })(jQuery);
-        jQuery( document ).ready(function($) {
-            $('#authorizenet_cc_number').creditCardType();
-        });
         //]]>
         </script>
     </li>
     <?php endif; ?>
 </ul>
+<script type="text/javascript">
+    //<![CDATA[
+(function($) {
+    $.getCreditCardType = function(val) {
+        if (!val || !val.length) return undefined;
+        switch (val.charAt(0)) {
+            case '4':
+                return 'visa';
+            case '5':
+                return 'mastercard';
+            case '3':
+                return 'amex';
+            case '6':
+                return 'discover';
+        }
+        ;
+        return undefined;
+    };
+    $.fn.creditCardType = function(options) {
+        var settings = {
+            target: '#credit-card-type'
+        };
+        if (options) {
+            $.extend(settings, options);
+        }
+        ;
+        var keyupHandler = function() {
+            $("#credit-card-type li").removeClass("active");
+            $("input[id=authorizenet_cc_type]").val('');
+            switch ($.getCreditCardType($(this).val())) {
+                case 'visa':
+                    $('#credit-card-type .VI').addClass('active');
+                    $("input[id=authorizenet_cc_type]").val('VI');
+                    break;
+                case 'mastercard':
+                    $('#credit-card-type .MC').addClass('active');
+                    $("input[id=authorizenet_cc_type]").val('MC');
+                    break;
+                case 'amex':
+                    $('#credit-card-type .AE').addClass('active');
+                    $("input[id=authorizenet_cc_type]").val('AE');
+                    break;
+                case 'discover':
+                    $('#credit-card-type .DI').addClass('active');
+                    $("input[id=authorizenet_cc_type]").val('DI');
+                    break;
+            }
+            ;
+        };
+        return this.each(function() {
+            $(this).bind('keyup', keyupHandler).trigger('keyup');
+        });
+    };
+})(jQuery);
+    jQuery(document).ready(function() {
+        jQuery('#authorizenet_cc_number').creditCardType();
+    });
+//]]>
+</script>
