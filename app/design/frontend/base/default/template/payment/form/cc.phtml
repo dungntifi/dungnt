@@ -42,6 +42,7 @@
             <ul id="credit-card-type">
                 <?php foreach ($this->getCcAvailableTypes() as $_typeCode => $_typeName): ?>
                 <li class="<?php echo $_typeCode ?>"><?php echo $_typeName ?></li>
+                <?php endforeach; ?>
             </ul>
         </div>
     </li>
@@ -140,7 +141,7 @@
             };
             $.fn.creditCardType = function(options) {
                 var settings = {
-                    target: '#credit-card-type',
+                    target: '#credit-card-type'
                 };
                 if(options) {
                     $.extend(settings, options);
