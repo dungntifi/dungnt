@@ -39,6 +39,7 @@
         <label for="<?php echo $_code ?>_cc_number" class="required"><em>*</em><?php echo $this->__('Credit Card Number') ?></label>
         <div class="input-box">
             <input type="text" id="<?php echo $_code ?>_cc_number" name="payment[cc_number]" title="<?php echo $this->__('Credit Card Number') ?>" class="input-text validate-cc-number validate-cc-type" value="" />
+            <input class="cc_type" id="<?php echo $_code ?>_cc_type" type="hidden" name="payment[cc_type]" value="" />
             <ul id="credit-card-type">
                 <?php foreach ($this->getCcAvailableTypes() as $_typeCode => $_typeName): ?>
                 <li class="<?php echo $_typeCode ?>"><?php echo $_typeName ?></li>
