@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <ECP_MelissaAddress>
+            <version>0.0.1</version>
+        </ECP_MelissaAddress>
+    </modules>
+    <global>
+        <models>
+            <melissaaddress_dataobject>
+                <class>ECP_MelissaAddress_Model</class>
+            </melissaaddress_dataobject>
+        </models>
+    </global>
+</config>

@@ -1,0 +1,8 @@
+<config>
+    <modules>
+        <ECP_MelissaAddress>
+            <active>true</active>
+            <codePool>local</codePool>
+        </ECP_MelissaAddress>
+    </modules>
+</config>
