@@ -11,5 +11,19 @@
                 <class>ECP_MelissaAddress_Model</class>
             </melissaaddress_dataobject>
         </models>
+        <helpers>
+            <melissa_address>
+                <class>ECP_MelissaAddress_Helper</class>
+            </melissa_address>
+        </helpers>
     </global>
+    <options>
+        <melissa_host>https://addresscheck.melissadata.net/v2/XML/Service.svc/doAddressCheck</melissa_host>
+        <melissa_port>80</melissa_port>
+        <melissa_cId>108957011</melissa_cId>
+
+        <melissa_license>OQkfYrWnds1528mTTpx745==SBK2640HSP0TKj4P/nr0ln==</melissa_license>
+        <melissa_datafiles2>/usr/local/melissadata/data</melissa_datafiles2>
+        <melissa_datafiles>/var/local/melissadata/data</melissa_datafiles>
+    </options>
 </config>
