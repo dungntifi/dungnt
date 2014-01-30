@@ -1,14 +1,23 @@
 <?php
 
 class ECP_MelissaAddress_Helper_Data extends Mage_Core_Helper_Abstract {
-    function melissaCheckAddress($data) {
+
+    private $_melissaData = null;
+
+    public function getMelissaData(){
+        if ($this->_melissaData === null) {
+            $license = Mage::getConfig()->getNode("options/melissa_license")->asArray();
+            $datafiles = Mage::getConfig()->getNode("options/melissa_datafiles")->asArray();
+            $this->_melissaData = new ECP_MelissaAddress_Model_DataObject($license, $datafiles);
+        }
+        return $this->_melissaData;
+    }
+
+    public function melissaCheckAddress($data) {
 
         // ********************************************************
         try {
-            $license = Mage::getConfig()->getNode("options/melissa_license")->asArray();
-            $datafiles = Mage::getConfig()->getNode("options/melissa_datafiles")->asArray();
-
-            $melissaData = new ECP_MelissaAddress_Model_DataObject($license, $datafiles);
+            $melissaData = $this->getMelissaData();
             $res = $melissaData->checkAddress($data);
         } catch (Mage_Exception $e) {
             $res['status'] = 0;
@@ -48,4 +57,14 @@ class ECP_MelissaAddress_Helper_Data extends Mage_Core_Helper_Abstract {
         return false;
 
     }
+
+    public function searchCityStateAction($zip) {
+            $melissaData = $this->getMelissaData();
+            $result = $melissaData->getCityStateByZip($zip);
+            if (!$result) {
+                $result['error'] = 1;
+            }
+            return json_encode($result);
+        }
+
 }
