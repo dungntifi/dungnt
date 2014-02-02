@@ -36,7 +36,7 @@ class OpsWay_Varnishgento_Helper_Ajaxify extends Mage_Core_Helper_Abstract
                 $blockHead->addJs('varnishgento/ajaxify.js');
                 $block = $this->getLayout()->createBlock(
                     'Mage_Core_Block_Template',
-                    'ajaxify',
+                    'ajaxify-init',
                     array('template' => 'varnishgento/ajaxify.phtml')
                 );
                 $blockHead->append($block);
