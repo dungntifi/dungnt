@@ -1,0 +1,214 @@
+<?xml version="1.0"?>
+<config>
+    <sections>
+        <opsway_varnishgento translate="label" module="opsway_varnishgento">
+            <show_in_default>1</show_in_default>
+            <show_in_website>0</show_in_website>
+            <show_in_store>0</show_in_store>
+            <label>Varnish Cache</label>
+            <tab>advanced</tab>
+            <groups>
+                <general translate="label" module="opsway_varnishgento">
+                <show_in_default>1</show_in_default>
+                <show_in_website>0</show_in_website>
+                <show_in_store>0</show_in_store>
+                <label>General</label>
+                <sort_order>10</sort_order>
+                    <fields>
+                        <active translate="label">
+                            <label>Enabled</label>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </active>
+                        <servers translate="label">
+                            <label>Servers</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Format: "host1:port1[:secret1];host2:port2[:secret2];..."</comment>
+                        </servers>
+                        <version>
+                            <label>Varnish version</label>
+                            <source_model>opsway_varnishgento/source_varnishversion</source_model>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>11</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </version>
+                        <show_nodes translate="label">
+                            <label>Enable Show Nodes On The Current Page</label>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </show_nodes>
+                        <nodes_ip translate="label">
+                            <label>Nodes private IP</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>60</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Format: "N1:ip1;N2:ip;..."</comment>
+                        </nodes_ip>
+                        <debug translate="label">
+                            <label>Debug</label>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </debug>
+                    </fields>
+                </general>
+                <flushing translate="label" module="opsway_varnishgento">
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <label>Cache flushing options</label>
+                    <sort_order>20</sort_order>
+                    <fields>
+                        <asynchronous translate="label">
+                            <label>Asynchronous Cache Flush</label>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </asynchronous>
+                        <limit_to_flush translate="label">
+                            <label>Limit to flush tags</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>For once request, if more, then will full flush</comment>
+                        </limit_to_flush>
+                        <base_period translate="label">
+                            <label>Base period for flushing tags</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>In minutes</comment>
+                        </base_period>
+                        <period_by_tags translate="label">
+                            <label>Flushing period by tags</label>
+                            <frontend_model>opsway_varnishgento/adminhtml_system_config_field_periodTags</frontend_model>
+                            <backend_model>adminhtml/system_config_backend_serialized_array</backend_model>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Should be multiple of base period</comment>
+                        </period_by_tags>
+                        <exception_tags translate="label">
+                            <label>Exception tags for purge</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Comma separate: "TAG1,TAG2,etc"</comment>
+                        </exception_tags>
+                        <after_reindex translate="label">
+                            <label>Flush cache after reindex</label>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>60</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </after_reindex>
+                        <after_import translate="label">
+                            <label>Cache Flush affected products after import</label>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>70</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Only for standart magento import</comment>
+                        </after_import>
+                    </fields>
+                </flushing>
+                <ajaxify translate="label" module="opsway_varnishgento">
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <label>Ajaxify Options</label>
+                    <sort_order>30</sort_order>
+                    <fields>
+                        <active translate="label">
+                            <label>Enabled</label>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </active>
+                        <uncached_blocks translate="label">
+                            <label>Non-cacheable magento blocks</label>
+                            <frontend_type>textarea</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Set name blocks with new line</comment>
+                        </uncached_blocks>
+                        <generate_blocks translate="label">
+                            <label>Generate static ajaxify blocks</label>
+                            <frontend_type>button</frontend_type>
+                            <frontend_model>opsway_varnishgento/adminhtml_system_config_field_generateButton</frontend_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </generate_blocks>
+                    </fields>
+                </ajaxify>
+                <memcached translate="label" module="opsway_varnishgento">
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <label>Storage Options</label>
+                    <sort_order>40</sort_order>
+                    <fields>
+                        <auto translate="label">
+                            <label>Flush with varnish</label>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </auto>
+                        <servers translate="label">
+                            <label>Servers</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Format: "host1:port1[:secret1];host2:port2[:secret2];..."</comment>
+                        </servers>
+                    </fields>
+                </memcached>
+            </groups>
+        </opsway_varnishgento>
+    </sections>
+</config>
