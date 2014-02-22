@@ -480,6 +480,30 @@ function get_save_billing_function(url, set_methods_url, update_payments, trigge
                     shipping_box.show();
                 }
 
+                if (data.hasOwnProperty('melissa')){
+
+                    for (var addr_type in data.melissa){
+                        if (data.melissa[addr_type] === false) continue;
+                        if (!data.melissa[addr_type].hasOwnProperty('error')){
+                            $(addr_type+':city').value = data.melissa[addr_type]['city'];
+                            for (v in countryRegions.US){
+                                if (countryRegions.US[v].code == data.melissa['state']){
+                                    for (var opt in $(addr_type+':region_id').children){
+                                        if ($($(addr_type+':region_id').children[opt]).value == v) {
+                                            $($(addr_type+':region_id').children[opt]).selected = true;
+                                            $($(addr_type+':region_id').children[opt]).setAttribute('selected','selected');
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+
+
+                }
+
 
             }
         },

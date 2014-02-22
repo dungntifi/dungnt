@@ -28,7 +28,6 @@ class Idev_OneStepCheckout_IndexController extends Mage_Core_Controller_Front_Ac
         if (!Mage::helper('onestepcheckout')->isRewriteCheckoutLinksEnabled() && $routeName != 'onestepcheckout'){
             $this->_redirect('checkout/onepage', array('_secure'=>true));
         }
-
         $quote = $this->getOnepage()->getQuote();
         if (!$quote->hasItems() || $quote->getHasError()) {
             $this->_redirect('checkout/cart');

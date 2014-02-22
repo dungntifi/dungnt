@@ -971,11 +971,29 @@ Event.observe(window, 'load', function() {
         already_placing_order = false;
         review = false;
         reviewmodal = false;
+        check_address = true;
+
+        function submitOrderForm(){
+            already_placing_order = true;
+
+            var submitelement = $('onestepcheckout-place-order');
+
+            var loaderelement = new Element('div').
+                addClassName('onestepcheckout-place-order-loading').
+                update('<img src="<?php echo $this->getSkinUrl('images/opc-ajax-loader.gif'); ?>" />&nbsp;&nbsp;<?php echo $this->__('Please wait, processing your order...'); ?>');
+
+            submitelement.parentNode.appendChild(loaderelement);
+
+            /* Disable button to avoid multiple clicks */
+            submitelement.removeClassName('orange').addClassName('grey');
+            submitelement.disabled = true;
+
+            $('onestepcheckout-form').submit();
+        }
 
         /* Handle place order click event */
         $$('.onestepcheckout-place-order').each(function(elem){
             elem.observe('click', function(e)   {
-                Event.stop(e);
 
                // First validate the form
                 var form = new VarienForm('onestepcheckout-form');
@@ -1011,22 +1029,132 @@ Event.observe(window, 'load', function() {
                             reviewmodal.close();
                         }
                     <?php endif;?>
-                        already_placing_order = true;
-
-                        var submitelement = $('onestepcheckout-place-order');
-
-                        var loaderelement = new Element('div').
-                            addClassName('onestepcheckout-place-order-loading').
-                            update('<img src="<?php echo $this->getSkinUrl('images/opc-ajax-loader.gif'); ?>" />&nbsp;&nbsp;<?php echo $this->__('Please wait, processing your order...'); ?>');
-
-                        submitelement.parentNode.appendChild(loaderelement);
-
-                        /* Disable button to avoid multiple clicks */
-                        submitelement.removeClassName('orange').addClassName('grey');
-                        submitelement.disabled = true;
 
                         /* Submit the form */
-                        $('onestepcheckout-form').submit();
+                        if (check_address) {
+                            //checkMelissaAddress();
+                            var submitelement = $('onestepcheckout-place-order');
+                            submitelement.removeClassName('orange').addClassName('grey');
+                            submitelement.disabled = true;
+
+                            var _url = '<?php echo $this->getUrl('onestepcheckout/ajax/check_melissa_address', array('_secure'=>true)); ?>';
+                            var request = new Ajax.Request(_url, //this.saveUrl,
+                           {
+                           method: 'post',
+                           onComplete: function(r){ //this.onComplete,
+                           var res = eval ('('+ r['responseText'] +')');
+                           if (res['check_errors']){
+                                var address_type = res['address_type'];
+                                                   if (res['check_errors']['warning']) {
+
+                                                       var ers;
+                                                       ers = '<h2>PLEASE VERIFY YOUR SHIPPING ADDRESS</h2>';
+                                                       ers += '<p>TO ENSURE BET TER DELIVERY, OUR SHIPPING PARTNER SUGGESTS THE FOLLOWING MODIFICATION SHOWN BELOW CHOOSE TO ACCEPT EITHER THE ORIGINAL ADDRESS AS YOU HAVE ENTERED IT OR THE SUGGESTED ADDRESS.</p><BR/>';
+                                                       ers += '<p>CHOOSE FROM THE SHIPPING ADDRESSES BELOW:</p><BR/>';
+                                                       ers += '<strong>ORIGINAL ADDRESS:</strong>';
+                                                       ers += '<ul style="margin:0px 75px 15px;" class="cart-table">';
+                                                       ers += '<li><input type="radio" class="radio" value="1" id="billing:use_address_wrote" name="billing:use_address"><label>'+res['check_errors']['warning'][1]+'</label>';
+                                                       //if (res['check_errors']['isLogin']) onclick="setLocation(\'/customer/address/edit/id/'+ res['check_errors']['isLogin'] +'\')"
+                                                           ers += '<button type="button" class="button right" id="billing:edit_address"><span><span>EDIT</span></span></button>';
+                                                       ers += '</li>';
+                                                       ers += '</ul><hr/>';
+
+                                                       ers += '<strong>SUGGESTED ADDRESS:</strong>';
+                                                       ers += '<ul style="margin:0px 75px 15px;">';
+                                                       ers += '<li><input type="radio" checked="checked" class="radio" value="0" id="billing:use_address_1" name="billing:use_address"><label>'+res['check_errors']['warning'][2]+'</label></li>';
+                                                       ers += '</ul>';
+                                                       ers += '<button type="button" class="button" id="address-use" style="padding:0 5px;margin:0 15px 0 0"><span><span>USE THIS ADDRESS</span></span></button>';
+                                                       var postcode_old = $(address_type + ':postcode').value;
+                                                       $(address_type + ':street1').value = res['check_errors']['street'];
+                                                       $(address_type + ':postcode').value = res['check_errors']['zip'];
+                                                       var _div = new Element('div',{
+                                                           'id':'co-billing-form-errors',
+                                                           'style':'position:fixed;top:35%;left:32%;border:1px solid #D3D3D3;padding:15px;margin:0 auto 10px;color:#444444;background:#fff;width:500px;z-index:9'
+                                                       }).update(ers);
+                                                       document.getElementById('onestepcheckout-form').insert({before: _div});
+                                                       //ie_zindex('co-billing-form-errors', 7000);
+                                                       $(address_type + ':use_address_wrote').observe('click',function(){
+                                                           $(address_type + ':street1').value = res['check_errors']['street_old'];
+                                                           $(address_type + ':postcode').value = postcode_old;
+                                                       });
+                                                       $(address_type + ':use_address_1').observe('click',function(){
+                                                           $(address_type + ':street1').value = res['check_errors']['street'];
+                                                           $(address_type + ':postcode').value = res['check_errors']['zip'];
+                                                       });
+                                                       $('address-use').observe('click',function(){
+                                                           $('co-billing-form-errors').remove();
+                                                           //Event.stop(e);
+                                                          //check_address = false;
+                                                          submitOrderForm()
+                                                       });
+                                                       $(address_type + ':edit_address').observe('click',function(){
+                                                           $('co-billing-form-errors').remove();
+                                                           $(address_type + ':street1')
+                                                               .removeClassName('validation-passed')
+                                                               .addClassName('validation-failed')
+                                                               .focus();
+                                                           submitelement.removeClassName('grey').addClassName('orange');
+                                                           submitelement.disabled = false;
+                                                       });
+                                                   } else {
+
+                                                       var ers = '<ul style="margin:0 0 25px">';
+                                                       for (var n=0; n<res['check_errors']['errors'].length; n++){
+                                                           ers += '<li>'+res['check_errors']['errors'][n]+'</li>';
+                                                       }
+                                                       ers += '</ul>';
+                                                       //ers += '<p>We can\'t verify your address "'+$('billing:street1').getValue()+'"!</p>';
+                                                       ers += '<p>We can\'t verify your address "'+res['check_errors']['address'][0]+'"!</p>';
+                                                       ers += '<p style="margin:0 0 15px;">Please "Confirm" if you have entered it right or click "Cancel" to change.</p>';
+                                                       ers += '<button type="button" class="button" id="address-confirm" style="padding:0 5px;margin:0 15px 0 0"><span><span>Confirm</span></span></button>';
+                                                       ers += '<button type="button" class="button" id="address-cancel" style="padding:0 5px;"><span><span>Cancel</span></span></button>';
+                                                       var _div = new Element('div',{
+                                                           'id':'co-billing-form-errors',
+                                                           'style':'position:fixed;top:35%;left:32%;border:1px solid #F47D4E;padding:15px;margin:0 auto 10px;color:#D91A00;background:#fff;width:500px;z-index:9'
+                                                       }).update(ers);
+                                                       var _er = document.getElementById('co-billing-form-errors');
+                                                       if (_er) _er.remove();
+                                                       document.getElementById('onestepcheckout-form').insert({before: _div});
+                                                       //ie_zindex('co-billing-form-errors', 7000);
+                                                       $('address-cancel').observe('click',function(){
+                                                           $('co-billing-form-errors').remove();
+                                                           $(address_type + ':street1')
+                                                               .removeClassName('validation-passed')
+                                                               .addClassName('validation-failed')
+                                                               .focus();
+                                                           submitelement.removeClassName('grey').addClassName('orange');
+                                                           submitelement.disabled = false;
+                                                       });
+                                                       $('address-confirm').observe('click',function(){
+                                                           $('co-billing-form-errors').remove();
+                                                           //billing.save(1);
+                                                           //Event.stop(e);
+                                                           //check_address = false;
+                                                           //jQuery('.onestepcheckout-place-order').click();
+                                                           submitOrderForm()
+                                                       });
+
+                                                   }
+                           }
+
+                           },
+                           onSuccess: function(){
+
+                           },
+                           onFailure: function(){},
+                           parameters: $('onestepcheckout-form').serialize(true)//Form.serialize($('onestepcheckout-form'))
+                           });
+
+
+
+
+
+
+                        } else {
+
+                            submitOrderForm();
+
+                        }
                     }
                 }
             });
