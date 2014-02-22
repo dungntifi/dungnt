@@ -28,7 +28,6 @@ class Idev_OneStepCheckout_IndexController extends Mage_Core_Controller_Front_Ac
         if (!Mage::helper('onestepcheckout')->isRewriteCheckoutLinksEnabled() && $routeName != 'onestepcheckout'){
             $this->_redirect('checkout/onepage', array('_secure'=>true));
         }
-
         $quote = $this->getOnepage()->getQuote();
         if (!$quote->hasItems() || $quote->getHasError()) {
             $this->_redirect('checkout/cart');
@@ -58,6 +57,11 @@ class Idev_OneStepCheckout_IndexController extends Mage_Core_Controller_Front_Ac
             ;
         }
 
+        $data = $this->getRequest()->getParam('billing');
+        if (!Mage::helper('customer')->isLoggedIn() && $this->_isEmailRegistered($data['email'])){
+            $this->getLayout()->getBlock('login-popup')->setShowLoginPopup(1);
+        }
+
         if(is_object(Mage::getConfig()->getNode('global/models/googleoptimizer')) && Mage::getStoreConfigFlag('google/optimizer/active')){
             $googleOptimizer = $this->getLayout()->createBlock('googleoptimizer/code_conversion', 'googleoptimizer.conversion.script', array('after'=>'-'))
             ->setScriptType('conversion_script')
@@ -67,6 +71,18 @@ class Idev_OneStepCheckout_IndexController extends Mage_Core_Controller_Front_Ac
         }
 
         $this->renderLayout();
+    }
+
+    protected function _isEmailRegistered($email)
+    {
+        $model = Mage::getModel('customer/customer');
+        $model->setWebsiteId(Mage::app()->getStore()->getWebsiteId())->loadByEmail($email);
+
+        if($model->getId() == NULL) {
+            return false;
+        }
+
+        return true;
     }
 
     /**

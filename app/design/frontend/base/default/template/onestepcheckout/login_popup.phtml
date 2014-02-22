@@ -33,7 +33,9 @@
             <div id="onestepcheckout-login-popup-contents-login">
 
                 <h1><?php echo $this->__('Login'); ?></h1>
-
+                <?php if ($this->getShowLoginPopup()):?>
+                <p class="notice-msg"><?php echo $this->__('You tried do order with exists email customer'); ?></p>
+                <?php endif; ?>
                 <p><?php echo $this->__('Please login with your email address and password.'); ?></p>
                 <form id="onestepcheckout-login-form">
 
@@ -67,6 +69,7 @@
 <script>
 var onestepcheckout_login_popup;
 var login_popup;
+var show_now = <?php echo ($this->getShowLoginPopup())?'1':'0';?>;
 Event.observe(window, 'load', function() {
     var options = {
         forgot_password_url: '<?php echo $this->getUrl('onestepcheckout/ajax/forgotPassword', array('_secure'=>true)); ?>',
@@ -78,5 +81,6 @@ Event.observe(window, 'load', function() {
     };
     onestepcheckout_login_popup = new OneStepCheckoutLoginPopup(options);
     login_popup = onestepcheckout_login_popup;
+    if (show_now) login_popup.show();
 });
 </script>

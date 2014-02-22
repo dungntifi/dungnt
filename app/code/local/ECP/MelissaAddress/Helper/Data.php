@@ -58,13 +58,13 @@ class ECP_MelissaAddress_Helper_Data extends Mage_Core_Helper_Abstract {
 
     }
 
-    public function searchCityStateAction($zip) {
+    public function searchCityStateAction($zip,$json_encode = true) {
             $melissaData = $this->getMelissaData();
             $result = $melissaData->getCityStateByZip($zip);
             if (!$result) {
                 $result['error'] = 1;
             }
-            return json_encode($result);
+            return ($json_encode)?json_encode($result):$result;
         }
 
 }

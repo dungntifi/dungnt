@@ -30,6 +30,25 @@ class Idev_OneStepCheckout_AjaxController extends Mage_Core_Controller_Front_Act
         $this->renderLayout();
     }
 
+    public function check_melissa_addressAction(){
+        $data = $this->getRequest()->getParam('billing');
+        $validationAddress = '';
+        if (isset($data['use_for_shipping']) && $data['use_for_shipping'] == 1) {
+            $validationAddress = 'billing';
+        } else {
+            $data = $this->getRequest()->getParam('shipping');
+            $validationAddress = 'shipping';
+        }
+        $result = Mage::helper('melissa_address')->melissaCheckAddress($data);
+        if ($result){
+            $result = array('check_errors' => $result, 'address_type' => $validationAddress);
+            $result = Zend_Json::encode($result);
+        } else {
+            $result = Zend_Json::encode(array('errors' => 'Unknown internal error'));
+        }
+        $this->getResponse()->setBody($result);
+    }
+
     protected function _isEmailRegistered($email)
     {
         $model = Mage::getModel('customer/customer');

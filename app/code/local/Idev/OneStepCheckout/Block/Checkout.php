@@ -715,6 +715,7 @@ class Idev_OneStepCheckout_Block_Checkout extends Mage_Checkout_Block_Onepage_Ab
 
                         if($allow_without_password) {
 
+                            return;
                             // Place order on the emails account without the password
                             $this->setCustomerAfterPlace($this->_getCustomer());
 
