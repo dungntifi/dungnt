@@ -487,7 +487,7 @@ function get_save_billing_function(url, set_methods_url, update_payments, trigge
                         if (!data.melissa[addr_type].hasOwnProperty('error')){
                             $(addr_type+':city').value = data.melissa[addr_type]['city'];
                             for (v in countryRegions.US){
-                                if (countryRegions.US[v].code == data.melissa['state']){
+                                if (countryRegions.US[v].code == data.melissa[addr_type]['state']){
                                     for (var opt in $(addr_type+':region_id').children){
                                         if ($($(addr_type+':region_id').children[opt]).value == v) {
                                             $($(addr_type+':region_id').children[opt]).selected = true;
