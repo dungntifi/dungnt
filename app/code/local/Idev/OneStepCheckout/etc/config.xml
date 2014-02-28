@@ -7,7 +7,7 @@
     </modules>
     <frontend>
         <secure_url>
-          <onestepcheckout>/onestepcheckout</onestepcheckout>
+          <onestepcheckout>/place-order</onestepcheckout>
         </secure_url>
         <events>
             <checkout_type_onepage_save_order>
@@ -66,7 +66,7 @@
                 <use>standard</use>
                 <args>
                     <module>Idev_OneStepCheckout</module>
-                    <frontName>onestepcheckout</frontName>
+                    <frontName>place-order</frontName>
                 </args>
             </onestepcheckout>
             <checkout>
