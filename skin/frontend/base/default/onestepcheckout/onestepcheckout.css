@@ -353,6 +353,10 @@ fieldset.group-select {
     padding: 4px 0;
 }
 
+.group-select li:first-child {
+    padding: 4px 0 0;
+}
+
 .shipment-methods dd {
     font-weight: bold;
     margin: 0 !important;
@@ -401,6 +405,10 @@ p.onestepcheckout-numbers {
     padding-left: 38px;
     font-size: 15px;
     font-weight: bold;
+}
+
+span.notes {
+	font-weight:bold;
 }
 
 p.onestepcheckout-numbers-1 {

@@ -49,7 +49,8 @@ $helper = Mage::helper('onestepcheckout/checkout');
             </script>
             <ul>
                 <li>
-                    <p class="onestepcheckout-numbers onestepcheckout-numbers-<?php echo $step_counter++; ?>"><?php echo $this->__('Billing address'); ?><br/><span class="notes">* Billing information must match your form of payment!</span></p>
+                    <p class="onestepcheckout-numbers onestepcheckout-numbers-<?php echo $step_counter++; ?>"><?php echo $this->__('Billing address'); ?></p>
+                    <span class="notes">* Billing information must match your form of payment!</span>
                         <?php if(isset($this->formErrors['billing_error']) && count($this->formErrors['billing_errors']) > 0): ?>
                         <div class="onestepcheckout-error">
                             <?php echo $this->__('Please check red fields below and try again.'); ?>
