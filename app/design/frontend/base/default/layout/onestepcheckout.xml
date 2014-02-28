@@ -69,10 +69,38 @@
         </reference>
     </onestepcheckout_index_index>
     <checkout_onepage_success translate="label">
-            <reference name="content">
-                <block type="onestepcheckout/register" name="onestepcheckout.register" template="onestepcheckout/register.phtml">
-                    <block type="onestepcheckout/register" name="customer_form_register" template="onestepcheckout/register_form.phtml"/>
+        <reference name="content">
+            <block type="onestepcheckout/register" name="onestepcheckout.register"
+                   template="onestepcheckout/register.phtml">
+                <block type="onestepcheckout/register" name="customer_form_register"
+                       template="onestepcheckout/register_form.phtml"/>
+            </block>
+            <block type="onestepcheckout/checkout_orderview" name="full.order.info" as="orderinfo"
+                   template="onestepcheckout/full_order.phtml">
+                <action method="addItemRender">
+                    <type>default</type>
+                    <block>sales/order_item_renderer_default</block>
+                    <template>sales/order/items/renderer/default.phtml</template>
+                </action>
+                <action method="addItemRender">
+                    <type>grouped</type>
+                    <block>sales/order_item_renderer_grouped</block>
+                    <template>sales/order/items/renderer/default.phtml</template>
+                </action>
+                <block type="sales/order_totals" name="order_totals" template="sales/order/totals.phtml">
+                    <action method="setLabelProperties">
+                        <value>colspan="4" class="a-right"</value>
+                    </action>
+                    <action method="setValueProperties">
+                        <value>class="last a-right"</value>
+                    </action>
+                    <block type="tax/sales_order_tax" name="tax" template="tax/order/tax.phtml">
+                        <action method="setIsPlaneMode">
+                            <value>1</value>
+                        </action>
+                    </block>
                 </block>
-            </reference>
+            </block>
+        </reference>
     </checkout_onepage_success>
 </layout>

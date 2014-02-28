@@ -25,13 +25,15 @@
  */
 ?>
 <div class="page-title">
-    <h1><?php echo $this->__('Your order has been received.') ?></h1>
+    <h1><?php echo $this->__('ORDER COMPLETED!') ?></h1>
 </div>
 <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
 <h2 class="sub-title"><?php echo $this->__('Thank you for your purchase!') ?></h2>
 
 <?php if ($this->getOrderId()):?>
-<?php if ($this->getCanViewOrder()) :?>
+<?php $order_details = Mage::getModel('sales/order')->loadByIncrementId(Mage::getSingleton('checkout/session')->getLastRealOrderId());
+    Mage::register('current_order',$order_details);
+    if ($this->getCanViewOrder()) :?>
     <p><?php echo $this->__('Your order # is: %s.', sprintf('<a href="%s">%s</a>', $this->escapeHtml($this->getViewOrderUrl()), $this->escapeHtml($this->getOrderId()))) ?></p>
 <?php  else :?>
     <p><?php echo $this->__('Your order # is: %s.', $this->escapeHtml($this->getOrderId())) ?></p>
@@ -40,10 +42,12 @@
 <?php if ($this->getCanViewOrder() && $this->getCanPrintOrder()) :?>
     <p>
         <?php echo $this->__('Click <a href="%s" onclick="this.target=\'_blank\'">here to print</a> a copy of your order confirmation.', $this->getPrintUrl()) ?>
-        <?php echo $this->getChildHtml() ?>
+        <?php //echo $this->getChildHtml() ?>
     </p>
 <?php endif;?>
 <?php endif;?>
+
+<?php echo $this->getChildHtml('orderinfo') ?>
 
 <?php if ($this->getAgreementRefId()): ?>
     <p><?php echo $this->__('Your billing agreement # is: %s.', sprintf('<a href="%s">%s</a>', $this->escapeHtml($this->getAgreementUrl()), $this->escapeHtml($this->getAgreementRefId())))?></p>
@@ -63,8 +67,8 @@
     <button type="button" class="button" title="<?php echo $this->__('Continue Shopping') ?>" onclick="window.location='<?php echo $this->getUrl() ?>'"><span><span><?php echo $this->__('Continue Shopping') ?></span></span></button>
 </div>
 <!-- Begin Jumpfly ReMarketing Code -->
-<?php 
-$order_details = Mage::getModel('sales/order')->loadByIncrementId(Mage::getSingleton('checkout/session')->getLastRealOrderId());
+<?php
+
 $adwords_saleamt = $order_details->subtotal;
 ?>
 <script type="text/javascript">
