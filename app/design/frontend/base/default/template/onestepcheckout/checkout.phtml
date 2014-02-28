@@ -49,7 +49,7 @@ $helper = Mage::helper('onestepcheckout/checkout');
             </script>
             <ul>
                 <li>
-                    <p class="onestepcheckout-numbers onestepcheckout-numbers-<?php echo $step_counter++; ?>"><?php echo $this->__('Billing address'); ?></p>
+                    <p class="onestepcheckout-numbers onestepcheckout-numbers-<?php echo $step_counter++; ?>"><?php echo $this->__('Billing address'); ?><br/><span class="notes">* Billing information must match your form of payment!</span></p>
                         <?php if(isset($this->formErrors['billing_error']) && count($this->formErrors['billing_errors']) > 0): ?>
                         <div class="onestepcheckout-error">
                             <?php echo $this->__('Please check red fields below and try again.'); ?>
@@ -1049,7 +1049,7 @@ Event.observe(window, 'load', function() {
 
                                                        var ers;
                                                        ers = '<h2>PLEASE VERIFY YOUR SHIPPING ADDRESS</h2>';
-                                                       ers += '<p>TO ENSURE BET TER DELIVERY, OUR SHIPPING PARTNER SUGGESTS THE FOLLOWING MODIFICATION SHOWN BELOW CHOOSE TO ACCEPT EITHER THE ORIGINAL ADDRESS AS YOU HAVE ENTERED IT OR THE SUGGESTED ADDRESS.</p><BR/>';
+                                                       ers += '<p>To ensure on time delivery, Please select your correct shipping address from the options listed below..</p><BR/>';
                                                        ers += '<p>CHOOSE FROM THE SHIPPING ADDRESSES BELOW:</p><BR/>';
                                                        ers += '<strong>ORIGINAL ADDRESS:</strong>';
                                                        ers += '<ul style="margin:0px 75px 15px;" class="cart-table">';
