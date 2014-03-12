@@ -39,12 +39,23 @@ class Idev_OneStepCheckout_AjaxController extends Mage_Core_Controller_Front_Act
             $data = $this->getRequest()->getParam('shipping');
             $validationAddress = 'shipping';
         }
+        $address_id = "";
+        if ($validationAddress == 'billing'){
+            $address_id = $this->getRequest()->getParam('billing_address_id','');
+        } else {
+            $address_id = $this->getRequest()->getParam('shipping_address_id','');
+        }
+        if ($address_id != ""){
+            $customerAddr = Mage::getModel('customer/address')->load($address_id);
+            $data = $customerAddr->getData();
+        }
+
         $result = Mage::helper('melissa_address')->melissaCheckAddress($data);
         if ($result){
-            $result = array('check_errors' => $result, 'address_type' => $validationAddress);
+            $result = array('check_errors' => $result, 'address_type' => $validationAddress, 'address_id' => $address_id, 'additional' => $data);
             $result = Zend_Json::encode($result);
         } else {
-            $result = Zend_Json::encode(array('errors' => 'Unknown internal error'));
+            $result = Zend_Json::encode(array('verify' => '1'));
         }
         $this->getResponse()->setBody($result);
     }

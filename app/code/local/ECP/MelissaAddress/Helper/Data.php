@@ -39,12 +39,12 @@ class ECP_MelissaAddress_Helper_Data extends Mage_Core_Helper_Abstract {
             return array(
                 'warning'    => array(
                     'Error with address: ',
-                    $data['street'][0] . ' ' . $data['city'] . ' ' . $res['address']['State'] . ' ' . $data['postcode'] . '-' . $data['zip4'],
+                    ((is_string($data['street']))?$data['street']:$data['street'][0]) . ' ' . $data['city'] . ' ' . $res['address']['State'] . ' ' . $data['postcode'] . '-' . $data['zip4'],
                     $streetMelissa . ' ' . $res['address']['City'] . ', ' . $res['address']['State'] . ' '
                     . $res['address']['Zip'] . '-' . $res['address']['Plus4'],
                 ),
                 'street'     => $streetMelissa,
-                'street_old' => $data['street'][0],
+                'street_old' => ((is_string($data['street'])) ? $data['street'] : $data['street'][0]),
                 'zip'        => $res['address']['Zip'],
                 'zip4'       => $res['address']['Plus4'],
                 'city'       => $res['address']['City'],
