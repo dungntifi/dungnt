@@ -150,26 +150,24 @@ div.onestepcheckout-threecolumns h1 {
 }
 
 div.onestepcheckout-threecolumns div.onestepcheckout-column-left {
-    width: 33%;
+    width: 32%;
     float: left;
-    margin-right: 15px;
-    background: transparent url(images/line-gradient.gif) no-repeat scroll
-        right top;
+    margin-right: 30px;
+    background: transparent url(images/line-gradient.gif) no-repeat scroll right top;
     padding-top: 15px;
 }
 
 div.onestepcheckout-threecolumns div.onestepcheckout-column-middle {
     width: 29%;
     float: left;
-    margin-right: 15px;
-    padding-right: 15px;
-    background: transparent url(images/line-gradient.gif) no-repeat scroll
-        right top;
+    margin-right: 30px;
+    padding-right: 30px;
+    background: transparent url(images/line-gradient.gif) no-repeat scroll right top;
     padding-top: 15px;
 }
 
 div.onestepcheckout-threecolumns div.onestepcheckout-column-right {
-    width: 32%;
+    width: 29%;
     float: left;
     padding-top: 15px;
 }
@@ -398,7 +396,6 @@ div.loading-ajax, div.loading-ajax-login {
 
 p.onestepcheckout-numbers {
     background-repeat: no-repeat;
-    height: 35px;
     color: #404040;
     text-transform: uppercase;
     padding-top: 6px;
