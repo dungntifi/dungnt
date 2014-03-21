@@ -40,7 +40,7 @@
 	filter: alpha(opacity = 60);
 	z-index:120;
 	position:absolute;
-	border:1px solid #CCC;
+	/*border:1px solid #CCC;*/
   z-index:101;
   cursor:crosshair;
 }
@@ -70,7 +70,7 @@
 }
 .zoomWrapper{
 	position:relative;
-	border:1px solid #999;
+	/*border:1px solid #999;*/
   z-index:110;
 }
 .zoomWrapperTitle{

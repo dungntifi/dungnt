@@ -47,7 +47,7 @@
     display: none;
 }
 
-#ajaxpro-scrolling-button {margin: 5px auto; text-align: center;   display: block;}
+#ajaxpro-scrolling-button {margin: 5px auto; text-align: center;   display: block; clear: both;}
 #ajaxpro-scrolling-button  span{padding: 5px auto;}
 
 .ajaxpro-header-cart { width: 200px; float: right; }

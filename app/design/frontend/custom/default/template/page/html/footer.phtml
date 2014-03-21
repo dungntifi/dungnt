@@ -28,6 +28,7 @@
     <div class="footer">
         <?php echo $this->getChildHtml() ?>
         <address><?php echo $this->getCopyright() ?></address>
+        <div class="logo-footer">&copy; <?php echo date ('Y'); ?>&nbsp;&nbsp;<img src="<?php echo $this->getSkinUrl('images/logo-footer.gif'); ?>" />.&nbsp;&nbsp;&nbsp;All Rights Reserved.</div>
     </div>
 </div>
 <!-- Google Code for Remarketing tag -->
@@ -47,3 +48,40 @@ var google_remarketing_only = true;
 <img height="1" width="1" style="border-style:none;" alt="" src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/1009962017/?value=0&amp;label=fZzRCJfcgQUQoZjL4QM&amp;guid=ON&amp;script=0"/>
 </div>
 </noscript>
+<!-- Responsive Nav -->
+<script>
+  var nav = responsiveNav(".nav-collapse");
+</script>
+
+<!-- Responsive Nav End -->
+
+<!-- slider -->
+
+	<script type="text/javascript">
+
+		var revapi;
+
+		jQuery(document).ready(function() {
+
+			   revapi = jQuery('.tp-banner').revolution(
+				{
+					delay:9000,
+					startwidth:1170,
+					startheight:500,
+					hideThumbs:10,
+					fullWidth:"on",
+					forceFullWidth:"on"
+				});
+
+		});	//ready
+
+	</script>
+<!-- Fittext -->	
+		<script type="text/javascript">
+		$("#fittext1").fitText(.45);
+		$("#fittext2").fitText(1.1);
+		$("#fittext3").fitText(.6);
+		$("#fittext4").fitText(1.7);
+		$("#fittext5").fitText(.25);
+		$("#fittext6").fitText(.9);
+	</script>

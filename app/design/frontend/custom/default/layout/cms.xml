@@ -44,6 +44,14 @@ Default layout, loads most of the pages
     
     <cms_page translate="label">
         <label>CMS Pages (All)</label>
+		<reference name="head">
+			<action method="addJs"><script>revolution/jquery-1.10.1.js</script></action>
+			<!-- Speedo Popup Begin -->
+			<action method="addJs"><script>speedo/speedo.popup.min.js</script></action>
+			<!-- <action method="addJs"><script>speedo/speedo.sizechart.js</script></action> -->
+			<action method="addCss"><stylesheet>css/default-speedo.css</stylesheet></action>
+			<!-- Speedo Popup End -->           
+        </reference> 
         <reference name="content">
             <block type="core/template" name="page_content_heading" template="cms/content_heading.phtml"/>
             <block type="page/html_wrapper" name="cms.wrapper" translate="label">
@@ -57,28 +65,11 @@ Default layout, loads most of the pages
     <cms_index_index translate="label">
         <label>CMS Home Page</label>
 		<reference name="head">
-<action method="addJs"><script>index_banners/jquery.scrollTo-1.4.2-min.js</script></action>
-<action method="addJs"><script>index_banners/jquery.localscroll-1.2.7-min.js</script></action>
-<action method="addJs"><script>index_banners/jq_indexFilter.js</script></action>
-<action method="addJs"><script>index_banners/jq_showBack.js</script></action>
-<action method="addJs"><script>index_banners/jq_designerProfile.js</script></action>
-<action method="addJs"><script>index_banners/jq_cp_menu.js</script></action>
-<action method="addJs"><script>index_banners/jq_detectWin.js</script></action>
-<action method="addJs"><script>index_banners/messages.js</script></action>
-<action method="addJs"><script>index_banners/adjust.js</script></action>
-<action method="addJs"><script>index_banners/jq_clearSearch.js</script></action>
-<action method="addJs"><script>index_banners/jquery.common.js</script></action>
-<action method="addJs"><script>index_banners/jquery.utilities.js</script></action>
-<action method="addJs"><script>index_banners/common.js</script></action>
-<action method="addJs"><script>index_banners/jquery.deltatext.min.js</script></action>
-<action method="addJs"><script>index_banners/bigtext.js</script></action>
-<action method="addJs"><script>index_banners/cufon-yui.js</script></action>
-<action method="addJs"><script>index_banners/sweet-justice.min.js</script></action>
-<action method="addJs"><script>index_banners/Gotham_700-Gotham_700.font.js</script></action>
-<action method="addJs"><script>index_banners/DalaFloda_450-DalaFloda_700-DalaFloda_italic_450-DalaFloda_italic_700.font.js</script></action>
-<action method="addJs"><script>index_banners/substance.js</script></action>   
-<action method="addJs"><script>index_banners/jquery-ui-1.8.17.custom.min.js</script></action>
-<action method="addJs"><script>index_banners/jquery.pngFix.js</script></action>
+			<action method="addJs"><script>revolution/jquery-1.10.1.js</script></action>
+			<action method="addJs"><script>revolution/jquery.themepunch.plugins.min.js</script></action>
+			<action method="addJs"><script>revolution/jquery.themepunch.revolution.min.js</script></action>	
+			<action method="addJs"><script>fittext/jquery.fittext.js</script></action>	
+			<action method="addCss"><stylesheet>css/revolution-settings.css</stylesheet></action>   
 			             
         </reference>
     </cms_index_index>

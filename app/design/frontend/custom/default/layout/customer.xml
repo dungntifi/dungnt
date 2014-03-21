@@ -49,18 +49,9 @@ Default layout, loads most of the pages
     <default>
         <!-- Mage_Customer -->
         <reference name="top.links">
-        	<!-- <action method="addLink" translate="label title" module="customer"><label>Free Worldwide Shipping</label><url>free-shipping</url><title>Free Worldwide Shipping</title><prepare/><urlParams/><position>1</position></action> -->
-            <!-- <action method="addLink" translate="label title" module="customer"><label>Home</label><url helper="core/url/getHomeUrl"/><title>Home</title><prepare/><urlParams/><position>2</position></action>
-            <action method="addLink" translate="label title" module="customer"><label>Create Account</label><url helper="customer/getAccountUrl"/><title>Create Account</title><prepare/><urlParams/><position>9</position></action> -->
-            <!-- <action method="addLink" translate="label title" module="contacts" ifconfig="contacts/contacts/enabled"><label>Contact Us</label><url>contacts</url><title>Contact Us</title><prepare>true</prepare></action> -->
-            <action method="addLink" translate="label title" module="customer"><label>Contact</label><url>http://www.promoutfitters.com/contact</url><title>Contact</title><prepare/><urlParams/><position>150</position></action>
-            <action method="addLink" translate="label title" module="customer"><label>718-412-1968</label><url>http://www.promoutfitters.com/contact</url><title>Contact</title><prepare/><urlParams/><position>160</position></action>
-            <!-- <action method="addLink" translate="label title" module="customer"><label>FAQ</label><url>http://www.promoutfitters.com/faq</url><title>FAQ</title><prepare/>
-            <urlParams/><position>120</position></action> -->
-            <action method="addLink" translate="label title" module="customer"><label>Order Status</label><url>http://www.promoutfitters.com/sales/guest/form/</url><title>Order Status</title><prepare/><urlParams/><position>130</position></action>
+        	<action method="addLink" translate="label title" module="customer"><label>My Account</label><url helper="customer/getAccountUrl"/><title>My Account</title><prepare/><urlParams/><position>10</position></action>
 		    <action method="addLink" translate="label title" module="customer"><label>Help</label><url>http://www.promoutfitters.com/customer-service</url><title>Help</title><prepare/><urlParams/><position>140</position></action>
-            <!-- <action method="addLink" translate="label title" module="customer"><label>Store Locator</label><url>http://www.promoutfitters.com/store-locator</url><title>Store Locator</title><prepare/><urlParams/><position>150</position></action> -->
-            <!-- <action method="addLink" translate="label title" module="customer"><label>Feedback</label><url>http://www.promoutfitters.com/feedback</url><title>Feedback</title><prepare/><urlParams/><position>160</position></action> -->
+		    <action method="addLink" translate="label title" module="customer"><label>Locations</label><url>http://www.promoutfitters.com/locations</url><title>Locations</title><prepare/><urlParams/><position>150</position></action>
         </reference>
     </default>
 
@@ -70,7 +61,6 @@ Load this update on every page when customer is logged in
 
     <customer_logged_in>
         <reference name="top.links">
-		   <action method="addLink" translate="label title" module="customer"><label>My Account</label><url helper="customer/getAccountUrl"/><title>My Account</title><prepare/><urlParams/><position>10</position></action>
             <action method="addLink" translate="label title" module="customer"><label>Log Out</label><url helper="customer/getLogoutUrl"/><title>Log Out</title><prepare/><urlParams/><position>100</position></action>
         </reference>
     </customer_logged_in>
@@ -84,7 +74,7 @@ Load this update on every page when customer is logged out
             <block type="customer/form_login" name="customer_form_mini_login" before="-" template="customer/form/mini.login.phtml"/>
         </reference>-->
         <reference name="top.links">
-            <action method="addLink" translate="label title" module="customer"><label>Log In</label><url helper="customer/getLoginUrl"/><title>Log In</title><prepare/><urlParams/><position>100</position></action>
+            
         </reference>
         <remove name="reorder"></remove>
     </customer_logged_out>
@@ -242,12 +232,6 @@ Customer account pages, rendered for all tabs in dashboard
                 <action method="addLink" translate="label" module="customer"><name>account_edit</name><path>customer/account/edit/</path><label>Account Information</label></action>
                 <action method="addLink" translate="label" module="customer"><name>address_book</name><path>customer/address/</path><label>Address Book</label></action>
             </block>
-            <block type="checkout/cart_sidebar" name="cart_sidebar" template="checkout/cart/sidebar.phtml">
-                <action method="addItemRender"><type>simple</type><block>checkout/cart_item_renderer</block><template>checkout/cart/sidebar/default.phtml</template></action>
-                <action method="addItemRender"><type>grouped</type><block>checkout/cart_item_renderer_grouped</block><template>checkout/cart/sidebar/default.phtml</template></action>
-                <action method="addItemRender"><type>configurable</type><block>checkout/cart_item_renderer_configurable</block><template>checkout/cart/sidebar/default.phtml</template></action>
-            </block>
-            <block type="catalog/product_compare_sidebar" name="catalog.compare.sidebar" template="catalog/product/compare/sidebar.phtml"/>
             <remove name="tags_popular"/>
 
         </reference>

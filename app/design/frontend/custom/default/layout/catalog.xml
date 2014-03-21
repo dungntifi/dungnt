@@ -80,8 +80,6 @@ Category default layout
         </reference>
         <reference name="left">
             <block type="catalog/layer_view" name="catalog.leftnav" after="currency" template="catalog/layer/view.phtml"/>
-            <block type="catalog/navigation" name="catalog.catnav" after="currency" template="catalog/navigation/cat_nav.phtml"/>
-            <block type="catalog/navigation" name="catalog.designernav" after="currency" template="catalog/navigation/designer_nav.phtml"/>
         </reference>
         <reference name="content">
             <block type="catalog/category_view" name="category.products" template="catalog/category/view.phtml">
@@ -123,9 +121,7 @@ Category layered navigation layout
             <action method="setTemplate"><template>page/2columns-left-category.phtml</template></action>
         </reference>
         <reference name="left">
-            <block type="catalog/layer_view" name="catalog.leftnav" after="currency" template="catalog/layer/view.phtml"/>
-			<block type="catalog/navigation" name="catalog.catnav" after="currency" template="catalog/navigation/cat_nav.phtml"/>
-            <block type="catalog/navigation" name="catalog.designernav" after="currency" template="catalog/navigation/designer_nav.phtml"/>
+            <block type="catalog/layer_view" name="catalog.leftnav" before="-" template="catalog/layer/view.phtml"/>
         </reference>
         <reference name="content">
             <block type="catalog/category_view" name="category.products" template="catalog/category/view.phtml">
@@ -256,9 +252,8 @@ Product view
                 <block type="catalog/product_view" name="product.info.options.wrapper.bottom" as="product_options_wrapper_bottom" template="catalog/product/view/options/wrapper/bottom.phtml" translate="label">
                     <label>Bottom Block Options Wrapper</label>
                     <action method="insert"><block>product.tierprices</block></action>
-                    <block type="catalog/product_view" name="product.clone_prices" as="prices" template="catalog/product/view/price_clone.phtml"/>
+                    <!-- <block type="catalog/product_view" name="product.clone_prices" as="prices" template="catalog/product/view/price_clone.phtml"/> -->
                     <action method="append"><block>product.info.addtocart</block></action>
-                    <action method="append"><block>product.info.addto</block></action>
                 </block>
 
                 <block type="core/template_facade" name="product.info.container1" as="container1">

@@ -43,3 +43,50 @@
 <?php echo $this->getChildHtml() ?>
 <?php echo $this->helper('core/js')->getTranslatorScript() ?>
 <?php echo $this->getIncludes() ?>
+
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700,800' rel='stylesheet' type='text/css'>
+
+<script type="text/javascript">
+<!--
+ 
+window.onload=function() {
+ subMenusO = getElementsByClassName(document,'ul','nav-collapse-sub');
+}
+//-----------------------------------------------------------
+ 
+function showSubMenu(elemId) {
+ var dispStatus = (document.getElementById(elemId).style.display == 'block')? 'none' : 'block';
+ //hide any visible submenus
+ for(var i=0; i < subMenusO.length; i=i+1) {
+     subMenusO[i].style.display = 'none';
+    }
+    //show/hide this menu id
+    document.getElementById(elemId).style.display = dispStatus;
+}
+//--------------------------------------------------------------------------
+
+function getElementsByClassName(oElm, strTagName, strClassName){
+    var arrElements = (strTagName == "*" && oElm.all)? oElm.all : oElm.getElementsByTagName(strTagName);
+    var arrReturnElements = new Array();
+    strClassName = strClassName.replace(/\-/g, "\\-");
+    var oRegExp = new RegExp("(^|\\s)" + strClassName + "(\\s|$)");
+    var oElement;
+    for(var i=0; i<arrElements.length; i++)
+    {
+        oElement = arrElements[i];
+        if(oRegExp.test(oElement.className))
+        {
+            arrReturnElements.push(oElement);
+        }
+    }
+    return (arrReturnElements)
+}
+ 
+//-->
+</script> 
+<script type="text/javascript">
+	function newsletterOverlay() {
+	el = document.getElementById("newsletter-overlay");
+	el.style.visibility = (el.style.visibility == "visible") ? "hidden" : "visible";
+	}
+</script>

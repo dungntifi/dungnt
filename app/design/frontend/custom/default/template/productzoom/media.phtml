@@ -35,7 +35,7 @@
 }
 else
 {
-	$zoomwidth='350';
+	$zoomwidth='475';
 }
 if(Mage::getStoreConfig('productzoom/columns/zoomheight'))
 {
@@ -43,7 +43,7 @@ if(Mage::getStoreConfig('productzoom/columns/zoomheight'))
 }
 else
 {
-	$zoomheight='350';
+	$zoomheight='475';
 }
 ?>
 <script type="text/javascript">
@@ -51,7 +51,7 @@ else
 jQuery(window).load(function() {		
 		//jQuery('ul#basic_config').carouFredSel();
 		jQuery('ul#thumblist').carouFredSel({
-			height: 110,
+			height: 160,
 			items : 4,		
 			scroll:{duration:800},				
 			auto: {play:false,duration:800,pauseOnHover:true},
@@ -75,11 +75,11 @@ jQuery(window).load(function() {
 <div class="clearfix" id="content" style="position:relative;" >
     <div class="clearfix">
         <a href="<?php echo $this->helper('catalog/image')->init($_product, 'image')?>" class="jqzoom" rel='gal1'  title="<?php echo $_product->getName();?>" >
-            <img src="<?php echo $this->helper('catalog/image')->init($_product, 'image')->keepAspectRatio(TRUE)->keepFrame(FALSE)->resize(500)?>"  title="<?php echo $_product->getName();?>"  style="border: 1px solid #666;">
+            <img src="<?php echo $this->helper('catalog/image')->init($_product, 'image')->keepAspectRatio(TRUE)->keepFrame(FALSE)->resize(475)?>"  title="<?php echo $_product->getName();?>">
         </a>	
     </div>
     <p id="mouse-hover-massage" style=" "><span style="">Rollover Mouse To Zoom</span></p>
-	<br/>
+	
 <?php if (count($this->getGalleryImages()) > 0): ?>
 <div class="clearfix" >
  <div id="wrapper">
@@ -88,8 +88,8 @@ jQuery(window).load(function() {
             <ul id="thumblist" class="clearfix" >
                 <?php foreach ($this->getGalleryImages() as $_image): ?>
                 <li>        	
-                    <a class="" href='javascript:void(0);' rel="{gallery: 'gal1', smallimage: '<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'thumbnail', $_image->getFile())->keepAspectRatio(TRUE)->keepFrame(FALSE)->resize(500); ?>',largeimage: '<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'thumbnail', $_image->getFile()); ?>'}">
-                        <img src='<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'thumbnail', $_image->getFile())->constrainOnly(TRUE)->keepAspectRatio(TRUE)->keepFrame(FALSE)->resize(100); ?>'>
+                    <a class="" href='javascript:void(0);' rel="{gallery: 'gal1', smallimage: '<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'thumbnail', $_image->getFile())->keepAspectRatio(TRUE)->keepFrame(FALSE)->resize(475); ?>',largeimage: '<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'thumbnail', $_image->getFile()); ?>'}">
+                        <img src='<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'thumbnail', $_image->getFile())->constrainOnly(TRUE)->keepAspectRatio(TRUE)->keepFrame(FALSE)->adaptiveResize(150, 150); ?>'>
                     </a>
                 </li>
                 <?php endforeach; ?>				

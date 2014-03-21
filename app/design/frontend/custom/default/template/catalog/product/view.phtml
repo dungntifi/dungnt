@@ -33,17 +33,23 @@
 ?>
 <?php $_helper = $this->helper('catalog/output'); ?>
 <?php $_product = $this->getProduct(); ?>
+
 <script type="text/javascript">
     var optionsPrice = new Product.OptionsPrice(<?php echo $this->getJsonConfig() ?>);
 </script>
+
 <div id="messages_product_view"><?php echo $this->getMessagesBlock()->getGroupedHtml() ?></div>
 <div class="product-view">
     <div class="product-essential">
     <form action="<?php echo $this->getSubmitUrl($_product) ?>" method="post" id="product_addtocart_form"<?php if($_product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>>
-        <?php //echo $this->getBlockHtml('formkey') ?>
+        <?php echo $this->getBlockHtml('formkey') ?>
         <div class="no-display">
             <input type="hidden" name="product" value="<?php echo $_product->getId() ?>" />
             <input type="hidden" name="related_product" id="related-products-field" value="" />
+        </div>
+
+        <div class="product-img-box">
+            <?php echo $this->getChildHtml('media') ?>
         </div>
 
         <div class="product-shop">
@@ -51,13 +57,51 @@
                 <h1><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></h1>
             </div>
 
-            <?php if ($this->canEmailToFriend()): ?>
-                <p class="email-friend"><a href="<?php echo $this->helper('catalog/product')->getEmailToFriendUrl($_product) ?>"><?php echo $this->__('Email to a Friend') ?></a></p>
-            <?php endif; ?>
+			<?php
 
-            <?php echo $this->getReviewsSummaryHtml($_product, false, true)?>
-            <?php echo $this->getChildHtml('alert_urls') ?>
+			$attributeSetName = Mage::getModel('eav/entity_attribute_set')->load($_product->getAttributeSetId())->getAttributeSetName();
+			
+			if ($attributeSetName == "Dresses") {
+
+			?>
+
+            <?php 
+            
+            $designer = "";
+
+            $designer = $_product->getAttributeText('designer');
+            										
+            include(MAGENTO_ROOT . '/includes/size_chart.php');     
+            
+			$sizechart = sizeDesigner($designer);			
+
+             ?>
+           
+			<script>
+			jQuery.noConflict();
+			// $j is now an alias to the jQuery function; creating the new alias is optional.
+			</script>
+            
+            <script type="text/javascript">
+				
+				
+				function sizePopup() {
+				
+				jQuery.fn.speedoPopup({
+					htmlContent: "<?php echo $sizechart; ?>", window: null, height: null, effectIn: "fade", effectOut: "fade"
+					}); 
+				};
+			</script>
+
+
+			<?php } ?>
+
+            
+            <?php echo $this->getPriceHtml($_product) ?>
             <?php echo $this->getChildHtml('product_type_data') ?>
+
+
+            <?php echo $this->getChildHtml('alert_urls') ?>
             <?php echo $this->getTierPriceHtml() ?>
             <?php echo $this->getChildHtml('extrahint') ?>
 
@@ -77,28 +121,27 @@
                     <?php echo $this->getChildHtml('addto') ?>
                 </div>
             <?php endif; ?>
-
-            <?php if ($_product->getShortDescription()):?>
-                <div class="short-description">
-                    <h2><?php echo $this->__('Quick Overview') ?></h2>
-                    <div class="std"><?php echo $_helper->productAttribute($_product, nl2br($_product->getShortDescription()), 'short_description') ?></div>
-                </div>
-            <?php endif;?>
-            <span class="additional_info_po"><?php echo $this->htmlEscape($_product->getData('additionalinfo')); ?></span>
+            
+            <div class="std"><p><?php echo $this->htmlEscape($_product->getData('description')); ?></p></div>
+            <div class="std"><p class="additional_info_po"><?php echo $this->htmlEscape($_product->getData('additionalinfo')); ?></p></div>
 
             <?php echo $this->getChildHtml('other');?>
 
             <?php if ($_product->isSaleable() && $this->hasOptions()):?>
                 <?php echo $this->getChildChildHtml('container1', '', true, true) ?>
             <?php endif;?>
-
+			
+			<div class="email-wishlist-links">
+            <?php if ($this->canEmailToFriend()): ?>
+                <a href="<?php echo $this->helper('catalog/product')->getEmailToFriendUrl($_product) ?>" class="email-friend" ><?php echo $this->__('Email to a Friend') ?></a>
+            <?php endif; ?> | 
+			<?php echo $this->getChildHtml('addto') ?>
+            <?php echo $this->getReviewsSummaryHtml($_product, false, true)?>
+			</div>
+			
         </div>
 
-        <div class="product-img-box">
-            <?php echo $this->getChildHtml('media') ?>
-        </div>
-
-        <div class="clearer"></div>
+        
         <?php if ($_product->isSaleable() && $this->hasOptions()):?>
             <?php echo $this->getChildChildHtml('container2', '', true, true) ?>
         <?php endif;?>
@@ -154,18 +197,14 @@
         }.bind(productAddToCartForm);
     //]]>
     </script>
+    
     </div>
-
+	
+	
+	<div style="clear:both;"></div>
+	
     <div class="product-collateral">
-<?php foreach ($this->getChildGroup('detailed_info', 'getChildHtml') as $alias => $html):?>
-        <div class="box-collateral <?php echo "box-{$alias}"?>">
-            <?php if ($title = $this->getChildData($alias, 'title')):?>
-            <h2><?php echo $this->escapeHtml($title); ?></h2>
-            <?php endif;?>
-            <?php echo $html; ?>
-        </div>
-<?php endforeach;?>
+
         <?php echo $this->getChildHtml('upsell_products') ?>
-        <?php echo $this->getChildHtml('product_additional_data') ?>
     </div>
 </div>
