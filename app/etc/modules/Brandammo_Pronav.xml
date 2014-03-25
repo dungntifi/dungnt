@@ -10,7 +10,7 @@
 <config>
     <modules>
         <Brandammo_Pronav>
-            <active>true</active>
+            <active>false</active>
             <codePool>local</codePool>
         </Brandammo_Pronav>
     </modules>
