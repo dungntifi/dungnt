@@ -48,6 +48,10 @@
         <reference name="head">
           	<action method="addJs"><script>revolution/jquery-1.10.1.js</script></action>
             <action method="addJs"><script>pronav/jquery.noConflict.js</script></action>
+            <action method="addJs"><script>revolution/jquery.themepunch.plugins.min.js</script></action>
+         			<action method="addJs"><script>revolution/jquery.themepunch.revolution.min.js</script></action>
+         			<action method="addJs"><script>fittext/jquery.fittext.js</script></action>
+         			<action method="addCss"><stylesheet>css/revolution-settings.css</stylesheet></action>
             <action method="setTitle" translate="title"><title>One Step Checkout</title></action>
             <action method="addItem"><type>skin_js</type><name>onestepcheckout/js/window.js</name></action>
             <action method="addItem"><type>skin_js</type><name>onestepcheckout/js/onestepcheckout.js</name></action>
