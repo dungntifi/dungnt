@@ -19,7 +19,7 @@ Options +FollowSymLinks
 
 RewriteEngine On
 
-RewriteBase /
+RewriteBase /~blake/promoutfitters/
 
 RewriteCond %{REQUEST_URI} !^/media/
 RewriteCond %{REQUEST_URI} !^/skin/
