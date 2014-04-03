@@ -47,6 +47,7 @@
         </reference>
         <reference name="head">
           	<action method="addJs"><script>revolution/jquery-1.10.1.js</script></action>
+            <action method="addJs"><script>pronav/jquery.noConflict.js</script></action>
             <action method="setTitle" translate="title"><title>One Step Checkout</title></action>
             <action method="addItem"><type>skin_js</type><name>onestepcheckout/js/window.js</name></action>
             <action method="addItem"><type>skin_js</type><name>onestepcheckout/js/onestepcheckout.js</name></action>
