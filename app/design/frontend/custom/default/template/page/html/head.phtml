@@ -44,7 +44,10 @@
 <?php echo $this->helper('core/js')->getTranslatorScript() ?>
 <?php echo $this->getIncludes() ?>
 
+<?php if ($this->getIsHomePage()):?>
 <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700,800' rel='stylesheet' type='text/css'>
+<?php else:?>
+<?php endif ?>
 
 <script type="text/javascript">
 <!--
