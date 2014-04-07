@@ -1006,14 +1006,14 @@ html,div,span,object,iframe,h1,h2,h3,h4,h5,h6,blockquote,pre,abbr,address,cite,c
 
 .fittext-h2 {
 	color:#3c414b;
-	background:rgba(255,255,255,0.2);
+	background:rgba(240,220,190,0.2);
 	text-align:center;
 	margin: 0 7%;
 }
 
 .fittext-h3 {
 	color:#fff;
-	background:rgba(220,20,120,0.7);
+	background:rgba(213,14,34,0.7);
 	text-align:left;
 }
 
@@ -1037,7 +1037,7 @@ html,div,span,object,iframe,h1,h2,h3,h4,h5,h6,blockquote,pre,abbr,address,cite,c
 }
 
 .fittext-p3 {
-	color:#fff;
+	color:#d50e22;
 	text-align:left;
 	margin:0 0 20% 0;
 }
