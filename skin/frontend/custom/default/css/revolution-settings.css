@@ -424,6 +424,23 @@ border-color:rgb(255, 214, 88);
 border-style:none;
 }
 
+.tp-caption.large_bold_grey_sale {
+font-size:160px;
+line-height:160px;
+font-weight:800;
+font-family:"Open Sans";
+color:rgb(102, 102, 102);
+text-decoration:none;
+text-transform: uppercase;
+background-color:transparent;
+text-shadow:none;
+margin:0px;
+padding:1px 4px 0px;
+border-width:0px;
+border-color:rgb(255, 214, 88);
+border-style:none;
+}
+
 .tp-caption.large_thin_grey {
 font-size:120px;
 line-height:120px;
@@ -436,6 +453,23 @@ background-color:transparent;
 text-shadow:none;
 margin:0px;
 padding:1px 4px 0px;
+border-width:0px;
+border-color:rgb(255, 214, 88);
+border-style:none;
+}
+
+.tp-caption.medium_bold_grey_sale {
+font-size:82px;
+line-height:82px;
+font-weight:800;
+font-family:"Open Sans";
+color:rgb(102, 102, 102);
+text-decoration:none;
+text-transform: uppercase;
+background-color:transparent;
+padding:1px 4px 0px;
+text-shadow:none;
+margin:0px;
 border-width:0px;
 border-color:rgb(255, 214, 88);
 border-style:none;
