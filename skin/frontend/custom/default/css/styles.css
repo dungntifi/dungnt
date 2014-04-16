@@ -692,6 +692,7 @@ html,div,span,object,iframe,h1,h2,h3,h4,h5,h6,blockquote,pre,abbr,address,cite,c
 .top-right {
 	float:right;
 	margin:10px 16px 16px 4px;
+	min-width: 394px;
 /* background: gray; */
 }
 
