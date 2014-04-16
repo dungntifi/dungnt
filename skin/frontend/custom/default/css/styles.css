@@ -425,6 +425,15 @@ html,div,span,object,iframe,h1,h2,h3,h4,h5,h6,blockquote,pre,abbr,address,cite,c
 	margin-left: 20px;
 }
 
+.breadcrumbs .Facebook {
+	margin-left: 10px;
+	vertical-align: middle;
+}
+
+.breadcrumbs iframe {
+	vertical-align: middle;
+}
+
 /*.header .logo { float: none; width: 385px; margin:0 auto; text-decoration:none !important; }*/
 .header .quick-access {
 	float:right;
