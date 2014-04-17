@@ -72,6 +72,6 @@ display: none;
 
 .nav-toggle{background-image:url("../images/hamburger-retina.gif");-webkit-background-size:100px 100px !important;-moz-background-size:100px 100px !important;-o-background-size:100px 100px !important;background-size:100px 100px !important}}
 
-@media screen and (min-width: 640px){
+@media screen and (min-width: 800px){
 
 .nav-toggle{display:none}}
