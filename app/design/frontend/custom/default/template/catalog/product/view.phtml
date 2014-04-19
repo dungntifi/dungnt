@@ -55,6 +55,23 @@
         <div class="product-shop">
             <div class="product-name">
                 <h1><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></h1>
+                
+                <span class="pinterest">
+                <a href="//pinterest.com/pin/create/button/?media=<?php echo $this->helper('catalog/image')->init($_product, 'small_image'); ?>&description=<?php echo trim(Mage::registry('current_product')->getName()); ?>&url=<?php echo trim(Mage::registry('current_product')->getProductUrl()); ?>" data-pin-do="buttonPin" data-pin-config="none"><img src="//assets.pinterest.com/images/pidgets/pinit_fg_en_rect_gray_20.png" /></a>
+<!-- Please call pinit.js only once per page -->
+<script type="text/javascript" async src="//assets.pinterest.com/js/pinit.js"></script>
+                </span>
+                
+				<span class="wanelo">
+				   <a class="wanelo-save-button"
+				      href="<?php echo Mage::getBaseUrl(); ?>"
+				      data-url="<?php echo $this->helper('core/url')->getCurrentUrl();?>"
+				      data-title="<?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?>"
+				      data-image="<?php echo $_product->getImageUrl(); ?>"
+				      data-price="<?php echo number_format($_product->getFinalPrice(),2);?>"></a>
+
+				</span>
+					  <script async="true" type="text/javascript" src="//cdn-saveit.wanelo.com/bookmarklet/3/save.js"></script> 
             </div>
 
 			<?php

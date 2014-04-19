@@ -425,13 +425,27 @@ html,div,span,object,iframe,h1,h2,h3,h4,h5,h6,blockquote,pre,abbr,address,cite,c
 	margin-left: 20px;
 }
 
-.breadcrumbs .Facebook {
-	margin-left: 10px;
+.page_likes {
+	font-size: 1px;	
+}
+
+.page_likes span {
+	display: inline-block;
+	width: 80px;
 	vertical-align: middle;
 }
 
-.breadcrumbs iframe {
-	vertical-align: middle;
+.page_likes .Facebook {
+	margin-top:-4px;
+}
+
+.page_likes .google {
+	width: 71px;
+}
+
+.page_likes .wanelo {
+	width: 54px;
+	margin-left: -9px;
 }
 
 /*.header .logo { float: none; width: 385px; margin:0 auto; text-decoration:none !important; }*/
