@@ -68,9 +68,10 @@ Default layout, loads most of the pages
 			<action method="addJs"><script>revolution/jquery-1.10.1.js</script></action>
 			<action method="addJs"><script>revolution/jquery.themepunch.plugins.min.js</script></action>
 			<action method="addJs"><script>revolution/jquery.themepunch.revolution.min.js</script></action>	
+			<action method="addJs"><script>flexgrid/respond.js</script></action>
 			<action method="addJs"><script>fittext/jquery.fittext.js</script></action>	
 			<action method="addCss"><stylesheet>css/revolution-settings.css</stylesheet></action>   
-			             
+			<action method="addCss"><stylesheet>css/flexgrid.css</stylesheet></action>             
         </reference>
     </cms_index_index>
 

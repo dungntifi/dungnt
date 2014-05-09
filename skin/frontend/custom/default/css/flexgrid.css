@@ -1,0 +1,215 @@
+/* Reset. 
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+
+ol, ul {
+	list-style: none;
+} 
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+} */
+
+/* FlexGRID. */
+.flexGRID {
+	width: 100%;
+	border-collapse: collapse;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	padding: 0 0;
+	margin: 0 0;
+}
+body .flexGRID:first-child {
+	margin: 0;
+}
+.flexGRID .row {
+	clear: both;
+	/*max-width: 92%;*/
+	height: 100%;
+	margin: 0 4px;
+}
+.flexGRID .row.last {
+	margin: 0 4px 4px;
+}
+.flexGRID .row:after {
+	content:"";
+	display:table;
+	clear:both;
+}
+.flexGRID .banner_01, .flexGRID .banner_02, .flexGRID .banner_03, .flexGRID .banner_04, .flexGRID .banner_05, .flexGRID .banner_06, .flexGRID .banner_07, .flexGRID .banner_08, .flexGRID .banner_09 {
+	/*font-size: 14px;*/
+	float: left;
+	width: 100%;
+	border-collapse:collapse;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	/*word-break: break-word;*/
+	margin: 4px 0 0;
+}
+.flexGRID .banner_01 a, .flexGRID .banner_02 a, .flexGRID .banner_03 a, .flexGRID .banner_04 a, .flexGRID .banner_05 a, .flexGRID .banner_06 a, .flexGRID .banner_07 a, .flexGRID .banner_08 a, .flexGRID .banner_09 a {
+	/*font-size: 14px;*/
+	text-decoration: none;
+}
+.flexGRID .banner_01 .banner_text {
+	position:relative;width:53%;float: left;
+}
+.flexGRID .banner_02 .banner_text {
+	position:relative;width:80%;margin: 0 auto;
+}
+.flexGRID .banner_03 .banner_text {
+	position:relative;width:50%;float: right;
+}
+.flexGRID .banner_04 .banner_text {
+	position:relative;width:70%;float: right;
+}
+.flexGRID .banner_05 .banner_text {
+	position:relative;width:80%;margin: 0 auto;
+}
+.flexGRID .banner_06 .banner_text {
+	position:relative;width:70%;float: right;
+}
+.flexGRID .banner_07 .banner_text {
+	position:relative;width:65%;float: left;
+}
+.flexGRID .banner_08 .banner_text {
+	position:relative;width:80%;margin: 0 auto;
+}
+.flexGRID .banner_09 .banner_text {
+	position:relative;width:50%;float: right;
+}
+.flexGRID .row .banner_01,
+.flexGRID .row .banner_02,
+.flexGRID .row .banner_03,
+.flexGRID .row .banner_04,
+.flexGRID .row .banner_05,
+.flexGRID .row .banner_06,
+.flexGRID .row .banner_07,
+.flexGRID .row .banner_08,
+.flexGRID .row .banner_09 {
+	padding: 0;
+}
+.flexGRID .no_padding,
+.flexGRID .row.no_padding .banner_01,
+.flexGRID .row.no_padding .banner_02,
+.flexGRID .row.no_padding .banner_03,
+.flexGRID .row.no_padding .banner_04,
+.flexGRID .row.no_padding .banner_05,
+.flexGRID .row.no_padding .banner_06,
+.flexGRID .row.no_padding .banner_07,
+.flexGRID .row.no_padding .banner_08,
+.flexGRID .row.no_padding .banner_09 {
+	padding: 0 !important;
+}
+
+@media all and (min-width : 768px) {
+	.flexGRID  {
+		width: 100%;
+		padding: 0;
+		margin: 0;
+
+	}
+	.flexGRID .row {
+		display: -webkit-box;
+		display: -moz-box;
+		display: -ms-flexbox;
+		display: -webkit-flex;
+		display: flex;
+		clear: both;
+		margin: 0 auto;
+		/*max-width: 90%;*/
+		height: 325px;
+		padding: 8px 0 0;
+	}
+	
+	.flexGRID .row.last {
+		margin: 0 auto 8px;
+	}
+
+	.flexGRID .row:after {
+		content:"";
+		display:table;
+		clear:both;
+	}
+	.flexGRID .banner_01, .flexGRID .banner_02, .flexGRID .banner_03, .flexGRID .banner_04, .flexGRID .banner_05, .flexGRID .banner_06, .flexGRID .banner_07, .flexGRID .banner_08, .flexGRID .banner_09 {
+		margin: 0 8px 0 0;
+		float: left;
+		/*word-break: break-word;*/
+		position: relative;
+	}
+	
+	.flexGRID .banner_01 { width: 33.33%; }
+	.flexGRID .banner_02 { width: 33.33%; }
+	.flexGRID .banner_03 { width: 33.33%; }
+	.flexGRID .banner_04 { width: 44%; }
+	.flexGRID .banner_05 { width: 28%; }
+	.flexGRID .banner_06 { width: 28%; }
+	.flexGRID .banner_07 { width: 28%; }
+	.flexGRID .banner_08 { width: 28%; }
+	.flexGRID .banner_09 { width: 44%; }
+	
+	.flexGRID .banner_01.last, .flexGRID .banner_02.last, .flexGRID .banner_03.last, .flexGRID .banner_04.last, .flexGRID .banner_05.last, .flexGRID .banner_06.last, .flexGRID .banner_07.last, .flexGRID .banner_08.last, .flexGRID .banner_09.last {
+		margin: 0;
+	}
+}
+
+
+/* Your styles go here. */
+
+.flexGRID {
+	/*background: #34495e;*/
+}
+
+.flexGRID .banner_01 { background: url('../images/home-images/banner_01.jpg') no-repeat; background-size: cover; }
+.flexGRID .banner_02 { background: url('../images/home-images/banner_02.jpg') no-repeat; background-size: cover; }
+.flexGRID .banner_03 { background: url('../images/home-images/banner_03.jpg') no-repeat; background-size: cover; }
+.flexGRID .banner_04 { background: url('../images/home-images/banner_04.jpg') no-repeat; background-size: cover; }
+.flexGRID .banner_05 { background: url('../images/home-images/banner_05.jpg') no-repeat; background-size: cover; }
+.flexGRID .banner_06 { background: url('../images/home-images/banner_06.jpg') no-repeat; background-size: cover; }
+.flexGRID .banner_07 { background: url('../images/home-images/banner_07.jpg') no-repeat; background-size: cover; }
+.flexGRID .banner_08 { background: url('../images/home-images/banner_08.jpg') no-repeat; background-size: cover; }
+.flexGRID .banner_09 { background: url('../images/home-images/banner_09.jpg') no-repeat; background-size: cover; }
+
+.flexGRID .row .banner_01,
+.flexGRID .row .banner_02,
+.flexGRID .row .banner_03,
+.flexGRID .row .banner_04,
+.flexGRID .row .banner_05,
+.flexGRID .row .banner_06,
+.flexGRID .row .banner_07,
+.flexGRID .row .banner_08,
+.flexGRID .row .banner_09 {
+	border-radius: 0px;
+	min-height: 150px;
+}
