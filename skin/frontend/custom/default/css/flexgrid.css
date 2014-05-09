@@ -133,6 +133,8 @@ body .flexGRID:first-child {
 	padding: 0 !important;
 }
 
+
+
 @media all and (min-width : 768px) {
 	.flexGRID  {
 		width: 100%;
@@ -149,7 +151,7 @@ body .flexGRID:first-child {
 		clear: both;
 		margin: 0 auto;
 		/*max-width: 90%;*/
-		height: 450px;
+		height: 325px;
 		padding: 8px 0 0;
 	}
 	
@@ -184,6 +186,20 @@ body .flexGRID:first-child {
 	}
 }
 
+@media all and (min-width : 1200px) {
+		.flexGRID .row {
+		display: -webkit-box;
+		display: -moz-box;
+		display: -ms-flexbox;
+		display: -webkit-flex;
+		display: flex;
+		clear: both;
+		margin: 0 auto;
+		/*max-width: 90%;*/
+		height: 450px;
+		padding: 8px 0 0;
+	}
+}
 
 /* Your styles go here. */
 
