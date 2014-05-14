@@ -5,7 +5,7 @@ html,body {
 	overflow-x:hidden;
 	margin:0;
 	background:#000;
-	font:12px/1.55 Arial,Helvetica,sans-serif;
+	font:12px/1.4 Arial,Helvetica,sans-serif;
 	color:#000;
 	text-align:center;
 }
@@ -1035,24 +1035,63 @@ html,div,span,object,iframe,h1,h2,h3,h4,h5,h6,blockquote,pre,abbr,address,cite,c
 	text-decoration: none;
 }*/
 
+
 /*FitText */
 .fittext-h1,.fittext-h2,.fittext-h3,.fittext-h4,.fittext-h5,.fittext-h6,.fittext-h7,.fittext-h8,.fittext-h9 {
-	font:95px/1 "Open Sans";
-	font-weight:800;
+/*	font:95px/1 "Open Sans";
+	font-weight:800;*/
+	font-size:95px;
+	line-height: 0.9 !important;
+	/*font-family: 'Raleway', sans-serif;
+	font-weight: 600;*/
+	font-weight: 100;
+	font-family: 'Lato', sans-serif;
 	text-transform:uppercase;
 	display:block;
-	padding: 3% 6%;
+	padding: 0% 6% 6%;
+}
+
+.shoptext {
+	font: 24px 'Playfair Display SC', serif;
+	line-height: 1 !important;
+	font-weight: 400;
+	font-style: italic;
+	text-transform: none;
+	padding: 3% 6% 0;
+}
+
+.text-left {
+	text-align: left;
+}
+
+.text-right {
+	text-align: right;
+}
+
+.text-center {
+	text-align: center;
+}
+
+.black {
+	color: #000;
+}
+
+.white {
+	color: #fff;
+}
+
+.fittext-h1-wrap {
+	background:rgba(191,1,36,1.0);	
 }
 
 .fittext-h1 {
 	color:#fff;
-	background:rgba(191,1,36,1.0);
 	text-align:right;
 	margin-top:80px;
 }
 
 .fittext-h2 {
-	color:#3c414b;
+	color:#000;
 	background:rgba(240,220,190,0.2);
 	text-align:center;
 	margin-top:120px;
@@ -1105,8 +1144,11 @@ html,div,span,object,iframe,h1,h2,h3,h4,h5,h6,blockquote,pre,abbr,address,cite,c
 }
 
 .fittext-p1,.fittext-p2,.fittext-p3,.fittext-p4,.fittext-p5,.fittext-p6,.fittext-p7,.fittext-p8,.fittext-p9 {
-	font:18px/1.2 "Open Sans";
-	font-weight: 500;
+	/*font:18px/1.2 "Open Sans";
+	font-weight: 500;*/
+	font:95px/1;
+	font-family: 'Raleway', sans-serif;
+	font-weight: 400;
 	text-transform:uppercase;
 	display:block;
 	padding: 3% 6%;
@@ -1118,7 +1160,7 @@ html,div,span,object,iframe,h1,h2,h3,h4,h5,h6,blockquote,pre,abbr,address,cite,c
 }
 
 .fittext-p2 {
-	color:#3c414b;
+	color:#000;
 	text-align:center;
 }
 

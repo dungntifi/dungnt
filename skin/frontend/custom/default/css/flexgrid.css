@@ -98,10 +98,10 @@ body .flexGRID:first-child {
 	position:relative;width:80%;margin: 0 auto;
 }
 .flexGRID .banner_06 .banner_text {
-	position:relative;width:70%;float: right;
+	position:relative;width:50%;float: right;
 }
 .flexGRID .banner_07 .banner_text {
-	position:relative;width:65%;float: left;
+	position:relative;width:50%;float: left;
 }
 .flexGRID .banner_08 .banner_text {
 	position:relative;width:80%;margin: 0 auto;
