@@ -34,8 +34,16 @@ text-shadow:none;
 -ms-transition:all 0.2s ease-out;
 }
 
+.tp-caption.medium_bold_red_sale a, .tp-caption.medium_bold_red a, .tp-caption.large_bold_red_sale a {
+	color: #5e0045;
+}
+
+.tp-caption.medium_bold_red_sale a:hover, .tp-caption.medium_bold_red a:hover, .tp-caption.large_bold_red_sale a:hover {
+	color: #92006b;
+}
+
 .tp-caption a:hover {
-color:#ff6100;
+color:#92006b;
 }
 
 .tp-caption.excerpt {
@@ -64,7 +72,7 @@ line-height:120px;
 font-weight:800;
 /*font-family:"Open Sans";*/
 font-family: 'Raleway', sans-serif;
-color:rgb(102, 102, 102);
+color: #000;
 text-decoration:none;
 text-transform: uppercase;
 background-color:transparent;
@@ -79,10 +87,28 @@ border-style:none;
 .tp-caption.large_bold_grey_sale {
 font-size:160px;
 line-height:160px;
-font-weight:800;
+font-weight:900;
 /*font-family:"Open Sans";*/
 font-family: 'Raleway', sans-serif;
-color:rgb(102, 102, 102);
+color: #000;
+text-decoration:none;
+text-transform: uppercase;
+background-color:transparent;
+text-shadow:none;
+margin:0px;
+padding:1px 4px 0px;
+border-width:0px;
+border-color:rgb(255, 214, 88);
+border-style:none;
+}
+
+.tp-caption.large_bold_red_sale {
+font-size:160px;
+line-height:160px;
+font-weight:900;
+/*font-family:"Open Sans";*/
+font-family: 'Raleway', sans-serif;
+color:#ee0000;
 text-decoration:none;
 text-transform: uppercase;
 background-color:transparent;
@@ -100,7 +126,7 @@ line-height:120px;
 font-weight:300;
 /*font-family:"Open Sans";*/
 font-family: 'Raleway', sans-serif;
-color:rgb(102, 102, 102);
+color: #000;
 text-decoration:none;
 text-transform: uppercase;
 background-color:transparent;
@@ -115,10 +141,28 @@ border-style:none;
 .tp-caption.medium_bold_grey_sale {
 font-size:82px;
 line-height:82px;
-font-weight:800;
+font-weight:900;
 /*font-family:"Open Sans";*/
 font-family: 'Raleway', sans-serif;
-color:rgb(102, 102, 102);
+color: #000;
+text-decoration:none;
+text-transform: uppercase;
+background-color:transparent;
+padding:1px 4px 0px;
+text-shadow:none;
+margin:0px;
+border-width:0px;
+border-color:rgb(255, 214, 88);
+border-style:none;
+}
+
+.tp-caption.medium_bold_red_sale {
+font-size:55px;
+line-height:55px;
+font-weight:900;
+/*font-family:"Open Sans";*/
+font-family: 'Raleway', sans-serif;
+color:#ee0000;
 text-decoration:none;
 text-transform: uppercase;
 background-color:transparent;
@@ -136,7 +180,25 @@ line-height:48px;
 font-weight:800;
 /*font-family:"Open Sans";*/
 font-family: 'Raleway', sans-serif;
-color:rgb(102, 102, 102);
+color: #000;
+text-decoration:none;
+text-transform: uppercase;
+background-color:transparent;
+padding:1px 4px 0px;
+text-shadow:none;
+margin:0px;
+border-width:0px;
+border-color:rgb(255, 214, 88);
+border-style:none;
+}
+
+.tp-caption.medium_bold_red {
+font-size:48px;
+line-height:48px;
+font-weight:800;
+/*font-family:"Open Sans";*/
+font-family: 'Raleway', sans-serif;
+color:#ee0000;
 text-decoration:none;
 text-transform: uppercase;
 background-color:transparent;
@@ -154,7 +216,25 @@ line-height:56px;
 font-weight:800;
 /*font-family:"Open Sans";*/
 font-family: 'Raleway', sans-serif;
-color:rgb(102, 102, 102);
+color: #000;
+text-decoration:none;
+text-transform: uppercase;
+background-color:transparent;
+padding:1px 4px 0px;
+text-shadow:none;
+margin:0px;
+border-width:0px;
+border-color:rgb(255, 214, 88);
+border-style:none;
+}
+
+.tp-caption.medium_bold_grey_arrivals2 {
+font-size:38px;
+line-height:38px;
+font-weight:800;
+/*font-family:"Open Sans";*/
+font-family: 'Raleway', sans-serif;
+color: #000;
 text-decoration:none;
 text-transform: uppercase;
 background-color:transparent;
@@ -184,13 +264,31 @@ border-color:rgb(255, 214, 88);
 border-style:none;
 }
 
+.tp-caption .medium_bold_red_discount {
+font-size:32px;
+line-height:32px;
+font-weight:900;
+/*font-family:"Open Sans";*/
+font-family: 'Raleway', sans-serif;
+color:rgb(0, 0, 0);
+text-decoration:none;
+text-transform: uppercase;
+background-color:transparent;
+padding:1px 4px 0px;
+text-shadow:none;
+margin:0px;
+border-width:0px;
+border-color:rgb(255, 214, 88);
+border-style:none;
+}
+
 .tp-caption.medium_thin_grey {
 font-size:36px;
 line-height:36px;
 font-weight:300;
 /*font-family:"Open Sans";*/
 font-family: 'Raleway', sans-serif;
-color:rgb(102, 102, 102);
+color: #000;
 text-decoration:none;
 background-color:transparent;
 padding:1px 4px 0px;
