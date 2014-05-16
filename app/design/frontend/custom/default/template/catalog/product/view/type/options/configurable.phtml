@@ -100,4 +100,5 @@ $attributeSetName = Mage::getModel('eav/entity_attribute_set')->load($_product->
         };
         spConfig.newEventBind();
     </script>
+    <div class="std"><p class="additional_info_po"><?php echo $this->htmlEscape($_product->getData('additionalinfo')); ?></p></div>
 <?php endif;?>

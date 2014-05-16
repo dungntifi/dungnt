@@ -140,8 +140,9 @@
             <?php endif; ?>
             
             <div class="std"><p><?php echo $this->htmlEscape($_product->getData('description')); ?></p></div>
-            <div class="std"><p class="additional_info_po"><?php echo $this->htmlEscape($_product->getData('additionalinfo')); ?></p></div>
-
+            <div class="std"><p>Promotion: <?php echo $this->htmlEscape($_product->getData('product_promotion')); ?></p></div>
+			<div class="std"><p>Returns: <?php echo $this->htmlEscape($_product->getData('product_return')); ?></p></div>
+			
             <?php echo $this->getChildHtml('other');?>
 
             <?php if ($_product->isSaleable() && $this->hasOptions()):?>
