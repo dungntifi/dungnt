@@ -699,7 +699,6 @@ class Idev_OneStepCheckout_Block_Checkout extends Mage_Checkout_Block_Onepage_Ab
             if( $this->_isLoggedIn() )  {
                 // User is logged in
                 // Place order as registered customer
-
                 $this->_saveOrder();
                 $this->log[] = 'Saving order as a logged in customer';
 
@@ -714,6 +713,14 @@ class Idev_OneStepCheckout_Block_Checkout extends Mage_Checkout_Block_Onepage_Ab
                     if($registration_mode == 'require_registration' || $registration_mode == 'auto_generate_account')   {
 
                         if($allow_without_password) {
+
+                            if(is_array($this->formErrors['billing_errors']))   {
+                                $this->formErrors['billing_errors'][] = 'email';
+                                $this->formErrors['billing_errors'][] = 'email_registered';
+                            }
+                            else    {
+                                $this->formErrors['billing_errors'] = array('email','email_registered');
+                            }
 
                             return;
                             // Place order on the emails account without the password
@@ -769,7 +776,6 @@ class Idev_OneStepCheckout_Block_Checkout extends Mage_Checkout_Block_Onepage_Ab
 
                         if($registration_mode == 'auto_generate_account')   {
                             $this->getOnepage()->saveCheckoutMethod('register');
-                            $this->getQuote()->setCustomerId(0);
                             $this->_saveOrder();
                         }
                         else    {
