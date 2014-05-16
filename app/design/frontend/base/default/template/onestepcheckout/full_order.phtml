@@ -25,7 +25,7 @@
     <?php endif; ?>
         <div class="col-2">
             <h2><?php echo $this->__('Payment Method') ?></h2>
-            <?php echo $this->helper('payment')->getInfoBlock($_order->getPayment()) ?>
+            <?php echo $this->helper('payment')->getInfoBlock($_order->getPayment())->toHtml(); ?>
         </div>
     </div>
     <h2><?php echo $this->__('Items Ordered') ?></h2>
