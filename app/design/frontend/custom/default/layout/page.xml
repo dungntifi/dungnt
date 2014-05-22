@@ -49,7 +49,12 @@ Default layout, loads most of the pages
                 <action method="addJs"><script>mage/translate.js</script></action>
                 <action method="addJs"><script>mage/cookies.js</script></action>
                 <action method="addJs"><script>responsive-nav/responsive-nav.js</script></action>
-                
+				<action method="addJs"><script>revolution/jquery-1.10.1.js</script></action>
+				<!-- Speedo Popup Begin -->
+				<action method="addJs"><script>speedo/speedo.popup.min.js</script></action>
+				<!-- <action method="addJs"><script>speedo/speedo.sizechart.js</script></action> -->
+				<action method="addCss"><stylesheet>css/default-speedo.css</stylesheet></action>
+				<!-- Speedo Popup End -->                
 
                 <block type="page/js_cookie" name="js_cookies" template="page/js/cookie.phtml"/>
 

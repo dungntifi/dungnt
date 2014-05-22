@@ -23,13 +23,7 @@
         added to the *flush_events* of all *private* ESI blocks, and should
         not be specified in the layout
     -->
-    <default>  
-	    <!-- <reference name="head">
-	        <action method="addJs"><script>prototype/window.js</script></action>
-	        <action method="addItem"><type>js_css</type><name>prototype/windows/themes/default.css</name></action>
-	        <action method="addItem"><type>js_css</type><name>prototype/windows/themes/newsletter.css</name></action>
-	    </reference>    	
-    	 -->	
+    <default>  	
         <!--
             New block used to warn users who choose to navigate without Varnish while it's activated.
         -->

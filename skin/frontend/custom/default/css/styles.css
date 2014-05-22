@@ -731,8 +731,25 @@ html,div,span,object,iframe,h1,h2,h3,h4,h5,h6,blockquote,pre,abbr,address,cite,c
 
 .top-left .free_shipping_returns {
 	margin: 10px auto;
-	width: 240px;
-	height: 24px;
+	width: 416px;
+	height: 36px;
+}
+
+.top-left .phoneheader {
+	font-size: 18px;
+	font-weight: bold;
+}
+
+.top-left .phone-icon {
+	background:url(../images/phone-icon.png);
+	width:23px;
+	height:16px;
+	display:inline-block;
+	vertical-align:top;
+	position:relative;
+	top:0;
+	margin-right:4px;
+	margin-left: 4px;
 }
 
 .top-right {
@@ -1359,6 +1376,11 @@ html,div,span,object,iframe,h1,h2,h3,h4,h5,h6,blockquote,pre,abbr,address,cite,c
 .logo-footer img {
 	vertical-align: top;
 	margin-top: 1px;
+}
+
+.footer .address {
+	margin-top: 4px;
+	letter-spacing: 1px;
 }
 
 .footer .store-switcher {

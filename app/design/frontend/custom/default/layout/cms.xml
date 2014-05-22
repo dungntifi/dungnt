@@ -43,15 +43,7 @@ Default layout, loads most of the pages
     </default>
     
     <cms_page translate="label">
-        <label>CMS Pages (All)</label>
-		<reference name="head">
-			<action method="addJs"><script>revolution/jquery-1.10.1.js</script></action>
-			<!-- Speedo Popup Begin -->
-			<action method="addJs"><script>speedo/speedo.popup.min.js</script></action>
-			<!-- <action method="addJs"><script>speedo/speedo.sizechart.js</script></action> -->
-			<action method="addCss"><stylesheet>css/default-speedo.css</stylesheet></action>
-			<!-- Speedo Popup End -->           
-        </reference> 
+        <label>CMS Pages (All)</label> 
         <reference name="content">
             <block type="core/template" name="page_content_heading" template="cms/content_heading.phtml"/>
             <block type="page/html_wrapper" name="cms.wrapper" translate="label">
@@ -65,7 +57,7 @@ Default layout, loads most of the pages
     <cms_index_index translate="label">
         <label>CMS Home Page</label>
 		<reference name="head">
-			<action method="addJs"><script>revolution/jquery-1.10.1.js</script></action>
+			<!-- <action method="addJs"><script>revolution/jquery-1.10.1.js</script></action> -->
 			<action method="addJs"><script>revolution/jquery.themepunch.plugins.min.js</script></action>
 			<action method="addJs"><script>revolution/jquery.themepunch.revolution.min.js</script></action>	
 			<action method="addJs"><script>flexgrid/respond.js</script></action>
