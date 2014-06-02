@@ -19,7 +19,7 @@ Vagrant.configure("2") do |config|
 
   config.vm.box = "promoutfitters"
 
-  config.vm.box_url = "http://s3-eu-west-1.amazonaws.com/opsway-containers/promoutfitters.box?AWSAccessKeyId=AKIAINARFTCXS32ZW7CQ&Expires=2023474906&Signature=%2BuJVYH8AcdrND%2FYZSAab0rS5Zfc%3D&x-amz-version-id=J2mJfq7jcJGxqt9wwogQRVNRBy317eqK"
+  config.vm.box_url = "http://s3-eu-west-1.amazonaws.com/opsway-containers/promoutfitters.box?AWSAccessKeyId=AKIAINARFTCXS32ZW7CQ&Expires=2032455183&Signature=%2FQsRpYYi6h0aiTzQnPM05Rerz5w%3D&x-amz-version-id=CwTw2HuutuHhnfmHu9YuvKnP_dbiO1kt"
 
   config.vm.network :forwarded_port, guest: 80, host: 80
   config.vm.network :forwarded_port, guest: 443, host: 443
