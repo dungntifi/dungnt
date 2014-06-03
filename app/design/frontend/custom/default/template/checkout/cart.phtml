@@ -161,3 +161,38 @@
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+    (function($) {
+        $(function() {
+
+            $('.edit-cart-item').each(function() {
+                var link = $(this),
+                    rel = link.attr('rel'), tmp = rel.split('-');
+
+                var productId = tmp[0],
+                    itemId    = tmp[1];
+
+                var editUrl = '<?php echo $this->getUrl('quickbox/product/edit'); ?>';
+                link.fancybox({
+                    titleShow: false,
+                    showNavArrows: false,
+                    modal: true,
+                    padding:0,
+                    margin:0,
+                    fitToView : false,
+                    overlayShow:false,
+                    openEffect   : 'none',
+                    closeEffect : 'none',
+                    autoDimensions: false,
+                    width: 578,
+                    height: 406,
+                    onComplete: function() {jQuery('css3-container').css('display','none');jQuery('#fancybox-content').css('background-color','#fff');},
+                    onClosed: function() {},
+                    type: 'ajax',
+                    href: editUrl + '?id=' + productId + '&item=' + itemId
+                });
+            });
+        });
+    })(jQuery);
+</script>
