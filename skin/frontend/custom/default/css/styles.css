@@ -200,26 +200,10 @@ html,div,span,object,iframe,h1,h2,h3,h4,h5,h6,blockquote,pre,abbr,address,cite,c
 	margin: 0 auto;
 }
 
-.cms-customer-service .main {
-	width: 960px;
-	margin: 0 auto;
-}
-
-.cms-locations .main {
-	position: relative;
-	float: right;
-	right: 50%;
-}
-
-.cms-locations .locations-container, .cms-locations .breadcrumbs {
-	position: relative;
-	float: left;
-	left: 50%;
-}
-
 .cms-locations .locations-container p {
 	float: left;
-	padding: 24px 64px;
+	width: 50%;
+	/*padding: 24px 24px;*/
 }
 
 .customer-address-form .main-container, .customercredit-index-index .main-container, .downloadable-customer-products .main-container, .newsletter-manage-index .main-container, .oauth-customer-token-index .main-container, .wishlist-index-index .main-container, .tag-customer-index .main-container, .review-customer-index .main-container, .sales-recurring-profile-index .main-container, .sales-billing-agreement-index .main-container, .sales-order-history .main-container, .customer-address-index .main-container, .customer-account-edit .main-container, .customer-account-index .main-container {
@@ -6876,6 +6860,255 @@ ul,ol {
 }
 
 /*Customer Service page*/
+.cms-page-view .breadcrumbs {display: none;}
+
+.cms-page-view .container-fluid {
+    padding: 0 55px;
+}
+
+.cms-page-view .container-fluid h4 {
+	font-size:14px;
+	font-weight:700;
+	line-height:20px;
+	margin-bottom: 10px;
+}
+
+.cms-page-view .container-fluid:before, .cms-page-view .container-fluid:after, .cms-page-view .row-fluid:before, .cms-page-view .row-fluid:after {
+	display: table;
+	content: "";
+	line-height: 0;
+}
+
+.cms-page-view .container-fluid:after {
+	clear: both;
+}
+
+.cms-page-view .row-fluid {
+	margin-left: -12px;
+}
+
+.cms-page-view .row-fluid>.span3 {
+	width: 18.75%;
+}
+
+.cms-page-view .row-fluid>[class*="span"] {
+	display: block;
+	box-sizing: border-box;
+	float: left;
+	padding-left: 12px;
+}
+
+.cms-page-view .help-menu {
+	margin-top: 50px;
+}
+
+[class*=".cms-page-view span"] {
+	min-height: 1px;
+}
+
+.cms-page-view .type-menu-block ul, .cms-page-view .type-menu-block li {
+	list-style: none;
+	margin: 0;
+	margin-bottom: 3px;
+}
+
+.cms-page-view .help-menu-items li, .cms-page-view .help-menu-items a {
+	line-height: 15px;
+	margin-bottom: 5px;
+	padding-bottom: 0;
+}
+
+.help-menu-items a, .contact-us a {
+	text-decoration: none;
+}
+
+.cms-page-view .help-menu .contact-us {
+	display: none;
+}
+
+.cms-page-view .help-menu .contact-us h4 {
+	margin-top: 20px;
+}
+
+.cms-page-view .row-fluid > .span8 {
+	width: 50%;
+}
+
+.cms-page-view .row-fluid > .span16 {
+	width: 100%;
+}
+
+.cms-page-view .row-fluid .offset4 {
+margin-left: 25%;
+}
+
+[class*="push--"] {
+	position: relative;
+}
+
+.cms-page-view .push--one-sixteenth {
+	left: 6.25%;
+}
+
+.cms-page-view .contact-us-widget {
+	margin-top: 50px;
+}
+
+.cms-page-view .push--one-eighth, .cms-page-view .push--two-sixteenths {
+	left: 12.5%;
+}
+
+/*Shipping*/
+
+/*Contact*/
+.fa-email {
+	display: inline-block;
+	background:url(../images/icon-email.gif) 0 0 no-repeat;
+	height: 14px;
+	width: 21px;
+	vertical-align: top;
+}
+
+.fa-chat {
+	display: inline-block;
+	background:url(../images/icon-chat.gif) 0 0 no-repeat;
+	height: 14px;
+	width: 21px;	
+	vertical-align: bottom;
+}
+
+.cms-page-view .fixedContainerSmall {
+	max-width: 640px;
+	width: 100%;
+	margin: 0 auto;
+}
+
+.cms-page-view .help-primary-content label {
+display: block;
+margin-top:7px;
+margin-bottom: 5px;
+line-height: 25px;
+font-size: 12px;
+}
+
+.cms-page-view .help-primary-content form input[type=text], .cms-page-view .help-primary-content form input.form-input, .cms-page-view .help-primary-content .form input[type=text], .cms-page-view .help-primary-content .form input.form-input {
+height: 30px;
+-webkit-appearance: none;
+}
+
+.cms-page-view .help-primary-content form input[type=text], .cms-page-view .help-primary-content form input.form-input, .cms-page-view .help-primary-content form .dropdown, .cms-page-view .help-primary-content .form input[type=text], .cms-page-view .help-primary-content .form input.form-input, .cms-page-view .help-primary-content .form .dropdown {
+color: black;
+border: 1px solid #777;
+padding-left: 5px;
+}
+
+.cms-page-view .help-primary-content form input.form-input, .cms-page-view .help-primary-content .form input.form-input {
+border-bottom: 1px dotted #000;
+padding-bottom: 0px;
+margin-bottom: 20px;
+width: 100%;
+}
+
+.cms-page-view .help-primary-content form input[type="text"], .cms-page-view .help-primary-content form input[type="email"], .cms-page-view .help-primary-content form input[type="password"], .cms-page-view .help-primary-content form input[type="url"], .cms-page-view .help-primary-content form input[type="tel"], .cms-page-view .help-primary-content form input[type="number"], .cms-page-view .help-primary-content .form input[type="text"], .cms-page-view .help-primary-content .form input[type="email"], .cms-page-view .help-primary-content .form input[type="password"], .cms-page-view .help-primary-content .form input[type="url"], .cms-page-view .help-primary-content .form input[type="tel"], .cms-page-view .help-primary-content .form input[type="number"] {
+background-clip: padding-box;
+margin: 0;
+outline: 0;
+padding: 0;
+background: transparent;
+vertical-align: top;
+}
+
+.cms-page-view .help-primary-content form textarea.form-input, .cms-page-view .help-primary-content .form textarea.form-input {
+border: 1px solid #777;
+padding: 10px;
+box-sizing: border-box;
+margin-bottom: 20px;
+height: 200px;
+width: 100%;
+}
+
+.cms-page-view .help-primary-content form textarea, .cms-page-view .help-primary-content .form textarea {
+-webkit-appearance: none;
+border-radius: 0;
+}
+
+.cms-page-view .help-primary-content textarea {
+overflow: auto;
+vertical-align: top;
+}
+
+.cms-page-view .button--inverted.button--opaque, .cms-page-view #sizechart-container #product-measurements .measurement-buttons a.button.active {
+background: #000;
+}
+
+.cms-page-view .help-primary-content .type-text-inverted, .cms-page-view .help-primary-content .button, .button--inverted.button--opaque, .cms-page-view #sizechart-container #product-measurements .measurement-buttons a.button.active {
+color: #fff;
+-webkit-font-smoothing: antialiased;
+}
+
+.cms-page-view form button.one-whole, .cms-page-view .form button.one-whole {
+width: 100%;
+}
+
+.cms-page-view .help-primary-content .button {
+	border: 1px solid #000;
+	border-radius: 0;
+	min-width: 140px;
+	display: inline-block;
+	outline: none;
+	font-weight: bold;
+	padding: 7px 30px;
+	text-align: center;
+	box-sizing: border-box;
+	vertical-align: middle;
+	margin: 0;
+	cursor: pointer;
+	text-transform: uppercase;
+}
+
+@media screen and (max-width: 880px) {
+	.cms-page-view .help-section-container .help-primary-content, .cms-page-view .help-section-container .help-menu, .cms-page-view .help-section-container .help-menu .contact-us {
+		width: 75%;
+		left: 0;
+		display: block;
+	}
+}
+
+@media screen and (max-width: 880px) {
+	.cms-page-view .help-section-container .help-menu {
+		width: 25%;
+		left: 0;
+	}
+}
+
+/*@media screen and (max-width: 880px) {
+	.help-section-container .help-menu .help-menu-items {
+		display: none;
+	}
+}*/
+
+@media screen and (max-width: 880px) {
+	.cms-page-view .help-section-container .contact-us {
+		display: none;
+		margin: 0 0 20px;
+	}
+}
+
+@media screen and (max-width: 768px) {
+	.cms-page-view .help-section-container .help-primary-content, .cms-page-view .help-section-container .help-menu, .cms-page-view .help-section-container .help-menu .contact-us {
+		width: 100%;
+		left: 0;
+	}
+}
+
+@media screen and (max-width: 768px) {
+	.cms-page-view .contact-us-widget {
+		width: 100% !important;
+		left: 0 !important;
+	}
+}
+
+
 #helpIndex a {
 	margin:0;
 	padding:0;
