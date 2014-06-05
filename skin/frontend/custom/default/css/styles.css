@@ -7106,6 +7106,15 @@ width: 100%;
 		width: 100% !important;
 		left: 0 !important;
 	}
+
+	.cms-page-view .help-section-container .help-menu .contact-us {
+		display: none;
+	}
+	
+	.cms-page-view .contact-us-widget .contact-us {
+		display: block;
+	}	
+	
 }
 
 
