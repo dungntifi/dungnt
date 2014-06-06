@@ -49,7 +49,7 @@ class Idev_OneStepCheckout_AjaxController extends Mage_Core_Controller_Front_Act
             $customerAddr = Mage::getModel('customer/address')->load($address_id);
             $data = $customerAddr->getData();
         }
-        if($data['country_id'] != "US"){
+        if($data['country_id'] == "US"){
         $result = Mage::helper('melissa_address')->melissaCheckAddress($data);
         if ($result){
             $result = array('check_errors' => $result, 'address_type' => $validationAddress, 'address_id' => $address_id, 'additional' => $data);
