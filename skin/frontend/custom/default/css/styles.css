@@ -376,8 +376,9 @@ html,div,span,object,iframe,blockquote,pre,abbr,address,cite,code,del,dfn,em,img
 }
 
 .logo img {
-	width:385px;
-	height:49px;
+	width: 100%;
+	max-width:385px;
+	/*height:49px;*/
 	text-align:center;
 	margin-top: 16px;
 }
@@ -399,7 +400,8 @@ html,div,span,object,iframe,blockquote,pre,abbr,address,cite,code,del,dfn,em,img
 }
 
 .ups {
-	width: 385px;
+	width: 100%;
+	max-width: 385px;
 	margin: 10px auto;
 	font-size: 1px;
 }
