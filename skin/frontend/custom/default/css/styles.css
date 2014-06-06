@@ -16,12 +16,12 @@ img {
 }
 
 a {
-	color:#306;
-	text-decoration:underline;
+	color:#000;
+	text-decoration:none;
 }
 
 a:hover {
-	text-decoration:none;
+	text-decoration:underline;
 }
 
 :focus {
@@ -34,7 +34,7 @@ a:hover {
 
 /* Headings */
 h1,h2,h3,h4,h5,h6 {
-	margin:0 0 5px;
+	margin:0 0 16px;
 /*line-height:32px;*/
 	text-transform:uppercase;
 }
@@ -52,13 +52,13 @@ h2 {
 h3 {
 	font-size:18px;
 	font-weight:700;
-	line-height:54px;
+	/*line-height:54px;*/
 }
 
 h4 {
 	font-size:14px;
 	font-weight:700;
-	line-height:36px;
+	/*line-height:36px;*/
 }
 
 h5 {
@@ -129,7 +129,7 @@ small,big {
 	font-size:1em;
 }
 
-html,div,span,object,iframe,h1,h2,h3,h4,h5,h6,blockquote,pre,abbr,address,cite,code,del,dfn,em,img,ins,kbd,q,samp,small,strong,sub,sup,var,b,i,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,figure,footer,header,hgroup,menu,nav,section,menu,time,mark,audio,video {
+html,div,span,object,iframe,blockquote,pre,abbr,address,cite,code,del,dfn,em,img,ins,kbd,q,samp,small,strong,sub,sup,var,b,i,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,figure,footer,header,hgroup,menu,nav,section,menu,time,mark,audio,video {
 	background:none repeat scroll 0 0 transparent;
 	margin:0;
 	padding:0;
@@ -6860,6 +6860,11 @@ ul,ol {
 }
 
 /*Customer Service page*/
+.logo-sidebar img {
+	margin-top: 20px;
+	width: 100%;
+	max-width: 180px;
+}
 .cms-page-view .breadcrumbs {display: none;}
 
 .cms-page-view .container-fluid {
@@ -7099,12 +7104,19 @@ width: 100%;
 		width: 100%;
 		left: 0;
 	}
+	
+	.cms-page-view .help-section-container .help-menu {
+		text-align: center;
+		margin-top:0;
+		margin-bottom: 24px;
+	}
 }
 
 @media screen and (max-width: 768px) {
 	.cms-page-view .contact-us-widget {
 		width: 100% !important;
 		left: 0 !important;
+		text-align: center;
 	}
 
 	.cms-page-view .help-section-container .help-menu .contact-us {
