@@ -100,6 +100,7 @@ $helper = Mage::helper('onestepcheckout/checkout');
     <?php if($this->differentShippingAvailable()): ?>
         <div id="shipping_address" <?php  echo (($this->sameAsBilling() && !$uncheck) ? 'style="display: none"': false);?>>
             <script type="text/javascript">
+            jQuery("select#billing:billing:country_id").hide
                 var shipping = new Shipping();
             </script>
             <ul>
@@ -208,14 +209,32 @@ $helper = Mage::helper('onestepcheckout/checkout');
         </div>
 
         <?php if($this->settings['enable_discount']): ?>
+		<script type="text/javascript">
+		jQuery(document).ready(function(){
+			   jQuery("#couponblock").css("display","none");
+			   jQuery("#couponcheckbox").click(function(){
+				if (jQuery("#couponcheckbox").is(":checked"))
+				{
+					jQuery("#couponblock").show("fast");
+				}
+				else
+				{
+					jQuery("#couponblock").hide("fast");
+				}
+			  });
+		});
+		</script>
         <div class="onestepcheckout-coupons">
             <div id="coupon-notice" style="display: none;"></div>
+            <input id="couponcheckbox" type="checkbox" name="coupon_question" /> Have Coupon
+            <div id="couponblock">
             <?php $_couponcode = $this->getQuote()->getCouponCode(); ?>
             <label for="id_couponcode"><?php echo $this->__('Coupon code:'); ?></label><br/>
             <input class="input-text" type="text" name="onestepcheckout-couponcode" id="id_couponcode" value="<?php echo Mage::helper('core')->escapeHtml($_couponcode); ?>" />
             <br/>
             <button id="onestepcheckout-coupon-add" class="form-button-alt button" type="button"><span><span><?php echo $this->__('Apply Coupon'); ?></span></span></button>
             <button id="onestepcheckout-coupon-remove" class="form-button-alt button" type="button" style="<?php if($_couponcode == '') { echo 'display: none;'; } ?>"><span><span><?php echo $this->__('Cancel Coupon'); ?></span></span></button>
+            </div>
             <script>
             Event.observe(window, 'load', function() {
                 $('onestepcheckout-coupon-add').observe('click', function(e)    {
