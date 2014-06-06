@@ -29,7 +29,21 @@
 <meta name="description" content="<?php echo htmlspecialchars($this->getDescription()) ?>" />
 <meta name="keywords" content="<?php echo htmlspecialchars($this->getKeywords()) ?>" />
 <meta name="robots" content="<?php echo htmlspecialchars($this->getRobots()) ?>" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<?php
+
+$pagecheck = Mage::getSingleton('cms/page');
+if ($pagecheck->getId()) {
+    // The current page is a CMS page
+	
+    if ($pagecheck->getId() != Mage::getStoreConfig('web/default/cms_home_page')) {
+        // The current page is NOT the CMS home page
+        echo '<meta name="viewport" content="width=device-width, initial-scale=1.0">';
+    }
+    
+}
+
+?>
+
 <link rel="icon" href="<?php echo $this->getFaviconFile(); ?>" type="image/x-icon" />
 <link rel="shortcut icon" href="<?php echo $this->getFaviconFile(); ?>" type="image/x-icon" />
 <!--[if lt IE 7]>
