@@ -175,20 +175,15 @@
 
                 var editUrl = '<?php echo $this->getUrl('quickbox/product/edit'); ?>';
                 link.fancybox({
-                    titleShow: false,
-                    showNavArrows: false,
-                    modal: true,
-                    padding:0,
-                    margin:0,
-                    fitToView : false,
-                    overlayShow:false,
-                    openEffect   : 'none',
-                    closeEffect : 'none',
-                    autoDimensions: false,
-                    width: 578,
-                    height: 406,
-                    onComplete: function() {jQuery('css3-container').css('display','none');jQuery('#fancybox-content').css('background-color','#fff');},
-                    onClosed: function() {},
+                    maxWidth	: 800,
+                    maxHeight	: 600,
+                    fitToView	: false,
+                    width		: '70%',
+                    height		: '70%',
+                    autoSize	: false,
+                    closeClick	: false,
+                    openEffect	: 'none',
+                    closeEffect	: 'none',
                     type: 'ajax',
                     href: editUrl + '?id=' + productId + '&item=' + itemId
                 });
