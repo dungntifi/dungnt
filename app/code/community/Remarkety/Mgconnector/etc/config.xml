@@ -1,0 +1,20 @@
+<config>
+    <modules>
+        <Remarkety_Mgconnector>
+            <version>1.0.0.7</version>
+        </Remarkety_Mgconnector>
+    </modules>
+    <global>
+        <models>
+            <mgconnector>
+                <class>Remarkety_Mgconnector_Model</class>
+            </mgconnector>
+        </models>
+        <helpers>
+            <mgconnector>
+                <class>Remarkety_Mgconnector_Helper</class>
+            </mgconnector>
+        </helpers>
+    </global>
+</config>
+
