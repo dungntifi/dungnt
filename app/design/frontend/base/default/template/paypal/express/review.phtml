@@ -104,9 +104,9 @@ $shippingAddress = $this->getShippingAddress();
         </div>
     </form>
 </div>
-<script>jQuery.noConflict();</script>
 <script type="text/javascript">
 //<![CDATA[
+jQuery.noConflict();
 // submit buttons are not needed when submitting with ajax
 $('review_submit').hide();
 if ($('update_shipping_method_submit')) {

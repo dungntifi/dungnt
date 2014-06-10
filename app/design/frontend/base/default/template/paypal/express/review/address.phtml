@@ -86,6 +86,7 @@
                             </select>
                             <script type="text/javascript">
                             //<![CDATA[
+                                jQuery.noConflict();
                                 $('<?php echo $prefix ?>:region_id').setAttribute('defaultValue',  "<?php echo $this->getAddress()->getRegionId() ?>");
                             //]]>
                             </script>
