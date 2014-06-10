@@ -37,7 +37,7 @@ if ($pagecheck->getId()) {
 	
     if ($pagecheck->getId() != Mage::getStoreConfig('web/default/cms_home_page')) {
         // The current page is NOT the CMS home page
-        echo '<meta name="viewport" content="width=device-width">';
+        echo '<meta name="viewport" content="width=device-width, initial-scale=1.0">';
     }
     
 }

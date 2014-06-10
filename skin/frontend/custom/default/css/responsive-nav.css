@@ -70,7 +70,11 @@ display: none;
 
 @media screen and (-webkit-min-device-pixel-ratio:1.3),screen and (min--moz-device-pixel-ratio:1.3),screen and (-o-min-device-pixel-ratio:2 / 1),screen and (min-device-pixel-ratio:1.3),screen and (min-resolution:192dpi),screen and (min-resolution:2dppx){
 
-.nav-toggle{background-image:url("../images/hamburger-retina.gif");-webkit-background-size:100px 100px !important;-moz-background-size:100px 100px !important;-o-background-size:100px 100px !important;background-size:100px 100px !important}}
+	.nav-toggle{background-image:url("../images/hamburger-retina.gif");-webkit-background-size:100px 100px !important;-moz-background-size:100px 100px !important;-o-background-size:100px 100px !important;background-size:100px 100px !important; width:70px; height: 55px;margin:0;}
+	
+	.ups {display: none;}
+
+}
 
 @media screen and (min-width: 800px){
 
