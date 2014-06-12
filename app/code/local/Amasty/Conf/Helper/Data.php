@@ -51,7 +51,8 @@ class Amasty_Conf_Helper_Data extends Mage_Core_Helper_Abstract
     
     public function getHtmlBlock($_product, $html)
     {
-        $blockForForm = Mage::app()->getLayout()->createBlock('amconf/catalog_product_view_type_configurablel', 'amconf.catalog_product_view_type_configurable', array('template'=>"amasty/amconf/configurable.phtml"));
+        return true;
+        /*$blockForForm = Mage::app()->getLayout()->createBlock('amconf/catalog_product_view_type_configurablel', 'amconf.catalog_product_view_type_configurable', array('template'=>"amasty/amconf/configurable.phtml"));
         $blockForForm->setProduct($_product);
         $blockForForm->setNameInLayout('product.info.options.configurable');
         $submitUrl = $blockForForm->getSubmitUrl($_product);
@@ -67,6 +68,6 @@ class Amasty_Conf_Helper_Data extends Mage_Core_Helper_Abstract
                             </span>
                       </button>' ;
         }
-        return $html;
+        return $html;*/
     }
 }

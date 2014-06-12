@@ -3325,17 +3325,12 @@ tr.summary-details-excluded {
 }
 
 .products-grid .product-name {
-/*min-height:2.7em;*/
-	/*position:relative;
-	top:-30px;
-	right:8px;*/
 	margin:0 0;
 	font-weight:700;
 	font-size:11px;
 	color:#000;
 	text-align:center;
 	position:relative;
-	top:-50px;	
 }
 
 .products-grid .color-avail {
@@ -3343,8 +3338,7 @@ tr.summary-details-excluded {
 	margin:0 0;
 	word-wrap:normal;
 	font-size: 10px;
-	position:relative;
-	top:-50px;	
+	position:relative;	
 }
 
 .products-grid .product-subtitle {
@@ -3371,7 +3365,6 @@ tr.summary-details-excluded {
 	margin:0;
 	padding:0;
 	position:relative;
-	top:-50px;	
 }
 
 .products-grid .availability {
@@ -7168,3 +7161,5 @@ width: 100%;
 #credit-card-type .MC.active  {background-position: -51px 0px;}
 #credit-card-type .AE.active  {background-position: -102px 0px;}
 #credit-card-type .DI.active  {background-position: -153px 0px;}
+
+.amconf-block { margin-top: -55px; }
