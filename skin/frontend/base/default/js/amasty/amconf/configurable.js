@@ -83,7 +83,7 @@ Product.Config.prototype.resetChildren = function(element){
 Product.Config.prototype.fillSelect = function(element){
     var attributeId = element.id.replace(/[a-z]*/, '');
     var options = this.getAttributeOptions(attributeId);
-	this.clearSelect(element);
+    this.clearSelect(element);
     element.options[0] = new Option(this.config.chooseText, '');
 
     var prevConfig = false;
@@ -108,7 +108,15 @@ Product.Config.prototype.fillSelect = function(element){
         }
         // extension Code End
         
-        var index = 1;		
+        var sizeOptions = [];
+        this.settings.each(function(select, ch) {
+            if(select.config.code == 'size') {
+                var sizeAttrId = parseInt(select.config.id);
+                sizeOptions = select.config.options;
+            }
+        });
+        
+        var index = 1;      
         for(var i=0;i<options.length;i++){
             var allowedProducts = [];
             if(prevConfig) {
@@ -137,22 +145,39 @@ Product.Config.prototype.fillSelect = function(element){
                     var image = document.createElement('img');
                     image = $(image); // fix for IE
                     image.id = 'amconf-image-' + options[i].id;
-			        image.src = options[i].image;
-			        image.addClassName('amconf-image');
-			        image.alt = options[i].label;
-			        image.title = options[i].label;
-					
-			        if(showAttributeTitle != 0) image.style.marginBottom = '0px';
-			        else image.style.marginBottom = '7px';
-					
-                    image.observe('click', this.configureImage.bind(this));
-					
-		            if('undefined' != typeof(buble)){
-                         image.observe('mouseover', buble.showToolTip);
-                         image.observe('mouseout', buble.hideToolTip); 				 
+
+                    var key = '';
+                    if(typeof sizeOptions != 'undefined') {
+                        for(var k=0;k<allowedProducts.length;k++){
+                            for (var l=0;l<sizeOptions.length;l++){
+                                if(sizeOptions[l].products[0] == allowedProducts[k] && confData.getData(options[i].id + ',' + sizeOptions[l].id, 'media_url')) {
+                                    key = options[i].id + ',' + sizeOptions[l].id;
+                                    break;
+                                }
+                            }
+                            if(key.length) {
+                                break;
+                            }
+                        }
                     }
-					
-					imgContainer.appendChild(image);
+
+                    image.src = confData.optionProducts[key].small_image;   
+                    image.style.width = '100px';
+                    image.addClassName('amconf-image');
+                    image.alt = options[i].label;
+                    image.title = options[i].label;
+                    
+                    if(showAttributeTitle != 0) image.style.marginBottom = '0px';
+                    else image.style.marginBottom = '7px';
+                    
+                    image.observe('click', this.configureImage.bind(this));
+                    
+                    if('undefined' != typeof(buble)){
+                         image.observe('mouseover', buble.showToolTip);
+                         image.observe('mouseout', buble.hideToolTip);               
+                    }
+                    
+                    imgContainer.appendChild(image);
                     
                     if(showAttributeTitle && showAttributeTitle != 0){ 
                         var amImgTitle = document.createElement('div');
@@ -258,7 +283,7 @@ Product.Config.prototype.configureElement = function(element)
     this.settings.each(function(select, ch){
         // will check if we need to reload product information when the first attribute selected
         if (parseInt(select.value))
-	    {
+        {
             key += select.value + ',';   
         }
     });
@@ -282,19 +307,19 @@ Product.Config.prototype.configureElement = function(element)
     // for compatibility with custom stock status extension:
     if ('undefined' != typeof(stStatus) && 'function' == typeof(stStatus.onConfigure))
     {
-	var key = '';
-    	this.settings.each(function(select, ch){
+    var key = '';
+        this.settings.each(function(select, ch){
                 if (parseInt(select.value) || (!select.value && (!select.options[1] || !select.options[1].value))){
-	            key += select.value + ',';   
-	        }
-		else {
-		     key += select.options[1].value + ','; 
-		}
-    	});
-	key = key.substr(0, key.length - 1);
+                key += select.value + ',';   
+            }
+        else {
+             key += select.options[1].value + ','; 
+        }
+        });
+    key = key.substr(0, key.length - 1);
         stStatus.onConfigure(key, this.settings);
     }
-	//Amasty code for Automatically select attributes that have one single value
+    //Amasty code for Automatically select attributes that have one single value
     if(('undefined' != typeof(amConfAutoSelectAttribute) && amConfAutoSelectAttribute) ||('undefined' != typeof(amStAutoSelectAttribute) && amStAutoSelectAttribute)){
         var nextSet = element.nextSetting;
         if(nextSet && nextSet.options.length == 2 && !nextSet.options[1].selected && element && !element.options[0].selected){
@@ -303,26 +328,26 @@ Product.Config.prototype.configureElement = function(element)
         } 
     }
     if('undefined' != typeof(preorderState))
-	    preorderState.update()
+        preorderState.update()
 
 
-	var label = "";
-	element.config.options.each(function(option){
-		if(option.id == element.value) label = option.label;
-	});
-	if(label) label = " - " + label;
-	var parent = element.parentNode.parentNode.previousElementSibling;
-	if( typeof(parent) != 'undefined' && parent.nodeName == "DT" && (conteiner = parent.select("label")[0])) {
-		if( tmp = conteiner.select('span.amconf-label')[0]){
-			tmp.innerHTML = label;
-		}
-		else{
-			var tmp = document.createElement('span');
-			tmp.addClassName('amconf-label');
-			conteiner.appendChild(tmp);
-			tmp.innerHTML = label;
-		}			
-	}
+    var label = "";
+    element.config.options.each(function(option){
+        if(option.id == element.value) label = option.label;
+    });
+    if(label) label = " - " + label;
+    var parent = element.parentNode.parentNode.previousElementSibling;
+    if( typeof(parent) != 'undefined' && parent.nodeName == "DT" && (conteiner = parent.select("label")[0])) {
+        if( tmp = conteiner.select('span.amconf-label')[0]){
+            tmp.innerHTML = label;
+        }
+        else{
+            var tmp = document.createElement('span');
+            tmp.addClassName('amconf-label');
+            conteiner.appendChild(tmp);
+            tmp.innerHTML = label;
+        }           
+    }
     // extension Code End
 }
 
@@ -383,10 +408,10 @@ Product.Config.prototype.processEmpty = function()
             holderDiv.id = 'amconf-images-' + attributeId;
             if ('undefined' != typeof(confData))
             {
-            	holderDiv.innerHTML = confData.textNotAvailable;
+                holderDiv.innerHTML = confData.textNotAvailable;
             } else 
             {
-            	holderDiv.innerHTML = "";
+                holderDiv.innerHTML = "";
             }
             holder.insertBefore(holderDiv, select);
         } else if (!select.disabled && !$(select).hasClassName("no-display")) {
@@ -402,10 +427,10 @@ Product.Config.prototype.clearConfig = function()
 {
     this.settings[0].value = "";
     if (typeof confData != 'undefined')
-    	confData.isResetButton = true;
+        confData.isResetButton = true;
     this.configureElement(this.settings[0]);
     $$('span.amconf-label').each(function (el){
-	    el.remove();
+        el.remove();
     })
     return false;
 }
@@ -470,9 +495,9 @@ Product.Config.prototype.updateData = function(key)
                 onComplete: function()
                 {
                     if('undefined' != typeof(AmZoomerObj)) {
-				        if($$('.zoomContainer')[0]) $$('.zoomContainer')[0].remove();
-			                AmZoomerObj.loadZoom();
-			        }
+                        if($$('.zoomContainer')[0]) $$('.zoomContainer')[0].remove();
+                            AmZoomerObj.loadZoom();
+                    }
                     jQuery('.cloud-zoom, .cloud-zoom-gallery').CloudZoom();
                 }
             });
@@ -523,15 +548,15 @@ Product.Config.prototype.updateData = function(key)
                         confData.saveDefault('media', tmpContainer.innerHTML);
                         confData.currentIsMain = true;
                     },
-					onComplete: function()
-					{
-						if('undefined' != typeof(AmZoomerObj)) {
-						    if($$('.zoomContainer')[0]) $$('.zoomContainer')[0].remove();
-						    AmZoomerObj.loadZoom();
-						}
+                    onComplete: function()
+                    {
+                        if('undefined' != typeof(AmZoomerObj)) {
+                            if($$('.zoomContainer')[0]) $$('.zoomContainer')[0].remove();
+                            AmZoomerObj.loadZoom();
+                        }
                         jQuery('.cloud-zoom, .cloud-zoom-gallery').CloudZoom();
-					}
-				});
+                    }
+                });
             }
         }
     }
@@ -554,7 +579,7 @@ Product.Config.prototype.reloadSimplePrice = function(key)
         // top price box
         if (confData.getData(key, 'price_html'))
         {
-	        $$('.product-shop .price-box').each(function(container)
+            $$('.product-shop .price-box').each(function(container)
             {
                 if (!confData.getDefault('price_html'))
                 {
@@ -568,15 +593,15 @@ Product.Config.prototype.reloadSimplePrice = function(key)
                 {
                     container.remove();
         }.bind(this));
- 	$$('.product-shop .tier-prices').each(function(container)
+    $$('.product-shop .tier-prices').each(function(container)
                 {
                     container.remove();
         }.bind(this));
    
             $$('.amconf_price_container').each(function(container)
             {
-		        container.outerHTML = confData.getData(key, 'price_html');	
-	        }.bind(this));        
+                container.outerHTML = confData.getData(key, 'price_html');  
+            }.bind(this));        
         }
         
         // bottom price box
@@ -593,8 +618,8 @@ Product.Config.prototype.reloadSimplePrice = function(key)
             
             $$('.amconf_price_clone_container').each(function(container)
             {
-		container.outerHTML = confData.getData(key, 'price_clone_html');	
-	    }.bind(this));
+        container.outerHTML = confData.getData(key, 'price_clone_html');    
+        }.bind(this));
 
         }
         
@@ -612,33 +637,33 @@ Product.Config.prototype.reloadSimplePrice = function(key)
             // restore price info containers into default price-boxes
             if (confData.getDefault('price_html'))
             {
-		        $$('.product-shop .price-box').each(function(container)
+                $$('.product-shop .price-box').each(function(container)
                 {
                     container.addClassName('amconf_price_container');
                 }.bind(this));
-		$$('.product-shop .tier-prices').each(function(container)
+        $$('.product-shop .tier-prices').each(function(container)
                 {
                     container.remove();
-       		}.bind(this));
+            }.bind(this));
                           
                 $$('.amconf_price_container').each(function(container)
-            	{
-			        container.innerHTML  = confData.getDefault('price_html');
-                	container.removeClassName('amconf_price_container');	
-	    	    }.bind(this));
+                {
+                    container.innerHTML  = confData.getDefault('price_html');
+                    container.removeClassName('amconf_price_container');    
+                }.bind(this));
             }
             
             if (confData.getDefault('price_clone_html'))
             {
-		        $$('.product-options-bottom .price-box').each(function(container)
+                $$('.product-options-bottom .price-box').each(function(container)
                 {
                     container.addClassName('amconf_price_clone_container');
                 }.bind(this));
 
                 $$('.amconf_price_clone_container').each(function(container){
-			        container.innerHTML = confData.getDefault('price_clone_html');
-                	container.removeClassName('amconf_price_clone_container');	
-	    	    }.bind(this));
+                    container.innerHTML = confData.getDefault('price_clone_html');
+                    container.removeClassName('amconf_price_clone_container');  
+                }.bind(this));
                 
             }
             

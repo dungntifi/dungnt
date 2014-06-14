@@ -52,10 +52,16 @@ class Amasty_Conf_Block_Catalog_Product_View_Type_Configurable extends Mage_Cata
                         $strKey = implode(',', $key);
                         // @todo check settings:
                         // array key here is a combination of choosen options
+                        $_prod = Mage::getModel('catalog/product')->load($simple->getId());
+                        $small_image = '';
+                        if($_prod->getSmallImage()) {
+                            $small_image = Mage::getModel('catalog/product_media_config')->getMediaUrl($_prod->getSmallImage());
+                        }
+
                         $confData[$strKey] = array(
                             'short_description' => $this->helper('catalog/output')->productAttribute($simple, nl2br($simple->getShortDescription()), 'short_description'),
                             'description'       => $this->helper('catalog/output')->productAttribute($simple, $simple->getDescription(), 'description'),
-			                 //'sku'       	=> $simple->getSku(),
+                            'small_image'       => $small_image,
                         );
                          
                         if (Mage::getStoreConfig('amconf/general/reload_name'))
@@ -70,13 +76,13 @@ class Amasty_Conf_Block_Catalog_Product_View_Type_Configurable extends Mage_Cata
                             $confData[$strKey]['price_html'] = str_replace('product-price-' . $simple->getId(), 'product-price-' . $this->getProduct()->getId(), $this->getPriceHtml($simple) . $tierPriceHtml);
                             $confData[$strKey]['price_clone_html'] = str_replace('product-price-' . $simple->getId(), 'product-price-' . $this->getProduct()->getId(), $this->getPriceHtml($simple, false, '_clone') . $tierPriceHtml);
 
-				            // the price value is required for product list/grid
-				            $confData[$strKey]['price'] = $simple->getFinalPrice();
+                            // the price value is required for product list/grid
+                            $confData[$strKey]['price'] = $simple->getFinalPrice();
                         }
                         
                         if ($simple->getImage() && Mage::getStoreConfig('amconf/general/reload_images'))
                         {
-				$confData[$strKey]['media_url'] = $this->getUrl('amconf/media', array('id' => $simple->getId()));
+                            $confData[$strKey]['media_url'] = $this->getUrl('amconf/media', array('id' => $simple->getId()));
                             if(Mage::getStoreConfig('amconf/general/oneselect_reload')) {
                                 $k = $strKey;
                                 if(strpos($strKey, ',')){
@@ -108,18 +114,18 @@ class Amasty_Conf_Block_Catalog_Product_View_Type_Configurable extends Mage_Cata
                         
                     }
                 }
-				if (Mage::getStoreConfig('amconf/general/show_clear'))
-				{
-					$html = '<a href="#" onclick="javascript: spConfig.clearConfig(); return false;">' . $this->__('Reset Configuration') . '</a>' . $html;
-				}
-				$html = '<script type="text/javascript">
-							var showAttributeTitle =' . intval(Mage::getStoreConfig('amconf/general/show_attribute_title')). '; 
-							var amConfAutoSelectAttribute = ' . intval(Mage::getStoreConfig('amconf/general/auto_select_attribute')) . ';
-							confData = new AmConfigurableData(' . Zend_Json::encode($confData) . ');
-						    confData.textNotAvailable = "' . $this->__('Choose previous option please...') . '";
-						    confData.mediaUrlMain = "' . $this->getUrl('amconf/media', array('id' => $this->getProduct()->getId())) . '";
-						    confData.oneAttributeReload = "' . (boolean) Mage::getStoreConfig('amconf/general/oneselect_reload') . '";
-						    confData.useSimplePrice = "' . intval($_useSimplePrice)  . '";
+                if (Mage::getStoreConfig('amconf/general/show_clear'))
+                {
+                    $html = '<a href="#" onclick="javascript: spConfig.clearConfig(); return false;">' . $this->__('Reset Configuration') . '</a>' . $html;
+                }
+                $html = '<script type="text/javascript">
+                            var showAttributeTitle =' . intval(Mage::getStoreConfig('amconf/general/show_attribute_title')). '; 
+                            var amConfAutoSelectAttribute = ' . intval(Mage::getStoreConfig('amconf/general/auto_select_attribute')) . ';
+                            confData = new AmConfigurableData(' . Zend_Json::encode($confData) . ');
+                            confData.textNotAvailable = "' . $this->__('Choose previous option please...') . '";
+                            confData.mediaUrlMain = "' . $this->getUrl('amconf/media', array('id' => $this->getProduct()->getId())) . '";
+                            confData.oneAttributeReload = "' . (boolean) Mage::getStoreConfig('amconf/general/oneselect_reload') . '";
+                            confData.useSimplePrice = "' . intval($_useSimplePrice)  . '";
                     </script>'. $html;
                 
                 if (Mage::getStoreConfig('amconf/general/hide_dropdowns'))
