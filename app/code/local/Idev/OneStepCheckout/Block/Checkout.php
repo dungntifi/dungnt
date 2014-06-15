@@ -691,12 +691,12 @@ class Idev_OneStepCheckout_Block_Checkout extends Mage_Checkout_Block_Onepage_Ab
                 }
             }
 
-            if($paymentRedirect && $paymentRedirect != '')  {
-                $response = Mage::app()->getResponse();
-                return $response->setRedirect($paymentRedirect);
-            }
-
             if( $this->_isLoggedIn() )  {
+
+                if($paymentRedirect && $paymentRedirect != '')  {
+                    $response = Mage::app()->getResponse();
+                    return $response->setRedirect($paymentRedirect);
+                }
                 // User is logged in
                 // Place order as registered customer
                 $this->_saveOrder();
@@ -736,6 +736,10 @@ class Idev_OneStepCheckout_Block_Checkout extends Mage_Checkout_Block_Onepage_Ab
                         }
                     }
                     else    {
+                        if($paymentRedirect && $paymentRedirect != '')  {
+                            $response = Mage::app()->getResponse();
+                            return $response->setRedirect($paymentRedirect);
+                        }
                         $this->getOnepage()->saveCheckoutMethod('guest');
                         $this->_saveOrder();
                     }
@@ -749,6 +753,11 @@ class Idev_OneStepCheckout_Block_Checkout extends Mage_Checkout_Block_Onepage_Ab
 
                 }
                 else    {
+
+                    if($paymentRedirect && $paymentRedirect != '')  {
+                        $response = Mage::app()->getResponse();
+                        return $response->setRedirect($paymentRedirect);
+                    }
 
                     if($this->settings['registration_mode'] == 'require_registration')  {
 
