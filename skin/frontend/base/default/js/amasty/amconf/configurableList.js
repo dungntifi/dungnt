@@ -425,6 +425,7 @@ Product.Config.prototype.selectImage = function(element)
     });
     key = key.substr(0, key.length - 1);
 
+    var productLink = element.up('.item').down('.product-image');
     if('undefined' != typeof(confData[parentId]['optionProducts'][key]['small_image'])){ 
          var parUrl = confData[parentId]['optionProducts'][key]['parent_image'];
          var possl = parUrl.lastIndexOf('/');
@@ -433,7 +434,7 @@ Product.Config.prototype.selectImage = function(element)
               if(img.src.substr(posslImg, img.src.length) == parUrl.substr(possl, parUrl.length) || img.hasClassName('amconf-parent-'+parentId)){
                   img.src = confData[parentId]['optionProducts'][key]['small_image'];
                   img.addClassName('amconf-parent-'+parentId);
-                  
+                  productLink.href = (productLink.href.match(/color=(\d+)/)) ? productLink.href.replace(/color=(\d+)/, 'color=' + key) : productLink.href + '?color=' + key;
               }
          });              
                     

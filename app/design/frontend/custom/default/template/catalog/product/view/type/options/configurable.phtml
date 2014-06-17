@@ -82,7 +82,6 @@ $attributeSetName = Mage::getModel('eav/entity_attribute_set')->load($_product->
                     sizeOfExistingProducts = sizeOfExistingProducts + 1
                 }
                 if (sizeOfExistingProducts == 1) {
-                  // alert(currentSimpleProductId + ' - ' + this.simpleOptions[currentSimpleProductId]);
                   return this.simpleOptions[currentSimpleProductId];
                 }
             return false;
@@ -102,3 +101,14 @@ $attributeSetName = Mage::getModel('eav/entity_attribute_set')->load($_product->
     </script>
     <div class="std"><p class="additional_info_po"><?php echo $this->htmlEscape($_product->getData('additionalinfo')); ?></p></div>
 <?php endif;?>
+
+<script>
+    jQuery(document).ready(function() {
+        if(window.location.href.match(/color=(\d+)/)) {
+            var color = window.location.href.match(/color=(\d+)/);
+            if(jQuery('#amconf-image-' + color[1]).length) {
+                jQuery('#amconf-image-' + color[1]).trigger('click');
+            }
+        }
+    });
+</script>
