@@ -1,0 +1,64 @@
+<?php
+    /** @var $this Mage_Catalog_Block_Product_View */
+    /** @var $_helper Mage_Catalog_Helper_Output */
+    $_helper = $this->helper('catalog/output');
+    /** @var $_product Mage_Catalog_Model_Product */
+    $_product = $this->getProduct();
+
+    /** @var $session Mage_Checkout_Model_Session */
+    $session = Mage::getSingleton('checkout/session');
+    $itemId = Mage::app()->getRequest()->getParam('item');
+    $item = $session->getQuote()->getItemById($itemId);
+    $infoBuyRequest = @unserialize($item->getOptionByCode('info_buyRequest')->getValue());
+    $pre_config_values = $this->getProduct()->getPreconfiguredValues();
+?>
+<script type="text/javascript">
+	jQuery.noConflict();
+    var optionsPrice = new Product.OptionsPrice(<?php echo $this->getJsonConfig() ?>);
+</script>
+<div class="quick-view">
+    <h1><?php echo $this->__('Edit item'); ?></h1>
+    <div class="info">
+        <form action="<?php echo $this->getUrl('quickbox/product/replace'); ?>" method="post" id="product_addtocart_form"<?php if($_product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>>
+            <input type="hidden" name="product" value="<?php echo $_product->getId() ?>" />
+            <input type="hidden" name="related_product" id="related-products-field" value="" />
+            <input type="hidden" name="replace_item_id" value="<?php echo $itemId; ?>" />
+            <div class="name">
+                <h1><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></h1>
+                <div class="sku"><?php echo $this->__('SKU') ?><?php echo $_helper->productAttribute($_product, $_product->getSku(), 'sku') ?></div>
+                <?php echo $this->getChildHtml('product_price'); ?>
+            </div>
+            <?php echo $this->getChildHtml('other');?>
+
+            <?php if ($_product->isSaleable() && $this->hasOptions()):?>
+             				<?php echo $this->getChildChildHtml('container1', '', true, true) ?>
+             				<?php //echo $this->getChildChildHtml('container2', '', true, true) ?>
+            <?php endif;?>
+
+            <div class="qty">
+            <?php if(!$_product->isGrouped()): ?>
+                <label for="qty"><?php echo $this->__('Quantity') ?></label>
+                <div class="select-styled">
+                    <select name="qty" id="qty" style="width:23px;">
+                        <?php foreach (range(1, 5) as $qty): ?>
+                        <option value="<?php echo $qty; ?>"<?php if($qty == (int) $pre_config_values->getQty()/*$this->getProductDefaultQty()*/): ?> selected="selected"<?php endif ?>>
+                            <?php echo $qty ?>
+                        </option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+            <?php endif; ?>
+            </div>
+
+            <div class="buttons">
+                <button class="button" type="submit"><span><span><?php echo $this->__('Edit'); ?></span></span></button>
+                <a href="<?php echo Mage::getUrl().$_product->getUrlPath(); ?>" class="a-more-details">More details</a>
+            </div>
+        </form>
+    </div>
+    <div class="media">
+        <?php echo $this->getChildHtml('media') ?>
+    </div>
+    <div class="clr"><!-- --></div>
+    <?php echo $this->getChildHtml('product_additional_data'); ?>
+</div>
