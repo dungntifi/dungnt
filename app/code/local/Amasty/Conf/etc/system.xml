@@ -195,6 +195,7 @@ $('amconf_lightbox_thumbnail_lignhtbox').setValue(0);
                         </listimg_size>
 						<main_image_list_size translate="label comment">
                             <label>Product Thumbnail Size, px</label>
+                            <comment>You can enter width and height, separated by comma</comment>
                             <frontend_type>text</frontend_type>
                             <sort_order>35</sort_order>
                             <show_in_default>1</show_in_default>

@@ -13,6 +13,9 @@ class Amasty_Conf_Block_Catalog_Product_View_Type_Configurablel extends Mage_Cat
     {
 
         $imageSizeAtCategoryPage = Mage::getStoreConfig('amconf/list/main_image_list_size');
+        if(strpos($imageSizeAtCategoryPage, ',') !== false) {
+            $imageSizeAtCategoryPage = split(',', $imageSizeAtCategoryPage);
+        }
         $html = parent::_afterToHtml($html);
         if ('product.info.options.configurable' == $this->getNameInLayout())
         {
@@ -49,9 +52,14 @@ class Amasty_Conf_Block_Catalog_Product_View_Type_Configurablel extends Mage_Cat
                         $confData[$strKey] = array();
                         
                         if(!('no_selection' == $simple->getSmallImage() || '' == $simple->getSmallImage())){
-				 $confData[$strKey]['small_image'] = (string)($this->helper('catalog/image')->init($simple, 'small_image')->resize($imageSizeAtCategoryPage));
+                            if(is_array($imageSizeAtCategoryPage)) {
+				                $confData[$strKey]['small_image'] = (string)($this->helper('catalog/image')->init($simple, 'small_image')->resize($imageSizeAtCategoryPage[0], $imageSizeAtCategoryPage[1]));
+                                $confData[$strKey]['parent_image'] =(string)($this->helper('catalog/image')->init($this->getProduct(), 'small_image')->resize($imageSizeAtCategoryPage[0], $imageSizeAtCategoryPage[1]));
+                            } else {
+                                $confData[$strKey]['small_image'] = (string)($this->helper('catalog/image')->init($simple, 'small_image')->resize($imageSizeAtCategoryPage));
                                 $confData[$strKey]['parent_image'] =(string)($this->helper('catalog/image')->init($this->getProduct(), 'small_image')->resize($imageSizeAtCategoryPage));
-                             if(Mage::getStoreConfig('amconf/general/oneselect_reload')) {
+                            }
+                            if(Mage::getStoreConfig('amconf/general/oneselect_reload')) {
                                 $k = $strKey;
                                 if(strpos($strKey, ',') > 0){
                                     $k = substr($strKey, 0, strpos($strKey, ','));
@@ -66,8 +74,13 @@ class Amasty_Conf_Block_Catalog_Product_View_Type_Configurablel extends Mage_Cat
                             }
                         }
                         else{
-                           $confData[$strKey]['small_image'] = (string)($this->helper('catalog/image')->init($this->getProduct(), 'small_image')->resize($imageSizeAtCategoryPage));
-                           $confData[$strKey]['parent_image'] =(string)($this->helper('catalog/image')->init($this->getProduct(), 'small_image')->resize($imageSizeAtCategoryPage)); 
+                            if(is_array($imageSizeAtCategoryPage)) {
+                                $confData[$strKey]['small_image'] = (string)($this->helper('catalog/image')->init($this->getProduct(), 'small_image')->resize($imageSizeAtCategoryPage[0], $imageSizeAtCategoryPage[1]));
+                                $confData[$strKey]['parent_image'] =(string)($this->helper('catalog/image')->init($this->getProduct(), 'small_image')->resize($imageSizeAtCategoryPage[0], $imageSizeAtCategoryPage[1])); 
+                            } else {
+                                $confData[$strKey]['small_image'] = (string)($this->helper('catalog/image')->init($this->getProduct(), 'small_image')->resize($imageSizeAtCategoryPage));
+                                $confData[$strKey]['parent_image'] =(string)($this->helper('catalog/image')->init($this->getProduct(), 'small_image')->resize($imageSizeAtCategoryPage)); 
+                            }
                         }
                         
                         if (Mage::getStoreConfig('amconf/general/reload_name'))
