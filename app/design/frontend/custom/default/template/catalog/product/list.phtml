@@ -84,7 +84,7 @@
     <?php else: ?>
 
     <?php // Grid Mode ?>
-
+    
     <?php $_collectionSize = $_productCollection->count() ?>
     <?php $_columnCount = $this->getColumnCount(); ?>
     <?php $i=0; foreach ($_productCollection as $_product): ?>
@@ -96,11 +96,24 @@
                 <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" class="product-image"><img src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->constrainOnly(TRUE)->keepAspectRatio(TRUE)->keepFrame(FALSE)->resize(190,300); ?>" alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" /></a>
  
                 <a class="product-subtitle-link" href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($_product->getName(), null, true) ?>"><div class="product-subtitle"><?php echo $this->htmlEscape($_product->getData('subtitle')); ?></div></a>
-                               
+                     
+                <div class="amconf-block">
+                    <script>jQuery.noConflict();</script>
+                    <?php
+                        $blockForForm = Mage::app()->getLayout()->createBlock('amconf/catalog_product_view_type_configurablel', 
+                                                                              'amconf.catalog_product_view_type_configurable', 
+                                                                               array('template'=>"amasty/amconf/configurable.phtml"));
+                        $blockForForm->setProduct($_product);
+                        $blockForForm->setNameInLayout('product.info.options.configurable');
+                        echo $blockForForm->toHtml();
+                    ?>
+                </div>     
+
+
                 <h2 class="product-name"><a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($_product->getName(), null, true) ?>"><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></a></h2>
                 
 
-            	
+                
                 <?php if($_product->getRatingSummary()): ?>
                 <?php echo $this->getReviewsSummaryHtml($_product, 'short') ?>
                 <?php endif; ?>
@@ -108,26 +121,26 @@
                 <!-- Colors mod -->
                 <div class="color-avail" > 
                 <?php $attrs  = $_product->getTypeInstance(true)->getConfigurableAttributesAsArray($_product);
-					foreach($attrs as $attr) {
-    				if(0 == strcmp("color", $attr['attribute_code'])) {
-    					print "Available in ";
-        				$options    = $attr['values'];
-        				$total = count($options);
-        				if ($total == 1) {
-        					foreach($options as $option) {
-            				print "{$option['store_label']}";
-        					}
-        				}
-        				else {
-        				print $total;
-        				print " colors";
-        				}	
-    				}
-				}?>
-				</div>
- 				<!-- Colors mod -->
- 				<?php echo $this->getPriceHtml($_product, true) ?>
- 				
+                    foreach($attrs as $attr) {
+                    if(0 == strcmp("color", $attr['attribute_code'])) {
+                        print "Available in ";
+                        $options    = $attr['values'];
+                        $total = count($options);
+                        if ($total == 1) {
+                            foreach($options as $option) {
+                            print "{$option['store_label']}";
+                            }
+                        }
+                        else {
+                        print $total;
+                        print " colors";
+                        }   
+                    }
+                }?>
+                </div>
+                <!-- Colors mod -->
+                <?php echo $this->getPriceHtml($_product, true) ?>
+                
                 <div class="actions">
                     <?php if($_product->isSaleable()): ?>
                     <?php else: ?>
