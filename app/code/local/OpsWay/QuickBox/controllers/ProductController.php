@@ -21,49 +21,10 @@ require_once('app/code/core/Mage/Catalog/controllers/ProductController.php');
 
 class OpsWay_QuickBox_ProductController extends Mage_Catalog_ProductController
 {
-    public function testAction()
-    {
-        //$this->loadLayout();
-        //$this->renderLayout();
-        echo 'testController';
-    }
-
-    /*public function viewAction(){
-        //$this->loadLayout();
-        //$this->renderLayout();
-        //echo 'viewProduct';
-                // Get initial data from request
-        $categoryId = (int) $this->getRequest()->getParam('category', false);
-        $productId  = (int) $this->getRequest()->getParam('id');
-        $specifyOptions = $this->getRequest()->getParam('options');
-
-        // Prepare helper and params
-        $viewHelper = Mage::helper('catalog/product_view');
-
-        $params = new Varien_Object();
-        $params->setCategoryId($categoryId);
-        $params->setSpecifyOptions($specifyOptions);
-
-        // Render page
-        try {
-            $viewHelper->prepareAndRender($productId, $this, $params);
-        } catch (Exception $e) {
-            if ($e->getCode() == $viewHelper->ERR_NO_PRODUCT_LOADED) {
-                if (isset($_GET['store'])  && !$this->getResponse()->isRedirect()) {
-                    $this->_redirect('');
-                } elseif (!$this->getResponse()->isRedirect()) {
-                    $this->_forward('noRoute');
-                }
-            } else {
-                Mage::logException($e);
-                $this->_forward('noRoute');
-            }
-        }
-    }*/
 
     public function editAction(){
         $productId = $this->getRequest()->getParam('id');
-
+        $this->_getSession()->setRefererArea($this->getRequest()->getParam('area','cart'));
         /** @var $viewHelper Mage_Catalog_Helper_Product_View */
         $viewHelper = Mage::helper('catalog/product_view');
 
@@ -107,7 +68,11 @@ class OpsWay_QuickBox_ProductController extends Mage_Catalog_ProductController
         } catch (Exception $e) {
             $this->_getSession()->addError($e->getMessage());
         }
-        $this->_redirect('checkout/cart');
+        if ($this->_getSession()->getRefererArea() == 'checkout'){
+            $this->_redirect('onestepcheckout');
+        } else {
+            $this->_redirect('checkout/cart');
+        }
     }
 
     /**

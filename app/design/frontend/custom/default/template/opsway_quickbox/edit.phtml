@@ -40,7 +40,9 @@
                 <label for="qty"><?php echo $this->__('Quantity') ?></label>
                 <div class="select-styled">
                     <select name="qty" id="qty" style="width:23px;">
-                        <?php foreach (range(1, 5) as $qty): ?>
+                        <?php
+                        $qtyStock = 5;//Mage::getModel('cataloginventory/stock_item')->loadByProduct($_product)->getQty(); Need getting qty for each simple
+                        foreach (range(1, (($qtyStock > 5) ? 5 : $qtyStock)) as $qty): ?>
                         <option value="<?php echo $qty; ?>"<?php if($qty == (int) $pre_config_values->getQty()/*$this->getProductDefaultQty()*/): ?> selected="selected"<?php endif ?>>
                             <?php echo $qty ?>
                         </option>
@@ -56,7 +58,7 @@
             </div>
         </form>
     </div>
-    <div class="media">
+    <div class="product-img-box">
         <?php echo $this->getChildHtml('media') ?>
     </div>
     <div class="clr"><!-- --></div>

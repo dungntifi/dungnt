@@ -8,37 +8,59 @@
 
 </script>
 <div class="quick-view">
-	<?php echo $this->getChildHtml('media') ?>
- 
- 	<a href="<?php echo $_product->getProductUrl() ?>"><?php echo $this->__('View Full Details') ?></a>
- 
-	<?php echo $this->getReviewsSummaryHtml($_product) ?>
- 
-	<h1><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></h1>
- 
-	<?php echo $this->getPriceHtml($_product) ?>
- 
-	<?php if(!$_product->isSaleable()): ?>
-	    <div id="availability"><?php echo $this->__('Out Of Stock') ?></div>
-	<?php endif; ?>
- 
-	<?php echo $this->getChildHtml('alert_urls') ?>
-	<div class="product-type-data">
-    	<?php echo $this->getChildHtml('product_type_data') ?>
-	</div>
-    <?php echo $this->getTierPriceHtml() ?>
-    <?php echo $this->getChildHtml('extrahint') ?>
-    <?php echo $this->getChildHtml('other') ?>
- 
-	<form action="<?php echo $this->getSubmitUrl($_product) ?>" method="post" id="order-form" <?php if($_product->getOptions()): ?>enctype="multipart/form-data"<?php endif; ?>>
-		<?php if($_product->isSaleable()): ?>
-			<?php if($this->hasOptions()): ?>
-				<?php echo $this->getChildChildHtml('container1', '', true, true) ?>
-				<?php echo $this->getChildChildHtml('container2', '', true, true) ?>
-			<?php endif; ?>
-			<?php echo $this->getChildHtml('addtocart') ?>
-		<?php endif; ?>
-	</form>
+
+    <h1><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></h1>
+    <div class="info">
+        <form action="<?php echo $this->getSubmitUrl($_product) ?>" method="post" id="order-form" <?php if($_product->getOptions()): ?>enctype="multipart/form-data"<?php endif; ?>>
+            <div class="name">
+                <h1><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></h1>
+                <div class="sku"><?php echo $this->__('SKU') ?><?php echo $_helper->productAttribute($_product, $_product->getSku(), 'sku') ?></div>
+                <?php echo $this->getChildHtml('product_price'); ?>
+                <?php // echo $this->getPriceHtml($_product) ?>
+            </div>
+            <div class="product-type-data">
+               	<?php echo $this->getChildHtml('product_type_data') ?>
+           	</div>
+               <?php echo $this->getTierPriceHtml() ?>
+               <?php echo $this->getChildHtml('extrahint') ?>
+            <?php echo $this->getChildHtml('other');?>
+
+            <?php if ($_product->isSaleable() && $this->hasOptions()):?>
+             				<?php echo $this->getChildChildHtml('container1', '', true, true) ?>
+             				<?php echo $this->getChildChildHtml('container2', '', true, true) ?>
+            <?php endif;?>
+            <?php if(!$_product->isSaleable()): ?>
+           	    <div id="availability"><?php echo $this->__('Out Of Stock') ?></div>
+           	<?php endif; ?>
+
+            <div class="qty">
+            <?php if(!$_product->isGrouped()): ?>
+                <label for="qty"><?php echo $this->__('Quantity') ?></label>
+                <div class="select-styled">
+                    <select name="qty" id="qty" style="width:23px;">
+                        <?php
+                        $qtyStock = 5;// Mage::getModel('cataloginventory/stock_item')->loadByProduct($_product)->getQty(); Need getting qty for each simple
+                        foreach (range(1, (($qtyStock > 5) ? 5 : $qtyStock)) as $qty): ?>
+                        <option value="<?php echo $qty; ?>">
+                            <?php echo $qty ?>
+                        </option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+            <?php endif; ?>
+            </div>
+
+            <div class="buttons">
+                <?php echo $this->getChildHtml('addtocart') ?>
+            </div>
+        </form>
+    </div>
+    <div class="product-img-box">
+        <?php echo $this->getChildHtml('media') ?>
+    </div>
+    <div class="clr"><!-- --></div>
+    <?php echo $this->getChildHtml('product_additional_data'); ?>
+
 </div>
 <script type="text/javascript">
 

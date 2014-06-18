@@ -8,6 +8,7 @@
        	    <action method="addJs"><script>calendar/calendar.js</script></action>
        	    <action method="addJs"><script>calendar/calendar-setup.js</script></action>
        	   <action method="addItem"><type>skin_js</type><name>js/bundle.js</name></action>
+            <action method="addItem"><type>skin_js</type><name>js/amasty/amconf/configurable.js</name><params/></action>
         </reference>
     </default>
 
@@ -94,6 +95,12 @@
             <action method="addItem"><type>skin_css</type><name>js/fancybox/jquery.fancybox.css</name></action>
         </reference>
     </catalog_category_view>
+    <onestepcheckout_index_index>
+        <reference name="head">
+            <action method="addItem"><type>skin_js</type><name>js/fancybox/jquery.fancybox.js</name></action>
+            <action method="addItem"><type>skin_css</type><name>js/fancybox/jquery.fancybox.css</name></action>
+        </reference>
+    </onestepcheckout_index_index>
     <opsway_quickbox_product_view>
         <reference name="root">
             <action method="setTemplate"><template>page/quickbox.phtml</template></action>
