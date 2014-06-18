@@ -93,7 +93,10 @@ $shippingAddress = $this->getShippingAddress();
             <?php echo $this->getChildHtml('details') ?>
         </div>
     </div>
-        <?php echo $this->getChildHtml('agreements'); ?>
+        <?php foreach (Mage::helper('checkout')->getRequiredAgreementIds() as $id): ?>
+        <input name="agreement[<?php echo $id; ?>]" value="1" type="hidden" />
+        <?php endforeach; ?>
+
         <div class="buttons-set buttons-set-order" id="review-buttons-container">
             <button type="button" id="review_button" value="<?php echo $this->__('Place Order') ?>" class="button btn-checkout"><span><span><?php echo $this->__('Place Order') ?></span></span></button>
             <button type="button" id="review_submit" value="<?php echo $this->__('Place Order') ?>" class="button btn-checkout"><span><span><?php echo $this->__('Place Order') ?></span></span></button>
