@@ -101,28 +101,13 @@ var google_remarketing_only = true;
 
 	</script>
 
-<?php if (strpos((string)Mage::helper('core/url')->getCurrentUrl(), 'place-order/') === false) : ?>
-
-	<script>
+<script>
+	var currentUrl = document.location.href;
+	if(currentUrl.indexOf('checkout/onepage/success/') == -1) {
 		var _mTrack = _mTrack || [];
     	_mTrack.push(['trackPage']);
-	</script>
+	}
 
-<?php else: ?>
-
-	<script>
-	    var _mTrack = _mTrack || [];
-	    _mTrack.push(['addTrans', {
-	        currency: <?php echo Mage::app()->getStore()->getCurrentCurrencyCode(); ?>,
-	        total: <?php echo $_order->getData('grand_total'); ?>,
-	        orderId: <?php echo $_order->getRealOrderId(); ?>
-	    }]);
-	    _mTrack.push(['processOrders']);
-	</script>
-
-<?php endif; ?>
-
-<script>
 	(function() {
         var mClientId = '2385385r38813';
         var mProto = ('https:' == document.location.protocol ? 'https://' : 'http://');
