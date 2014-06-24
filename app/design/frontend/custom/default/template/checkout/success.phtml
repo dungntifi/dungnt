@@ -87,3 +87,16 @@ google_conversion_value = <?php echo $adwords_saleamt; ?>;
 <script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js">
 </script>
 <!-- End Jumpfly ReMarketing Code -->
+
+<script>
+    var currentUrl = document.location.href;
+    if(currentUrl.indexOf('checkout/onepage/success/') > -1) {
+        var _mTrack = _mTrack || [];
+        _mTrack.push(['addTrans', {
+            currency: "<?php echo Mage::app()->getStore()->getCurrentCurrencyCode(); ?>",
+            total: "<?php echo $order_details->grand_total; ?>",
+            orderId: "<?php echo $this->getOrderId(); ?>"
+        }]);
+        _mTrack.push(['processOrders']);
+    }
+</script>

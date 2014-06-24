@@ -100,4 +100,22 @@ var google_remarketing_only = true;
 
 
 	</script>
+
+<script>
+	var currentUrl = document.location.href;
+	if(currentUrl.indexOf('checkout/onepage/success/') == -1) {
+		var _mTrack = _mTrack || [];
+    	_mTrack.push(['trackPage']);
+	}
+
+	(function() {
+        var mClientId = '2385385r38813';
+        var mProto = ('https:' == document.location.protocol ? 'https://' : 'http://');
+        var mHost = 'pro.marinsm.com';
+		var mt = document.createElement('script'); mt.type = 'text/javascript'; mt.async = true;
+		mt.src = mProto + mHost + '/tracker/async/' + mClientId + '.js';
+		var fscr = document.getElementsByTagName('script')[0];
+		fscr.parentNode.insertBefore(mt, fscr);
+	})();
+</script>
 	
