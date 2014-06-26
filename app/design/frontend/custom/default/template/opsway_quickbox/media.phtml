@@ -1,0 +1,38 @@
+<?php
+    $_product = $this->getProduct();
+    $_helper = $this->helper('catalog/output');
+?>
+
+<div class="slideshow cycle-slideshow" 
+    data-cycle-fx=carousel
+    data-cycle-timeout=0
+    data-cycle-carousel-visible=2
+    data-cycle-slides="> div.image"
+    data-cycle-next=".next"
+    data-cycle-prev=".prev"
+    data-cycle-caption=".cycle-caption"
+    data-cycle-caption-template="{{slideNum}} / {{slideCount}}"
+    >
+    <div class="controls">
+        <div class="prev"></div>
+        <div class="next"></div>
+        <div class="cycle-caption"></div>
+    </div>
+    <div class="socials">
+        <a href="" class="like">Like</a>
+        <a href="" class="facebbok">Facebook</a>
+        <a href="" class="pinterest">Pinterest</a>
+        <a href="" class="symbaloo">Symbaloo</a>
+        <a href="" class="twitter">Twitter</a>
+        <a href="" class="google">G+</a>
+        <a href="" class="mail">Mail</a>
+    </div>
+    <div class="image easyzoom--overlay"><a href="images/18418_1_big.jpg"><img src="images/18418_1.jpg"></a></div>
+    <div class="image easyzoom--overlay"><a href="images/18418_02_big.jpg"><img src="images/18418_02.jpg"></a></div>
+    <div class="image easyzoom--overlay"><a href="images/18418_1_big.jpg"><img src="images/18418_1.jpg"></a></div>
+    <div class="image easyzoom--overlay"><a href="images/18418_02_big.jpg"><img src="images/18418_02.jpg"></a></div>
+</div>
+<script>
+    var $easyzoom = $('.slideshow .image').easyZoom();
+    var api = $easyzoom.data('easyZoom');
+</script>

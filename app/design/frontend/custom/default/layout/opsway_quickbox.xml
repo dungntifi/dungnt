@@ -110,9 +110,9 @@
             <action method="addJs"><script>varien/configurableList.js</script></action>
         </reference>
         <reference name="content">
-    		<block type="catalog/product_view" name="product.info" template="opsway_quickbox/view.phtml">
+    		<block type="catalog/product_view" name="product.info" template="opsway_quickbox/view-popup.phtml">
     			<!-- Media: To use, create new template with code located at bottom of blog post -->
-                <block type="catalog/product_view_media" name="product.info.media" as="media" template="opsway_quickbox/media-quickview.phtml" />
+                <block type="catalog/product_view_media" name="product.info.media" as="media" template="opsway_quickbox/media-popup.phtml" />
 
     		    <block type="core/text_list" name="alert.urls" as="alert_urls" translate="label">
                     <label>Alert Urls</label>
@@ -175,12 +175,15 @@
     </opsway_quickbox_product_view>
     <catalog_product_view>                      
         <reference name="head">
-            <action method="addItem"><type>skin_js</type><name>carousel.js</name></action>
+            <action method="addItem"><type>skin_js</type><name>js/carousel.js</name></action>
             <action method="addItem"><type>skin_js</type><name>js/easyzoom.js</name></action>
             <action method="addItem"><type>skin_css</type><name>css/slide.css</name></action>                        
         </reference>
         <reference name="product.info"> 
-            <block type="catalog/product_view_media" name="product.info.media" as="media" template="opsway_quickbox/media-quickview.phtml" />
+            <block type="catalog/product_view_media" name="product.info.media" as="media" template="opsway_quickbox/media.phtml" />
+        </reference>
+        <reference name="content">
+            <block type="catalog/product_view" name="product.info" template="opsway_quickbox/view.phtml" />
         </reference>
     </catalog_product_view>
 </layout>
