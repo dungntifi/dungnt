@@ -40,116 +40,185 @@
 
 <div id="messages_product_view"><?php echo $this->getMessagesBlock()->getGroupedHtml() ?></div>
 <div class="block-product">
-    <div class="slideshow cycle-slideshow" 
-        data-cycle-fx=carousel
-        data-cycle-timeout=0
-        data-cycle-carousel-visible=2
-        data-cycle-slides="> div.image"
-        data-cycle-next=".next"
-        data-cycle-prev=".prev"
-        data-cycle-caption=".cycle-caption"
-        data-cycle-caption-template="{{slideNum}} / {{slideCount}}"
-        >
-        <div class="controls">
-            <div class="prev"></div>
-            <div class="next"></div>
-            <div class="cycle-caption"></div>
+
+    <form action="<?php echo $this->getSubmitUrl($_product) ?>" method="post" id="product_addtocart_form"<?php if($_product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>>
+        <?php echo $this->getBlockHtml('formkey') ?>
+        <div class="no-display">
+            <input type="hidden" name="product" value="<?php echo $_product->getId() ?>" />
+            <input type="hidden" name="related_product" id="related-products-field" value="" />
         </div>
-        <div class="socials">
-            <a href="" class="like">Like</a>
-            <a href="" class="facebbok">Facebook</a>
-            <a href="" class="pinterest">Pinterest</a>
-            <a href="" class="symbaloo">Symbaloo</a>
-            <a href="" class="twitter">Twitter</a>
-            <a href="" class="google">G+</a>
-            <a href="" class="mail">Mail</a>
+
+        <?php echo $this->getChildHtml('media') ?>
+        <div class="product-info">
+            <div class="name">
+                <b class="title"><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></b>
+                <span class="pinterest">
+                    <a href="//pinterest.com/pin/create/button/?media=<?php echo $this->helper('catalog/image')->init($_product, 'image'); ?>&description=<?php echo trim(Mage::registry('current_product')->getName()); ?>&url=<?php echo trim(Mage::registry('current_product')->getProductUrl()); ?>" data-pin-do="buttonPin" data-pin-config="none"><img src="//assets.pinterest.com/images/pidgets/pinit_fg_en_rect_gray_20.png" /></a>
+                    <!-- Please call pinit.js only once per page -->
+                    <script type="text/javascript" async src="//assets.pinterest.com/js/pinit.js"></script>
+                </span>
+                
+                <span class="wanelo">
+                   <a class="wanelo-save-button"
+                      href="<?php echo Mage::getBaseUrl(); ?>"
+                      data-url="<?php echo $this->helper('core/url')->getCurrentUrl();?>"
+                      data-title="<?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?>"
+                      data-image="<?php echo $_product->getImageUrl(); ?>"
+                      data-price="<?php echo number_format($_product->getFinalPrice(),2);?>"></a>
+                </span>
+                <script async="true" type="text/javascript" src="//cdn-saveit.wanelo.com/bookmarklet/3/save.js"></script> 
+            </div>
+            <?php
+                //TODO: breaks page output - need to fix!
+                //$attributeSetName = Mage::getModel('eav/entity_attribute_set')->load($_product->getAttributeSetId())->getAttributeSetName();
+                if ($attributeSetName == "Dresses") {
+                    
+                    $designer = "";
+                    $designer = $_product->getAttributeText('designer');
+                                                        
+                    include(MAGENTO_ROOT . '/includes/size_chart.php');     
+                
+                    $sizechart = sizeDesigner($designer);           
+            ?>   
+            <script>
+                jQuery.noConflict();
+                // $j is now an alias to the jQuery function; creating the new alias is optional.
+            </script>
+                
+            <script type="text/javascript">
+                function sizePopup() {
+                    jQuery.fn.speedoPopup({
+                        htmlContent: "<?php echo $sizechart; ?>", window: null, height: null, effectIn: "fade", effectOut: "fade"
+                    }); 
+                };
+            </script>
+
+            <?php } ?>
+            <?php echo $this->getPriceHtml($_product) ?>
+            <?php echo $this->getChildHtml('product_type_data') ?>
+            <?php echo $this->getChildHtml('alert_urls') ?>
+            <?php echo $this->getTierPriceHtml() ?>
+            <?php echo $this->getChildHtml('extrahint') ?>
+
+            <div class="info-holder">
+                <p><?php echo $this->htmlEscape($_product->getData('description')); ?></p>
+                <div class="std product_promotion"><p><?php echo $this->htmlEscape($_product->getData('product_promotion')); ?></p></div>
+                <div class="std product_return"><p><?php echo $this->htmlEscape($_product->getData('product_return')); ?></p></div>
+                <?php echo $this->getChildHtml('other');?>
+                <?php /*if ($_product->isSaleable() && $this->hasOptions()):?>
+                    <?php echo $this->getChildChildHtml('container1', '', true, true) ?>
+                <?php endif;?>
+
+                <?php if (!$this->hasOptions()):?>
+                    <div class="add-to-box">
+                        <?php if($_product->isSaleable()): ?>
+                            <?php echo $this->getChildHtml('addtocart') ?>
+                            <?php if( $this->helper('wishlist')->isAllow() || $_compareUrl=$this->helper('catalog/product_compare')->getAddUrl($_product)): ?>
+                                <span class="or"><?php echo $this->__('OR') ?></span>
+                            <?php endif; ?>
+                        <?php endif; ?>
+                        <?php echo $this->getChildHtml('addto') ?>
+                    </div>
+                    <?php echo $this->getChildHtml('extra_buttons') ?>
+                <?php elseif (!$_product->isSaleable()): ?>
+                    <div class="add-to-box">
+                        <?php echo $this->getChildHtml('addto') ?>
+                    </div>
+                <?php endif;*/ ?>
+
+                <span class="sale-info">THIS ITEM IS FINAL SALE AND CANNOT BE RETURNED OR EXCHANGED. *AVAILABLE ONLINE ONLY</span>
+                <div class="product-details"><a href="">Jump in product details</a></div>
+                <div class="block-select">
+                    <div class="column">
+                        <div class="label">
+                            <span>*</span><label>Colors</label>
+                        </div>
+                        <select name="">
+                            <option value="">Coose an option</option>
+                            <option value="">Coose an option</option>
+                            <option value="">Coose an option</option>
+                        </select>
+                    </div>
+                    <div class="column">
+                        <div class="label">
+                            <div class="sizechartlink"><a href="#" onclick='sizePopup()'>Size Chart</a></div>
+                            <span>*</span><label>Size</label>
+                        </div>
+                        <select name="">
+                            <option value="">Coose an option</option>
+                            <option value="">Coose an option</option>
+                            <option value="">Coose an option</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="block-color">
+                    <span class="required">*Required Fields</span>
+                    <b>Select color</b>
+                    <ul class="images-list">
+                        <li><a href="" class="active"><img src="images/img01.jpg" alt="" width="59" height="85"></a></li>
+                        <li><a href=""><img src="images/img02.jpg" alt="" width="59" height="85"></a></li>
+                    </ul>
+                </div>
+                <button class="button btn-cart">ADD TO CART</button>
+                <button class="button btn-wishlist">ADD TO WISHLIST</button>
+
+            </div>
         </div>
-        <div class="image easyzoom--overlay"><a href="images/18418_1_big.jpg"><img src="images/18418_1.jpg"></a></div>
-        <div class="image easyzoom--overlay"><a href="images/18418_02_big.jpg"><img src="images/18418_02.jpg"></a></div>
-        <div class="image easyzoom--overlay"><a href="images/18418_1_big.jpg"><img src="images/18418_1.jpg"></a></div>
-        <div class="image easyzoom--overlay"><a href="images/18418_02_big.jpg"><img src="images/18418_02.jpg"></a></div>
-    </div>
-    <script>
-        var $easyzoom = $('.slideshow .image').easyZoom();
-        var api = $easyzoom.data('easyZoom');
+
+        <?php if ($_product->isSaleable() && $this->hasOptions()):?>
+            <?php echo $this->getChildChildHtml('container2', '', true, true) ?>
+        <?php endif;?>
+
+    </form>
+    <script type="text/javascript">
+    //<![CDATA[
+        var productAddToCartForm = new VarienForm('product_addtocart_form');
+        productAddToCartForm.submit = function(button, url) {
+            if (this.validator.validate()) {
+                var form = this.form;
+                var oldUrl = form.action;
+
+                if (url) {
+                   form.action = url;
+                }
+                var e = null;
+                try {
+                    this.form.submit();
+                } catch (e) {
+                }
+                this.form.action = oldUrl;
+                if (e) {
+                    throw e;
+                }
+
+                if (button && button != 'undefined') {
+                    button.disabled = true;
+                }
+            }
+        }.bind(productAddToCartForm);
+
+        productAddToCartForm.submitLight = function(button, url){
+            if(this.validator) {
+                var nv = Validation.methods;
+                delete Validation.methods['required-entry'];
+                delete Validation.methods['validate-one-required'];
+                delete Validation.methods['validate-one-required-by-name'];
+                // Remove custom datetime validators
+                for (var methodName in Validation.methods) {
+                    if (methodName.match(/^validate-datetime-.*/i)) {
+                        delete Validation.methods[methodName];
+                    }
+                }
+
+                if (this.validator.validate()) {
+                    if (url) {
+                        this.form.action = url;
+                    }
+                    this.form.submit();
+                }
+                Object.extend(Validation.methods, nv);
+            }
+        }.bind(productAddToCartForm);
+    //]]>
     </script>
-    <div class="product-info">
-       <div class="name">
-            <b class="title">La Femme 18418</b>
-            <span class="pinterest">
-               <a href="//pinterest.com/pin/create/button/?media=http://promoutfitters.ecp-development.net/media/catalog/product/cache/1/image/b01d3b8ae73548ae7a60776684592334/1/8/18418_1.jpg&description=La Femme 18418&url=http://promoutfitters.ecp-development.net/la-femme-18418" data-pin-do="buttonPin" data-pin-config="none"><img src="//assets.pinterest.com/images/pidgets/pinit_fg_en_rect_gray_20.png" /></a>
-           <!-- Please call pinit.js only once per page -->
-           <script type="text/javascript" async src="//assets.pinterest.com/js/pinit.js"></script>
-           </span>
-                   
-           <span class="wanelo">
-              <a class="wanelo-save-button"
-                 href="http://promoutfitters.ecp-development.net/"
-                 data-url="http://promoutfitters.ecp-development.net/la-femme-18418"
-                 data-title="La Femme 18418"
-                 data-image="http://promoutfitters.ecp-development.net/media/catalog/product/cache/1/image/265x/b01d3b8ae73548ae7a60776684592334/1/8/18418_1.jpg"
-                 data-price="139.99"></a>
-           
-           </span>
-           <script async="true" type="text/javascript" src="//cdn-saveit.wanelo.com/bookmarklet/3/save.js"></script> 
-       </div>
-       <script>
-       // jQuery.noConflict();
-        // $j is now an alias to the jQuery function; creating the new alias is optional.
-        </script>
-        
-        <script type="text/javascript">
-            
-            
-            function sizePopup() {
-            
-            jQuery.fn.speedoPopup({
-                htmlContent: "<div class=\"size-chart-header\">Size Chart (All measurements are in inches)</div><table id=\"size-chart\"> <tr class=\"odd\"> <th>Size</th> <td>00</td> <td>0</td> <td>2</td> <td>4</td> <td>6</td> <td>8</td> <td>10</td> <td>12</td> <td>14</td> <td>16</td> <td>18</td> <td>20</td> <td>22</td> <td>24</td> </tr> <tr class=\"even\"> <th>Bust</th> <td>32</td> <td>33</td> <td>34</td> <td>35</td> <td>36</td> <td>37</td> <td>38</td> <td>40</td> <td>42</td> <td>44</td> <td>46</td> <td>48</td> <td>50</td> <td>52</td> </tr> <tr class=\"odd\"> <th>Waist</th> <td>24</td> <td>25</td> <td>26</td> <td>27</td> <td>28</td> <td>29</td> <td>30</td> <td>32</td> <td>34</td> <td>36</td> <td>38</td> <td>40</td> <td>42</td> <td>44</td> </tr> <tr class=\"even\"> <th>Hips</th> <td>35</td> <td>36</td> <td>37</td> <td>38</td> <td>39</td> <td>40</td> <td>41</td> <td>43</td> <td>45</td> <td>47</td> <td>49</td> <td>51</td> <td>53</td> <td>55</td> </tr> <tr class=\"odd\"> <th>Length</th> <td>60</td> <td>60</td> <td>60</td> <td>60</td> <td>60</td> <td>60</td> <td>60</td> <td>60</td> <td>60</td> <td>60</td> <td>60</td> <td>60</td> <td>60</td> <td>60</td> </tr> </table><br><img src=\"http://www.promoutfitters.com/skin/frontend/custom/default/images/how-to-measure.gif\" width=\"504px\" height=\"292px\"><br><br>", window: null, height: null, effectIn: "fade", effectOut: "fade"
-                }); 
-            };
-        </script>
-        <div class="price-box">
-            <span class="old-price price" id="old-price-5928">$278.00</span>
-            <span class="price special-price" id="product-price-5928">$139.99</span>
-        </div>
-        <p class="availability in-stock">Availability: <span>In stock</span></p>
-        <div class="info-holder">
-            <p>Be the center of attention with this stunning strapless party dress by Alyce Paris 6054, this eye catching floor length dress features a natural neckline, a see thru beaded bodice. The stunning floor length ruffled asymmetrical skirt enhances the look of this gown. Dress to impress at your next special occasion, available colors Turquoise, White and Pink.</p>
-            <span class="sale-info">THIS ITEM IS FINAL SALE AND CANNOT BE RETURNED OR EXCHANGED. *AVAILABLE ONLINE ONLY</span>
-            <div class="product-details"><a href="">Jump in product details</a></div>
-            <div class="block-select">
-                <div class="column">
-                    <div class="label">
-                        <span>*</span><label>Colors</label>
-                    </div>
-                    <select name="">
-                        <option value="">Coose an option</option>
-                        <option value="">Coose an option</option>
-                        <option value="">Coose an option</option>
-                    </select>
-                </div>
-                <div class="column">
-                    <div class="label">
-                        <div class="sizechartlink"><a href="#" onclick='sizePopup()'>Size Chart</a></div>
-                        <span>*</span><label>Size</label>
-                    </div>
-                    <select name="">
-                        <option value="">Coose an option</option>
-                        <option value="">Coose an option</option>
-                        <option value="">Coose an option</option>
-                    </select>
-                </div>
-            </div>
-            <div class="block-color">
-                <span class="required">*Required Fields</span>
-                <b>Select color</b>
-                <ul class="images-list">
-                    <li><a href="" class="active"><img src="images/img01.jpg" alt="" width="59" height="85"></a></li>
-                    <li><a href=""><img src="images/img02.jpg" alt="" width="59" height="85"></a></li>
-                </ul>
-            </div>
-            <button class="button btn-cart">ADD TO CART</button>
-            <button class="button btn-wishlist">ADD TO WISHLIST</button>
-        </div>
-    </div>
 </div>

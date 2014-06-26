@@ -1,8 +1,3 @@
-<?php
-    $_product = $this->getProduct();
-    $_helper = $this->helper('catalog/output');
-?>
-
 <div class="slideshow cycle-slideshow" 
     data-cycle-fx=carousel
     data-cycle-timeout=0
@@ -27,10 +22,13 @@
         <a href="" class="google">G+</a>
         <a href="" class="mail">Mail</a>
     </div>
-    <div class="image easyzoom--overlay"><a href="images/18418_1_big.jpg"><img src="images/18418_1.jpg"></a></div>
-    <div class="image easyzoom--overlay"><a href="images/18418_02_big.jpg"><img src="images/18418_02.jpg"></a></div>
-    <div class="image easyzoom--overlay"><a href="images/18418_1_big.jpg"><img src="images/18418_1.jpg"></a></div>
-    <div class="image easyzoom--overlay"><a href="images/18418_02_big.jpg"><img src="images/18418_02.jpg"></a></div>
+    <?php foreach ($this->getGalleryImages() as $_image): ?>
+    <div class="image easyzoom--overlay">            
+        <a href='<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'thumbnail', $_image->getFile()); ?>'>
+            <img src='<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'thumbnail', $_image->getFile())->keepAspectRatio(TRUE)->keepFrame(FALSE)->resize(475); ?>'>
+        </a>
+    </div>
+    <?php endforeach; ?>
 </div>
 <script>
     var $easyzoom = $('.slideshow .image').easyZoom();

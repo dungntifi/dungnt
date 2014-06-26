@@ -21,8 +21,8 @@
             <div class="product-type-data">
                	<?php echo $this->getChildHtml('product_type_data') ?>
            	</div>
-               <?php echo $this->getTierPriceHtml() ?>
-               <?php echo $this->getChildHtml('extrahint') ?>
+            <?php echo $this->getTierPriceHtml() ?>
+            <?php echo $this->getChildHtml('extrahint') ?>
             <?php echo $this->getChildHtml('other');?>
 
             <?php if ($_product->isSaleable() && $this->hasOptions()):?>

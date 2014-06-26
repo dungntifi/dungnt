@@ -5,9 +5,9 @@
             <!-- Add these files to show configurable product options in the Quick View -->
                    <action method="addJs"><script>varien/product.js</script></action>
                    <action method="addJs"><script>varien/configurable.js</script></action>
-       	    <action method="addJs"><script>calendar/calendar.js</script></action>
-       	    <action method="addJs"><script>calendar/calendar-setup.js</script></action>
-       	    <action method="addItem"><type>skin_js</type><name>js/bundle.js</name></action>
+            <action method="addJs"><script>calendar/calendar.js</script></action>
+            <action method="addJs"><script>calendar/calendar-setup.js</script></action>
+            <action method="addItem"><type>skin_js</type><name>js/bundle.js</name></action>
             <action method="addItem"><type>skin_js</type><name>js/amasty/amconf/configurableList.js</name></action>
         </reference>
     </default>
@@ -110,15 +110,15 @@
             <action method="addJs"><script>varien/configurableList.js</script></action>
         </reference>
         <reference name="content">
-    		<block type="catalog/product_view" name="product.info" template="opsway_quickbox/view-popup.phtml">
-    			<!-- Media: To use, create new template with code located at bottom of blog post -->
+            <block type="catalog/product_view" name="product.info" template="opsway_quickbox/view-popup.phtml">
+                <!-- Media: To use, create new template with code located at bottom of blog post -->
                 <block type="catalog/product_view_media" name="product.info.media" as="media" template="opsway_quickbox/media-popup.phtml" />
 
-    		    <block type="core/text_list" name="alert.urls" as="alert_urls" translate="label">
+                <block type="core/text_list" name="alert.urls" as="alert_urls" translate="label">
                     <label>Alert Urls</label>
                 </block>
 
-    	        <action method="setTierPriceTemplate"><template>catalog/product/view/tierprices.phtml</template></action>
+                <action method="setTierPriceTemplate"><template>catalog/product/view/tierprices.phtml</template></action>
 
                 <block type="core/text_list" name="product.info.extrahint" as="extrahint" translate="label">
                     <label>Product View Extra Hint</label>
@@ -134,7 +134,7 @@
                         <action method="addOptionRenderer"><type>date</type><block>catalog/product_view_options_type_date</block><template>catalog/product/view/options/type/date.phtml</template></action>
                     </block>
 
-    				<block type="core/html_calendar" name="html_calendar" as="html_calendar" template="page/js/calendar.phtml"/>
+                    <block type="core/html_calendar" name="html_calendar" as="html_calendar" template="page/js/calendar.phtml"/>
                 </block>
 
                 <block type="catalog/product_view" name="product.info.options.wrapper.bottom" as="product_options_wrapper_bottom" template="catalog/product/view/options/wrapper/bottom.phtml" translate="label">
@@ -152,25 +152,25 @@
                     <action method="append"><block>product.info.options.wrapper.bottom</block></action>
                 </block>
 
-    			<block type="core/template_facade" name="product.info.container2" as="container2">
-    			    <action method="setDataByKey"><key>alias_in_layout</key><value>container2</value></action>
-    			    <action method="setDataByKeyFromRegistry"><key>options_container</key><key_in_registry>product</key_in_registry></action>
-    			    <action method="append"><block>product.info.options.wrapper</block></action>
-    			    <action method="append"><block>product.info.options.wrapper.bottom</block></action>
-    			</block>
+                <block type="core/template_facade" name="product.info.container2" as="container2">
+                    <action method="setDataByKey"><key>alias_in_layout</key><value>container2</value></action>
+                    <action method="setDataByKeyFromRegistry"><key>options_container</key><key_in_registry>product</key_in_registry></action>
+                    <action method="append"><block>product.info.options.wrapper</block></action>
+                    <action method="append"><block>product.info.options.wrapper.bottom</block></action>
+                </block>
 
                 <action method="unsetCallChild"><child>container1</child><call>ifEquals</call><if>0</if><key>alias_in_layout</key><key>options_container</key></action>
-    	        <action method="unsetCallChild"><child>container2</child><call>ifEquals</call><if>0</if><key>alias_in_layout</key><key>options_container</key></action>
+                <action method="unsetCallChild"><child>container2</child><call>ifEquals</call><if>0</if><key>alias_in_layout</key><key>options_container</key></action>
 
-    			<!-- Rating (Use Black BG) -->
-    			<action method="addReviewSummaryTemplate"><type>default</type><template>review/helper/fd_summary-black.phtml</template></action>
+                <!-- Rating (Use Black BG) -->
+                <action method="addReviewSummaryTemplate"><type>default</type><template>review/helper/fd_summary-black.phtml</template></action>
 
-    			<!-- Add to Cart -->
-               	<block type="catalog/product_view" name="product.info.addtocart" as="addtocart" template="catalog/product/view/addtocart.phtml"/>
+                <!-- Add to Cart -->
+                <block type="catalog/product_view" name="product.info.addtocart" as="addtocart" template="catalog/product/view/addtocart.phtml"/>
 
-    			<!-- Additional Data -->
-    			<block type="catalog/product_view_additional" name="product.info.additional" as="product_additional_data" />
-    		</block>
+                <!-- Additional Data -->
+                <block type="catalog/product_view_additional" name="product.info.additional" as="product_additional_data" />
+            </block>
         </reference>
     </opsway_quickbox_product_view>
     <catalog_product_view>                      
@@ -179,11 +179,10 @@
             <action method="addItem"><type>skin_js</type><name>js/easyzoom.js</name></action>
             <action method="addItem"><type>skin_css</type><name>css/slide.css</name></action>                        
         </reference>
-        <reference name="product.info"> 
+        
+        <reference name="product.info">
+            <action method="setTemplate"><template>opsway_quickbox/view.phtml</template></action>
             <block type="catalog/product_view_media" name="product.info.media" as="media" template="opsway_quickbox/media.phtml" />
-        </reference>
-        <reference name="content">
-            <block type="catalog/product_view" name="product.info" template="opsway_quickbox/view.phtml" />
         </reference>
     </catalog_product_view>
 </layout>
