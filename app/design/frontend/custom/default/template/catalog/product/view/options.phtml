@@ -186,8 +186,10 @@
     //]]>
     </script>
     <dl>
-    <?php foreach($_options as $_option): ?>
-        <?php echo $this->getOptionHtml($_option) ?>
-    <?php endforeach; ?>
+        <div class="block-select">
+            <?php foreach($_options as $_option): ?>
+                <?php echo $this->getOptionHtml($_option) ?>
+            <?php endforeach; ?>
+        </div>
     </dl>
 <?php endif; ?>

@@ -69,8 +69,7 @@
                 <script async="true" type="text/javascript" src="//cdn-saveit.wanelo.com/bookmarklet/3/save.js"></script> 
             </div>
             <?php
-                //TODO: breaks page output - need to fix!
-                //$attributeSetName = Mage::getModel('eav/entity_attribute_set')->load($_product->getAttributeSetId())->getAttributeSetName();
+                $attributeSetName = Mage::getModel('eav/entity_attribute_set')->load($_product->getAttributeSetId())->getAttributeSetName();
                 if ($attributeSetName == "Dresses") {
                     
                     $designer = "";
