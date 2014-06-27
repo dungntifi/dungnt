@@ -48,6 +48,18 @@ $attributeSetName = Mage::getModel('eav/entity_attribute_set')->load($_product->
             </div>
         <?php endforeach; ?>
     </div>
+    <div class="block-color">
+        <span class="required">*Required Fields</span>
+        <b>Select color</b>
+        <ul class="images-list">
+            <li><a href="" class="active"><img src="images/img01.jpg" alt="" width="59" height="85"></a></li>
+            <li><a href=""><img src="images/img02.jpg" alt="" width="59" height="85"></a></li>
+        </ul>
+    </div>
+    <?php $_wishlistSubmitUrl = $this->helper('wishlist')->getAddUrl($_product); ?>
+    <?php if ($this->helper('wishlist')->isAllow()) : ?>
+        <button class="button btn-wishlist add-to-links" onclick="productAddToCartForm.submitLight(this, <?php echo $_wishlistSubmitUrl ?>); return false;"><?php echo $this->__('Add to Wishlist') ?></button>
+    <?php endif; ?>
     <script type="text/javascript">
         var spConfig = new Product.Config(<?php echo $this->getJsonConfig() ?>);
         <?php
