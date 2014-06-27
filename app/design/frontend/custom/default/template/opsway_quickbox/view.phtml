@@ -104,52 +104,9 @@
                 <div class="std product_promotion"><p><?php echo $this->htmlEscape($_product->getData('product_promotion')); ?></p></div>
                 <div class="std product_return"><p><?php echo $this->htmlEscape($_product->getData('product_return')); ?></p></div>
                 <?php echo $this->getChildHtml('other');?>
-                <?php /*if ($_product->isSaleable() && $this->hasOptions()):?>
+                <?php if ($_product->isSaleable() && $this->hasOptions()):?>
                     <?php echo $this->getChildChildHtml('container1', '', true, true) ?>
                 <?php endif;?>
-
-                <?php if (!$this->hasOptions()):?>
-                    <div class="add-to-box">
-                        <?php if($_product->isSaleable()): ?>
-                            <?php echo $this->getChildHtml('addtocart') ?>
-                            <?php if( $this->helper('wishlist')->isAllow() || $_compareUrl=$this->helper('catalog/product_compare')->getAddUrl($_product)): ?>
-                                <span class="or"><?php echo $this->__('OR') ?></span>
-                            <?php endif; ?>
-                        <?php endif; ?>
-                        <?php echo $this->getChildHtml('addto') ?>
-                    </div>
-                    <?php echo $this->getChildHtml('extra_buttons') ?>
-                <?php elseif (!$_product->isSaleable()): ?>
-                    <div class="add-to-box">
-                        <?php echo $this->getChildHtml('addto') ?>
-                    </div>
-                <?php endif;*/ ?>
-
-                <span class="sale-info">THIS ITEM IS FINAL SALE AND CANNOT BE RETURNED OR EXCHANGED. *AVAILABLE ONLINE ONLY</span>
-                <div class="product-details"><a href="">Jump in product details</a></div>
-                <div class="block-select">
-                    <div class="column">
-                        <div class="label">
-                            <span>*</span><label>Colors</label>
-                        </div>
-                        <select name="">
-                            <option value="">Coose an option</option>
-                            <option value="">Coose an option</option>
-                            <option value="">Coose an option</option>
-                        </select>
-                    </div>
-                    <div class="column">
-                        <div class="label">
-                            <div class="sizechartlink"><a href="#" onclick='sizePopup()'>Size Chart</a></div>
-                            <span>*</span><label>Size</label>
-                        </div>
-                        <select name="">
-                            <option value="">Coose an option</option>
-                            <option value="">Coose an option</option>
-                            <option value="">Coose an option</option>
-                        </select>
-                    </div>
-                </div>
                 <div class="block-color">
                     <span class="required">*Required Fields</span>
                     <b>Select color</b>
@@ -163,11 +120,6 @@
 
             </div>
         </div>
-
-        <?php if ($_product->isSaleable() && $this->hasOptions()):?>
-            <?php echo $this->getChildChildHtml('container2', '', true, true) ?>
-        <?php endif;?>
-
     </form>
     <script type="text/javascript">
     //<![CDATA[

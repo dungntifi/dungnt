@@ -31,19 +31,23 @@ $_attributes = Mage::helper('core')->decorateArray($this->getAllowAttributes());
 $attributeSetName = Mage::getModel('eav/entity_attribute_set')->load($_product->getAttributeSetId())->getAttributeSetName();
 ?>
 <?php if ($_product->isSaleable() && count($_attributes)):?>
-    <dl>
-    <?php foreach($_attributes as $_attribute): ?>
-    	<?php $optionLabel = $_attribute->getLabel(); ?>
-        <dt><label class="required"><em>*</em><?php echo $_attribute->getLabel() ?></label><?php if ($optionLabel == "Size" && $attributeSetName == "Dresses"){ ?><div class="sizechartlink"><a href="#" onclick='sizePopup()'>Size Chart</a></div><?php } ?></dt>
-        <dd<?php if ($_attribute->decoratedIsLast){?> class="last"<?php }?>>
-            <div class="input-box">
+    <span class="sale-info"><?php echo $this->htmlEscape($_product->getData('additionalinfo')); ?></span>
+    <div class="product-details"><a href="">Jump in product details</a></div>
+    <div class="block-select">
+        <?php foreach($_attributes as $_attribute): ?>
+            <div class="column">
+                <?php $optionLabel = $_attribute->getLabel(); ?>
+                <div class="label">
+                    <?php if ($optionLabel == "Size" && $attributeSetName == "Dresses"){ ?><div class="sizechartlink"><a href="#" onclick='sizePopup()'>Size Chart</a></div><?php } ?>
+                    <span>*</span>
+                    <label><?php echo $_attribute->getLabel() ?></label>
+                </div>
                 <select name="super_attribute[<?php echo $_attribute->getAttributeId() ?>]" id="attribute<?php echo $_attribute->getAttributeId() ?>" class="required-entry super-attribute-select">
                     <option><?php echo $this->__('Choose an Option...') ?></option>
-                  </select>
-              </div>
-        </dd>
-    <?php endforeach; ?>
-    </dl>
+                </select>
+            </div>
+        <?php endforeach; ?>
+    </div>
     <script type="text/javascript">
         var spConfig = new Product.Config(<?php echo $this->getJsonConfig() ?>);
         <?php
@@ -99,7 +103,6 @@ $attributeSetName = Mage::getModel('eav/entity_attribute_set')->load($_product->
         };
         spConfig.newEventBind();
     </script>
-    <div class="std"><p class="additional_info_po"><?php echo $this->htmlEscape($_product->getData('additionalinfo')); ?></p></div>
 <?php endif;?>
 
 <script>
