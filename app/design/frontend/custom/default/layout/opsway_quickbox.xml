@@ -12,6 +12,7 @@
             <action method="addItem"><type>skin_js</type><name>js/carousel.js</name></action>
             <action method="addItem"><type>skin_js</type><name>js/easyzoom.js</name></action>
             <action method="addItem"><type>skin_css</type><name>css/slide.css</name></action> 
+
         </reference>
     </default>
 
@@ -152,14 +153,12 @@
                     <action method="setDataByKey"><key>alias_in_layout</key><value>container1</value></action>
                     <action method="setDataByKeyFromRegistry"><key>options_container</key><key_in_registry>product</key_in_registry></action>
                     <action method="append"><block>product.info.options.wrapper</block></action>
-                    <action method="append"><block>product.info.options.wrapper.bottom</block></action>
                 </block>
 
                 <block type="core/template_facade" name="product.info.container2" as="container2">
                     <action method="setDataByKey"><key>alias_in_layout</key><value>container2</value></action>
                     <action method="setDataByKeyFromRegistry"><key>options_container</key><key_in_registry>product</key_in_registry></action>
                     <action method="append"><block>product.info.options.wrapper</block></action>
-                    <action method="append"><block>product.info.options.wrapper.bottom</block></action>
                 </block>
 
                 <action method="unsetCallChild"><child>container1</child><call>ifEquals</call><if>0</if><key>alias_in_layout</key><key>options_container</key></action>

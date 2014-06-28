@@ -3,7 +3,6 @@
     $_product = $this->getProduct();
 ?>
 <script type="text/javascript">
-    jQuery.noConflict();
     var optionsPrice = new Product.OptionsPrice(<?php echo $this->getJsonConfig() ?>);
 </script>
 <div class="view-popup">
@@ -15,7 +14,7 @@
                 <input type="hidden" name="related_product" id="related-products-field" value="" />
             </div>
 
-            <button class="close">X</button>
+            <a href="javascript:void(0);" class="close">X</a>
 
             <?php echo $this->getChildHtml('media') ?>
 
@@ -65,6 +64,15 @@
 </div>
 
 <script type="text/javascript">
+
+    var $easyzoom = jQuery('.slideshow .image-popup').easyZoom();
+    var api = $easyzoom.data('easyZoom');
+    jQuery('.cycle-slideshow').cycle();
+
+    jQuery('.close').on('click', function() {
+        parent.jQuery.fancybox.close();
+    });
+
     var productAddToCartForm = new VarienForm('order-form');
     productAddToCartForm.submit = function(button, url) {
         if (this.validator.validate()) {

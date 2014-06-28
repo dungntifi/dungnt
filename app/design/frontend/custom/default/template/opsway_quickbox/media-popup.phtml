@@ -23,16 +23,10 @@
         <a href="" class="mail">Mail</a>
     </div>
     <?php foreach ($this->getGalleryImages() as $_image): ?>
-	<div class="image-popup easyzoom--overlay">            
+    <div class="image-popup easyzoom--overlay">            
         <a href='<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'thumbnail', $_image->getFile()); ?>'>
             <img src='<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'thumbnail', $_image->getFile())->keepAspectRatio(TRUE)->keepFrame(FALSE)->resize(475); ?>'>
         </a>
     </div>
     <?php endforeach; ?>
 </div>
-<script>
-jQuery(document).ready(function(){
-    var $easyzoom = jQuery('.slideshow .image').easyZoom();
-    var api = $easyzoom.data('easyZoom');
-});
-</script>
