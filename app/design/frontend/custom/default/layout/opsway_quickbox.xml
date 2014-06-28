@@ -9,6 +9,9 @@
             <action method="addJs"><script>calendar/calendar-setup.js</script></action>
             <action method="addItem"><type>skin_js</type><name>js/bundle.js</name></action>
             <action method="addItem"><type>skin_js</type><name>js/amasty/amconf/configurableList.js</name></action>
+            <action method="addItem"><type>skin_js</type><name>js/carousel.js</name></action>
+            <action method="addItem"><type>skin_js</type><name>js/easyzoom.js</name></action>
+            <action method="addItem"><type>skin_css</type><name>css/slide.css</name></action> 
         </reference>
     </default>
 
@@ -92,7 +95,7 @@
     <catalog_category_view>
         <reference name="head">
             <action method="addItem"><type>skin_js</type><name>js/fancybox/jquery.fancybox.js</name></action>
-            <action method="addItem"><type>skin_css</type><name>js/fancybox/jquery.fancybox.css</name></action>
+            <action method="addItem"><type>skin_css</type><name>js/fancybox/jquery.fancybox.css</name></action> 
         </reference>
     </catalog_category_view>
     <onestepcheckout_index_index>
@@ -107,10 +110,7 @@
         </reference>
         <reference name="head">
             <action method="addJs"><script>varien/product.js</script></action>
-            <action method="addJs"><script>varien/configurableList.js</script></action>
-            <action method="addItem"><type>skin_js</type><name>js/carousel.js</name></action>
-            <action method="addItem"><type>skin_js</type><name>js/easyzoom.js</name></action>
-            <action method="addItem"><type>skin_css</type><name>css/slide.css</name></action>                        
+            <action method="addJs"><script>varien/configurableList.js</script></action>                      
         </reference>
         <reference name="content">
             <block type="catalog/product_view" name="product.info" template="opsway_quickbox/view-popup.phtml">

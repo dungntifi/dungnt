@@ -31,6 +31,8 @@
     <?php endforeach; ?>
 </div>
 <script>
-    var $easyzoom = $('.slideshow .image').easyZoom();
+jQuery(document).ready(function(){
+    var $easyzoom = jQuery('.slideshow .image').easyZoom();
     var api = $easyzoom.data('easyZoom');
+});
 </script>

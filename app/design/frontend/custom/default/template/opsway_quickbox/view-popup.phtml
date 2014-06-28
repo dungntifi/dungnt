@@ -5,113 +5,111 @@
 <script type="text/javascript">
     jQuery.noConflict();
     var optionsPrice = new Product.OptionsPrice(<?php echo $this->getJsonConfig() ?>);
-
 </script>
 <div class="view-popup">
-    <form action="<?php echo $this->getSubmitUrl($_product) ?>" method="post" id="order-form" <?php if($_product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>>
-        <?php echo $this->getBlockHtml('formkey') ?>
-        <div class="no-display">
-            <input type="hidden" name="product" value="<?php echo $_product->getId() ?>" />
-            <input type="hidden" name="related_product" id="related-products-field" value="" />
-        </div>
-
-        <button class="close">X</button>
-
-        <?php echo $this->getChildHtml('media') ?>
-
-        <div class="product-info">
-            <div class="name">
-                <b class="title"><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></b>
-                <span class="pinterest">
-                    <a href="//pinterest.com/pin/create/button/?media=<?php echo $this->helper('catalog/image')->init($_product, 'image'); ?>&description=<?php echo trim(Mage::registry('current_product')->getName()); ?>&url=<?php echo trim(Mage::registry('current_product')->getProductUrl()); ?>" data-pin-do="buttonPin" data-pin-config="none"><img src="//assets.pinterest.com/images/pidgets/pinit_fg_en_rect_gray_20.png" /></a>
-                    <!-- Please call pinit.js only once per page -->
-                    <script type="text/javascript" async src="//assets.pinterest.com/js/pinit.js"></script>
-                </span>
-                
-                <span class="wanelo">
-                   <a class="wanelo-save-button"
-                      href="<?php echo Mage::getBaseUrl(); ?>"
-                      data-url="<?php echo $this->helper('core/url')->getCurrentUrl();?>"
-                      data-title="<?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?>"
-                      data-image="<?php echo $_product->getImageUrl(); ?>"
-                      data-price="<?php echo number_format($_product->getFinalPrice(),2);?>"></a>
-                </span>
-                <script async="true" type="text/javascript" src="//cdn-saveit.wanelo.com/bookmarklet/3/save.js"></script>  
+    <div class="popup">
+        <form action="<?php echo $this->getSubmitUrl($_product) ?>" method="post" id="order-form" <?php if($_product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>>
+            <?php echo $this->getBlockHtml('formkey') ?>
+            <div class="no-display">
+                <input type="hidden" name="product" value="<?php echo $_product->getId() ?>" />
+                <input type="hidden" name="related_product" id="related-products-field" value="" />
             </div>
 
-            <?php echo $this->getPriceHtml($_product) ?>
-            <?php echo $this->getChildHtml('product_type_data') ?>
-            <?php echo $this->getChildHtml('alert_urls') ?>
-            <?php echo $this->getTierPriceHtml() ?>
-            <?php echo $this->getChildHtml('extrahint') ?>
+            <button class="close">X</button>
 
-            <div class="info-holder">
-                <p><?php echo $this->htmlEscape($_product->getData('description')); ?></p>
-                <!-- <ul class="info-list">
-                    <li>Skinny, low waist, Destroyed, medium blue</li>
-                    <li>100% Cotton</li>
-                </ul> -->
-                <button class="button btn-details">VIEW FULL PRODUCT DETAILS</button>
-                <div class="std product_promotion"><p><?php echo $this->htmlEscape($_product->getData('product_promotion')); ?></p></div>
-                <div class="std product_return"><p><?php echo $this->htmlEscape($_product->getData('product_return')); ?></p></div>
-                <?php echo $this->getChildHtml('other');?>
-                <?php if ($_product->isSaleable() && $this->hasOptions()):?>
-                    <?php echo $this->getChildChildHtml('container1', '', true, true) ?>
-                <?php endif;?>
+            <?php echo $this->getChildHtml('media') ?>
+
+            <div class="product-info">
+                <div class="name">
+                    <b class="title"><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></b>
+                    <span class="pinterest">
+                        <a href="//pinterest.com/pin/create/button/?media=<?php echo $this->helper('catalog/image')->init($_product, 'image'); ?>&description=<?php echo trim(Mage::registry('current_product')->getName()); ?>&url=<?php echo trim(Mage::registry('current_product')->getProductUrl()); ?>" data-pin-do="buttonPin" data-pin-config="none"><img src="//assets.pinterest.com/images/pidgets/pinit_fg_en_rect_gray_20.png" /></a>
+                        <!-- Please call pinit.js only once per page -->
+                        <script type="text/javascript" async src="//assets.pinterest.com/js/pinit.js"></script>
+                    </span>
+                    
+                    <span class="wanelo">
+                       <a class="wanelo-save-button"
+                          href="<?php echo Mage::getBaseUrl(); ?>"
+                          data-url="<?php echo $this->helper('core/url')->getCurrentUrl();?>"
+                          data-title="<?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?>"
+                          data-image="<?php echo $_product->getImageUrl(); ?>"
+                          data-price="<?php echo number_format($_product->getFinalPrice(),2);?>"></a>
+                    </span>
+                    <script async="true" type="text/javascript" src="//cdn-saveit.wanelo.com/bookmarklet/3/save.js"></script>  
+                </div>
+
+                <?php echo $this->getPriceHtml($_product) ?>
+                <?php echo $this->getChildHtml('product_type_data') ?>
+                <?php echo $this->getChildHtml('alert_urls') ?>
+                <?php echo $this->getTierPriceHtml() ?>
+                <?php echo $this->getChildHtml('extrahint') ?>
+
+                <div class="info-holder">
+                    <p><?php echo $this->htmlEscape($_product->getData('description')); ?></p>
+                    <!-- <ul class="info-list">
+                        <li>Skinny, low waist, Destroyed, medium blue</li>
+                        <li>100% Cotton</li>
+                    </ul> -->
+                    <button class="button btn-details">VIEW FULL PRODUCT DETAILS</button>
+                    <div class="std product_promotion"><p><?php echo $this->htmlEscape($_product->getData('product_promotion')); ?></p></div>
+                    <div class="std product_return"><p><?php echo $this->htmlEscape($_product->getData('product_return')); ?></p></div>
+                    <?php echo $this->getChildHtml('other');?>
+                    <?php if ($_product->isSaleable() && $this->hasOptions()):?>
+                        <?php echo $this->getChildChildHtml('container1', '', true, true) ?>
+                    <?php endif;?>
+                </div>
             </div>
-        </div>
-    </form>
+        </form>
+    </div>
 </div>
+
 <script type="text/javascript">
-
-
-
     var productAddToCartForm = new VarienForm('order-form');
-productAddToCartForm.submit = function(button, url) {
-    if (this.validator.validate()) {
-        var form = this.form;
-        var oldUrl = form.action;
-
-        if (url) {
-           form.action = url;
-        }
-        var e = null;
-        try {
-            this.form.submit();
-        } catch (e) {
-        }
-        this.form.action = oldUrl;
-        if (e) {
-            throw e;
-        }
-
-        if (button && button != 'undefined') {
-            button.disabled = true;
-        }
-    }
-}.bind(productAddToCartForm);
-
-productAddToCartForm.submitLight = function(button, url){
-    if(this.validator) {
-        var nv = Validation.methods;
-        delete Validation.methods['required-entry'];
-        delete Validation.methods['validate-one-required'];
-        delete Validation.methods['validate-one-required-by-name'];
-        // Remove custom datetime validators
-        for (var methodName in Validation.methods) {
-            if (methodName.match(/^validate-datetime-.*/i)) {
-                delete Validation.methods[methodName];
-            }
-        }
-
+    productAddToCartForm.submit = function(button, url) {
         if (this.validator.validate()) {
-            if (url) {
-                this.form.action = url;
-            }
-            this.form.submit();
-        }
-        Object.extend(Validation.methods, nv);
-    }
-}.bind(productAddToCartForm);
+            var form = this.form;
+            var oldUrl = form.action;
 
+            if (url) {
+               form.action = url;
+            }
+            var e = null;
+            try {
+                this.form.submit();
+            } catch (e) {
+            }
+            this.form.action = oldUrl;
+            if (e) {
+                throw e;
+            }
+
+            if (button && button != 'undefined') {
+                button.disabled = true;
+            }
+        }
+    }.bind(productAddToCartForm);
+
+    productAddToCartForm.submitLight = function(button, url){
+        if(this.validator) {
+            var nv = Validation.methods;
+            delete Validation.methods['required-entry'];
+            delete Validation.methods['validate-one-required'];
+            delete Validation.methods['validate-one-required-by-name'];
+            // Remove custom datetime validators
+            for (var methodName in Validation.methods) {
+                if (methodName.match(/^validate-datetime-.*/i)) {
+                    delete Validation.methods[methodName];
+                }
+            }
+
+            if (this.validator.validate()) {
+                if (url) {
+                    this.form.action = url;
+                }
+                this.form.submit();
+            }
+            Object.extend(Validation.methods, nv);
+        }
+    }.bind(productAddToCartForm);
 </script>
