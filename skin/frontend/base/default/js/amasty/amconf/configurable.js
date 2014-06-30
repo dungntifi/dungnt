@@ -99,12 +99,12 @@ Product.Config.prototype.fillSelect = function(element){
             
        if (this.config.attributes[attributeId].use_image)
         {
-            holder = element.parentNode;
+            holder = element.up('.block-select').next('.block-color');
             holderDiv = document.createElement('div');
             holderDiv = $(holderDiv); // fix for IE
             holderDiv.addClassName('amconf-images-container');
             holderDiv.id = 'amconf-images-' + attributeId;
-            holder.insertBefore(holderDiv, element);
+            holder.appendChild(holderDiv, element);
         }
         // extension Code End
         
@@ -162,7 +162,7 @@ Product.Config.prototype.fillSelect = function(element){
                     }
 
                     image.src = confData.optionProducts[key].small_image;   
-                    image.style.width = '100px';
+                    image.style.width = '59px';
                     image.addClassName('amconf-image');
                     image.alt = options[i].label;
                     image.title = options[i].label;

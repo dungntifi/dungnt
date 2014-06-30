@@ -8,7 +8,7 @@
             <action method="addJs"><script>calendar/calendar.js</script></action>
             <action method="addJs"><script>calendar/calendar-setup.js</script></action>
             <action method="addItem"><type>skin_js</type><name>js/bundle.js</name></action>
-            <action method="addItem"><type>skin_js</type><name>js/amasty/amconf/configurableList.js</name></action>
+            <action method="addItem"><type>skin_js</type><name>js/amasty/amconf/configurable.js</name></action>
             <action method="addItem"><type>skin_js</type><name>js/carousel.js</name></action>
             <action method="addItem"><type>skin_js</type><name>js/easyzoom.js</name></action>
             <action method="addItem"><type>skin_css</type><name>css/slide.css</name></action> 
@@ -111,7 +111,7 @@
         </reference>
         <reference name="head">
             <action method="addJs"><script>varien/product.js</script></action>
-            <action method="addJs"><script>varien/configurableList.js</script></action>                      
+            <action method="addJs"><script>varien/configurable.js</script></action>                      
         </reference>
         <reference name="content">
             <block type="catalog/product_view" name="product.info" template="opsway_quickbox/view-popup.phtml">
