@@ -45,7 +45,7 @@
             <action method="addJs" ifconfig="amconf/list/enable_list"><script>varien/configurable.js</script></action>
             
             <action method="addItem" ifconfig="amconf/list/enable_list"><type>skin_js</type><name>js/amasty/amconf/formList.js</name><params/></action>
-            <action method="addItem" ifconfig="amconf/list/enable_list"><type>skin_js</type><name>js/amasty/amconf/configurableList.js</name><params/></action>
+            <!-- <action method="addItem" ifconfig="amconf/list/enable_list"><type>skin_js</type><name>js/amasty/amconf/configurableList.js</name><params/></action> -->
             <action method="addItem" ifconfig="amconf/list/show_title_list"><type>skin_js</type><name>js/amasty/amconf/bubleTooltip.js</name><params/></action>
              <action method="addItem" ifconfig="amconf/list/show_title_list"><type>skin_css</type><name>js/amasty/amconf/css/bubleTooltip.css</name><params/></action>
         </reference>
@@ -60,7 +60,7 @@
             <action method="addJs" ifconfig="amconf/list/enable_list"><script>varien/product.js</script></action>
             <action method="addJs" ifconfig="amconf/list/enable_list"><script>varien/configurable.js</script></action>
             <action method="addItem" ifconfig="amconf/list/enable_list"><type>skin_js</type><name>js/amasty/amconf/formList.js</name><params/></action>
-            <action method="addItem" ifconfig="amconf/list/enable_list"><type>skin_js</type><name>js/amasty/amconf/configurableList.js</name><params/></action>
+            <!-- <action method="addItem" ifconfig="amconf/list/enable_list"><type>skin_js</type><name>js/amasty/amconf/configurableList.js</name><params/></action> -->
             <action method="addItem" ifconfig="amconf/list/show_title_list"><type>skin_js</type><name>js/amasty/amconf/bubleTooltip.js</name><params/></action>
              <action method="addItem" ifconfig="amconf/list/show_title_list"><type>skin_css</type><name>js/amasty/amconf/css/bubleTooltip.css</name><params/></action>
         </reference>
@@ -75,7 +75,7 @@
             <action method="addJs" ifconfig="amconf/list/enable_list"><script>varien/product.js</script></action>
             <action method="addJs" ifconfig="amconf/list/enable_list"><script>varien/configurable.js</script></action>
             <action method="addItem" ifconfig="amconf/list/enable_list"><type>skin_js</type><name>js/amasty/amconf/formList.js</name><params/></action>
-            <action method="addItem" ifconfig="amconf/list/enable_list"><type>skin_js</type><name>js/amasty/amconf/configurableList.js</name><params/></action>
+            <!-- <action method="addItem" ifconfig="amconf/list/enable_list"><type>skin_js</type><name>js/amasty/amconf/configurableList.js</name><params/></action> -->
             <action method="addItem" ifconfig="amconf/list/show_title_list"><type>skin_js</type><name>js/amasty/amconf/bubleTooltip.js</name><params/></action>
              <action method="addItem" ifconfig="amconf/list/show_title_list"><type>skin_css</type><name>js/amasty/amconf/css/bubleTooltip.css</name><params/></action>
         </reference>
@@ -90,7 +90,7 @@
             <action method="addJs" ifconfig="amconf/list/enable_list"><script>varien/product.js</script></action>
             <action method="addJs" ifconfig="amconf/list/enable_list"><script>varien/configurable.js</script></action>
             <action method="addItem" ifconfig="amconf/list/enable_list"><type>skin_js</type><name>js/amasty/amconf/formList.js</name><params/></action>
-            <action method="addItem" ifconfig="amconf/list/enable_list"><type>skin_js</type><name>js/amasty/amconf/configurableList.js</name><params/></action>
+            <!-- <action method="addItem" ifconfig="amconf/list/enable_list"><type>skin_js</type><name>js/amasty/amconf/configurableList.js</name><params/></action> -->
             <action method="addItem" ifconfig="amconf/list/show_title_list"><type>skin_js</type><name>js/amasty/amconf/bubleTooltip.js</name><params/></action>
              <action method="addItem" ifconfig="amconf/list/show_title_list"><type>skin_css</type><name>js/amasty/amconf/css/bubleTooltip.css</name><params/></action>
         </reference>
@@ -105,7 +105,7 @@
             <action method="addJs" ifconfig="amconf/list/enable_list"><script>varien/product.js</script></action>
             <action method="addJs" ifconfig="amconf/list/enable_list"><script>varien/configurable.js</script></action>
             <action method="addItem" ifconfig="amconf/list/enable_list"><type>skin_js</type><name>js/amasty/amconf/formList.js</name><params/></action>
-            <action method="addItem" ifconfig="amconf/list/enable_list"><type>skin_js</type><name>js/amasty/amconf/configurableList.js</name><params/></action>
+            <!-- <action method="addItem" ifconfig="amconf/list/enable_list"><type>skin_js</type><name>js/amasty/amconf/configurableList.js</name><params/></action> -->
             <action method="addItem" ifconfig="amconf/list/show_title_list"><type>skin_js</type><name>js/amasty/amconf/bubleTooltip.js</name><params/></action>
              <action method="addItem" ifconfig="amconf/list/show_title_list"><type>skin_css</type><name>js/amasty/amconf/css/bubleTooltip.css</name><params/></action>
         </reference>
