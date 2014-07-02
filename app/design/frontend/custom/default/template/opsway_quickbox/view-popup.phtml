@@ -15,8 +15,9 @@
             </div>
 
             <a href="javascript:void(0);" class="close">X</a>
-
-            <?php echo $this->getChildHtml('media') ?>
+            <div class="product-img-box">
+                <?php echo $this->getChildHtml('media') ?>
+            </div>
 
             <div class="product-info">
                 <div class="name">
@@ -64,10 +65,6 @@
 </div>
 
 <script type="text/javascript">
-
-    var $easyzoom = jQuery('.slideshow .image-popup').easyZoom();
-    var api = $easyzoom.data('easyZoom');
-    jQuery('.cycle-slideshow').cycle();
 
     jQuery('.close').on('click', function() {
         parent.jQuery.fancybox.close();
