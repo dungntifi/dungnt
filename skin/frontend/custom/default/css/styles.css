@@ -4324,7 +4324,11 @@ tr.summary-details-excluded {
 
 .product-options-bottom .add-to-links {
 	clear:both;
-	text-align:right;
+	display: block;
+    line-height: 35px;
+}
+.product-options-bottom .add-to-links:hover {
+	text-decoration: none;
 }
 
 .col3-layout .product-options-bottom .price-box {
