@@ -352,6 +352,7 @@
     background: none repeat scroll 0 0 #ff6100;
     padding: 2px 6px;
     display: none;
+    margin: 10px 0 0;
 }
 .quickview a {
 	color: #fff;
