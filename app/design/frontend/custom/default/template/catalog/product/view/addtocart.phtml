@@ -32,5 +32,5 @@
 <?php endif; ?>
 <?php $_wishlistSubmitUrl = $this->helper('wishlist')->getAddUrl($_product); ?>
 <?php if ($this->helper('wishlist')->isAllow()) : ?>
-    <button class="button btn-wishlist add-to-links" onclick="productAddToCartForm.submitLight(this, <?php echo $_wishlistSubmitUrl ?>); return false;"><?php echo $this->__('Add to Wishlist') ?></button>
+    <a href="<?php echo $_wishlistSubmitUrl ?>" class="button btn-wishlist add-to-links" onclick="productAddToCartForm.submitLight(this, this.href); return false;" class="link-wishlist"><?php echo $this->__('Add to Wishlist') ?></a>
 <?php endif; ?>
