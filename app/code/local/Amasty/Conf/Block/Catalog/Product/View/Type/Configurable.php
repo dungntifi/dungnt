@@ -118,12 +118,23 @@ class Amasty_Conf_Block_Catalog_Product_View_Type_Configurable extends Mage_Cata
                 {
                     $html = '<a href="#" onclick="javascript: spConfig.clearConfig(); return false;">' . $this->__('Reset Configuration') . '</a>' . $html;
                 }
+                 
+                /**
+                 * if route name opsway_quickbox - template is called for popup, mediaUrlMain will call popup controller method
+                 * else - index controller method will be called
+                 */
+                if($this->getRequest()->getRouteName() == 'opsway_quickbox') {
+                    $mediaUrlMain = $this->getUrl('amconf/media/popup/', array('id' => $this->getProduct()->getId()));
+                } else {
+                    $mediaUrlMain = $this->getUrl('amconf/media', array('id' => $this->getProduct()->getId()));
+                }
+                 
                 $html = '<script type="text/javascript">
                             var showAttributeTitle =' . intval(Mage::getStoreConfig('amconf/general/show_attribute_title')). '; 
                             var amConfAutoSelectAttribute = ' . intval(Mage::getStoreConfig('amconf/general/auto_select_attribute')) . ';
                             confData = new AmConfigurableData(' . Zend_Json::encode($confData) . ');
                             confData.textNotAvailable = "' . $this->__('Choose previous option please...') . '";
-                            confData.mediaUrlMain = "' . $this->getUrl('amconf/media', array('id' => $this->getProduct()->getId())) . '";
+                            confData.mediaUrlMain = "' . $mediaUrlMain . '";
                             confData.oneAttributeReload = "' . (boolean) Mage::getStoreConfig('amconf/general/oneselect_reload') . '";
                             confData.useSimplePrice = "' . intval($_useSimplePrice)  . '";
                     </script>'. $html;

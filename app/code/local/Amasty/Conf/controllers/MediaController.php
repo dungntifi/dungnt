@@ -36,12 +36,21 @@ class Amasty_Conf_MediaController extends Mage_Core_Controller_Front_Action
         }
     }
     
-     public function indexAction()
+    public function indexAction()
     {
         $this->_initProduct();
         Mage::register('amconf_product_load', true);
         $this->loadLayout('catalog_product_view');         
         $block = Mage::app()->getLayout('catalog_product_view')->getBlock('product.info.media');
+        $this->getResponse()->setBody($block->toHtml());
+    }
+
+    public function popupAction()
+    {
+        $this->_initProduct();
+        Mage::register('amconf_product_load', true);
+        $this->loadLayout('opsway_quickbox_product_view');         
+        $block = Mage::app()->getLayout('opsway_quickbox_product_view')->getBlock('product.info.media');
         $this->getResponse()->setBody($block->toHtml());
     }
     
