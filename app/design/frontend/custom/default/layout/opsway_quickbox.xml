@@ -9,6 +9,7 @@
             <action method="addJs"><script>calendar/calendar-setup.js</script></action>
             <action method="addItem"><type>skin_js</type><name>js/bundle.js</name></action>
             <action method="addItem"><type>skin_js</type><name>js/amasty/amconf/configurable.js</name></action>
+            <action method="addItem"><type>skin_css</type><name>js/amasty/amconf/css/amconf.css</name><params/></action>
             <action method="addItem"><type>skin_js</type><name>js/carousel.js</name></action>
             <action method="addItem"><type>skin_js</type><name>js/easyzoom.js</name></action>
             <action method="addItem"><type>skin_css</type><name>css/slide.css</name></action> 
@@ -18,7 +19,7 @@
 
     <opsway_quickbox_product_edit>
         <reference name="root">
-            <action method="setTemplate"><template>page/empty.phtml</template></action>
+            <action method="setTemplate"><template>page/quickbox.phtml</template></action>
         </reference>
         <reference name="content">
             <block type="catalog/product_view" name="product.info" template="opsway_quickbox/edit.phtml">
@@ -27,7 +28,7 @@
                 <action method="addReviewSummaryTemplate"><type>short</type><template>review/helper/summary_short.phtml</template></action>
                 <action method="addReviewSummaryTemplate"><type>...</type><template>...</template></action>
                 -->
-                <block type="catalog/product_view_media" name="product.info.media" as="media" template="catalog/product/view/media.phtml"/>
+                <block type="catalog/product_view_media" name="product.info.media" as="media" template="opsway_quickbox/media-popup.phtml"/>
                 <block type="core/text_list" name="alert.urls" as="alert_urls" translate="label">
                     <label>Alert Urls</label>
                 </block>

@@ -30,7 +30,10 @@
     </div>
     <?php endforeach; ?>
 </div>
-<script>
-    var $easyzoom = $('.slideshow .image').easyZoom();
+<script type="text/javascript">
+
+    var $easyzoom = jQuery('.slideshow .image').easyZoom();
     var api = $easyzoom.data('easyZoom');
+    jQuery('.cycle-slideshow').cycle();
+
 </script>
