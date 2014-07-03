@@ -52,8 +52,6 @@
                         <li>100% Cotton</li>
                     </ul> -->
                     <button class="button btn-details">VIEW FULL PRODUCT DETAILS</button>
-                    <div class="std product_promotion"><p><?php echo $this->htmlEscape($_product->getData('product_promotion')); ?></p></div>
-                    <div class="std product_return"><p><?php echo $this->htmlEscape($_product->getData('product_return')); ?></p></div>
                     <?php echo $this->getChildHtml('other');?>
                     <?php if ($_product->isSaleable() && $this->hasOptions()):?>
                         <?php echo $this->getChildChildHtml('container1', '', true, true) ?>

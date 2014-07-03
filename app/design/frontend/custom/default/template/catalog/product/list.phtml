@@ -171,9 +171,9 @@
         $(function() {
 
             $('.item').hover(function(){
-                $(this).parent().children(":first").css('display', 'block');
+                $(this).children(":first").css('display', 'block');
             }, function() {
-                $(this).parent().children(":first").css('display', 'none');
+                $(this).children(":first").css('display', 'none');
             });
 
             $('.quickview-btn').each(function() {
