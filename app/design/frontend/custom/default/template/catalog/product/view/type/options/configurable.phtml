@@ -53,15 +53,15 @@ $attributeSetName = Mage::getModel('eav/entity_attribute_set')->load($_product->
         <b>Select color</b>
     </div>
     <script type="text/javascript">
-        var spConfig = new Product.Config(<?php echo $this->getJsonConfig() ?>);
+        var spConfigSingle = new Product.ConfigSingle(<?php echo $this->getJsonConfig() ?>);
         <?php
          $arr = array();
         foreach ($_product->getTypeInstance(true)->getUsedProducts ( null, $_product) as $simple) {
              $arr[$simple->getId()] = $simple->getData('additionalinfo');
         }
         ?>
-        spConfig.simpleOptions = <?php echo Mage::helper('core')->jsonEncode($arr)?>;
-        spConfig.getIdOfSelectedProduct = function () {
+        spConfigSingle.simpleOptions = <?php echo Mage::helper('core')->jsonEncode($arr)?>;
+        spConfigSingle.getIdOfSelectedProduct = function () {
                 var existingProducts = new Object();
                 for (var i = this.settings.length - 1; i >= 0; i--) {
                     var selected = this.settings[i].options[this.settings[i].selectedIndex];
@@ -94,18 +94,18 @@ $attributeSetName = Mage::getModel('eav/entity_attribute_set')->load($_product->
                 }
             return false;
             };
-        spConfig.changeInfo = function(){
+        spConfigSingle.changeInfo = function(){
             var textSimple = this.getIdOfSelectedProduct();
             if (textSimple) {
                 jQuery('p.additional_info_po').html(textSimple);
             }
         };
-        spConfig.newEventBind = function(){
+        spConfigSingle.newEventBind = function(){
             this.settings.each(function(element){
                 Event.observe(element, 'change', this.changeInfo.bind(this))
             }.bind(this));
         };
-        spConfig.newEventBind();
+        spConfigSingle.newEventBind();
     </script>
 <?php endif;?>
 

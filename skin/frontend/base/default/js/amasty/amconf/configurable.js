@@ -65,7 +65,308 @@ AmConfigurableData.prototype =
 }
 // extension Code End
 
-Product.Config.prototype.resetChildren = function(element){
+//class definition
+if (typeof Product == 'undefined') {
+    var Product = {};
+}
+
+//Define ConfigSimple, to prevent same methods overriding in configurable.js and configurableList.js
+
+/**************************** CONFIGURABLE PRODUCT **************************/
+Product.ConfigSingle = Class.create();
+Product.ConfigSingle.prototype = {
+    initialize: function(config){
+        this.config     = config;
+        this.taxConfig  = this.config.taxConfig;
+        if (config.containerId) {
+            this.settings   = $$('#' + config.containerId + ' ' + '.super-attribute-select');
+        } else {
+            this.settings   = $$('.super-attribute-select');
+        }
+        this.state      = new Hash();
+        this.priceTemplate = new Template(this.config.template);
+        this.prices     = config.prices;
+
+        // Set default values from config
+        if (config.defaultValues) {
+            this.values = config.defaultValues;
+        }
+
+        // Overwrite defaults by url
+        var separatorIndex = window.location.href.indexOf('#');
+        if (separatorIndex != -1) {
+            var paramsStr = window.location.href.substr(separatorIndex+1);
+            var urlValues = paramsStr.toQueryParams();
+            if (!this.values) {
+                this.values = {};
+            }
+            for (var i in urlValues) {
+                this.values[i] = urlValues[i];
+            }
+        }
+
+        // Overwrite defaults by inputs values if needed
+        if (config.inputsInitialized) {
+            this.values = {};
+            this.settings.each(function(element) {
+                if (element.value) {
+                    var attributeId = element.id.replace(/[a-z]*/, '');
+                    this.values[attributeId] = element.value;
+                }
+            }.bind(this));
+        }
+
+        // Put events to check select reloads
+        this.settings.each(function(element){
+            Event.observe(element, 'change', this.configure.bind(this))
+        }.bind(this));
+
+        // fill state
+        this.settings.each(function(element){
+            var attributeId = element.id.replace(/[a-z]*/, '');
+            if(attributeId && this.config.attributes[attributeId]) {
+                element.config = this.config.attributes[attributeId];
+                element.attributeId = attributeId;
+                this.state[attributeId] = false;
+            }
+        }.bind(this))
+
+        // Init settings dropdown
+        var childSettings = [];
+        for(var i=this.settings.length-1;i>=0;i--){
+            var prevSetting = this.settings[i-1] ? this.settings[i-1] : false;
+            var nextSetting = this.settings[i+1] ? this.settings[i+1] : false;
+            if (i == 0){
+                this.fillSelect(this.settings[i])
+            } else {
+                this.settings[i].disabled = true;
+            }
+            $(this.settings[i]).childSettings = childSettings.clone();
+            $(this.settings[i]).prevSetting   = prevSetting;
+            $(this.settings[i]).nextSetting   = nextSetting;
+            childSettings.push(this.settings[i]);
+        }
+
+        // Set values to inputs
+        this.configureForValues();
+        document.observe("dom:loaded", this.configureForValues.bind(this));
+    },
+
+    configureForValues: function () {
+        if (this.values) {
+            this.settings.each(function(element){
+                var attributeId = element.attributeId;
+                element.value = (typeof(this.values[attributeId]) == 'undefined')? '' : this.values[attributeId];
+                this.configureElement(element);
+            }.bind(this));
+        }
+    },
+
+    configure: function(event){
+        var element = Event.element(event);
+        this.configureElement(element);
+    },
+
+    configureElement : function(element) {
+        this.reloadOptionLabels(element);
+        if(element.value){
+            this.state[element.config.id] = element.value;
+            if(element.nextSetting){
+                element.nextSetting.disabled = false;
+                this.fillSelect(element.nextSetting);
+                this.resetChildren(element.nextSetting);
+            }
+        }
+        else {
+            this.resetChildren(element);
+        }
+        this.reloadPrice();
+    },
+
+    reloadOptionLabels: function(element){
+        var selectedPrice;
+        if(element.options[element.selectedIndex].config && !this.config.stablePrices){
+            selectedPrice = parseFloat(element.options[element.selectedIndex].config.price)
+        }
+        else{
+            selectedPrice = 0;
+        }
+        for(var i=0;i<element.options.length;i++){
+            if(element.options[i].config){
+                element.options[i].text = this.getOptionLabel(element.options[i].config, element.options[i].config.price-selectedPrice);
+            }
+        }
+    },
+
+    resetChildren : function(element){
+        if(element.childSettings) {
+            for(var i=0;i<element.childSettings.length;i++){
+                element.childSettings[i].selectedIndex = 0;
+                element.childSettings[i].disabled = true;
+                if(element.config){
+                    this.state[element.config.id] = false;
+                }
+            }
+        }
+    },
+
+    fillSelect: function(element){
+        var attributeId = element.id.replace(/[a-z]*/, '');
+        var options = this.getAttributeOptions(attributeId);
+        this.clearSelect(element);
+        element.options[0] = new Option('', '');
+        element.options[0].innerHTML = this.config.chooseText;
+
+        var prevConfig = false;
+        if(element.prevSetting){
+            prevConfig = element.prevSetting.options[element.prevSetting.selectedIndex];
+        }
+
+        if(options) {
+            var index = 1;
+            for(var i=0;i<options.length;i++){
+                var allowedProducts = [];
+                if(prevConfig) {
+                    for(var j=0;j<options[i].products.length;j++){
+                        if(prevConfig.config.allowedProducts
+                            && prevConfig.config.allowedProducts.indexOf(options[i].products[j])>-1){
+                            allowedProducts.push(options[i].products[j]);
+                        }
+                    }
+                } else {
+                    allowedProducts = options[i].products.clone();
+                }
+
+                if(allowedProducts.size()>0){
+                    options[i].allowedProducts = allowedProducts;
+                    element.options[index] = new Option(this.getOptionLabel(options[i], options[i].price), options[i].id);
+                    if (typeof options[i].price != 'undefined') {
+                        element.options[index].setAttribute('price', options[i].price);
+                    }
+                    element.options[index].config = options[i];
+                    index++;
+                }
+            }
+        }
+    },
+
+    getOptionLabel: function(option, price){
+        var price = parseFloat(price);
+        if (this.taxConfig.includeTax) {
+            var tax = price / (100 + this.taxConfig.defaultTax) * this.taxConfig.defaultTax;
+            var excl = price - tax;
+            var incl = excl*(1+(this.taxConfig.currentTax/100));
+        } else {
+            var tax = price * (this.taxConfig.currentTax / 100);
+            var excl = price;
+            var incl = excl + tax;
+        }
+
+        if (this.taxConfig.showIncludeTax || this.taxConfig.showBothPrices) {
+            price = incl;
+        } else {
+            price = excl;
+        }
+
+        var str = option.label;
+        if(price){
+            if (this.taxConfig.showBothPrices) {
+                str+= ' ' + this.formatPrice(excl, true) + ' (' + this.formatPrice(price, true) + ' ' + this.taxConfig.inclTaxTitle + ')';
+            } else {
+                str+= ' ' + this.formatPrice(price, true);
+            }
+        }
+        return str;
+    },
+
+    formatPrice: function(price, showSign){
+        var str = '';
+        price = parseFloat(price);
+        if(showSign){
+            if(price<0){
+                str+= '-';
+                price = -price;
+            }
+            else{
+                str+= '+';
+            }
+        }
+
+        var roundedPrice = (Math.round(price*100)/100).toString();
+
+        if (this.prices && this.prices[roundedPrice]) {
+            str+= this.prices[roundedPrice];
+        }
+        else {
+            str+= this.priceTemplate.evaluate({price:price.toFixed(2)});
+        }
+        return str;
+    },
+
+    clearSelect: function(element){
+        for(var i=element.options.length-1;i>=0;i--){
+            element.remove(i);
+        }
+    },
+
+    getAttributeOptions: function(attributeId){
+        if(this.config.attributes[attributeId]){
+            return this.config.attributes[attributeId].options;
+        }
+    },
+
+    reloadPrice: function(){
+        if (this.config.disablePriceReload) {
+            return;
+        }
+        var price    = 0;
+        var oldPrice = 0;
+        for(var i=this.settings.length-1;i>=0;i--){
+            var selected = this.settings[i].options[this.settings[i].selectedIndex];
+            if(selected.config){
+                price    += parseFloat(selected.config.price);
+                oldPrice += parseFloat(selected.config.oldPrice);
+            }
+        }
+
+        optionsPrice.changePrice('config', {'price': price, 'oldPrice': oldPrice});
+        optionsPrice.reload();
+
+        return price;
+
+        if($('product-price-'+this.config.productId)){
+            $('product-price-'+this.config.productId).innerHTML = price;
+        }
+        this.reloadOldPrice();
+    },
+
+    reloadOldPrice: function(){
+        if (this.config.disablePriceReload) {
+            return;
+        }
+        if ($('old-price-'+this.config.productId)) {
+
+            var price = parseFloat(this.config.oldPrice);
+            for(var i=this.settings.length-1;i>=0;i--){
+                var selected = this.settings[i].options[this.settings[i].selectedIndex];
+                if(selected.config){
+                    price+= parseFloat(selected.config.price);
+                }
+            }
+            if (price < 0)
+                price = 0;
+            price = this.formatPrice(price);
+
+            if($('old-price-'+this.config.productId)){
+                $('old-price-'+this.config.productId).innerHTML = price;
+            }
+
+        }
+    }
+}
+
+//class methods redeclare for popup block
+Product.ConfigSingle.prototype.resetChildren = function(element){
     if(element.childSettings) {
         for(var i=0;i<element.childSettings.length;i++){
             element.childSettings[i].selectedIndex = 0;
@@ -80,7 +381,7 @@ Product.Config.prototype.resetChildren = function(element){
     // extension Code End
 }
 
-Product.Config.prototype.fillSelect = function(element){
+Product.ConfigSingle.prototype.fillSelect = function(element){
     var attributeId = element.id.replace(/[a-z]*/, '');
     var options = this.getAttributeOptions(attributeId);
     this.clearSelect(element);
@@ -150,7 +451,7 @@ Product.Config.prototype.fillSelect = function(element){
                     if(typeof sizeOptions != 'undefined') {
                         for(var k=0;k<allowedProducts.length;k++){
                             for (var l=0;l<sizeOptions.length;l++){
-                                if(sizeOptions[l].products[0] == allowedProducts[k] && confData.getData(options[i].id + ',' + sizeOptions[l].id, 'media_url')) {
+                                if(sizeOptions[l].products[0] == allowedProducts[k] && confDataSingle.getData(options[i].id + ',' + sizeOptions[l].id, 'media_url')) {
                                     key = options[i].id + ',' + sizeOptions[l].id;
                                     break;
                                 }
@@ -161,7 +462,7 @@ Product.Config.prototype.fillSelect = function(element){
                         }
                     }
 
-                    image.src = confData.optionProducts[key].small_image;   
+                    image.src = confDataSingle.optionProducts[key].small_image;   
                     image.style.width = '59px';
                     image.addClassName('amconf-image');
                     image.alt = options[i].label;
@@ -226,7 +527,7 @@ Product.Config.prototype.fillSelect = function(element){
     }
 }
 
-Product.Config.prototype.configureElement = function(element) 
+Product.ConfigSingle.prototype.configureElement = function(element) 
 {
     // extension Code
     optionId = element.value;
@@ -287,13 +588,13 @@ Product.Config.prototype.configureElement = function(element)
             key += select.value + ',';   
         }
     });
-    if (typeof confData != 'undefined') {
-        confData.isResetButton = false;    
+    if (typeof confDataSingle != 'undefined') {
+        confDataSingle.isResetButton = false;    
     }
     key = key.substr(0, key.length - 1);
     this.updateData(key);
     
-    if (typeof confData != 'undefined' && confData.useSimplePrice == "1")
+    if (typeof confDataSingle != 'undefined' && confDataSingle.useSimplePrice == "1")
     {
         // replace price values with the selected simple product price
         this.reloadSimplePrice(key);
@@ -351,7 +652,7 @@ Product.Config.prototype.configureElement = function(element)
     // extension Code End
 }
 
-Product.Config.prototype.configureForValues =  function () {
+Product.ConfigSingle.prototype.configureForValues =  function () {
         if (this.values) {
             this.settings.each(function(element){
                 var attributeId = element.attributeId;
@@ -371,7 +672,7 @@ Product.Config.prototype.configureForValues =  function () {
     
 // these are new methods introduced by the extension
 // extension Code
-Product.Config.prototype.configureImage = function(event){
+Product.ConfigSingle.prototype.configureImage = function(event){
     var element = Event.element(event);
     attributeId = element.parentNode.id.replace(/[a-z-]*/, '');
     optionId = element.id.replace(/[a-z-]*/, '');
@@ -382,7 +683,7 @@ Product.Config.prototype.configureImage = function(event){
     this.configureElement($('attribute' + attributeId));
 }
 
-Product.Config.prototype.selectImage = function(element)
+Product.ConfigSingle.prototype.selectImage = function(element)
 {
     attributeId = element.parentNode.id.replace(/[a-z-]*/, '');
     $('amconf-images-' + attributeId).childElements().each(function(child){
@@ -392,7 +693,7 @@ Product.Config.prototype.selectImage = function(element)
     element.addClassName('amconf-image-selected');
 }
 
-Product.Config.prototype.processEmpty = function()
+Product.ConfigSingle.prototype.processEmpty = function()
 {
     $$('.super-attribute-select').each(function(select) {
         var attributeId = select.id.replace(/[a-z]*/, '');
@@ -406,9 +707,9 @@ Product.Config.prototype.processEmpty = function()
             holderDiv = document.createElement('div');
             holderDiv.addClassName('amconf-images-container');
             holderDiv.id = 'amconf-images-' + attributeId;
-            if ('undefined' != typeof(confData))
+            if ('undefined' != typeof(confDataSingle))
             {
-                holderDiv.innerHTML = confData.textNotAvailable;
+                holderDiv.innerHTML = confDataSingle.textNotAvailable;
             } else 
             {
                 holderDiv.innerHTML = "";
@@ -416,18 +717,18 @@ Product.Config.prototype.processEmpty = function()
             holder.insertBefore(holderDiv, select);
         } else if (!select.disabled && !$(select).hasClassName("no-display")) {
             var element = $(select.parentNode).select('#amconf-images-' + attributeId)[0];
-            if (typeof confData != 'undefined' && typeof element != 'undefined' && element.innerHTML == confData.textNotAvailable){
+            if (typeof confDataSingle != 'undefined' && typeof element != 'undefined' && element.innerHTML == confDataSingle.textNotAvailable){
                 element.parentNode.removeChild(element);
             }
         }
     }.bind(this));
 }
 
-Product.Config.prototype.clearConfig = function()
+Product.ConfigSingle.prototype.clearConfig = function()
 {
     this.settings[0].value = "";
-    if (typeof confData != 'undefined')
-        confData.isResetButton = true;
+    if (typeof confDataSingle != 'undefined')
+        confDataSingle.isResetButton = true;
     this.configureElement(this.settings[0]);
     $$('span.amconf-label').each(function (el){
         el.remove();
@@ -435,53 +736,53 @@ Product.Config.prototype.clearConfig = function()
     return false;
 }
 
-Product.Config.prototype.updateData = function(key)
+Product.ConfigSingle.prototype.updateData = function(key)
 {
     var imageClassName = '.product-img-box';
     if(!$$(imageClassName)[0]) var imageClassName = '.img-box';
     if(!$$(imageClassName)[0]) var imageClassName = '.product-img-column';
-    if ('undefined' == typeof(confData))
+    if ('undefined' == typeof(confDataSingle))
     {
         return false;
     }
-    if (confData.hasKey(key))
+    if (confDataSingle.hasKey(key))
     {
         // getting values of selected configuration
-        if (confData.getData(key, 'name'))
+        if (confDataSingle.getData(key, 'name'))
         {
             $$('.product-name h1').each(function(container){
-                if (!confData.getDefault('name'))
+                if (!confDataSingle.getDefault('name'))
                 {
-                    confData.saveDefault('name', container.innerHTML);
+                    confDataSingle.saveDefault('name', container.innerHTML);
                 }
-                container.innerHTML = confData.getData(key, 'name');
+                container.innerHTML = confDataSingle.getData(key, 'name');
             }.bind(this));
         }
-        if (confData.getData(key, 'short_description'))
+        if (confDataSingle.getData(key, 'short_description'))
         {
             $$('.short-description div').each(function(container){
-                if (!confData.getDefault('short_description'))
+                if (!confDataSingle.getDefault('short_description'))
                 {
-                    confData.saveDefault('short_description', container.innerHTML);
+                    confDataSingle.saveDefault('short_description', container.innerHTML);
                 }
-                container.innerHTML = confData.getData(key, 'short_description');
+                container.innerHTML = confDataSingle.getData(key, 'short_description');
             }.bind(this));
         }
-        if (confData.getData(key, 'description'))
+        if (confDataSingle.getData(key, 'description'))
         {
             $$('.box-description div').each(function(container){
-                if (!confData.getDefault('description'))
+                if (!confDataSingle.getDefault('description'))
                 {
-                    confData.saveDefault('description', container.innerHTML);
+                    confDataSingle.saveDefault('description', container.innerHTML);
                 }
-                container.innerHTML = confData.getData(key, 'description');
+                container.innerHTML = confDataSingle.getData(key, 'description');
             }.bind(this));
         }
-        if (confData.getData(key, 'media_url'))
+        if (confDataSingle.getData(key, 'media_url'))
         {
             // should reload images
             tmpContainer = $$(imageClassName)[0];
-            new Ajax.Updater(tmpContainer, confData.getData(key, 'media_url'), {
+            new Ajax.Updater(tmpContainer, confDataSingle.getData(key, 'media_url'), {
                 evalScripts: true,
                 onSuccess: function(transport)
                 {
@@ -489,8 +790,8 @@ Product.Config.prototype.updateData = function(key)
                 },
                 onCreate: function()
                 {
-                    confData.saveDefault('media', tmpContainer.innerHTML);
-                    confData.currentIsMain = false;  
+                    confDataSingle.saveDefault('media', tmpContainer.innerHTML);
+                    confDataSingle.currentIsMain = false;  
                 },
                 onComplete: function()
                 {
@@ -501,13 +802,13 @@ Product.Config.prototype.updateData = function(key)
                     jQuery('.cloud-zoom, .cloud-zoom-gallery').CloudZoom();
                 }
             });
-        } else if (confData.getData(key, 'noimg_url'))
+        } else if (confDataSingle.getData(key, 'noimg_url'))
         {
             noImgInserted = false;
             $$(imageClassName + ' img').each(function(img){
                 if (!noImgInserted)
                 {
-                    img.src = confData.getData(key, 'noimg_url');
+                    img.src = confDataSingle.getData(key, 'noimg_url');
                     $(img).stopObserving('click');
                     $(img).stopObserving('mouseover');
                     $(img).stopObserving('mousemove');
@@ -519,34 +820,34 @@ Product.Config.prototype.updateData = function(key)
     } else 
     {
         // setting values of default product
-        if (true == confData.getDefault('set'))
+        if (true == confDataSingle.getDefault('set'))
         {
-            if (confData.getDefault('name'))
+            if (confDataSingle.getDefault('name'))
             {
                 $$('.product-name h1').each(function(container){
-                    container.innerHTML = confData.getDefault('name');
+                    container.innerHTML = confDataSingle.getDefault('name');
                 }.bind(this));
             }
-            if (confData.getDefault('short_description'))
+            if (confDataSingle.getDefault('short_description'))
             {
                 $$('.short-description div').each(function(container){
-                    container.innerHTML = confData.getDefault('short_description');
+                    container.innerHTML = confDataSingle.getDefault('short_description');
                 }.bind(this));
             }
-            if (confData.getDefault('description'))
+            if (confDataSingle.getDefault('description'))
             {
                 $$('.box-description div').each(function(container){
-                    container.innerHTML = confData.getDefault('description');
+                    container.innerHTML = confDataSingle.getDefault('description');
                 }.bind(this));
             }
-            if (confData.getDefault('media') && !confData.currentIsMain)
+            if (confDataSingle.getDefault('media') && !confDataSingle.currentIsMain)
             {
                 var tmpContainer = $$(imageClassName)[0];
-                new Ajax.Updater(tmpContainer, confData.mediaUrlMain, {
+                new Ajax.Updater(tmpContainer, confDataSingle.mediaUrlMain, {
                     evalScripts: true,
                     onSuccess: function(transport) {
-                        confData.saveDefault('media', tmpContainer.innerHTML);
-                        confData.currentIsMain = true;
+                        confDataSingle.saveDefault('media', tmpContainer.innerHTML);
+                        confDataSingle.currentIsMain = true;
                     },
                     onComplete: function()
                     {
@@ -564,26 +865,26 @@ Product.Config.prototype.updateData = function(key)
 
 //start code for reload simple price
 
-Product.Config.prototype.reloadSimplePrice = function(key)
+Product.ConfigSingle.prototype.reloadSimplePrice = function(key)
 {
-     if ('undefined' == typeof(confData))
+     if ('undefined' == typeof(confDataSingle))
     {
         return false;
     }
     
     var container;
     var result = false;
-    if (confData.hasKey(key))
+    if (confDataSingle.hasKey(key))
     {
         // convert div.price-box into price info container
         // top price box
-        if (confData.getData(key, 'price_html'))
+        if (confDataSingle.getData(key, 'price_html'))
         {
             $$('.product-shop .price-box').each(function(container)
             {
-                if (!confData.getDefault('price_html'))
+                if (!confDataSingle.getDefault('price_html'))
                 {
-                    confData.saveDefault('price_html', container.innerHTML);
+                    confDataSingle.saveDefault('price_html', container.innerHTML);
                 }
                 container.addClassName('amconf_price_container');
             }.bind(this));
@@ -600,42 +901,42 @@ Product.Config.prototype.reloadSimplePrice = function(key)
    
             $$('.amconf_price_container').each(function(container)
             {
-                container.outerHTML = confData.getData(key, 'price_html');  
+                container.outerHTML = confDataSingle.getData(key, 'price_html');  
             }.bind(this));        
         }
         
         // bottom price box
-        if (confData.getData(key, 'price_clone_html'))
+        if (confDataSingle.getData(key, 'price_clone_html'))
         {
             $$('.product-options-bottom .price-box').each(function(container)
             {
-                if (!confData.getDefault('price_clone_html'))
+                if (!confDataSingle.getDefault('price_clone_html'))
                 {
-                    confData.saveDefault('price_clone_html', container.innerHTML);
+                    confDataSingle.saveDefault('price_clone_html', container.innerHTML);
                 }
                 container.addClassName('amconf_price_clone_container');
             }.bind(this));
             
             $$('.amconf_price_clone_container').each(function(container)
             {
-        container.outerHTML = confData.getData(key, 'price_clone_html');    
+        container.outerHTML = confDataSingle.getData(key, 'price_clone_html');    
         }.bind(this));
 
         }
         
         // function return value
-        if (confData.getData(key, 'price'))
+        if (confDataSingle.getData(key, 'price'))
         {
-            result = confData.getData(key, 'price');
+            result = confDataSingle.getData(key, 'price');
         }
     } 
     else 
     {
         // setting values of default product
-        if (true == confData.getDefault('set'))
+        if (true == confDataSingle.getDefault('set'))
         {
             // restore price info containers into default price-boxes
-            if (confData.getDefault('price_html'))
+            if (confDataSingle.getDefault('price_html'))
             {
                 $$('.product-shop .price-box').each(function(container)
                 {
@@ -648,12 +949,12 @@ Product.Config.prototype.reloadSimplePrice = function(key)
                           
                 $$('.amconf_price_container').each(function(container)
                 {
-                    container.innerHTML  = confData.getDefault('price_html');
+                    container.innerHTML  = confDataSingle.getDefault('price_html');
                     container.removeClassName('amconf_price_container');    
                 }.bind(this));
             }
             
-            if (confData.getDefault('price_clone_html'))
+            if (confDataSingle.getDefault('price_clone_html'))
             {
                 $$('.product-options-bottom .price-box').each(function(container)
                 {
@@ -661,16 +962,16 @@ Product.Config.prototype.reloadSimplePrice = function(key)
                 }.bind(this));
 
                 $$('.amconf_price_clone_container').each(function(container){
-                    container.innerHTML = confData.getDefault('price_clone_html');
+                    container.innerHTML = confDataSingle.getDefault('price_clone_html');
                     container.removeClassName('amconf_price_clone_container');  
                 }.bind(this));
                 
             }
             
             // function return value
-            if (confData.getDefault('price'))
+            if (confDataSingle.getDefault('price'))
             {
-                result = confData.getDefault('price');
+                result = confDataSingle.getDefault('price');
             }
         }
     }
@@ -681,7 +982,7 @@ Product.Config.prototype.reloadSimplePrice = function(key)
 
 
 
-Product.Config.prototype.getOptionLabel = function(option, price){
+Product.ConfigSingle.prototype.getOptionLabel = function(option, price){
     var price = parseFloat(price);
     if (this.taxConfig.includeTax) {
         var tax = price / (100 + this.taxConfig.defaultTax) * this.taxConfig.defaultTax;
@@ -699,8 +1000,8 @@ Product.Config.prototype.getOptionLabel = function(option, price){
     }
     var str = option.label;
     if(price){
-        if('undefined' != typeof(confData) && confData.useSimplePrice == "1" && confData['optionProducts'] && confData['optionProducts'][option.id] && confData['optionProducts'][option.id]['price']) {
-            str+= ' ' + this.formatPrice(confData['optionProducts'][option.id]['price'], true);
+        if('undefined' != typeof(confDataSingle) && confDataSingle.useSimplePrice == "1" && confDataSingle['optionProducts'] && confDataSingle['optionProducts'][option.id] && confDataSingle['optionProducts'][option.id]['price']) {
+            str+= ' ' + this.formatPrice(confDataSingle['optionProducts'][option.id]['price'], true);
             pos = str.indexOf("+");
             str = str.substr(0, pos) + str.substr(pos + 1, str.length);
         }
@@ -713,8 +1014,8 @@ Product.Config.prototype.getOptionLabel = function(option, price){
         }
     }
     else {
-        if('undefined' != typeof(confData) && confData.useSimplePrice == "1" && confData['optionProducts'] && confData['optionProducts'][option.id] && confData['optionProducts'][option.id]['price']) {
-            str+= ' ' + this.formatPrice(confData['optionProducts'][option.id]['price'], true);
+        if('undefined' != typeof(confDataSingle) && confDataSingle.useSimplePrice == "1" && confDataSingle['optionProducts'] && confDataSingle['optionProducts'][option.id] && confDataSingle['optionProducts'][option.id]['price']) {
+            str+= ' ' + this.formatPrice(confDataSingle['optionProducts'][option.id]['price'], true);
             pos = str.indexOf("+");
             str = str.substr(0, pos) + str.substr(pos + 1, str.length);
         }    
@@ -723,9 +1024,9 @@ Product.Config.prototype.getOptionLabel = function(option, price){
 }
 
 Event.observe(window, 'load', function(){
-    if ('undefined' != typeof(confData) && confData.useSimplePrice == "1")
+    if ('undefined' != typeof(confDataSingle) && confDataSingle.useSimplePrice == "1")
     {
-        confData.reloadOptions();
+        confDataSingle.reloadOptions();
     }
 });
 // extension Code End
