@@ -32,7 +32,7 @@ $attributeSetName = Mage::getModel('eav/entity_attribute_set')->load($_product->
 ?>
 <?php if ($_product->isSaleable() && count($_attributes)):?>
     <span class="sale-info"><?php echo $this->htmlEscape($_product->getData('additionalinfo')); ?></span>
-    <div class="product-details"><a href="">Jump in product details</a></div>
+    <div class="product-details"><a href="<?php echo $_product->getProductUrl(); ?>">Jump in product details</a></div>
     <div class="block-select">
         <?php foreach($_attributes as $_attribute): ?>
             <div class="column">

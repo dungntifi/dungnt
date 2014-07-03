@@ -46,11 +46,7 @@
                 <?php echo $this->getChildHtml('extrahint') ?>
 
                 <div class="info-holder">
-                    <p><?php echo $this->htmlEscape($_product->getData('description')); ?></p>
-                    <!-- <ul class="info-list">
-                        <li>Skinny, low waist, Destroyed, medium blue</li>
-                        <li>100% Cotton</li>
-                    </ul> -->
+                    <p><?php echo $this->htmlEscape($_product->getData('short_description')); ?></p>
                     <button class="button btn-details">VIEW FULL PRODUCT DETAILS</button>
                     <?php echo $this->getChildHtml('other');?>
                     <?php if ($_product->isSaleable() && $this->hasOptions()):?>
