@@ -3,12 +3,22 @@ $_product    = $this->getProduct();
 $_attributes = Mage::helper('core')->decorateArray($this->getAllowAttributes());
 $attributeSetName = Mage::getModel('eav/entity_attribute_set')->load($_product->getAttributeSetId())->getAttributeSetName();
 ?>
-<?php if ($_product->isSaleable() && count($_attributes)):?>
+<?php if ($_product->isSaleable() && count($_attributes)):
+    
+    if ($attributeSetName == "Dresses") {
+        $designer = "";
+        $designer = $_product->getAttributeText('designer');
+                                            
+        include(MAGENTO_ROOT . '/includes/size_chart.php');     
+    
+        $sizechart = sizeDesigner($designer);           
+    } 
+?>
     <div class="block-select">
         <?php foreach($_attributes as $_attribute): ?>
             <?php $optionLabel = $_attribute->getLabel(); if ($optionLabel != "Size"): ?><div style="display: none;"><?php endif; ?>
             <div class="label">
-                <?php if ($optionLabel == "Size" && $attributeSetName == "Dresses"){ ?><div class="sizechartlink"><a href="javascript:void(0)" onclick='sizePopup()'>Size Chart</a></div><?php } ?>
+                <?php if ($optionLabel == "Size" && $attributeSetName == "Dresses"){ ?><div class="sizechartlink"><a href="#" onclick='sizePopup()'>Size Chart</a></div><?php } ?>
                 <span>*</span>
                 <label><?php echo $_attribute->getLabel() ?></label>
             </div>
