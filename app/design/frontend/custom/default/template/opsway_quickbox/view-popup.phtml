@@ -49,9 +49,14 @@
                     <p><?php echo $this->htmlEscape($_product->getData('short_description')); ?></p>
                     <button class="button btn-details">VIEW FULL PRODUCT DETAILS</button>
                     <?php echo $this->getChildHtml('other');?>
-                    <?php if ($_product->isSaleable() && $this->hasOptions()):?>
-                        <?php echo $this->getChildChildHtml('container1', '', true, true) ?>
-                    <?php endif;?>
+                    <?php if ($_product->isSaleable() && $this->hasOptions()):
+                            $blockForForm = Mage::app()->getLayout()->createBlock('catalog/product_view_type_configurable', 
+                                                                                  'product.info.options.configurable', 
+                                                                                   array('template'=>"opsway_quickbox/configurable.phtml"));
+                            $blockForForm->setProduct($_product);
+                            $blockForForm->setNameInLayout('product.info.options.configurable');
+                            echo $blockForForm->toHtml();
+                    endif;?>
                 </div>
             </div>
         </form>

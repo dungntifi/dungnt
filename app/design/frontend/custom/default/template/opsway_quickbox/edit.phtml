@@ -55,18 +55,17 @@
                 <?php echo $this->getChildHtml('extrahint') ?>
 
                 <div class="info-holder">
-                    <p><?php echo $this->htmlEscape($_product->getData('description')); ?></p>
-                    <!-- <ul class="info-list">
-                        <li>Skinny, low waist, Destroyed, medium blue</li>
-                        <li>100% Cotton</li>
-                    </ul> -->
+                    <p><?php echo $this->htmlEscape($_product->getData('short_description')); ?></p>
                     <button class="button btn-details">VIEW FULL PRODUCT DETAILS</button>
-                    <div class="std product_promotion"><p><?php echo $this->htmlEscape($_product->getData('product_promotion')); ?></p></div>
-                    <div class="std product_return"><p><?php echo $this->htmlEscape($_product->getData('product_return')); ?></p></div>
                     <?php echo $this->getChildHtml('other');?>
-                    <?php if ($_product->isSaleable() && $this->hasOptions()):?>
-                        <?php echo $this->getChildChildHtml('container1', '', true, true) ?>
-                    <?php endif;?>
+                    <?php if ($_product->isSaleable() && $this->hasOptions()):
+                            $blockForForm = Mage::app()->getLayout()->createBlock('catalog/product_view_type_configurable', 
+                                                                                  'product.info.options.configurable', 
+                                                                                   array('template'=>"opsway_quickbox/configurable.phtml"));
+                            $blockForForm->setProduct($_product);
+                            $blockForForm->setNameInLayout('product.info.options.configurable');
+                            echo $blockForForm->toHtml();
+                    endif;?>
 
                     <div class="qty">
                     <?php if(!$_product->isGrouped()): ?>
