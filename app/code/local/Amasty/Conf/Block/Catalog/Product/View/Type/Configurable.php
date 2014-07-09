@@ -82,7 +82,15 @@ class Amasty_Conf_Block_Catalog_Product_View_Type_Configurable extends Mage_Cata
                         
                         if ($simple->getImage() && Mage::getStoreConfig('amconf/general/reload_images'))
                         {
-                            $confDataSingle[$strKey]['media_url'] = $this->getUrl('amconf/media', array('id' => $simple->getId()));
+                            /**
+                             * if route name opsway_quickbox - template is called for popup, mediaUrlMain will call popup controller method
+                             * else - index controller method will be called
+                             */
+                            if($this->getRequest()->getRouteName() == 'opsway_quickbox') {
+                                $confDataSingle[$strKey]['media_url'] = $this->getUrl('amconf/media/popup', array('id' => $simple->getId()));
+                            } else {
+                                $confDataSingle[$strKey]['media_url'] = $this->getUrl('amconf/media', array('id' => $simple->getId()));
+                            }
                             if(Mage::getStoreConfig('amconf/general/oneselect_reload')) {
                                 $k = $strKey;
                                 if(strpos($strKey, ',')){
