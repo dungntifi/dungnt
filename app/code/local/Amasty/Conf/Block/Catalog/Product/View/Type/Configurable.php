@@ -86,10 +86,16 @@ class Amasty_Conf_Block_Catalog_Product_View_Type_Configurable extends Mage_Cata
                              * if route name opsway_quickbox - template is called for popup, mediaUrlMain will call popup controller method
                              * else - index controller method will be called
                              */
+                            $configOptions = '';
+                            if (Mage::app()->getStore()->isCurrentlySecure()) { //secure mode your current URL is HTTPS
+                                $configOptions = array('id' => $simple->getId(), '_secure' => true);
+                            } else { //your page is in HTTP mode
+                                $configOptions = array('id' => $simple->getId());
+                            }
                             if($this->getRequest()->getRouteName() == 'opsway_quickbox') {
-                                $confDataSingle[$strKey]['media_url'] = $this->getUrl('amconf/media/popup', array('id' => $simple->getId()));
+                                $confDataSingle[$strKey]['media_url'] = $this->getUrl('amconf/media/popup', $configOptions);
                             } else {
-                                $confDataSingle[$strKey]['media_url'] = $this->getUrl('amconf/media', array('id' => $simple->getId()));
+                                $confDataSingle[$strKey]['media_url'] = $this->getUrl('amconf/media', $configOptions);
                             }
                             if(Mage::getStoreConfig('amconf/general/oneselect_reload')) {
                                 $k = $strKey;
