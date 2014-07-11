@@ -56,12 +56,14 @@
 
                 <div class="info-holder">
                     <p><?php echo $this->htmlEscape($_product->getData('short_description')); ?></p>
-                    <button class="button btn-details">VIEW FULL PRODUCT DETAILS</button>
+                    <div class="buttons">
+                        <a href="<?php echo Mage::getUrl().$_product->getUrlPath(); ?>" class="button btn-details">VIEW FULL PRODUCT DETAILS</a>
+                    </div>
                     <?php echo $this->getChildHtml('other');?>
                     <?php if ($_product->isSaleable() && $this->hasOptions()):
                             $blockForForm = Mage::app()->getLayout()->createBlock('catalog/product_view_type_configurable', 
                                                                                   'product.info.options.configurable', 
-                                                                                   array('template'=>"opsway_quickbox/configurable.phtml"));
+                                                                                   array('template'=>"opsway_quickbox/configurable-edit.phtml"));
                             $blockForForm->setProduct($_product);
                             $blockForForm->setNameInLayout('product.info.options.configurable');
                             echo $blockForForm->toHtml();
@@ -84,10 +86,6 @@
                     <?php endif; ?>
                     </div>
                 </div>
-            </div>
-            <div class="buttons">
-                <button class="button" type="submit"><span><span><?php echo $this->__('Edit'); ?></span></span></button>
-                <a href="<?php echo Mage::getUrl().$_product->getUrlPath(); ?>" class="a-more-details">More details</a>
             </div>
         </form>
     </div>
