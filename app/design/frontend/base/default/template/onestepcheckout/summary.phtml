@@ -136,15 +136,7 @@ var total = <?php echo $this->getGrandTotal();?>;
                 var editUrl = '<?php echo $this->getUrl('quickbox/product/edit', array('_secure'=>true)); ?>';
 
                 link.fancybox({
-                    maxWidth	: 800,
-                    maxHeight	: 600,
-                    fitToView	: false,
-                    width		: '70%',
-                    height		: '70%',
-                    autoSize	: false,
-                    closeClick	: false,
-                    openEffect	: 'none',
-                    closeEffect	: 'none',
+                    closeClick: false,
                     type: 'ajax',
                     href: editUrl + '?id=' + productId + '&item=' + itemId + '&area=checkout'
                 });
