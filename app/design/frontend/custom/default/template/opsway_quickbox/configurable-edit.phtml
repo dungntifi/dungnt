@@ -2,6 +2,7 @@
 $_product    = $this->getProduct();
 $_attributes = Mage::helper('core')->decorateArray($this->getAllowAttributes());
 $attributeSetName = Mage::getModel('eav/entity_attribute_set')->load($_product->getAttributeSetId())->getAttributeSetName();
+$pre_config_values = $this->getProduct()->getPreconfiguredValues();
 ?>
 <?php if ($_product->isSaleable() && count($_attributes)):
     
@@ -16,9 +17,11 @@ $attributeSetName = Mage::getModel('eav/entity_attribute_set')->load($_product->
 ?>
     <div class="block-select">
         <?php if(!$_product->isGrouped()): ?>
-            <label for="qty"><?php echo $this->__('Quantity') ?></label>
+            <div class="label">
+                <label for="qty"><?php echo $this->__('Quantity') ?></label>
+            </div>
             <div class="select-styled">
-                <select name="qty" id="qty" style="width:23px;">
+                <select name="qty" id="qty">
                     <?php
                     $qtyStock = 5;//Mage::getModel('cataloginventory/stock_item')->loadByProduct($_product)->getQty(); Need getting qty for each simple
                     foreach (range(1, (($qtyStock > 5) ? 5 : $qtyStock)) as $qty): ?>
@@ -47,7 +50,7 @@ $attributeSetName = Mage::getModel('eav/entity_attribute_set')->load($_product->
     </div>
     
     <div class="product-options-bottom">
-        <button class="button btn-cart" type="submit"><span><span><?php echo $this->__('Edit'); ?></span></span></button>
+        <button class="button btn-cart" type="submit"><?php echo $this->__('Edit'); ?></button>
         <?php $_wishlistSubmitUrl = $this->helper('wishlist')->getAddUrl($_product); ?>
         <?php if ($this->helper('wishlist')->isAllow()) : ?>
             <a href="<?php echo $_wishlistSubmitUrl ?>" class="button btn-wishlist add-to-links" onclick="productAddToCartForm.submitLight(this, this.href); return false;" class="link-wishlist"><?php echo $this->__('Add to Wishlist') ?></a>

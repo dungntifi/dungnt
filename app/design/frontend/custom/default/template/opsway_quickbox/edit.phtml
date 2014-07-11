@@ -10,7 +10,6 @@
     $itemId = Mage::app()->getRequest()->getParam('item');
     $item = $session->getQuote()->getItemById($itemId);
     $infoBuyRequest = @unserialize($item->getOptionByCode('info_buyRequest')->getValue());
-    $pre_config_values = $this->getProduct()->getPreconfiguredValues();
 ?>
 <script type="text/javascript">
     jQuery.noConflict();
@@ -57,7 +56,7 @@
                 <div class="info-holder">
                     <p><?php echo $this->htmlEscape($_product->getData('short_description')); ?></p>
                     <div class="buttons">
-                        <a href="<?php echo Mage::getUrl().$_product->getUrlPath(); ?>" class="button btn-details">VIEW FULL PRODUCT DETAILS</a>
+                        <a href="<?php echo Mage::getUrl().$_product->getUrlPath(); ?>" class="button btn-details" style="display: block; line-height: 35px;">VIEW FULL PRODUCT DETAILS</a>
                     </div>
                     <?php echo $this->getChildHtml('other');?>
                     <?php if ($_product->isSaleable() && $this->hasOptions()):
