@@ -19,7 +19,7 @@ $checkoutHelper = Mage::helper('onestepcheckout/checkout');
     <tr>
         <td class="name">
             <span class="product-image"><img src="<?php echo $image->resize(88,115)->setWatermarkSize('30x10'); ?>" width="88" alt="<?php echo $this->htmlEscape($this->getProductName()) ?>" /></span>
-            <?php echo $item->getName(); ?>
+            <b><?php echo $item->getName(); ?></b>
             <a href="#" rel="<?php echo $item->getProductId(); ?>-<?php echo $item->getId(); ?>" title="<?php echo $this->__('Edit item parameters') ?>"
                            class="overlay-window btn_edit edit-cart-item"><?php echo $this->__('Edit') ?></a>
             <?php if($checkoutHelper->settings['show_custom_options']): ?>

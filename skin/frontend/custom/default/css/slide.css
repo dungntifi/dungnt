@@ -128,6 +128,7 @@
 	width:100%;
 	overflow:hidden;
 	margin:0 0 12px;
+	max-width: 290px;
 }
 .product-info .block-select .column{
 	float:right;
@@ -335,7 +336,7 @@
 }
 .view-popup .btn-details{
 	height:35px;
-	width:280px;
+	width:290px;
 	background:#efefef;
 	text-align:center;
 	font-size:14px;
