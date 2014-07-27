@@ -34,6 +34,8 @@
 <?php $order_details = Mage::getModel('sales/order')->loadByIncrementId(Mage::getSingleton('checkout/session')->getLastRealOrderId());
     Mage::register('current_order',$order_details);
     if ($this->getCanViewOrder()) :?>
+    <!-- Google Analytics Grand Total -->
+    <img height="1" width="1" style="border-style:none;" alt="" src="https://www.googleadservices.com/pagead/conversion/1009962017/?value=<?php echo $order_details->getGrandTotal(); ?>&amp;label=kfujCI_dgQUQoZjL4QM&amp;guid=ON&amp;script=0"/>
     <p><?php echo $this->__('Your order # is: %s.', sprintf('<a href="%s">%s</a>', $this->escapeHtml($this->getViewOrderUrl()), $this->escapeHtml($this->getOrderId()))) ?></p>
 <?php  else :?>
     <p><?php echo $this->__('Your order # is: %s.', $this->escapeHtml($this->getOrderId())) ?></p>
