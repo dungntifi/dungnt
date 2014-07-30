@@ -91,8 +91,8 @@ class Mage_GoogleAnalytics_Block_Ga extends Mage_Core_Block_Template
             $optPageURL = ", '{$this->jsQuoteEscape($pageName)}'";
         }
         return "
-_gaq.push(['_setAccount', '{$this->jsQuoteEscape($accountId)}']);
-_gaq.push(['_trackPageview'{$optPageURL}]);
+  ga('create', '{$this->jsQuoteEscape($accountId)}', 'auto');
+  ga('send', 'pageview');
 ";
     }
 
@@ -112,31 +112,29 @@ _gaq.push(['_trackPageview'{$optPageURL}]);
             ->addFieldToFilter('entity_id', array('in' => $orderIds))
         ;
         $result = array();
+        $result[] = "ga('require', 'ecommerce', 'ecommerce.js');";
         foreach ($collection as $order) {
             if ($order->getIsVirtual()) {
                 $address = $order->getBillingAddress();
             } else {
                 $address = $order->getShippingAddress();
             }
-            $result[] = sprintf("_gaq.push(['_addTrans', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s']);",
+            $result[] = sprintf("ga('ecommerce:addTransaction', {id: '%s', affiliation: '%s', revenue: '%s', tax: '%s', shipping: '%s'});",
                 $order->getIncrementId(),
                 $this->jsQuoteEscape(Mage::app()->getStore()->getFrontendName()),
                 $order->getBaseGrandTotal(),
                 $order->getBaseTaxAmount(),
-                $order->getBaseShippingAmount(),
-                $this->jsQuoteEscape(Mage::helper('core')->escapeHtml($address->getCity())),
-                $this->jsQuoteEscape(Mage::helper('core')->escapeHtml($address->getRegion())),
-                $this->jsQuoteEscape(Mage::helper('core')->escapeHtml($address->getCountry()))
+                $order->getBaseShippingAmount()
             );
             foreach ($order->getAllVisibleItems() as $item) {
-                $result[] = sprintf("_gaq.push(['_addItem', '%s', '%s', '%s', '%s', '%s', '%s']);",
+                $result[] = sprintf("ga('ecommerce:addItem', {id: '%s', sku: '%s', name: '%s', category: '%s', price: '%s', quantity: '%s'});",
                     $order->getIncrementId(),
                     $this->jsQuoteEscape($item->getSku()), $this->jsQuoteEscape($item->getName()),
                     null, // there is no "category" defined for the order item
                     $item->getBasePrice(), $item->getQtyOrdered()
                 );
             }
-            $result[] = "_gaq.push(['_trackTrans']);";
+            $result[] = "ga('ecommerce:send');";
         }
         return implode("\n", $result);
     }

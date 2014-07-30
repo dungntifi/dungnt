@@ -68,30 +68,7 @@
 <div class="buttons-set">
     <button type="button" class="button" title="<?php echo $this->__('Continue Shopping') ?>" onclick="window.location='<?php echo $this->getUrl() ?>'"><span><span><?php echo $this->__('Continue Shopping') ?></span></span></button>
 </div>
-<!-- Begin Jumpfly ReMarketing Code -->
-<?php
 
-$adwords_saleamt = floatval($order_details->subtotal);
-?>
-<script type="text/javascript">
-/* <![CDATA[ */
-var google_conversion_id = 1009962017;
-var google_conversion_language = "en";
-var google_conversion_format = "3";
-var google_conversion_color = "ffffff";
-var google_conversion_label = "kfujCI_dgQUQoZjL4QM";
-var google_conversion_value = "<?php echo $adwords_saleamt; ?>";
-var google_remarketing_only = false;
-/* ]]> */
-</script>
-<script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js">
-</script>
-<!-- End Jumpfly ReMarketing Code -->
-<noscript>
-    <div style="display:inline;">
-        <img height="1" width="1" style="border-style:none;" alt="" src="//www.googleadservices.com/pagead/conversion/1009962017/?value=<?php echo $adwords_saleamt; ?>&amp;label=kfujCI_dgQUQoZjL4QM&amp;guid=ON&amp;script=0"/>
-    </div>
-</noscript>
 
 <script>
     var currentUrl = document.location.href;
