@@ -70,7 +70,7 @@
 $orderId = Mage::getSingleton('checkout/session')->getLastRealOrderId();
 if ($orderId):
 $order_details = Mage::getModel('sales/order')->loadByIncrementId($orderId);
-$adwords_saleamt = floatval($order_details->subtotal);
+$adwords_saleamt = floatval($order_details->getBaseGrandTotal());
 ?>
 <script type="text/javascript">
 /* <![CDATA[ */
