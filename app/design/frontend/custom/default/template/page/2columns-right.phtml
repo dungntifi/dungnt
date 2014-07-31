@@ -65,32 +65,37 @@
     </div>
 </div>
 <?php echo $this->getAbsoluteFooter() ?>
-<!-- Begin Jumpfly ReMarketing Code -->
 <?php
-$orderId = Mage::getSingleton('checkout/session')->getLastRealOrderId();
-if ($orderId):
-    $order_details = Mage::getModel('sales/order')->loadByIncrementId($orderId);
-    $adwords_saleamt = floatval($order_details->getBaseGrandTotal());
-    ?>
-    <script type="text/javascript">
-        /* <![CDATA[ */
-        var google_conversion_id = 1009962017;
-        var google_conversion_language = "en";
-        var google_conversion_format = "3";
-        var google_conversion_color = "ffffff";
-        var google_conversion_label = "kfujCI_dgQUQoZjL4QM";
-        var google_conversion_value = "<?php echo $adwords_saleamt; ?>";
-        var google_remarketing_only = false;
-        /* ]]> */
-    </script>
-    <script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js">
-    </script>
-    <!-- End Jumpfly ReMarketing Code -->
-    <noscript>
-        <div style="display:inline;">
-            <img height="1" width="1" style="border-style:none;" alt="" src="//www.googleadservices.com/pagead/conversion/1009962017/?value=<?php echo $adwords_saleamt; ?>&amp;label=kfujCI_dgQUQoZjL4QM&amp;guid=ON&amp;script=0"/>
-        </div>
-    </noscript>
+global $gaRemarketingPromo;
+if($gaRemarketingPromo) :
+?>
+    <!-- Begin Jumpfly ReMarketing Code -->
+    <?php
+    $orderId = Mage::getSingleton('checkout/session')->getLastRealOrderId();
+    if ($orderId):
+        $order_details = Mage::getModel('sales/order')->loadByIncrementId($orderId);
+        $adwords_saleamt = floatval($order_details->getBaseGrandTotal());
+        ?>
+        <script type="text/javascript">
+            /* <![CDATA[ */
+            var google_conversion_id = 1009962017;
+            var google_conversion_language = "en";
+            var google_conversion_format = "3";
+            var google_conversion_color = "ffffff";
+            var google_conversion_label = "kfujCI_dgQUQoZjL4QM";
+            var google_conversion_value = "<?php echo $adwords_saleamt; ?>";
+            var google_remarketing_only = false;
+            /* ]]> */
+        </script>
+        <script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js">
+        </script>
+        <!-- End Jumpfly ReMarketing Code -->
+        <noscript>
+            <div style="display:inline;">
+                <img height="1" width="1" style="border-style:none;" alt="" src="//www.googleadservices.com/pagead/conversion/1009962017/?value=<?php echo $adwords_saleamt; ?>&amp;label=kfujCI_dgQUQoZjL4QM&amp;guid=ON&amp;script=0"/>
+            </div>
+        </noscript>
+    <?php endif; ?>
 <?php endif; ?>
 </body>
 </html>
