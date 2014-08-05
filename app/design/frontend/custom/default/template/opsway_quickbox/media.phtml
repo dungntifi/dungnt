@@ -1,0 +1,56 @@
+<div class="slideshow cycle-slideshow" 
+    data-cycle-fx="carousel" data-cycle-timeout="0" data-cycle-carousel-visible="2" data-cycle-slides="> div.image" data-cycle-next=".next" data-cycle-prev=".prev" data-cycle-caption=".cycle-caption" data-cycle-caption-template="{{slideNum}} / {{slideCount}}">
+    <div class="controls">
+        <div class="prev"></div>
+        <div class="next"></div>
+        <div class="cycle-caption"></div>
+    </div>
+    <div class="socials">
+        <a href="" class="like">Like</a>
+        <a href="" class="facebbok">Facebook</a>
+        <a href="" class="pinterest">Pinterest</a>
+        <a href="" class="symbaloo">Symbaloo</a>
+        <a href="" class="twitter">Twitter</a>
+        <a href="" class="google">G+</a>
+        <a href="" class="mail">Mail</a>
+    </div>
+    <?php foreach ($this->getGalleryImages() as $_image): ?>
+    <div class="image easyzoom easyzoom--overlay">            
+        <a href='<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'thumbnail', $_image->getFile()); ?>'>
+            <img src='<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'thumbnail', $_image->getFile())->keepAspectRatio(TRUE)->keepFrame(FALSE)->resize(475); ?>'>
+        </a>
+    </div>
+    <?php endforeach; ?>
+</div>
+<script type="text/javascript">
+    (function(){
+        var window_width = jQuery( window ).width(),
+            image = jQuery('.slideshow img');
+
+        calc_image(window_width);
+        jQuery('.cycle-slideshow').cycle();
+        
+        jQuery('.easyzoom').each(function() {
+            jQuery(this).easyZoom();
+        });
+
+        jQuery( window ).resize(function() {
+            window_width = jQuery( window ).width();
+            calc_image(window_width);
+        });
+        
+        function calc_image(width) {
+            if (width < 848) {
+                image.css({
+                    'width' :   window_width,
+                    'height':   'auto'
+                });
+                jQuery('.slideshow .controls').css({
+                    'left' :   window_width - 42,
+                });
+            }
+        }
+    })();
+
+
+</script>

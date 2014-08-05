@@ -1,57 +1,62 @@
 <?php
-/**
- * Magento
- *
- * NOTICE OF LICENSE
- *
- * This source file is subject to the Academic Free License (AFL 3.0)
- * that is bundled with this package in the file LICENSE_AFL.txt.
- * It is also available through the world-wide-web at this URL:
- * http://opensource.org/licenses/afl-3.0.php
- * If you did not receive a copy of the license and are unable to
- * obtain it through the world-wide-web, please send an email
- * to license@magentocommerce.com so we can send you a copy immediately.
- *
- * DISCLAIMER
- *
- * Do not edit or add to this file if you wish to upgrade Magento to newer
- * versions in the future. If you wish to customize Magento for your
- * needs please refer to http://www.magentocommerce.com for more information.
- *
- * @category    design
- * @package     base_default
- * @copyright   Copyright (c) 2013 Magento Inc. (http://www.magentocommerce.com)
- * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
- */
-?>
-
-<?php
 $_product    = $this->getProduct();
 $_attributes = Mage::helper('core')->decorateArray($this->getAllowAttributes());
 $attributeSetName = Mage::getModel('eav/entity_attribute_set')->load($_product->getAttributeSetId())->getAttributeSetName();
+$pre_config_values = $this->getProduct()->getPreconfiguredValues();
 ?>
-<?php if ($_product->isSaleable() && count($_attributes)):?>
-    <span class="sale-info"><?php echo $this->htmlEscape($_product->getData('additionalinfo')); ?></span>
-    <div class="product-details"><a href="<?php echo $_product->getProductUrl(); ?>">Jump in product details</a></div>
+<?php if ($_product->isSaleable() && count($_attributes)):
+    
+    if ($attributeSetName == "Dresses") {
+        $designer = "";
+        $designer = $_product->getAttributeText('designer');
+                                            
+        include(MAGENTO_ROOT . '/includes/size_chart.php');     
+    
+        $sizechart = sizeDesigner($designer);           
+    } 
+?>
     <div class="block-select">
-        <?php foreach($_attributes as $_attribute): ?>
-            <div class="column">
-                <?php $optionLabel = $_attribute->getLabel(); ?>
-                <div class="label">
-                    <?php if ($optionLabel == "Size" && $attributeSetName == "Dresses"){ ?><div class="sizechartlink"><a href="#" onclick='sizePopup()'>Size Chart</a></div><?php } ?>
-                    <span>*</span>
-                    <label><?php echo $_attribute->getLabel() ?></label>
-                </div>
-                <select name="super_attribute[<?php echo $_attribute->getAttributeId() ?>]" id="attribute<?php echo $_attribute->getAttributeId() ?>" class="required-entry super-attribute-select">
-                    <option><?php echo $this->__('Choose an Option...') ?></option>
+        <?php if(!$_product->isGrouped()): ?>
+            <div class="label">
+                <label for="qty"><?php echo $this->__('Quantity') ?></label>
+            </div>
+            <div class="select-styled">
+                <select name="qty" id="qty">
+                    <?php
+                    $qtyStock = 5;//Mage::getModel('cataloginventory/stock_item')->loadByProduct($_product)->getQty(); Need getting qty for each simple
+                    foreach (range(1, (($qtyStock > 5) ? 5 : $qtyStock)) as $qty): ?>
+                    <option value="<?php echo $qty; ?>"<?php if($qty == (int) $pre_config_values->getQty()/*$this->getProductDefaultQty()*/): ?> selected="selected"<?php endif ?>>
+                        <?php echo $qty ?>
+                    </option>
+                    <?php endforeach; ?>
                 </select>
             </div>
+        <?php endif; ?>
+        <?php foreach($_attributes as $_attribute): ?>
+            <?php $optionLabel = $_attribute->getLabel(); if ($optionLabel != "Size"): ?><div style="display: none;"><?php endif; ?>
+            <div class="label">
+                <?php if ($optionLabel == "Size" && $attributeSetName == "Dresses"){ ?><div class="sizechartlink"><a href="#" onclick='sizePopup()'>Size Chart</a></div><?php } ?>
+                <span>*</span>
+                <label><?php echo $_attribute->getLabel() ?></label>
+            </div>
+            <select name="super_attribute[<?php echo $_attribute->getAttributeId() ?>]" id="attribute<?php echo $_attribute->getAttributeId() ?>" class="required-entry super-attribute-select">
+                <option><?php echo $this->__('Choose an Option...') ?></option>
+            </select>
+            <?php if ($optionLabel != "Size"): ?></div><?php endif; ?>
         <?php endforeach; ?>
     </div>
     <div class="block-color">
-        <span class="required">*Required Fields</span>
         <b>Select color</b>
     </div>
+    
+    <div class="product-options-bottom">
+        <button class="button btn-cart" type="submit"><?php echo $this->__('Update Product'); ?></button>
+        <?php $_wishlistSubmitUrl = $this->helper('wishlist')->getAddUrl($_product); ?>
+        <?php if ($this->helper('wishlist')->isAllow()) : ?>
+            <a href="<?php echo $_wishlistSubmitUrl ?>" class="button btn-wishlist add-to-links" onclick="productAddToCartForm.submitLight(this, this.href); return false;" class="link-wishlist"><?php echo $this->__('Save for later') ?></a>
+        <?php endif; ?>
+    </div>
+
     <script type="text/javascript">
         var spConfigSingle = new Product.ConfigSingle(<?php echo $this->getJsonConfig() ?>);
         <?php
@@ -118,4 +123,9 @@ $attributeSetName = Mage::getModel('eav/entity_attribute_set')->load($_product->
             }
         }
     });
+    function sizePopup() {        
+        jQuery.fn.speedoPopup({
+            htmlContent: "<?php echo $sizechart; ?>", window: null, height: null, effectIn: "fade", effectOut: "fade"
+        }); 
+    };
 </script>

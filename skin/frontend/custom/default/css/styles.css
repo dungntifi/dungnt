@@ -3331,7 +3331,6 @@ tr.summary-details-excluded {
 	color:#000;
 	text-align:center;
 	position:relative;
-	top:-50px;	
 }
 
 .products-grid .color-avail {
@@ -4297,7 +4296,6 @@ tr.summary-details-excluded {
 
 .product-options-bottom {
 /*background-color:#fffada;*/
-	padding:15px 20px;
 	border:0 solid #e4e4e4;
 	border-top:0;
 }
@@ -4325,8 +4323,11 @@ tr.summary-details-excluded {
 
 .product-options-bottom .add-to-links {
 	clear:both;
-	padding:5px 0 0;
-	text-align:right;
+	display: block;
+    line-height: 35px;
+}
+.product-options-bottom .add-to-links:hover {
+	text-decoration: none;
 }
 
 .col3-layout .product-options-bottom .price-box {

@@ -19,7 +19,7 @@ $checkoutHelper = Mage::helper('onestepcheckout/checkout');
     <tr>
         <td class="name">
             <span class="product-image"><img src="<?php echo $image->resize(88,115)->setWatermarkSize('30x10'); ?>" width="88" alt="<?php echo $this->htmlEscape($this->getProductName()) ?>" /></span>
-            <?php echo $item->getName(); ?>
+            <b><?php echo $item->getName(); ?></b>
             <a href="#" rel="<?php echo $item->getProductId(); ?>-<?php echo $item->getId(); ?>" title="<?php echo $this->__('Edit item parameters') ?>"
                            class="overlay-window btn_edit edit-cart-item"><?php echo $this->__('Edit') ?></a>
             <?php if($checkoutHelper->settings['show_custom_options']): ?>
@@ -136,15 +136,7 @@ var total = <?php echo $this->getGrandTotal();?>;
                 var editUrl = '<?php echo $this->getUrl('quickbox/product/edit', array('_secure'=>true)); ?>';
 
                 link.fancybox({
-                    maxWidth	: 800,
-                    maxHeight	: 600,
-                    fitToView	: false,
-                    width		: '70%',
-                    height		: '70%',
-                    autoSize	: false,
-                    closeClick	: false,
-                    openEffect	: 'none',
-                    closeEffect	: 'none',
+                    closeClick: false,
                     type: 'ajax',
                     href: editUrl + '?id=' + productId + '&item=' + itemId + '&area=checkout'
                 });

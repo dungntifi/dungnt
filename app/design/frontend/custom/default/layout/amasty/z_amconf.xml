@@ -16,10 +16,10 @@
             <action method="addItem" ifconfig="amconf/lightbox/enable"><type>skin_css</type><name>js/z_amasty/plugins/fancybox/jquery.fancybox.css</name><params/></action>
             <action method="addItem" ifconfig="amconf/lightbox/enable"><type>skin_js</type><name>js/z_amasty/plugins/fancybox/jquery.fancybox.js</name><params/></action> 
         </reference>
-	    <reference name="product.info">
+        <reference name="product.info">
             <action ifconfig="amconf/general/use_zoom_lightbox" method="unsetChild"><name>product.info.media</name></action>
             <block type="amconf/catalog_product_view_media"  name="product.info.media" as="media"> 
-		<action method="setTemplate">
+        <action method="setTemplate">
                     <template>catalog/product/view/media.phtml</template> 
                 </action>
                 <action method="setTemplate" ifconfig="amconf/general/use_zoom_lightbox">
@@ -85,7 +85,7 @@
     </catalog_category_layered> 
     
    <amshopby_index_index>
-	  <reference name="head">            
+      <reference name="head">            
             <action method="addItem" ifconfig="amconf/list/enable_list"><type>skin_css</type><name>js/amasty/amconf/css/amconf.css</name><params/></action>
             <action method="addJs" ifconfig="amconf/list/enable_list"><script>varien/product.js</script></action>
             <action method="addJs" ifconfig="amconf/list/enable_list"><script>varien/configurable.js</script></action>
@@ -98,9 +98,9 @@
            <block type="amconf/catalog_product_tooltip" name="tooltip" template="amasty/amconf/tooltip.phtml"/>
         </reference>
     </amshopby_index_index>
-	
-	<cms_page>
-	   <reference name="head">            
+    
+    <cms_page>
+       <reference name="head">            
             <action method="addItem" ifconfig="amconf/list/enable_list"><type>skin_css</type><name>js/amasty/amconf/css/amconf.css</name><params/></action>
             <action method="addJs" ifconfig="amconf/list/enable_list"><script>varien/product.js</script></action>
             <action method="addJs" ifconfig="amconf/list/enable_list"><script>varien/configurable.js</script></action>

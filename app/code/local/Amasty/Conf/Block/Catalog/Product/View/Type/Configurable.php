@@ -58,7 +58,7 @@ class Amasty_Conf_Block_Catalog_Product_View_Type_Configurable extends Mage_Cata
                             $small_image = Mage::getModel('catalog/product_media_config')->getMediaUrl($_prod->getSmallImage());
                         }
 
-                        $confData[$strKey] = array(
+                        $confDataSingle[$strKey] = array(
                             'short_description' => $this->helper('catalog/output')->productAttribute($simple, nl2br($simple->getShortDescription()), 'short_description'),
                             'description'       => $this->helper('catalog/output')->productAttribute($simple, $simple->getDescription(), 'description'),
                             'small_image'       => $small_image,
@@ -66,30 +66,44 @@ class Amasty_Conf_Block_Catalog_Product_View_Type_Configurable extends Mage_Cata
                          
                         if (Mage::getStoreConfig('amconf/general/reload_name'))
                         {
-                            $confData[$strKey]['name'] = $simple->getName();
+                            $confDataSingle[$strKey]['name'] = $simple->getName();
                         }
                  
                         
                         if ($_useSimplePrice)
                         {
                             $tierPriceHtml = $this->getTierPriceHtml($simple);
-                            $confData[$strKey]['price_html'] = str_replace('product-price-' . $simple->getId(), 'product-price-' . $this->getProduct()->getId(), $this->getPriceHtml($simple) . $tierPriceHtml);
-                            $confData[$strKey]['price_clone_html'] = str_replace('product-price-' . $simple->getId(), 'product-price-' . $this->getProduct()->getId(), $this->getPriceHtml($simple, false, '_clone') . $tierPriceHtml);
+                            $confDataSingle[$strKey]['price_html'] = str_replace('product-price-' . $simple->getId(), 'product-price-' . $this->getProduct()->getId(), $this->getPriceHtml($simple) . $tierPriceHtml);
+                            $confDataSingle[$strKey]['price_clone_html'] = str_replace('product-price-' . $simple->getId(), 'product-price-' . $this->getProduct()->getId(), $this->getPriceHtml($simple, false, '_clone') . $tierPriceHtml);
 
                             // the price value is required for product list/grid
-                            $confData[$strKey]['price'] = $simple->getFinalPrice();
+                            $confDataSingle[$strKey]['price'] = $simple->getFinalPrice();
                         }
                         
                         if ($simple->getImage() && Mage::getStoreConfig('amconf/general/reload_images'))
                         {
-                            $confData[$strKey]['media_url'] = $this->getUrl('amconf/media', array('id' => $simple->getId()));
+                            /**
+                             * if route name opsway_quickbox - template is called for popup, mediaUrlMain will call popup controller method
+                             * else - index controller method will be called
+                             */
+                            $configOptions = '';
+                            if (Mage::app()->getStore()->isCurrentlySecure()) { //secure mode your current URL is HTTPS
+                                $configOptions = array('id' => $simple->getId(), '_secure' => true);
+                            } else { //your page is in HTTP mode
+                                $configOptions = array('id' => $simple->getId());
+                            }
+                            if($this->getRequest()->getRouteName() == 'opsway_quickbox') {
+                                $confDataSingle[$strKey]['media_url'] = $this->getUrl('amconf/media/popup', $configOptions);
+                            } else {
+                                $confDataSingle[$strKey]['media_url'] = $this->getUrl('amconf/media', $configOptions);
+                            }
                             if(Mage::getStoreConfig('amconf/general/oneselect_reload')) {
                                 $k = $strKey;
                                 if(strpos($strKey, ',')){
                                     $k = substr($strKey, 0, strpos($strKey, ','));
                                 }
-                                if(!(array_key_exists($k, $confData) && array_key_exists('media_url', $confData[$k]))){
-                                    $confData[$k]['media_url'] = $confData[$strKey]['media_url']; 
+                                if(!(array_key_exists($k, $confDataSingle) && array_key_exists('media_url', $confDataSingle[$k]))){
+                                    $confDataSingle[$k]['media_url'] = $confDataSingle[$strKey]['media_url']; 
                                 }
                             }
                             else{
@@ -97,7 +111,7 @@ class Amasty_Conf_Block_Catalog_Product_View_Type_Configurable extends Mage_Cata
                             }
                         } elseif ($noimgUrl) 
                         {
-                            $confData[$strKey]['noimg_url'] = $noimgUrl;
+                            $confDataSingle[$strKey]['noimg_url'] = $noimgUrl;
                         }
                         //for >3
                         if(Mage::getStoreConfig('amconf/general/oneselect_reload')){
@@ -106,7 +120,7 @@ class Amasty_Conf_Block_Catalog_Product_View_Type_Configurable extends Mage_Cata
                                 $pos = strpos($strKey, ",", $pos+1);
                                 if($pos){
                                     $newKey = substr($strKey, 0, $pos);
-                                    $confData[$newKey] =  $confData[$strKey];   
+                                    $confDataSingle[$newKey] =  $confDataSingle[$strKey];   
                                 }
                             }
                             
@@ -118,14 +132,25 @@ class Amasty_Conf_Block_Catalog_Product_View_Type_Configurable extends Mage_Cata
                 {
                     $html = '<a href="#" onclick="javascript: spConfig.clearConfig(); return false;">' . $this->__('Reset Configuration') . '</a>' . $html;
                 }
+                 
+                /**
+                 * if route name opsway_quickbox - template is called for popup, mediaUrlMain will call popup controller method
+                 * else - index controller method will be called
+                 */
+                if($this->getRequest()->getRouteName() == 'opsway_quickbox') {
+                    $mediaUrlMain = $this->getUrl('amconf/media/popup/', array('id' => $this->getProduct()->getId()));
+                } else {
+                    $mediaUrlMain = $this->getUrl('amconf/media', array('id' => $this->getProduct()->getId()));
+                }
+                 
                 $html = '<script type="text/javascript">
                             var showAttributeTitle =' . intval(Mage::getStoreConfig('amconf/general/show_attribute_title')). '; 
                             var amConfAutoSelectAttribute = ' . intval(Mage::getStoreConfig('amconf/general/auto_select_attribute')) . ';
-                            confData = new AmConfigurableData(' . Zend_Json::encode($confData) . ');
-                            confData.textNotAvailable = "' . $this->__('Choose previous option please...') . '";
-                            confData.mediaUrlMain = "' . $this->getUrl('amconf/media', array('id' => $this->getProduct()->getId())) . '";
-                            confData.oneAttributeReload = "' . (boolean) Mage::getStoreConfig('amconf/general/oneselect_reload') . '";
-                            confData.useSimplePrice = "' . intval($_useSimplePrice)  . '";
+                            confDataSingle = new AmConfigurableData(' . Zend_Json::encode($confDataSingle) . ');
+                            confDataSingle.textNotAvailable = "' . $this->__('Choose previous option please...') . '";
+                            confDataSingle.mediaUrlMain = "' . $mediaUrlMain . '";
+                            confDataSingle.oneAttributeReload = "' . (boolean) Mage::getStoreConfig('amconf/general/oneselect_reload') . '";
+                            confDataSingle.useSimplePrice = "' . intval($_useSimplePrice)  . '";
                     </script>'. $html;
                 
                 if (Mage::getStoreConfig('amconf/general/hide_dropdowns'))
