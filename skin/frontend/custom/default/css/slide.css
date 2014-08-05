@@ -18,8 +18,9 @@
 	position:relative;
 }
 .slideshow .image{
-	height:630px;
-	margin:0 2px 0 0;
+	position: relative !important;
+	height: 630px;
+	margin: 0 2px 0 0;
 }
 .slideshow img{
 	width:422px;
@@ -27,13 +28,14 @@
 }
 .slideshow .controls{
 	position:absolute;
-	top:218px;
-	left:380px;
-	height:124px;
-	width:42px;
-	border:1px solid #fff;
-	background:#fff;
-	z-index:9999;
+	top: 50%;
+	left: 380px;
+	height: 124px;
+	width: 42px;
+	margin-top: -62px;
+	border: 1px solid #fff;
+	background: #fff;
+	z-index: 9999;
 }
 .slideshow .controls .prev-popup,
 .slideshow .controls .next-popup,
@@ -296,16 +298,16 @@
 	background:#fff;
 }
 .view-popup .close{
-	border:none;
-	width:25px;
-	height:24px;
-	position:absolute;
-	right:0;
-	top:0;
-	cursor:pointer;
-	text-indent:-9999px;
-	overflow:hidden;
-	background:url(../images/btn-close.png) no-repeat;
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 35px;
+	height: 35px;
+	background:url(../images/btn-close.png) no-repeat 50% 50% #ff6100;
+	border: none;
+	cursor: pointer;
+	text-indent: -9999px;
+	overflow: hidden;
 }
 .view-popup .slideshow{
 	height:615px;
@@ -362,3 +364,15 @@
 .quickview a:hover {
 	text-decoration: none;
 }
+
+/*@media only screen and (min-width: 849px) {
+	.slideshow .controls {
+		left: 380px;
+	}
+}
+
+@media only screen and (max-width: 848px) {
+	.slideshow .controls {
+		top: 218px;
+	}
+}*/

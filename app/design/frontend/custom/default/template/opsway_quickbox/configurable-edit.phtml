@@ -50,10 +50,10 @@ $pre_config_values = $this->getProduct()->getPreconfiguredValues();
     </div>
     
     <div class="product-options-bottom">
-        <button class="button btn-cart" type="submit"><?php echo $this->__('Edit'); ?></button>
+        <button class="button btn-cart" type="submit"><?php echo $this->__('Update Product'); ?></button>
         <?php $_wishlistSubmitUrl = $this->helper('wishlist')->getAddUrl($_product); ?>
         <?php if ($this->helper('wishlist')->isAllow()) : ?>
-            <a href="<?php echo $_wishlistSubmitUrl ?>" class="button btn-wishlist add-to-links" onclick="productAddToCartForm.submitLight(this, this.href); return false;" class="link-wishlist"><?php echo $this->__('Add to Wishlist') ?></a>
+            <a href="<?php echo $_wishlistSubmitUrl ?>" class="button btn-wishlist add-to-links" onclick="productAddToCartForm.submitLight(this, this.href); return false;" class="link-wishlist"><?php echo $this->__('Save for later') ?></a>
         <?php endif; ?>
     </div>
 
