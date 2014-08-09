@@ -310,7 +310,7 @@
 	right: 0;
 	width: 35px;
 	height: 35px;
-	background:url(../images/btn-close.png) no-repeat 50% 50% #ff6100;
+	background:url(../images/btn-close.png) no-repeat 50% 50% #000;
 	border: none;
 	cursor: pointer;
 	text-indent: -9999px;
