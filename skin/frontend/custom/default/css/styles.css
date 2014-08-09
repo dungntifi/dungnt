@@ -3460,7 +3460,10 @@ tr.summary-details-excluded {
 /* Product View ========================================================================== */
 
 .sizechartlink {
-	float: right;
+	clear: both;
+	width: 100%;
+	text-align: right;
+	padding-bottom: 10px;
 	margin-right: 16px;
 }
 
