@@ -3324,6 +3324,10 @@ tr.summary-details-excluded {
 	border:0px solid #fff;
 }
 
+.product-image .img2 {
+	display: none;
+}
+
 .products-grid .product-name {
 	margin:0 0;
 	font-weight:700;
