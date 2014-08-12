@@ -101,11 +101,12 @@
                 
                 <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" class="product-image">
                     <?php $gallery = Mage::getModel('catalog/product')->load($_product->getId())->getMediaGalleryImages(); 
-                    // echo "gallery<pre>"; print_r($gallery); echo "</pre>";
                     $j = 1;
                     foreach ($gallery as $_image) : 
                         if($j <= 2) : ?>
+
                         <img src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image', $_image->getFile())->constrainOnly(TRUE)->keepAspectRatio(TRUE)->keepFrame(FALSE)->resize(190,300); ?>" alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" class="img<?php echo $j; ?>" />
+                        
                     <?php $j++; endif; 
                     endforeach; ?>
                 </a>
