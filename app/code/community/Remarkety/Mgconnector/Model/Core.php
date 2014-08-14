@@ -19,6 +19,8 @@ define('REMARKETY_LOG_SEPARATOR', 		'|');
 
 class Remarkety_Mgconnector_Model_Core extends Mage_Core_Model_Abstract {
 
+	private $configurable_product_model = null;
+	
 	private $response_mask = array (
 			'customer' => array (
 					'entity_id',
@@ -117,6 +119,7 @@ class Remarkety_Mgconnector_Model_Core extends Mage_Core_Model_Abstract {
 									'created_at',
 									'updated_at',
 									'thumbnail',
+									'small_image',
 									'categories',
 									'type_id',
 									'url_path'
@@ -425,6 +428,7 @@ class Remarkety_Mgconnector_Model_Core extends Mage_Core_Model_Abstract {
 					$address = Mage::getModel('sales/order_address')->load($addressID)->toArray();
 					$orderData['address'] = $address;
 				}
+				$storeUrl = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB);
 				
 				foreach ($order->getItemsCollection() as $item) {
 					$product = null;
@@ -435,10 +439,12 @@ class Remarkety_Mgconnector_Model_Core extends Mage_Core_Model_Abstract {
 							continue;
 						}
 						
-						$itemData['thumbnail'] = $product->getImageUrl();
+						$itemData['thumbnail'] = $this->getImageUrl($product, 'image');
+						$itemData['small_image'] = $this->getImageUrl($product, 'thumbnail');
+						
 						$itemData['type_id'] = $product->getData('type_id');
 						$itemData['categories'] = $this->_productCategories($itemData['product_id']);
-						$prodUrl = $this->getProdUrl($product);
+						$prodUrl = $this->getProdUrl($product, $storeUrl);
 						$itemData['url_path'] = $prodUrl;
 				
 						$orderData['items'][$itemData['item_id']] = $itemData;
@@ -518,7 +524,8 @@ class Remarkety_Mgconnector_Model_Core extends Mage_Core_Model_Abstract {
 			}
 		
 			if (!is_null($pageSize)) $quotesCollection->setPageSize($pageSize)->setCurPage($pageNumber);
-	
+			$storeUrl = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB);
+			
 			foreach ($quotesCollection as $quote) {
 				$quoteData = $quote->toArray();
 
@@ -539,7 +546,7 @@ class Remarkety_Mgconnector_Model_Core extends Mage_Core_Model_Abstract {
 					}
 					
 					$quoteItem['categories'] = $this->_productCategories($quoteItem['product_id']);
-					$prodUrl = $this->getProdUrl($_product);
+					$prodUrl = $this->getProdUrl($_product, $storeUrl);
 					$quoteItem['url_path'] = $prodUrl;
 						
 					$quoteData['items'][$quoteItem['item_id']] = $quoteItem;
@@ -630,16 +637,20 @@ class Remarkety_Mgconnector_Model_Core extends Mage_Core_Model_Abstract {
 			}
 		
 			if (!is_null($pageSize)) $productsCollection->setPage($pageNumber, $pageSize);
-	
+			
+			$storeUrl = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB);
+			
 			foreach ($productsCollection as $product) {
 				$productData = $product->toArray();
-				$productData['thumbnail'] = $product->getImageUrl();
+				$productData['thumbnail'] = $this->getImageUrl($product, 'image');
+				$productData['small_image'] = $this->getImageUrl($product, 'thumbnail');
+						
 				$productData['categories'] = array();
 				$categoryCollection = $product->getCategoryCollection()->addAttributeToSelect('name');
 				foreach ($categoryCollection as $category) {
 					$productData['categories'][] = $category->getData('name');
 				}
-				$prodUrl = $this->getProdUrl($product);
+				$prodUrl = $this->getProdUrl($product, $storeUrl);
 				$productData['url_path'] = $prodUrl;
 				
 				$productData = $this->_filter_output_data($productData, $this->response_mask['product']);
@@ -869,20 +880,41 @@ class Remarkety_Mgconnector_Model_Core extends Mage_Core_Model_Abstract {
 		}
 	}	
 	
-	public function getProdUrl($product) {
-		$url = $product->getProductUrl();
-		if($product->type_id == 'configurable') {
-			return $product->getProductUrl();
-		}else{
-			$configurable_product_model = Mage::getModel('catalog/product_type_configurable');
-			$arrayOfParentIds = $configurable_product_model->getParentIdsByChild($product->getId());
+	public function getProdUrl($product, $storeUrl) {
+		$url = '';
+		if($product->type_id != 'configurable') {
+			$arrayOfParentIds = $this->getConfigProdModel()->getParentIdsByChild($product->getId());
 			$parentId = (count($arrayOfParentIds) > 0 ? $arrayOfParentIds[0] : null);
-			$url = $product->getProductUrl();
+			
 			if(!is_null($parentId)){
-				$url = Mage::getModel("catalog/product")->load($parentId)->getProductUrl();
+				$product = Mage::getModel("catalog/product")->load($parentId);
 			}
 		}
+		$url = $product->getUrlPath();
+		return $storeUrl.$url;
+	}
+	
+	public function getImageUrl($product, $type = 'image'){
+		return (string)Mage::helper('catalog/image')->init($product, $type);
+		
+		$url = '';
+		if($product->type_id != 'configurable') {
+			$arrayOfParentIds = $this->getConfigProdModel()->getParentIdsByChild($product->getId());
+			$parentId = (count($arrayOfParentIds) > 0 ? $arrayOfParentIds[0] : null);
+			
+			if(!is_null($parentId)){
+				$product = Mage::getModel("catalog/product")->load($parentId);
+			}
+		}
+		$url = (string)Mage::helper('catalog/image')->init($product, $type);
 		return $url;
+	}
+	
+	private function getConfigProdModel(){
+		if($this->configurable_product_model == null){
+			$this->configurable_product_model = Mage::getModel('catalog/product_type_configurable');
+		}
+		return $this->configurable_product_model;
 	}
 }
 
@@ -898,5 +930,6 @@ function handleShutdown() {
 		Mage::log("SHUTDOWN", null, REMARKETY_LOG, true);
 	}
 }
+
 
 
