@@ -1051,7 +1051,7 @@ html,div,span,object,iframe,blockquote,pre,abbr,address,cite,code,del,dfn,em,img
 	font-family: 'Lato', sans-serif;
 	text-transform:uppercase;
 	display:block;
-	padding: 0% 6% 6%;
+	padding: 3% 6% 6%;
 }
 
 .shoptext {
@@ -1060,7 +1060,7 @@ html,div,span,object,iframe,blockquote,pre,abbr,address,cite,code,del,dfn,em,img
 	font-weight: 400;
 	font-style: italic;
 	text-transform: none;
-	padding: 3% 6% 0;
+	padding: 0% 6% 0;
 }
 
 .text-left {
@@ -1084,7 +1084,7 @@ html,div,span,object,iframe,blockquote,pre,abbr,address,cite,code,del,dfn,em,img
 }
 
 .fittext-h1-wrap {
-	background:rgba(191,1,36,1.0);	
+	background:rgba(33,46,101,0.7);	
 }
 
 .fittext-h1 {
@@ -1094,56 +1094,57 @@ html,div,span,object,iframe,blockquote,pre,abbr,address,cite,code,del,dfn,em,img
 }
 
 .fittext-h2 {
-	color:#000;
-	background:rgba(240,220,190,0.2);
+	color:#fff;
+	background:rgba(100,24,73,0.5);
 	text-align:center;
 	margin-top:120px;
 }
 
 .fittext-h3 {
 	color:#fff;
-	background:rgba(0,0,0,0.7);
+	background:rgba(226,0,11,0.7);
 	text-align:right;
 }
 
 .fittext-h4 {
 	color:#fff;
-	background:rgba(0,191,232,0.7);
+	background:rgba(0,0,0,0.7);
 	text-align:right;
 }
 
 .fittext-h5 {
 	color:#fff;
-	background:rgba(63,127,105,0.7);
+	background:rgba(251,42,64,0.7);
 	text-align:center;
+	margin-top: 180px;
 }
 
 .fittext-h6 {
 	color:#fff;
-	background:rgba(138,118,117,0.8);
+	background:rgba(50,200,200,0.8);
 	text-align:right;
 	margin-top:120px;
 }
 
 .fittext-h7 {
 	color:#fff;
-	background:rgba(227,59,111,0.8);
+	background:rgba(250,170,125,0.8);
 	text-align:left;
 	margin-top:80px;
 }
 
 .fittext-h8 {
 	color:#fff;
-	background:rgba(223,0,0,0.7);
+	background:rgba(180,150,95,0.5);
 	text-align:center;
 	margin-top:120px;
 }
 
 .fittext-h9 {
 	color:#fff;
-	background:rgba(42,225,195,0.7);
+	background:rgba(160,220,220,0.7);
 	text-align:right;
-	margin-top:50px;
+	margin-top:70px;
 }
 
 .fittext-p1,.fittext-p2,.fittext-p3,.fittext-p4,.fittext-p5,.fittext-p6,.fittext-p7,.fittext-p8,.fittext-p9 {
@@ -1158,7 +1159,7 @@ html,div,span,object,iframe,blockquote,pre,abbr,address,cite,code,del,dfn,em,img
 }
 
 .fittext-p1 {
-	color:#bf0124;
+	color:#212e65;
 	text-align:right;
 }
 
@@ -1168,7 +1169,7 @@ html,div,span,object,iframe,blockquote,pre,abbr,address,cite,code,del,dfn,em,img
 }
 
 .fittext-p3 {
-	color:#fff;
+	color:#e2000b;
 	text-align:right;
 	margin-top:80px;
 }
@@ -1183,26 +1184,25 @@ html,div,span,object,iframe,blockquote,pre,abbr,address,cite,code,del,dfn,em,img
 .fittext-p5 {
 	color:#fff;
 	text-align:center;
-	margin-top: 100px;
 }
 
 .fittext-p6 {
-	color:#8a7675;
+	color:#32c8c8;
 	text-align:right;
 }
 
 .fittext-p7 {
-	color:#e33b6f;
+	color:#faaa7d;
 	text-align:left;
 }
 
 .fittext-p8 {
-	color:#000;
+	color:#fff;
 	text-align:center;
 }
 
 .fittext-p9 {
-	color:#2ae1c3;
+	color:#a0dcdc;
 	text-align:right;
 }
 
@@ -7169,3 +7169,15 @@ width: 100%;
 #credit-card-type .AE.active  {background-position: -102px 0px;}
 #credit-card-type .DI.active  {background-position: -153px 0px;}
 .product_promotion {color: #cc0000; font-weight: bold;}
+.slider-button {
+	background: rgba(255,255,255,1.0);
+	padding: 7%;
+	color: #000;
+	font-size: 2em;
+	font-family: 'Raleway', sans-serif;
+	font-weight: 400;
+	text-transform:uppercase;
+}
+.tp-caption.sale a:hover {
+	color: #ea0000;
+}
