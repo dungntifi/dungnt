@@ -240,14 +240,14 @@ Product.Config.prototype.fillSelect = function(element){
                     image = document.createElement('img');
                     image = $(image); // fix for IE
                     image.id = 'amconf-image-' + options[i].id + '-' + this.config.productId;
-		            image.src   = options[i].image;
+                    image.src   = options[i].image;
                     image.width = this.config.size;
                     image.height = this.config.size;
                     image.addClassName('amconf-image');
-		            image.alt = options[i].label;
-		            image.title = options[i].label;
+                    image.alt = options[i].label;
+                    image.title = options[i].label;
                     image.observe('click', this.configureImage.bind(this));
-		    		if('undefined' != typeof(buble)){
+                    if('undefined' != typeof(buble)){
                          image.observe('mouseover', buble.showToolTip)
                          image.observe('mouseout', buble.hideToolTip)       
                     }
@@ -292,7 +292,7 @@ Product.Config.prototype.configureElement = function(element)
         var pos = elId.indexOf('-');
         if ('-1' != pos){
             elId = elId.substring(pos+1, elId.lenght);
-            elId = 	parseInt(elId);
+            elId =  parseInt(elId);
             if(prevNextSetting[elId] && prevNextSetting[elId][element.config.id] && prevNextSetting[elId][element.config.id][1] || element.nextSetting){
                  if(prevNextSetting[elId] && prevNextSetting[elId][element.config.id] && prevNextSetting[elId][element.config.id][1]){
                     element.nextSetting = prevNextSetting[elId][element.config.id][1]
@@ -429,10 +429,11 @@ Product.Config.prototype.selectImage = function(element)
     if('undefined' != typeof(confData[parentId]['optionProducts'][key]['small_image'])){ 
          var parUrl = confData[parentId]['optionProducts'][key]['parent_image'];
          var possl = parUrl.lastIndexOf('/');
-         $$('.product-image img').each(function(img){
+         $$('.product-image img').each(function(img, index){
+            // console.log(confData[parentId]['optionProducts'][key]['small_image'][index]);
               var posslImg = img.src.lastIndexOf('/');
               if(img.src.substr(posslImg, img.src.length) == parUrl.substr(possl, parUrl.length) || img.hasClassName('amconf-parent-'+parentId)){
-                  img.src = confData[parentId]['optionProducts'][key]['small_image'];
+                  img.src = confData[parentId]['optionProducts'][key]['small_image'][index];
                   img.addClassName('amconf-parent-'+parentId);
                   productLink.href = (productLink.href.match(/color=(\d+)/)) ? productLink.href.replace(/color=(\d+)/, 'color=' + key) : productLink.href + '?color=' + key;
               }
@@ -469,10 +470,10 @@ Product.Config.prototype.processEmpty = function()
             holderDiv.id = 'amconf-images-' + attributeId + '-' + this.config.productId;
             if ('undefined' != typeof(confData[me.config.productId]))
             {
-            	holderDiv.innerHTML = confData[me.config.productId].textNotAvailable;
+                holderDiv.innerHTML = confData[me.config.productId].textNotAvailable;
             } else 
             {
-            	holderDiv.innerHTML = "";
+                holderDiv.innerHTML = "";
             }
             holder.insertBefore(holderDiv, select);
         }
