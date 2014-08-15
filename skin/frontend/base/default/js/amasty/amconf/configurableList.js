@@ -427,19 +427,25 @@ Product.Config.prototype.selectImage = function(element)
 
     var productLink = element.up('.item').down('.product-image');
     if('undefined' != typeof(confData[parentId]['optionProducts'][key]['small_image'])){ 
-         var parUrl = confData[parentId]['optionProducts'][key]['parent_image'];
-         var possl = parUrl.lastIndexOf('/');
-         $$('.product-image img').each(function(img, index){
-            // console.log(confData[parentId]['optionProducts'][key]['small_image'][index]);
-              var posslImg = img.src.lastIndexOf('/');
-              if(img.src.substr(posslImg, img.src.length) == parUrl.substr(possl, parUrl.length) || img.hasClassName('amconf-parent-'+parentId)){
-                  img.src = confData[parentId]['optionProducts'][key]['small_image'][index];
-                  img.addClassName('amconf-parent-'+parentId);
-                  productLink.href = (productLink.href.match(/color=(\d+)/)) ? productLink.href.replace(/color=(\d+)/, 'color=' + key) : productLink.href + '?color=' + key;
-              }
-         });              
-                    
-      }
+        
+        //clear all images in current item
+        $$('.wrapper-for-product-' + parentId + ' img').each(function(img, index){ 
+            $(img).remove();
+        });
+
+        //adding new images, associated with selected color
+        for (var i = 0; i < confData[parentId]['optionProducts'][key]['small_image'].length; i++) {
+            var counter = i + 1;
+            var productImg = document.createElement('img');
+                productImg = $(productImg); // fix for IE
+                productImg.src = confData[parentId]['optionProducts'][key]['small_image'][i];
+                productImg.addClassName('img' + counter);
+                productImg.addClassName('amconf-parent-' + parentId);
+                productLink.href = (productLink.href.match(/color=(\d+)/)) ? productLink.href.replace(/color=(\d+)/, 'color=' + key) : productLink.href + '?color=' + key;
+                productLink.appendChild(productImg);
+        };
+            
+    }
       
     if ('undefined' != typeof(confData[parentId]) && confData[parentId].useSimplePrice == "1")
     {
