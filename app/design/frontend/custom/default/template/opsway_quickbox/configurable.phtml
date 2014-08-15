@@ -19,7 +19,7 @@ $pre_config_values = $this->getProduct()->getPreconfiguredValues();
         <?php foreach($_attributes as $_attribute): ?>
             <?php $optionLabel = $_attribute->getLabel(); ?>
             <?php if ($optionLabel == "Size" && $attributeSetName == "Dresses") : ?>
-                <div class="sizechartlink"><a href="#" onclick='sizePopup()'>Size Chart</a></div>
+                <div class="sizechartlink sizechart-popup"><a href="#" onclick='sizePopup()'>Size Chart</a></div>
             <?php endif; ?>
         <?php endforeach; ?>
 

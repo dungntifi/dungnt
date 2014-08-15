@@ -3464,6 +3464,11 @@ tr.summary-details-excluded {
 /* Product View ========================================================================== */
 
 .sizechartlink {
+	float: right;
+	margin-right: 16px;
+}
+
+.sizechart-popup {
 	clear: both;
 	width: 100%;
 	text-align: right;
