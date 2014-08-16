@@ -29,6 +29,7 @@
 $_product    = $this->getProduct();
 $_attributes = Mage::helper('core')->decorateArray($this->getAllowAttributes());
 $attributeSetName = Mage::getModel('eav/entity_attribute_set')->load($_product->getAttributeSetId())->getAttributeSetName();
+$pre_config_values = $this->getProduct()->getPreconfiguredValues();
 ?>
 <?php if ($_product->isSaleable() && count($_attributes)):?>
     <span class="sale-info"><?php echo $this->htmlEscape($_product->getData('additionalinfo')); ?></span>
