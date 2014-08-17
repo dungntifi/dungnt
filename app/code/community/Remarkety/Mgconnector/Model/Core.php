@@ -895,18 +895,23 @@ class Remarkety_Mgconnector_Model_Core extends Mage_Core_Model_Abstract {
 	}
 	
 	public function getImageUrl($product, $type = 'image'){
-		return (string)Mage::helper('catalog/image')->init($product, $type);
+//		return (string)Mage::helper('catalog/image')->init($product, $type);
 		
 		$url = '';
 		if($product->type_id != 'configurable') {
+			$this->_log(__FUNCTION__, null, "not config prod id".$product->getId(), ''); 
 			$arrayOfParentIds = $this->getConfigProdModel()->getParentIdsByChild($product->getId());
 			$parentId = (count($arrayOfParentIds) > 0 ? $arrayOfParentIds[0] : null);
 			
 			if(!is_null($parentId)){
+				$this->_log(__FUNCTION__, null, "parent id is no null: ".$parentId, ''); 
 				$product = Mage::getModel("catalog/product")->load($parentId);
 			}
+		}else{
+			$this->_log(__FUNCTION__, null, "configurable prod id".$product->getId(), ''); 
 		}
 		$url = (string)Mage::helper('catalog/image')->init($product, $type);
+		$this->_log(__FUNCTION__, null, $type." url: ".$url, ''); 
 		return $url;
 	}
 	
