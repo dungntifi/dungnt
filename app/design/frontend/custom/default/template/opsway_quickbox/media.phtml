@@ -1,9 +1,10 @@
-<div class="slideshow cycle-slideshow" 
-    data-cycle-fx="carousel" data-cycle-timeout="0" data-cycle-carousel-visible="2" data-cycle-slides="> div.image" data-cycle-next=".next" data-cycle-prev=".prev" data-cycle-caption=".cycle-caption" data-cycle-caption-template="{{slideNum}} / {{slideCount}}">
+<div class="jcarousel slideshow">
     <div class="controls">
-        <div class="prev"></div>
-        <div class="next"></div>
-        <div class="cycle-caption"></div>
+        <a class="jcarousel-prev prev" href="#">Prev</a>
+        <a class="jcarousel-next next" href="#">Next</a>
+      <!--   <div class="jcarousel-prev prev"></div>
+        <div class="jcarousel-next next"></div>
+       -->  <div class="cycle-caption"></div>
     </div>
     <div class="socials">
         <a href="" class="like">Like</a>
@@ -14,43 +15,68 @@
         <a href="" class="google">G+</a>
         <a href="" class="mail">Mail</a>
     </div>
+    <div class="slideshow__list">
     <?php foreach ($this->getGalleryImages() as $_image): ?>
-    <div class="image easyzoom easyzoom--overlay">            
-        <a href='<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'thumbnail', $_image->getFile()); ?>'>
-            <img src='<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'thumbnail', $_image->getFile())->keepAspectRatio(TRUE)->keepFrame(FALSE)->resize(475); ?>'>
-        </a>
-    </div>
+        <div class="image easyzoom easyzoom--overlay">            
+            <a href='<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'thumbnail', $_image->getFile()); ?>'>
+                <img src='<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'thumbnail', $_image->getFile())->keepAspectRatio(TRUE)->keepFrame(FALSE)->resize(475); ?>'>
+            </a>
+        </div>
     <?php endforeach; ?>
+    </div>
 </div>
 <script type="text/javascript">
     (function(){
-        var window_width = jQuery( window ).width(),
-            image = jQuery('.slideshow img');
+        var slider_width,
+            image = jQuery('.slideshow img'),
+            slider = jQuery('.jcarousel'),
+            slider_img = jQuery('.jcarousel .image'),
+            controls = jQuery('.slideshow .controls');
 
-        calc_image(window_width);
-        jQuery('.cycle-slideshow').cycle();
+        
+        jQuery( window ).resize(function() {
+            slider_width = jQuery( slider ).width();
+            calc_image(slider_width);
+        });
+        
+        jQuery('.jcarousel')
+        .on('jcarousel:create jcarousel:reload', function() {
+            var element = jQuery(this),
+                width = element.innerWidth();
+            // element.jcarousel('items').css('width', width/2 + 'px');
+            calc_image(width);
+        })
+        .jcarousel({
+            list: '.slideshow__list',
+            items: '.image',
+            wrap: 'circular'
+        });
+
+        jQuery('.jcarousel-prev').jcarouselControl({
+            target: '-=1'
+        });
+
+        jQuery('.jcarousel-next').jcarouselControl({
+            target: '+=1'
+        });
         
         jQuery('.easyzoom').each(function() {
             jQuery(this).easyZoom();
         });
 
-        jQuery( window ).resize(function() {
-            window_width = jQuery( window ).width();
-            calc_image(window_width);
-        });
         
         function calc_image(width) {
-            if (width < 848) {
-                image.css({
-                    'width' :   window_width,
-                    'height':   'auto'
-                });
-                jQuery('.slideshow .controls').css({
-                    'left' :   window_width - 42,
-                });
+            if (width > 640) {
+                width = width / 2;
             }
+
+            jQuery(slider_img).each(function(index) {
+                jQuery(this).css('width', width + 'px');
+            });
+
+            controls.css({
+                'left' :   width - 42 + 'px'
+            });
         }
     })();
-
-
 </script>
