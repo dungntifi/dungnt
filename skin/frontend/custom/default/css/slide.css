@@ -24,17 +24,6 @@
     width: 100%;
 }
 
-/*.slideshow .image{
-	position: relative !important;
-	height: 630px;
-	margin: 0 2px 0 0;
-}
-.slideshow img{
-	width:422px;
-	height:630px;
-}*/
-
-
 .block-product .slideshow__list {
     width: 20000em;  
 	position: relative;
@@ -44,16 +33,13 @@
 
 .block-product .slideshow img {
     display: block;
+    width: 100%;
     max-width: 100%;
     height: auto !important;
 }
 
 .block-product .slideshow .image {
-    /*position: absolute;
-    top: 0;
-    width: 100%;
-    /*display: inline-block;*/
-    /*width: 200px;*/
+    position: relative;
     float: left;
     border: 1px solid #fff;
     -moz-box-sizing: border-box;
@@ -65,6 +51,16 @@
 	display: block;
 }
 
+.block-product .easyzoom {
+    float: left;
+}
+.block-product .easyzoom img {
+    display: block;
+}
+
+.block-product .jcarousel-pagination {
+	display: none;
+}
 
 
 /*Quickview*/
@@ -124,10 +120,11 @@
 	text-align:center;
 	line-height:40px;
 }
-.cycle-slide-active{
+/*.is-ready{
 	position:relative !important;
 }
-.easyzoom--overlay.cycle-slide-active:after{
+*/
+.easyzoom--overlay.is-ready:after{
 	position:absolute;
 	bottom:0;
 	left:0;
@@ -136,8 +133,11 @@
 	text-align:center;
 	background:url(../images/mouse-over.png);
 }
-.cycle-slide-active:hover:after{
+.is-ready:hover:after{
 	display:none;
+}
+.block-product .easyzoom-notice {
+	display: none;
 }
 
 /*Product info*/
@@ -454,10 +454,10 @@
 	text-decoration: none;
 }
 
-@media only screen and (max-width: 853px) {
-	.product-img-box {
+@media only screen and (max-width: 900px) {
+	.block-product .product-img-box {
 		width: 60%;
 	}
-	.product-info {
+	.block-product .product-info {
 		width: 40%;
 	}

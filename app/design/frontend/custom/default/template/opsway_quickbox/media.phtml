@@ -2,9 +2,8 @@
     <div class="controls">
         <a class="jcarousel-prev prev" href="#">Prev</a>
         <a class="jcarousel-next next" href="#">Next</a>
-      <!--   <div class="jcarousel-prev prev"></div>
-        <div class="jcarousel-next next"></div>
-       -->  <div class="cycle-caption"></div>
+        <div class="cycle-caption"></div>
+        <div class="jcarousel-pagination"></div>
     </div>
     <div class="socials">
         <a href="" class="like">Like</a>
@@ -18,7 +17,7 @@
     <div class="slideshow__list">
     <?php foreach ($this->getGalleryImages() as $_image): ?>
         <div class="image easyzoom easyzoom--overlay">            
-            <a href='<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'thumbnail', $_image->getFile()); ?>'>
+            <a href='<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'image', $_image->getFile()); ?>'>
                 <img src='<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'thumbnail', $_image->getFile())->keepAspectRatio(TRUE)->keepFrame(FALSE)->resize(475); ?>'>
             </a>
         </div>
@@ -31,7 +30,9 @@
             image = jQuery('.slideshow img'),
             slider = jQuery('.jcarousel'),
             slider_img = jQuery('.jcarousel .image'),
-            controls = jQuery('.slideshow .controls');
+            controls = jQuery('.slideshow .controls'),
+            cycle = jQuery('.cycle-caption'),
+            slider_list = jQuery('.jcarousel-pagination');
 
         
         jQuery( window ).resize(function() {
@@ -42,9 +43,18 @@
         jQuery('.jcarousel')
         .on('jcarousel:create jcarousel:reload', function() {
             var element = jQuery(this),
-                width = element.innerWidth();
-            // element.jcarousel('items').css('width', width/2 + 'px');
-            calc_image(width);
+                width = element.innerWidth(),
+                slide_count = element.jcarousel("items").length,
+                visible_slider = 1;
+                calc_image(width);
+                cycle.html(visible_slider + "/" + slide_count);
+
+        })
+        .on('jcarousel:animateend', function(event, carousel) {
+            var element = jQuery(this),
+                slide_count = element.jcarousel("items").length,
+                visible_slider = slider_list.find('.active').index() + 1;
+                cycle.html(visible_slider + "/" + slide_count);
         })
         .jcarousel({
             list: '.slideshow__list',
@@ -58,6 +68,20 @@
 
         jQuery('.jcarousel-next').jcarouselControl({
             target: '+=1'
+        });
+
+        jQuery('.jcarousel-pagination')
+        .on('jcarouselpagination:active', 'a', function() {
+            jQuery(this).addClass('active');
+        })
+        .on('jcarouselpagination:inactive', 'a', function() {
+            jQuery(this).removeClass('active');
+        })
+        .jcarouselPagination({
+            perPage: 1,
+            item: function(page) {
+                return '<a href="#' + page + '">' + page + '</a>';
+            }
         });
         
         jQuery('.easyzoom').each(function() {
