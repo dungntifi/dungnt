@@ -7,3 +7,15 @@
  <label for="simpleimages_field">Simple images</label>
  <input type="text" class="input-text" name="simpleimages_field" id="simpleimages_field" />
 </div>
+
+<?php
+$_productId = $this->getRequest()->getParam('id') . "<br>";
+$product = Mage::getModel('catalog/product')->load($_productId); 
+$childProducts = Mage::getModel('catalog/product_type_configurable')->getUsedProducts(null,$product);   
+foreach($childProducts as $_simple) {
+    echo $_simple->getName() . "<br>";  // You can use any of the magic get functions on this object to get the value
+    //echo "simple<pre>"; print_r($_simple->getData()); echo "</pre>";
+
+    // $val = Mage::helper('catalog/image')->init($_simple, 'thumbnail')->resize(97);
+    // echo "<img src=". $val ." width='97px'/>";
+}
