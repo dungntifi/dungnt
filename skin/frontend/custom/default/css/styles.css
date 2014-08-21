@@ -7181,3 +7181,156 @@ width: 100%;
 .tp-caption.sale a:hover {
 	color: #ea0000;
 }
+
+
+/* Padict css */
+
+/* === BACKGROUND === */
+
+.padiOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10000;
+
+  display: none;
+  -webkit-overflow-scrolling: touch;
+
+  text-align: center;
+  background-color: rgba(0,0,0,0.6);
+  display: inline-block;
+
+}
+.padiOverlay:after {
+    display: inline-block;
+    height: 100%;
+    margin-left: -0.05em;
+    content: '';
+}
+.padiOverlay > * {
+    -webkit-transform: translateZ(0px);
+}
+.padiPop4Wrap, .padiOverlay:after {
+    vertical-align: middle;
+}
+
+
+
+/* === BOX === */
+
+
+.padiPop4Wrap {
+  text-align: left;
+  visibility: visible;
+  z-index: 1602;
+  position: relative;
+  display: inline-block;
+  text-align: left;
+  background: url(../images/background.jpg) no-repeat left top;
+  width: 732px;
+  height: 100%;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+}
+.padiPop4Overlay .padiPopupContent {
+  position: relative;
+}
+.padiPop4Overlay .padiContent {
+  padding: 0.01em 1.6em 0.2em 1.5em;
+}
+
+/* === CLOSE === */
+
+.padiPop4Overlay .padiClose {
+  font-family: Arial, Helvetica, sans-serif;
+  color: #fff;
+  text-shadow: none;
+  background-color:#2B9780;
+  padding: 8px;
+  margin: 0;
+  display: block;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  line-height: 18px;
+  text-decoration: none !important;
+  border: none;
+}
+.padiPop4Overlay .padiClose:hover {
+  opacity: 0.9;
+  filter: alpha(opacity=40);
+}
+/* === TEXT FIELDS === */
+
+.padiPop4Overlay  .padiTitle {}
+
+/* === THE FORM FIELDS === */
+
+.padiPop4Overlay form {
+  position: relative;
+  padding-top: 5px;
+  margin: 0;
+  display: block;
+  padding-top:330px;
+  padding-left:30px;
+}
+.padiPop4Overlay .padiLabel {}
+.padiPop4Overlay .padiLabel span {
+  display: block;
+}
+.padiPop4Overlay .padiField{background-color:#3FC9AF;
+width:240px;height:30px;margin-top:15px;}
+.padiPop4Overlay .padiLabel input {}
+.padiPop4Overlay .padiButton {background-color:#FF6103;
+position:absolute;
+  height:35px;
+  top:360px;
+  left:265px;
+  width:125px;
+  color:#ffffff;
+  font-family:arial;
+  font-size:19px;
+}
+.padiPreload {
+  display: inline-block;
+  position: absolute;
+  bottom: 0;
+  right: inherit;
+  padding: 3px;
+}
+
+/* === MESSAGES === */
+
+.padiPop4Overlay .padiThanks {
+  width: 100%;
+  display: block;
+  vertical-align: top;
+  padding: 0;
+  font-weight: bold;
+  color: #2d2d2d;
+}
+.padiPop4Overlay .padiErrorMessage {}
+
+/* Media queries
+   ========================================================================== */
+
+@media only screen and (min-width: 640px) /* min-width 641px */ {
+    .padiPop4Wrap {
+      max-width: 732px;
+      height:468px !important;
+      margin: 20px auto;
+      text-align: left;
+      position: absolute;
+      left: 25%;
+      right:30%;
+      top: 20%;
+      overflow: visible;
+      height: auto;
+  
+    }
+}
+
+
+/*end of padict css */
