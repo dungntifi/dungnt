@@ -7183,7 +7183,7 @@ width: 100%;
 }
 
 
-/* Padict css */
+//* Padict css */
 
 /* === BACKGROUND === */
 
@@ -7278,11 +7278,14 @@ width: 100%;
 }
 .padiPop4Overlay .padiLabel {}
 .padiPop4Overlay .padiLabel span {
-  display: block;
+  display: none;
 }
-.padiPop4Overlay .padiField{background-color:#3FC9AF;
-width:240px;height:30px;margin-top:15px;}
-.padiPop4Overlay .padiLabel input {}
+.padiPop4Overlay .padiField{
+		background-color:#3FC9AF;
+		width:240px;height: 35px;
+		margin-top: 21px;
+		}
+.padiPop4Overlay .padiLabel input {color:#fff !important;}
 .padiPop4Overlay .padiButton {background-color:#FF6103;
 position:absolute;
   height:35px;
