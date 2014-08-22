@@ -1,21 +1,96 @@
-<?php
-/**
- * Simple images tab template
- */
-?>
-<div class="input-field">
- <label for="simpleimages_field">Simple images</label>
- <input type="text" class="input-text" name="simpleimages_field" id="simpleimages_field" />
-</div>
+<style>
+	#color-chooser {
+		position: relative;
+	}
+
+	#color-chooser td, th {
+		text-align: center;
+		padding: 5px;
+	}
+
+	/*#color-chooser .simple-select, 
+	#color-chooser .color-select {
+		width: 250px;
+	}
+
+	#color-chooser .gallery-item {
+		width: 160px;
+	}*/
+
+	#color-chooser .gallery-item img {
+		width: 150px;
+	}
+</style>
 
 <?php
+//data preset
 $_productId = $this->getRequest()->getParam('id') . "<br>";
 $product = Mage::getModel('catalog/product')->load($_productId); 
 $childProducts = Mage::getModel('catalog/product_type_configurable')->getUsedProducts(null,$product);   
-foreach($childProducts as $_simple) {
-    echo $_simple->getName() . "<br>";  // You can use any of the magic get functions on this object to get the value
-    //echo "simple<pre>"; print_r($_simple->getData()); echo "</pre>";
 
-    // $val = Mage::helper('catalog/image')->init($_simple, 'thumbnail')->resize(97);
-    // echo "<img src=". $val ." width='97px'/>";
+$productAttributes = Mage::getSingleton('eav/config')->getAttribute('catalog_product', 'color');
+if ($productAttributes->usesSource()) {
+    $options = $productAttributes->getSource()->getAllOptions(false);
 }
+
+//data load
+$simpleOptions = '';
+foreach($childProducts as $_simple) {
+    $simpleOptions .= '<option value="' . $_simple->getId() . '">' . $_simple->getName() . '</option>'; 
+    //$colorName = Mage::getModel('catalog/product')->load($_simple->getId())->getAttributeText('color');
+}
+
+$colorOptions = '';
+foreach ($options as $option) {
+	$colorOptions .= '<option value="' . $option['value'] . '">' . $option['label'] . '</option>';
+}
+//echo "options<pre>"; print_r($options); echo "</pre>";
+?>
+
+<div class="entry-edit">
+	<div class="entry-edit-head">
+		<h4 class="icon-head head-edit-form fieldset-legend">Simple product image assign</h4>
+	</div>
+</div>
+<div class="entry-edit">
+	<div class="fieldset">
+		<table id="color-chooser">
+			<thead>
+				<tr>
+					<th>Gallery image</th>
+					<th>Assign color to image</th>
+					<th>Assign simple product to image</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<?php 
+					$gallery = $product->getMediaGalleryImages();
+					$j = 1; foreach ($gallery as $image) : 
+						//echo "image<pre>"; print_r($image); echo "</pre>";
+						?>
+						<td class="gallery-item">
+					    	<img src="<?php echo $image->getUrl(); ?>">
+					    </td>
+					    <td class="color-select">
+					    	<select name="color[<?php echo $image->getId(); ?>]" class="required-entry select">
+					    		<?php echo $colorOptions; ?>
+					    	</select>
+					    </td>
+					    <td class="simple-select">
+					    	<select name="simple[<?php echo $image->getId(); ?>]" class="required-entry select">
+					    		<?php echo $simpleOptions; ?>
+					    	</select>
+					    </td>
+						
+						<?php if($j < count($gallery)) : ?>
+							</tr><tr>
+						<?php endif; ?>
+
+					<?php $j++; endforeach; ?>
+				</tr>
+			</tbody>
+		</table>
+		<input type="hidden" name="affect_simpleimages_attributes" value="1" />
+	</div>
+</div>

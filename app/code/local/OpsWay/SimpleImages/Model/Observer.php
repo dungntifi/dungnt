@@ -2,12 +2,6 @@
   
 class OpsWay_SimpleImages_Model_Observer
 {
-    /**
-     * Flag to stop observer executing more than once
-     *
-     * @var static bool
-     */
-    static protected $_singletonFlag = false;
  
     /**
      * This method will run when the product is saved from the Magento Admin
@@ -18,27 +12,27 @@ class OpsWay_SimpleImages_Model_Observer
      */
     public function saveProductTabData(Varien_Event_Observer $observer)
     {
-        if (!self::$_singletonFlag) {
-            self::$_singletonFlag = true;
              
-            $product = $observer->getEvent()->getProduct();
-         
-            try {
-                /**
-                 * Perform any actions you want here
-                 *
-                 */
-                $customFieldValue =  $this->_getRequest()->getPost('simpleimages_field');
- 
-                /**
-                 * Uncomment the line below to save the product
-                 *
-                 */
-                //$product->save();
-            }
-            catch (Exception $e) {
-                Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
-            }
+        $product = $observer->getEvent()->getProduct();
+     
+        try {
+            /**
+             * Perform any actions you want here
+             *
+             */
+            //$customFieldValue =  $this->_getRequest()->getPost('simpleimages_post_test');
+            $customFieldValue = Mage::helper('core')->jsonDecode($observer->getRequest()->getPost('simpleimages_post_test'));
+            echo "customFieldValue<pre>"; print_r($customFieldValue); echo "</pre>";
+            die;
+
+            /**
+             * Uncomment the line below to save the product
+             *
+             */
+            //$product->save();
+        }
+        catch (Exception $e) {
+            Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
         }
     }
       
@@ -60,4 +54,5 @@ class OpsWay_SimpleImages_Model_Observer
     {
         return Mage::app()->getRequest();
     }
+
 }

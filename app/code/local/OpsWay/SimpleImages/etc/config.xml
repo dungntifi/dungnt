@@ -26,15 +26,15 @@
             </updates>
         </layout>
         <events>
-            <catalog_product_save_after>
+            <catalog_product_prepare_save>
                 <observers>
-                    <fishpig_save_product_data>
+                    <simpleimages_save_product_data>
                         <type>singleton</type>
                         <class>simpleimages/observer</class>
                         <method>saveProductTabData</method>
-                    </fishpig_save_product_data>
+                    </simpleimages_save_product_data>
                 </observers>
-            </catalog_product_save_after>
+            </catalog_product_prepare_save>
         </events>
     </adminhtml>
 </config>
