@@ -47,6 +47,11 @@ foreach ($options as $option) {
 //echo "options<pre>"; print_r($options); echo "</pre>";
 ?>
 
+<div class="input-field">
+ <label for="custom_field">Custom Field</label>
+ <input type="text" class="input-text" name="custom_field" id="custom_field" />
+</div>
+
 <div class="entry-edit">
 	<div class="entry-edit-head">
 		<h4 class="icon-head head-edit-form fieldset-legend">Simple product image assign</h4>
@@ -72,13 +77,13 @@ foreach ($options as $option) {
 						<td class="gallery-item">
 					    	<img src="<?php echo $image->getUrl(); ?>">
 					    </td>
-					    <td class="color-select">
-					    	<select name="color[<?php echo $image->getId(); ?>]" class="required-entry select">
+					    <td class="color-select input-field">
+					    	<select name="simpleimages_color[<?php echo $image->getId(); ?>]" class="required-entry select">
 					    		<?php echo $colorOptions; ?>
 					    	</select>
 					    </td>
-					    <td class="simple-select">
-					    	<select name="simple[<?php echo $image->getId(); ?>]" class="required-entry select">
+					    <td class="simple-select input-field">
+					    	<select name="simpleimages_product[<?php echo $image->getId(); ?>]" class="required-entry select">
 					    		<?php echo $simpleOptions; ?>
 					    	</select>
 					    </td>
@@ -91,6 +96,5 @@ foreach ($options as $option) {
 				</tr>
 			</tbody>
 		</table>
-		<input type="hidden" name="affect_simpleimages_attributes" value="1" />
 	</div>
 </div>

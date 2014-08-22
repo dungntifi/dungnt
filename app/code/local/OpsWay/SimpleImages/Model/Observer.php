@@ -20,9 +20,11 @@ class OpsWay_SimpleImages_Model_Observer
              * Perform any actions you want here
              *
              */
-            //$customFieldValue =  $this->_getRequest()->getPost('simpleimages_post_test');
-            $customFieldValue = Mage::helper('core')->jsonDecode($observer->getRequest()->getPost('simpleimages_post_test'));
-            echo "customFieldValue<pre>"; print_r($customFieldValue); echo "</pre>";
+            $simpleimagesProduct = $this->_getRequest()->getPost('simpleimages_product');
+            $simpleimagesColor = $this->_getRequest()->getPost('simpleimages_color');
+
+            echo "simpleimagesProduct<pre>"; print_r($simpleimagesProduct); echo "</pre>";
+            echo "simpleimagesColor<pre>"; print_r($simpleimagesColor); echo "</pre>";
             die;
 
             /**
