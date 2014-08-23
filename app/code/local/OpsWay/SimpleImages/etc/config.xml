@@ -26,7 +26,7 @@
             </updates>
         </layout>
         <events>
-            <catalog_product_prepare_save>
+            <catalog_product_save_after>
                 <observers>
                     <simpleimages_save_product_data>
                         <type>singleton</type>
@@ -34,7 +34,7 @@
                         <method>saveProductTabData</method>
                     </simpleimages_save_product_data>
                 </observers>
-            </catalog_product_prepare_save>
+            </catalog_product_save_after>
         </events>
     </adminhtml>
 </config>

@@ -20,14 +20,18 @@ class OpsWay_SimpleImages_Model_Observer
 
             $simpleimagesColor = $this->_getRequest()->getPost('simpleimages_color');
             $simpleimagesGallery = $this->_getRequest()->getPost('simpleimages_gallery');
-
-            if (is_array($simpleimagesGallery) && is_array($simpleimagesColor)){
                  
-                foreach($childProducts as $_simple){
-                    $_simple->setColor($simpleimagesColor[$_simple->getId()]);
-                    $_simple->setMediaGallery (array('images'=>array (), 'values'=>array ())); //media gallery initialization
-                    foreach ($simpleimagesGallery[$_simple->getId()] as $key => $value) {
-                        $_simple->addImageToMediaGallery('media/catalog/product' . $value, array('image','thumbnail','small_image'), false, false); //assigning image, thumb and small image to media gallery
+            foreach($childProducts as $_simple){
+                if(isset($simpleimagesGallery[$_simple->getId()]) || isset($simpleimagesColor[$_simple->getId()])) {
+                    if (isset($simpleimagesColor[$_simple->getId()])){
+                        $_simple->setColor($simpleimagesColor[$_simple->getId()]);
+                    }
+
+                    if(isset($simpleimagesGallery[$_simple->getId()])) {
+                        $_simple->setMediaGallery (array('images'=>array (), 'values'=>array ())); //media gallery initialization
+                        foreach ($simpleimagesGallery[$_simple->getId()] as $key => $value) {
+                            $_simple->addImageToMediaGallery('media/catalog/product' . $value, array('image','thumbnail','small_image'), false, false); //assigning image, thumb and small image to media gallery
+                        }
                     }
                     $_simple->save();
                 }
