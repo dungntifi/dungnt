@@ -8,15 +8,6 @@
 		padding: 5px;
 	}
 
-	/*#color-chooser .simple-select, 
-	#color-chooser .color-select {
-		width: 250px;
-	}
-
-	#color-chooser .gallery-item {
-		width: 160px;
-	}*/
-
 	#color-chooser .gallery-item img {
 		width: 150px;
 	}
@@ -37,14 +28,12 @@ if ($productAttributes->usesSource()) {
 $simpleOptions = '';
 foreach($childProducts as $_simple) {
     $simpleOptions .= '<option value="' . $_simple->getId() . '">' . $_simple->getName() . '</option>'; 
-    //$colorName = Mage::getModel('catalog/product')->load($_simple->getId())->getAttributeText('color');
 }
 
 $colorOptions = '';
 foreach ($options as $option) {
 	$colorOptions .= '<option value="' . $option['value'] . '">' . $option['label'] . '</option>';
 }
-//echo "options<pre>"; print_r($options); echo "</pre>";
 ?>
 
 <div class="entry-edit">
@@ -54,8 +43,13 @@ foreach ($options as $option) {
 </div>
 <div class="entry-edit">
 	<div class="fieldset">
+		<div id="add-row">Choose simple product to work with: 
+			<select name="simple_chooser" class="select">
+	    		<?php echo $simpleOptions; ?>
+	    	</select>
+	    </div>
 		<table id="color-chooser">
-			<thead>
+			<!-- <thead>
 				<tr>
 					<th>Gallery image</th>
 					<th>Assign color to image</th>
@@ -64,32 +58,40 @@ foreach ($options as $option) {
 			</thead>
 			<tbody>
 				<tr>
-					<?php 
-					$gallery = $product->getMediaGalleryImages();
-					$j = 1; foreach ($gallery as $image) : 
-						//echo "image<pre>"; print_r($image); echo "</pre>";
-						?>
+					<?php /*$gallery = $product->getMediaGalleryImages();
+					$j = 0; foreach ($gallery as $image) : 
+						// echo "image<pre>"; print_r($image); echo "</pre>";
+					?>
 						<td class="gallery-item">
 					    	<img src="<?php echo $image->getUrl(); ?>">
+					    	<input type="hidden" name="simpleimages_file[<?php echo $j; ?>]" value="<?php echo $image->getFile(); ?>">
 					    </td>
 					    <td class="color-select input-field">
-					    	<select name="simpleimages_color[<?php echo $image->getId(); ?>]" class="required-entry select">
+					    	<select name="simpleimages_color[<?php echo $j; ?>]" class="required-entry select">
 					    		<?php echo $colorOptions; ?>
 					    	</select>
 					    </td>
 					    <td class="simple-select input-field">
-					    	<select name="simpleimages_product[<?php echo $image->getId(); ?>]" class="required-entry select">
+					    	<select name="simpleimages_product[<?php echo $j; ?>]" class="required-entry select">
 					    		<?php echo $simpleOptions; ?>
 					    	</select>
 					    </td>
 						
-						<?php if($j < count($gallery)) : ?>
+						<?php if($j < (count($gallery) - 1)) : ?>
 							</tr><tr>
 						<?php endif; ?>
 
-					<?php $j++; endforeach; ?>
+					<?php $j++; endforeach; */?>
 				</tr>
-			</tbody>
+			</tbody> -->
 		</table>
 	</div>
 </div>
+
+<script>
+	jQuery(document).ready(function() {
+		jQuery('#add-row').on('change', function() {
+			alert(jQuery(this).val());
+		});
+	});
+</script>
