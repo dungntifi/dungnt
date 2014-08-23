@@ -5,12 +5,12 @@
 			<action method="addJs"><script>simpleimages/jquery-1.9.1.min.js</script></action>
 		</reference>
 	</default>
-    <adminhtml_catalog_product_edit>
+    <adminhtml_catalog_product_configurable>
         <reference name="product_tabs">
             <action method="addTab">
                 <name>simpleimages</name>
                 <block>simpleimages/adminhtml_catalog_product_tab</block>
             </action>
         </reference>
-    </adminhtml_catalog_product_edit>
+    </adminhtml_catalog_product_configurable>
 </layout>
