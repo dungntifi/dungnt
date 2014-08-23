@@ -14,33 +14,25 @@ class OpsWay_SimpleImages_Model_Observer
     {
              
         $product = $observer->getEvent()->getProduct();
+        $childProducts = Mage::getModel('catalog/product_type_configurable')->getUsedProducts(null,$product);  
      
         try {
-            /**
-             * Perform any actions you want here
-             *
-             */
-            $simpleimagesProduct = $this->_getRequest()->getPost('simpleimages_product');
+
             $simpleimagesColor = $this->_getRequest()->getPost('simpleimages_color');
+            $simpleimagesGallery = $this->_getRequest()->getPost('simpleimages_gallery');
 
-            if (is_array($simpleimagesProduct) && is_array($simpleimagesColor)){
-
-                // echo "simpleimagesProduct<pre>"; print_r($simpleimagesProduct); echo "</pre>";
-                //echo "simpleimagesColor<pre>"; print_r($simpleimagesColor); echo "</pre>";
-                // die;
+            if (is_array($simpleimagesGallery) && is_array($simpleimagesColor)){
                  
-                foreach($simpleimagesProduct as $_image => $simpleId){
-                    $_simple = Mage::getModel('catalog/product')->loadByAttribute('entity_id', $simpleId);
-                    //echo "simple $simpleId <pre>"; print_r($_simple->getData()); echo "</pre>";
-                    $_simple->setColor($simpleimagesColor[$_image]);
+                foreach($childProducts as $_simple){
+                    $_simple->setColor($simpleimagesColor[$_simple->getId()]);
+                    $_simple->setMediaGallery (array('images'=>array (), 'values'=>array ())); //media gallery initialization
+                    foreach ($simpleimagesGallery[$_simple->getId()] as $key => $value) {
+                        $_simple->addImageToMediaGallery('media/catalog/product' . $value, array('image','thumbnail','small_image'), false, false); //assigning image, thumb and small image to media gallery
+                    }
                     $_simple->save();
                 }
             }
 
-            /**
-             * Uncomment the line below to save the product
-             *
-             */
             $product->save();
         }
         catch (Exception $e) {

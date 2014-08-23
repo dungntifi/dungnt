@@ -1,6 +1,9 @@
 <style>
 	#color-chooser {
 		position: relative;
+		display: none;
+		border-bottom: 1px solid #d6d6d6;
+		margin-bottom: 10px;
 	}
 
 	#color-chooser td, th {
@@ -8,8 +11,30 @@
 		padding: 5px;
 	}
 
-	#color-chooser .gallery-item img {
+	#color-chooser .images-gallery img {
 		width: 150px;
+	}
+
+	#color-chooser .gallery-item {
+		width: 150px;
+		display: inline-block;
+		text-align: center;
+		margin: 0 5px;
+	}
+
+	#color-chooser .selected-images {
+		display: block;
+		max-width: 500px;
+		overflow-y: hidden;
+		position: relative;
+	}
+
+	#color-chooser .selected-remove {
+		vertical-align: middle;
+	}
+
+	#configurable-gallery {
+		display: none;
 	}
 </style>
 
@@ -24,7 +49,16 @@ if ($productAttributes->usesSource()) {
     $options = $productAttributes->getSource()->getAllOptions(false);
 }
 
+$gallery = $product->getMediaGalleryImages();
+$galleryWidth = count($gallery) * 160; //gallery-item width + margin
+
 //data load
+$imagesGallery = '<div class="images-gallery" style="width: ' . $galleryWidth . 'px;">';
+foreach ($gallery as $key => $image) {
+	$imagesGallery .= '<div class="gallery-item"><img src="' . $image->getUrl() . '" /><input type="checkbox" name="simpleimages_gallery[_replace_][' . $key . ']" value="' . $image->getFile() . '" /></div>';
+}
+$imagesGallery .= '</div>';
+
 $simpleOptions = '';
 foreach($childProducts as $_simple) {
     $simpleOptions .= '<option value="' . $_simple->getId() . '">' . $_simple->getName() . '</option>'; 
@@ -43,55 +77,45 @@ foreach ($options as $option) {
 </div>
 <div class="entry-edit">
 	<div class="fieldset">
+		<table id="color-chooser">
+			<thead>
+				<tr>
+					<th>Selected simple product</th>
+					<th>Selected color</th>
+					<th>Selected image</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+			</tbody>
+		</table>
 		<div id="add-row">Choose simple product to work with: 
 			<select name="simple_chooser" class="select">
 	    		<?php echo $simpleOptions; ?>
 	    	</select>
 	    </div>
-		<table id="color-chooser">
-			<!-- <thead>
-				<tr>
-					<th>Gallery image</th>
-					<th>Assign color to image</th>
-					<th>Assign simple product to image</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<?php /*$gallery = $product->getMediaGalleryImages();
-					$j = 0; foreach ($gallery as $image) : 
-						// echo "image<pre>"; print_r($image); echo "</pre>";
-					?>
-						<td class="gallery-item">
-					    	<img src="<?php echo $image->getUrl(); ?>">
-					    	<input type="hidden" name="simpleimages_file[<?php echo $j; ?>]" value="<?php echo $image->getFile(); ?>">
-					    </td>
-					    <td class="color-select input-field">
-					    	<select name="simpleimages_color[<?php echo $j; ?>]" class="required-entry select">
-					    		<?php echo $colorOptions; ?>
-					    	</select>
-					    </td>
-					    <td class="simple-select input-field">
-					    	<select name="simpleimages_product[<?php echo $j; ?>]" class="required-entry select">
-					    		<?php echo $simpleOptions; ?>
-					    	</select>
-					    </td>
-						
-						<?php if($j < (count($gallery) - 1)) : ?>
-							</tr><tr>
-						<?php endif; ?>
-
-					<?php $j++; endforeach; */?>
-				</tr>
-			</tbody> -->
-		</table>
+	    <div id="configurable-gallery"><?php echo $imagesGallery; ?></div>
 	</div>
 </div>
 
 <script>
 	jQuery(document).ready(function() {
-		jQuery('#add-row').on('change', function() {
-			alert(jQuery(this).val());
+		jQuery('#add-row select').on('change', function() {
+			var simpleId = jQuery(this).val();
+			var gallery = jQuery('#configurable-gallery').html();
+			gallery = gallery.replace(/_replace_/g, simpleId);
+
+			var row = '<tr class="row" id="simpleimages-' + simpleId + '"><td class="selected-simple">' + jQuery(this).find('option:selected').text() + '</td><td class="selected-color input-field"><select name="simpleimages_color[' + simpleId + ']" class="required-entry select"><?php echo $colorOptions; ?></select></td><td class="selected-images input-field">' + gallery + '</td><td class="selected-remove"><p>Remove this row, if you don`t want<br>to change this simple product</p><a href="#" class="button">Remove</a></td></tr>';
+			jQuery('#color-chooser').show();
+			jQuery('#color-chooser tbody').append(row);
+		});
+
+		//remove
+		jQuery('#color-chooser').on('click', '.selected-remove a', function(){
+			jQuery(this).parents('.row').remove();
+			if(jQuery('#color-chooser tbody tr').length == 0) {
+				jQuery('#color-chooser').hide();
+			}
 		});
 	});
 </script>
