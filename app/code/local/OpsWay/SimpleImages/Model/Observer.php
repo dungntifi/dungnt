@@ -23,15 +23,25 @@ class OpsWay_SimpleImages_Model_Observer
             $simpleimagesProduct = $this->_getRequest()->getPost('simpleimages_product');
             $simpleimagesColor = $this->_getRequest()->getPost('simpleimages_color');
 
-            echo "simpleimagesProduct<pre>"; print_r($simpleimagesProduct); echo "</pre>";
-            echo "simpleimagesColor<pre>"; print_r($simpleimagesColor); echo "</pre>";
-            die;
+            if (is_array($simpleimagesProduct) && is_array($simpleimagesColor)){
+
+                // echo "simpleimagesProduct<pre>"; print_r($simpleimagesProduct); echo "</pre>";
+                //echo "simpleimagesColor<pre>"; print_r($simpleimagesColor); echo "</pre>";
+                // die;
+                 
+                foreach($simpleimagesProduct as $_image => $simpleId){
+                    $_simple = Mage::getModel('catalog/product')->loadByAttribute('entity_id', $simpleId);
+                    //echo "simple $simpleId <pre>"; print_r($_simple->getData()); echo "</pre>";
+                    $_simple->setColor($simpleimagesColor[$_image]);
+                    $_simple->save();
+                }
+            }
 
             /**
              * Uncomment the line below to save the product
              *
              */
-            //$product->save();
+            $product->save();
         }
         catch (Exception $e) {
             Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
