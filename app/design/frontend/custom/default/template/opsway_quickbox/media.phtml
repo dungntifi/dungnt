@@ -1,9 +1,10 @@
 <div class="jcarousel slideshow">
     <div class="controls">
-        <a class="jcarousel-prev prev" href="#">Prev</a>
-        <a class="jcarousel-next next" href="#">Next</a>
-        <div class="cycle-caption"></div>
-        <div class="jcarousel-pagination"></div>
+        <a class="slider__button jcarousel-prev prev" href="#">Prev</a>
+        <a class="slider__button jcarousel-next next" href="#">Next</a>
+        <div class="slider__button cycle-caption"></div>
+        <div class="slider__button slider__button_zoom"></div>
+        <div class="slider__button jcarousel-pagination"></div>
     </div>
     <div class="socials">
         <a href="" class="like">Like</a>
@@ -16,12 +17,30 @@
     </div>
     <div class="slideshow__list">
     <?php foreach ($this->getGalleryImages() as $_image): ?>
-        <div class="image easyzoom easyzoom--overlay">            
-            <a href='<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'image', $_image->getFile()); ?>'>
-                <img src='<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'thumbnail', $_image->getFile())->keepAspectRatio(TRUE)->keepFrame(FALSE)->resize(475); ?>'>
-            </a>
+        <div class="image">            
+            <img src='<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'thumbnail', $_image->getFile())->keepAspectRatio(TRUE)->keepFrame(FALSE)->resize(475); ?>'>
         </div>
     <?php endforeach; ?>
+    </div>
+</div>
+<div class="zoom__container" style="display: none;">
+    <div class="thumb__container">
+    <?php foreach ($this->getGalleryImages() as $_image): ?>
+        <div class="thumb__items">
+            <a href='<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'image', $_image->getFile()); ?>' class="thumb__item">
+                <img src='<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'thumbnail', $_image->getFile())->keepAspectRatio(TRUE)->keepFrame(FALSE)->resize(475); ?>' width="65" height="98">
+            </a>          
+        </div>
+    <?php endforeach; ?>
+    </div>
+    <div class="image_zoom">
+        <img src="" alt="" style="top: 0; left: 0;">
+    </div>
+    <div class="zoom__controls">
+        <div class="slider__button zoom__close"></div>
+        <div class="slider__button zoom__prev"></div>
+        <div class="slider__button zoom__next"></div>
+        <!-- <div class="slider__button zoom__number"></div> -->
     </div>
 </div>
 <script type="text/javascript">
@@ -32,9 +51,111 @@
             slider_img = jQuery('.jcarousel .image'),
             controls = jQuery('.slideshow .controls'),
             cycle = jQuery('.cycle-caption'),
-            slider_list = jQuery('.jcarousel-pagination');
+            slider_list = jQuery('.jcarousel-pagination'),
+            // cache_image =[],                        
+            zoom = {
+                thumb_id : 0,
+                zoom_thumbs : jQuery('.thumb__items'),
+                slide_count : jQuery('.thumb__items').length,
+                zoom_container : jQuery('.image_zoom'),
+                zoom_image : jQuery('.image_zoom').find('img'),
+                selected_thumb : '',
+                init: function() {
+                    jQuery('.wrapper').hide();
+                    jQuery('.zoom__container').prependTo(jQuery('body'));
+                    jQuery('.zoom__container').css({
+                        width: jQuery(window).width(),
+                        height : jQuery(window).height()
+                    });
+                    this.show(this.thumb_id);
+                    jQuery('.zoom__container').show();
+                },    
+                move: function () {
+                    this.zoom_container.on('mousemove', function (e) {
+                            e.preventDefault();
+                        var zoomImage = jQuery('.image_zoom img'),
+                            zoomWrapper = jQuery('.image_zoom'),
+                            PageYaxis       = e.pageY,
+                            wrapperHeight   = zoomWrapper.height(),
+                            imgHeight       = zoomImage.outerHeight(),
+                            percentageY     = (PageYaxis * 100) / wrapperHeight,
+                            top             = ((-1) * (percentageY) * ((imgHeight / wrapperHeight)-1)) + "%",
+                            PageXaxis       = e.pageX,
+                            wrapperWidth    = zoomWrapper.width(),
+                            imgWidth        = zoomImage.outerWidth(),
+                            percentageX     = (PageXaxis * 100) / wrapperWidth,
+                            left            = ((-1) * (percentageX) * ((imgWidth / wrapperWidth)-1)) + "%",
+                            actualTop       = 0,
+                            imgTop          = zoomImage.css('top');
+                        
+                        zoomImage.css({
+                            'top': top,
+                            'left': left
+                        });
+                    });
+                },
+                show: function(thumb_id) {
+                    this.selected_thumb = this.zoom_thumbs.find('a').eq(thumb_id);
+                    var zoom_src = jQuery(this.selected_thumb).attr('href'),
+                        zoom_image = this.zoom_image;
+                    
+                    zoom_image.attr('src', zoom_src);
 
-        
+                    zoom_image.imagesLoaded(function() {
+                            zoom_image.show();
+                            zoom.move();
+                    });
+
+                    // this.zoom_container.append(cache_image);
+                },
+                close: function() {
+                  jQuery('.zoom__container').hide();  
+                  jQuery('.wrapper').show();
+                  zoom.zoom_container.off();
+                }
+            };
+            
+// PDP Zoom 
+        jQuery('.slider__button_zoom').on('click', function (e) {
+            zoom.init();
+            return false;
+        });
+
+        jQuery('.thumb__items').on('click', 'a', function(e) {
+            this.thumb_id = zoom.zoom_thumbs.find('a').index(this);
+            zoom.show(this.thumb_id);
+            e.preventDefault();
+        });
+
+        jQuery('.zoom__close').on('click', function(e) {
+            zoom.close();
+            e.preventDefault();
+        });
+
+        jQuery('.zoom__prev').on('click', function(e) {
+            if (zoom.thumb_id == 0) {
+                zoom.thumb_id = zoom.slide_count - 1;
+            }
+            else {
+                --zoom.thumb_id;
+            }
+            zoom.show(zoom.thumb_id);
+            e.preventDefault();
+        });
+
+        jQuery('.zoom__next').on('click', function(e) {
+            if (zoom.thumb_id == zoom.slide_count - 1) {
+                zoom.thumb_id = 0;
+            }
+            else {
+                ++zoom.thumb_id;
+            }
+            zoom.show(zoom.thumb_id);
+            e.preventDefault();
+        });
+
+
+// PDP Slider
         jQuery( window ).resize(function() {
             slider_width = jQuery( slider ).width();
             calc_image(slider_width);
@@ -83,11 +204,6 @@
                 return '<a href="#' + page + '">' + page + '</a>';
             }
         });
-        
-        jQuery('.easyzoom').each(function() {
-            jQuery(this).easyZoom();
-        });
-
         
         function calc_image(width) {
             if (width > 640) {
