@@ -3,6 +3,8 @@
     <default>
         <reference name="head">
             <!-- Add these files to show configurable product options in the Quick View -->
+            <action method="addItem"><type>skin_css</type><name>js/tipped/tipped.css</name></action>
+            <action method="addItem"><type>skin_css</type><name>css/slide.css</name></action>
             <action method="addJs"><script>varien/product.js</script></action>
             <action method="addJs"><script>varien/configurable.js</script></action>
             <action method="addJs"><script>calendar/calendar.js</script></action>
@@ -13,8 +15,8 @@
             <action method="addItem"><type>skin_js</type><name>js/carousel.js</name></action>
             <action method="addItem"><type>skin_js</type><name>js/jquery.jcarousel.min.js</name></action>
             <action method="addItem"><type>skin_js</type><name>js/easyzoom.js</name></action>
+            <action method="addItem"><type>skin_js</type><name>js/tipped/tipped.js</name></action>
             <action method="addItem"><type>skin_js</type><name>js/jquery.imagesloaded.js</name></action>
-            <action method="addItem"><type>skin_css</type><name>css/slide.css</name></action>
         </reference>
     </default>
 

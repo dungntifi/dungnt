@@ -41,6 +41,7 @@
             <?php endif; ?>
             </li>
         <?php endforeach; ?>
+        <?php if ($_crumbName !== 'product') :?>
         	<li class="<?php echo $_crumbName ?>">
 			<span class="page_likes">
 			    <!-- Facebook Like -->
@@ -68,6 +69,7 @@
  
 			</span> 
         	</li>
+        <?php endif ?>    
     </ul>
 
 </div>

@@ -87,15 +87,15 @@
 	top: 50%;
 	left: 380px;
 	z-index: 9999;
-	margin-top: -84px;
+	margin-top: -64px;
 	width: 42px;
-	height: 169px;
+	height: 127px;
 	background: #000;
 	border: 1px solid #fff;
 }
 
 .popup .controls {
-	height: 127px;
+	height: 169px;
 }
 
 .slider__button {
