@@ -54,12 +54,25 @@ $galleryWidth = count($gallery) * 160; //gallery-item width + margin
 
 //data load
 $imagesGallery = '<div class="images-gallery" style="width: ' . $galleryWidth . 'px;">';
+
+$i = 0;
 foreach ($gallery as $key => $image) {
-	$imagesGallery .= '<div class="gallery-item"><img src="' . $image->getUrl() . '" /><input type="checkbox" name="simpleimages_gallery[_replace_][' . $key . ']" value="' . $image->getFile() . '" /></div>';
+	$checked = ($i == 0) ? 'checked' : '';
+	$imagesGallery .= '<div class="gallery-item">
+		<img src="' . $image->getUrl() . '" />
+		<input type="checkbox" name="simpleimages_gallery[_replace_][' . $key . ']" value="' . $image->getFile() . '" />
+		<fieldset style="text-align: left;">
+			<legend style="display: block; width: auto; visibility: visible; overflow: visible;">Set image type</legend>
+			<input type="radio" ' . $checked . ' value="' . $key . '" name="simpleimages_type[_replace_][base]"> Base image<br>
+			<input type="radio" ' . $checked . ' value="' . $key . '" name="simpleimages_type[_replace_][small]"> Small image<br>
+			<input type="radio" ' . $checked . ' value="' . $key . '" name="simpleimages_type[_replace_][thumbnail]"> Thumbnail
+		</fieldset>
+	</div>';
+	$i++;
 }
 $imagesGallery .= '</div>';
 
-$simpleOptions = '';
+$simpleOptions = '<option selected="selected">--- Select simple product ---</option>';
 foreach($childProducts as $_simple) {
     $simpleOptions .= '<option value="' . $_simple->getId() . '">' . $_simple->getName() . '</option>'; 
 }
@@ -72,7 +85,7 @@ foreach ($options as $option) {
 
 <div class="entry-edit">
 	<div class="entry-edit-head">
-		<h4 class="icon-head head-edit-form fieldset-legend">Simple product image assign</h4>
+		<h4 class="icon-head head-edit-form fieldset-legend">Simple product color and image configuration</h4>
 	</div>
 </div>
 <div class="entry-edit">
@@ -81,15 +94,15 @@ foreach ($options as $option) {
 			<thead>
 				<tr>
 					<th>Selected simple product</th>
-					<th>Selected color</th>
-					<th>Selected image</th>
+					<th>Assign simple product color</th>
+					<th>Assign simple product image(s) (loaded from configurable product gallery)</th>
 					<th></th>
 				</tr>
 			</thead>
 			<tbody>
 			</tbody>
 		</table>
-		<div id="add-row">Choose simple product to work with: 
+		<div id="add-row">Choose simple product to configure: 
 			<select name="simple_chooser" class="select">
 	    		<?php echo $simpleOptions; ?>
 	    	</select>
@@ -100,14 +113,18 @@ foreach ($options as $option) {
 
 <script>
 	jQuery(document).ready(function() {
+		var galleryTemplate = jQuery('#configurable-gallery').html();
+			jQuery('#configurable-gallery').remove(); //delete template, to avoid sending it`s data in POST
+
 		jQuery('#add-row select').on('change', function() {
 			var simpleId = jQuery(this).val();
-			var gallery = jQuery('#configurable-gallery').html();
-			gallery = gallery.replace(/_replace_/g, simpleId);
-
+			var gallery = galleryTemplate.replace(/_replace_/g, simpleId);
 			var row = '<tr class="row" id="simpleimages-' + simpleId + '"><td class="selected-simple">' + jQuery(this).find('option:selected').text() + '</td><td class="selected-color input-field"><select name="simpleimages_color[' + simpleId + ']" class="required-entry select"><?php echo $colorOptions; ?></select></td><td class="selected-images input-field">' + gallery + '</td><td class="selected-remove"><p>Remove this row, if you don`t want<br>to change this simple product</p><a href="#" class="button">Remove</a></td></tr>';
 			jQuery('#color-chooser').show();
 			jQuery('#color-chooser tbody').append(row);
+
+			//set "selected" option to default
+			jQuery('#add-row select option').prop("selected", false);
 		});
 
 		//remove
