@@ -11,8 +11,13 @@
 		padding: 5px;
 	}
 
+	#color-chooser .images-gallery {
+		text-align: center;
+	}
+
 	#color-chooser .images-gallery img {
-		width: 150px;
+		width: 144px;
+		margin: 3px 0;
 	}
 
 	#color-chooser .gallery-item {
@@ -20,6 +25,23 @@
 		display: inline-block;
 		text-align: center;
 		margin: 0 5px;
+	}
+
+	#color-chooser .gallery-item .checked {
+		border: 3px solid #eb5e00;
+		margin: 0;
+	}
+
+	#color-chooser .gallery-item fieldset {
+		text-align: left; 
+		margin-top: 15px;
+	}
+
+	#color-chooser .gallery-item fieldset legend {
+		display: block; 
+		width: auto; 
+		visibility: visible; 
+		overflow: visible;
 	}
 
 	#color-chooser .selected-images {
@@ -60,11 +82,11 @@ foreach ($gallery as $key => $image) {
 	$checked = ($i == 0) ? 'checked' : '';
 	$imagesGallery .= '<div class="gallery-item">
 		<img src="' . $image->getUrl() . '" />
-		<input type="checkbox" name="simpleimages_gallery[_replace_][' . $key . ']" value="' . $image->getFile() . '" />
-		<fieldset style="text-align: left;">
-			<legend style="display: block; width: auto; visibility: visible; overflow: visible;">Set image type</legend>
-			<input type="radio" ' . $checked . ' value="' . $key . '" name="simpleimages_type[_replace_][base]"> Base image<br>
-			<input type="radio" ' . $checked . ' value="' . $key . '" name="simpleimages_type[_replace_][small]"> Small image<br>
+		<input type="checkbox" style="display:none;" name="simpleimages_gallery[_replace_][' . $key . ']" value="' . $image->getFile() . '" />
+		<fieldset>
+			<legend>Set image type</legend>
+			<input type="radio" ' . $checked . ' value="' . $key . '" name="simpleimages_type[_replace_][image]"> Base image<br>
+			<input type="radio" ' . $checked . ' value="' . $key . '" name="simpleimages_type[_replace_][small_image]"> Small image<br>
 			<input type="radio" ' . $checked . ' value="' . $key . '" name="simpleimages_type[_replace_][thumbnail]"> Thumbnail
 		</fieldset>
 	</div>';
@@ -95,7 +117,7 @@ foreach ($options as $option) {
 				<tr>
 					<th>Selected simple product</th>
 					<th>Assign simple product color</th>
-					<th>Assign simple product image(s) (loaded from configurable product gallery)</th>
+					<th>Click on image to assign it (loaded from configurable product gallery)</th>
 					<th></th>
 				</tr>
 			</thead>
@@ -133,6 +155,14 @@ foreach ($options as $option) {
 			if(jQuery('#color-chooser tbody tr').length == 0) {
 				jQuery('#color-chooser').hide();
 			}
+		});
+
+		//gallery img click -> checkbox toggle
+		jQuery('#color-chooser').on('click', '.gallery-item img', function() {
+			jQuery(this).toggleClass('checked');
+			jQuery(this).next('input[type="checkbox"]').prop('checked', function (i, value) {
+			    return !value;
+			});
 		});
 	});
 </script>
