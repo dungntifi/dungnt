@@ -10,8 +10,10 @@ $product_descr = urlencode($this->htmlEscape($_product->getData('description')))
 // $facebook = 'http://www.facebook.com/dialog/feed?api_key=679916502073648&amp;display=popup&amp;link='.$page_url.'&amp;picture='.$image_url.'&amp;name='.$product_name.'&amp;caption='.$product_descr.'&amp;description='.$product_name.'&amp;redirect_uri='.$page_url;
 
 $facebook = 'http://www.facebook.com/sharer.php?s=100&amp;p[title]='.$product_name.'&amp;p[summary]='.$product_descr.'&amp;p[url]='.$page_url.'&amp;p[images][0]='.$image_url;
-
 $pinterest = '//pinterest.com/pin/create/button/?media='.$image_url.'&description='.$product_name.'&url='.$page_url;
+$twitter = 'http://twitter.com/share?via=PromOutfitters&text='.$product_name.'&url='.$page_url;
+
+$google = 'http://plus.google.com/share?url='.$page_url;
    ?>
 <div class="jcarousel slideshow">
     <div class="controls">
@@ -21,13 +23,18 @@ $pinterest = '//pinterest.com/pin/create/button/?media='.$image_url.'&descriptio
         <div class="slider__button jcarousel-pagination"></div>
     </div>
     <div class="socials">
-        <a href="" class="icon_tooltip like" title="Add to Love List">Like</a>
-        <a href="<?php echo $facebook ?>" class="icon_tooltip facebbok" title="Share on Facebook">Facebook</a>
-        <a href="<?php echo $pinterest ?>" class="icon_tooltip pinterest" title="Pin on Pinterest"data-pin-do="buttonPin" data-pin-config="none">Pinterest</a>
+        <?php $_wishlistSubmitUrl = $this->helper('wishlist')->getAddUrl($_product); ?>
+        <?php if ($this->helper('wishlist')->isAllow()) : ?>
+            <a href="<?php echo $_wishlistSubmitUrl ?>" class="icon_tooltip like" title="Add to Love List" onclick="productAddToCartForm.submitLight(this, this.href); return false;">Like</a>            
+        <?php endif; ?>
+        <a href="<?php echo $facebook; ?>" class="icon_tooltip facebbok" title="Share on Facebook">Facebook</a>
+        <a href="<?php echo $pinterest; ?>" class="icon_tooltip pinterest" title="Pin on Pinterest"data-pin-do="buttonPin" data-pin-config="none">Pinterest</a>
         <a href="//wanelo.com" class="icon_tooltip symbaloo" title="Post to Wanelo" data-price="$378.00" data-image="<?php echo $image_url ?>" data-title="<?php echo $product_name?>" data-url="<?php echo $page_url ?>">Wanelo</a>
-        <a href="" class="icon_tooltip twitter" title="Tweet this">Twitter</a>
-        <a href="" class="icon_tooltip google" title="Share on Google+">G+</a>
-        <a href="" class="mail" title="">Mail</a>
+        <a href="<?php echo $twitter; ?>" class="icon_tooltip twitter" title="Tweet this">Twitter</a>
+        <a href="<?php echo $google; ?>" class="icon_tooltip google" title="Share on Google+">G+</a>
+        <?php //if ($this->helper('catalog/product')->canEmailToFriend()): ?>
+            <a href="<?php echo $this->helper('catalog/product')->getEmailToFriendUrl($_product) ?>" class="mail" title="">Mail</a>
+        <?php //endif; ?>
     </div>
     <div class="slideshow__list">
     <?php foreach ($this->getGalleryImages() as $_image): ?>

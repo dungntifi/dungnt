@@ -7182,3 +7182,8 @@ width: 100%;
 #credit-card-type .DI.active  {background-position: -153px 0px;}
 .amconf-block { margin-top: -55px; }
 .product_promotion {color: #cc0000; font-weight: bold;}
+
+.message_color {
+	font: 800 18px Arial,Helvetica,sans-serif;
+    text-transform: capitalize;
+}
