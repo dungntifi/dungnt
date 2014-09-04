@@ -10,6 +10,7 @@ class OpsWay_SimpleImages_IndexController extends Mage_Adminhtml_Controller_Acti
 
 			//data preset
 			$product = Mage::getModel('catalog/product')->load($productId);   
+			$simpleColor = Mage::getModel('catalog/product')->load($simpleId)->getColor();
 
 			$productAttributes = Mage::getSingleton('eav/config')->getAttribute('catalog_product', 'color');
 			if ($productAttributes->usesSource()) {
@@ -41,10 +42,11 @@ class OpsWay_SimpleImages_IndexController extends Mage_Adminhtml_Controller_Acti
 
 			$colorOptions = '';
 			foreach ($options as $option) {
-				$colorOptions .= '<option value="' . $option['value'] . '">' . $option['label'] . '</option>';
+				$selected = ($simpleColor == $option['value']) ? 'selected="selected"' : '';
+				$colorOptions .= '<option value="' . $option['value'] . '" ' . $selected . '>' . $option['label'] . '</option>';
 			}
 
-			$template = '<tr class="row" id="simpleimages-' . $simpleId . '"><td class="selected-simple"></td><td class="selected-color input-field"><select name="simpleimages_color[' . $simpleId . ']" class="required-entry select">' . $colorOptions . '</select></td><td class="selected-images input-field">' . $imagesGallery . '</td><td class="selected-remove"><p>Remove this row, if you don`t want<br>to change this simple product</p><a href="#" class="button">Remove</a></td></tr>';
+			$template = '<tr class="row" id="simpleimages-' . $simpleId . '"><td class="selected-simple">' . $this->getRequest()->getParam('simpleName') . '</td><td class="selected-color input-field"><select name="simpleimages_color[' . $simpleId . ']" class="required-entry select">' . $colorOptions . '</select></td><td class="selected-images input-field">' . $imagesGallery . '</td><td class="selected-remove"><p>Remove this row, if you don`t want<br>to change this simple product</p><a href="#" class="button">Remove</a></td></tr>';
 		}
 
 		$this->getResponse()->setHeader('Content-type', 'application/json', true) ;

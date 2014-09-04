@@ -98,13 +98,14 @@ foreach($childProducts as $_simple) {
 	jQuery(document).ready(function() {
 
 		jQuery('#add-row select').on('change', function() {
-			var simpleId = jQuery(this).val();
+			var simpleId = jQuery(this).val(),
+				simpleName = jQuery(this).find('option:selected').text();
 			jQuery('#loading-mask').show();
 
 			jQuery.ajax({
 				url: '<?php echo $this->getUrl("simpleimages/index/index/") ?>',
 				cache: false,
-				data: {'productId': <?php echo $this->getRequest()->getParam('id'); ?>, 'simpleId': simpleId},
+				data: {'productId': <?php echo $this->getRequest()->getParam('id'); ?>, 'simpleId': simpleId, 'simpleName': simpleName},
 				complete: function (xhr, status) {
 				    if (status === 'error' || !xhr.responseText) {
 				        alert('Error processing request for simple product id = ' + simpleId);
