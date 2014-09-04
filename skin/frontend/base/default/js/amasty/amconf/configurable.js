@@ -691,6 +691,9 @@ Product.ConfigSingle.prototype.selectImage = function(element)
             child.childElements()[0].removeClassName('amconf-image-selected');
     });
     element.addClassName('amconf-image-selected');
+        var colorValue = jQuery('#attribute92 :selected').html();
+    jQuery('.message_color').html(colorValue);    
+
 }
 
 Product.ConfigSingle.prototype.processEmpty = function()

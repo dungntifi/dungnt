@@ -40,7 +40,7 @@
 
 <div id="messages_product_view"><?php echo $this->getMessagesBlock()->getGroupedHtml() ?></div>
 <div class="block-product">
-
+    <div class="message_color"></div>
     <form action="<?php echo $this->getSubmitUrl($_product) ?>" method="post" id="product_addtocart_form"<?php if($_product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>>
         <?php echo $this->getBlockHtml('formkey') ?>
         <div class="no-display">
@@ -82,12 +82,9 @@
                 
                     $sizechart = sizeDesigner($designer);           
             ?>   
-            <script>
+            <script type="text/javascript">
                 jQuery.noConflict();
                 // $j is now an alias to the jQuery function; creating the new alias is optional.
-            </script>
-                
-            <script type="text/javascript">
                 function sizePopup() {
                     jQuery.fn.speedoPopup({
                         htmlContent: "<?php echo $sizechart; ?>", window: null, height: null, effectIn: "fade", effectOut: "fade"
