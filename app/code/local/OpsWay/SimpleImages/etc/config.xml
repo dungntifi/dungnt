@@ -16,7 +16,23 @@
                 <class>OpsWay_SimpleImages_Model</class>
             </simpleimages>
         </models>
+        <helpers>
+            <simpleimages>
+                <class>OpsWay_SimpleImages_Helper</class>
+            </simpleimages>
+        </helpers>
     </global>
+    <admin>
+        <routers>
+            <simpleimages_controller>
+                <use>admin</use>
+                <args>
+                    <module>OpsWay_SimpleImages</module>
+                    <frontName>simpleimages</frontName>
+                </args>
+            </simpleimages_controller>
+        </routers>
+    </admin>
     <adminhtml>
         <layout>
             <updates>
