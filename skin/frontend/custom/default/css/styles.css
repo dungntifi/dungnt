@@ -3474,6 +3474,7 @@ tr.summary-details-excluded {
 #size-chart {
 	font-size: 1.1em;
 	border: solid 1px #f5f5f5;
+	margin: 0 auto;
 }
 
 .size-chart-header {
