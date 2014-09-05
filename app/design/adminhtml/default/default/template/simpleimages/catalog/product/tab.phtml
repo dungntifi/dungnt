@@ -54,6 +54,10 @@
 	#color-chooser .selected-remove {
 		vertical-align: middle;
 	}
+
+	#color-chooser .color-icon {
+		margin: 10px 0;
+	}
 </style>
 
 <?php
@@ -138,6 +142,21 @@ foreach($childProducts as $_simple) {
 			jQuery(this).next('input[type="checkbox"]').prop('checked', function (i, value) {
 			    return !value;
 			});
+		});
+
+		//simple product color change -> load color icon
+		jQuery('#color-chooser').on('change', '.selected-color select', function() {
+			var iconUrl = jQuery(this).find('option:selected').data('icon');
+			if(iconUrl.length) {
+				var icon = '<img src="' + iconUrl + '"/>';
+			} else {
+				var icon = '<p>No image</p>';
+			}
+			jQuery(this).next('.color-icon').html(icon);
+		
+			//changing upload data
+			var amconfIcon = 'amconf_icon[' + jQuery(this).find('option:selected').val() + ']';
+			jQuery('.icon-upload input').attr('name', amconfIcon);
 		});
 	});
 </script>

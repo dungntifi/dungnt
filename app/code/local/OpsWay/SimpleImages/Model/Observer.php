@@ -21,6 +21,8 @@ class OpsWay_SimpleImages_Model_Observer
             try {
                 $product = $observer->getEvent()->getProduct();
                 $childProducts = Mage::getModel('catalog/product_type_configurable')->getUsedProducts(null,$product);
+
+                $uploadDir = Mage::getBaseDir('media') . DIRECTORY_SEPARATOR . 'amconf' . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR;
                      
                 foreach($childProducts as $_simple){
                     if(isset($simpleImagesGallery[$_simple->getId()]) || isset($simpleImagesColor[$_simple->getId()])) {
@@ -45,11 +47,30 @@ class OpsWay_SimpleImages_Model_Observer
                                 $_simple->addImageToMediaGallery('media/catalog/product' . $value, $currImageTypes, false, false); //assigning image types to media gallery
                             }
                         }
+
+                        /**
+                         * Uploading files
+                         */
+                        if (isset($_FILES['amconf_icon']) && isset($_FILES['amconf_icon']['error']))
+                        {
+
+                            foreach ($_FILES['amconf_icon']['error'] as $optionId => $errorCode)
+                            {
+                                if (UPLOAD_ERR_OK == $errorCode)
+                                {
+                                    //deleting file firstly
+                                    @unlink($uploadDir . $optionId . '.jpg');
+                                    //uploading new file
+                                    move_uploaded_file($_FILES['amconf_icon']['tmp_name'][$optionId], $uploadDir . $optionId . '.jpg');
+                                    Mage::getSingleton('core/session')->addSuccess('Color icon ' . $optionId . '.jpg added successfully.');
+                                }
+                            }
+                        }
                         
                         $_simple->save();
                     }
                 }
-
+                
                 $product->save();
             }
             catch (Exception $e) {
