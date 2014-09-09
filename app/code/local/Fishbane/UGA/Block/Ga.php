@@ -1,5 +1,5 @@
 <?php
-class Fishbane_UGA_GoogleAnalytics_Block_Ga extends Mage_GoogleAnalytics_Block_Ga
+class Fishbane_UGA_Block_Ga extends Mage_GoogleAnalytics_Block_Ga
 {
    protected function _getPageTrackingCode($accountId)
     {

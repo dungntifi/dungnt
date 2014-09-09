@@ -7,11 +7,11 @@
     </modules>
 	<global>
 		<blocks>
-			<GoogleAnalytics>
+			<googleanalytics>
 				<rewrite>
-					<ga>Fishbane_UGA_GoogleAnalytics_Block_Ga</ga>
+					<ga>Fishbane_UGA_Block_Ga</ga>
 				</rewrite>
-			</GoogleAnalytics>
+			</googleanalytics>
 		</blocks>
 	</global>
 </config>
