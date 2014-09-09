@@ -7195,15 +7195,13 @@ width: 100%;
   right: 0;
   bottom: 0;
   z-index: 10000;
-
   display: none;
   -webkit-overflow-scrolling: touch;
-
   text-align: center;
   background-color: rgba(0,0,0,0.6);
   display: inline-block;
-
 }
+
 .padiOverlay:after {
     display: inline-block;
     height: 100%;
@@ -7290,13 +7288,14 @@ width: 100%;
 .padiPop4Overlay .padiButton {background-color:#FF6103;
 position:absolute;
   height:35px;
-  top:360px;
-  left:265px;
+  top:359px;
+  left:269px;
   width:125px;
   color:#ffffff;
   font-family:arial;
   font-size:19px;
 }
+
 .padiPreload {
   display: inline-block;
   position: absolute;
