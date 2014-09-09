@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Fishbane_UGA>
+            <version>0.1.0</version>
+        </Fishbane_UGA>
+    </modules>
+	<global>
+		<blocks>
+			<GoogleAnalytics>
+				<rewrite>
+					<ga>Fishbane_UGA_GoogleAnalytics_Block_Ga</ga>
+				</rewrite>
+			</GoogleAnalytics>
+		</blocks>
+	</global>
+</config>
