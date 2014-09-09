@@ -68,7 +68,7 @@
     position: relative;
     float: left;
     overflow: hidden;
-    width: 846px;
+    /*width: 846px;*/
     width: 422px;
     height: 630px;
 }
@@ -78,8 +78,8 @@
     height: 630px;
 }
 .popup .slideshow img {
-    width: 422px;
-    height: 630px;
+    /*width: 422px;*/
+    /*height: 630px;*/
 }
 
 .slideshow .controls {
@@ -87,15 +87,15 @@
 	top: 50%;
 	left: 380px;
 	z-index: 9999;
-	margin-top: -64px;
+	margin-top: -84px;
 	width: 42px;
-	height: 127px;
+	height: 169px;
 	background: #000;
 	border: 1px solid #fff;
 }
 
 .popup .controls {
-	height: 169px;
+	height: 127px;
 }
 
 .slider__button {
@@ -315,7 +315,7 @@
 
 .easyzoom-flyout {
 	position: absolute;
-	z-index: 100;
+	z-index: 101;
 	overflow: hidden;
 	background: #FFF;
 }
@@ -519,4 +519,9 @@
 	position: absolute;
 	top: 0;
 	left: 0;
+}
+
+.easyzoom {
+	display: inline-block;
+	position: relative !important;
 }
