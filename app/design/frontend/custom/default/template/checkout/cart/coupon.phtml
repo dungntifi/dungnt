@@ -44,6 +44,7 @@
 </form>
 <script type="text/javascript">
 //<![CDATA[
+jQuery.noConflict();
 var discountForm = new VarienForm('discount-coupon-form');
 discountForm.submit = function (isRemove) {
     if (isRemove) {
