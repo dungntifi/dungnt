@@ -87,3 +87,22 @@
     global $gaRemarketingPromo;
     $gaRemarketingPromo = true;
 ?>
+
+
+<?php //Transferring Data to Rakuten LinkShare ?>
+<img src="http://track.linksynergy.com/ep?mid=39720&ord=<?php echo $this->getOrderId(); ?>&skulist=<?php
+$productsIdList = "";
+$productsQtyList = "";
+$productsNamesList = "";
+foreach ($order_details->getItemsCollection() as $item) {
+    $productsIdList .= $item->getProductId();
+    $productsQtyList .= $item->getQtyToInvoice();
+    $productsNamesList .= $item->getName();
+    if (strlen($productsIdList)){
+        $productsIdList .= "|";
+        $productsQtyList .= "|";
+        $productsNamesList .= "|";
+    }
+}
+echo $productsIdList;
+?>&qlist=<?php echo $productsQtyList; ?>&amtlist=<?php echo $order_details->grand_total*100; ?>&cur=USD&img=1&namelist=<?php echo $productsNamesList; ?>">
