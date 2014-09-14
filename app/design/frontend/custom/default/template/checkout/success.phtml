@@ -98,14 +98,16 @@ $productsIdList = "";
 $productsQtyList = "";
 $productsNamesList = "";
 foreach ($order_details->getItemsCollection() as $item) {
-    if (strlen($productsIdList) > 0) {
-        $productsIdList .= "|";
-        $productsQtyList .= "|";
-        $productsNamesList .= "|";
+    if ($item->getQtyToInvoice() > 0) {
+        if (strlen($productsIdList) > 0) {
+            $productsIdList .= "|";
+            $productsQtyList .= "|";
+            $productsNamesList .= "|";
+        }
+        $productsIdList .= $item->getProductId();
+        $productsQtyList .= $item->getQtyToInvoice();
+        $productsNamesList .= $item->getName();
     }
-    $productsIdList .= $item->getProductId();
-    $productsQtyList .= $item->getQtyToInvoice();
-    $productsNamesList .= $item->getName();
 }
 echo $productsIdList;
 ?>&qlist=<?php echo $productsQtyList; ?>&amtlist=<?php echo $order_details->grand_total * 100; ?>&cur=USD&img=1&namelist=<?php echo $productsNamesList; ?>">
