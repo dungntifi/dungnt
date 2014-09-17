@@ -42,10 +42,6 @@ Default layout, loads most of the pages
                     <method>ajax</method>
                 </params>
             </action> -->
-            <block type="checkout/links" name="checkout_cart_link">
-                <action method="addCartLink"></action>
-                <!-- <action method="addCheckoutLink"></action> -->
-            </block>
         </reference>
         <reference name="right">
             <block type="checkout/cart_sidebar" name="cart_sidebar" template="checkout/cart/sidebar.phtml" before="-">

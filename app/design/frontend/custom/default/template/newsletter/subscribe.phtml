@@ -24,25 +24,22 @@
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 ?>
-<?php if($crumbs && is_array($crumbs)): ?>
-<div class="breadcrumbs">
-    <ul>
-        <?php foreach($crumbs as $_crumbName=>$_crumbInfo): ?>
-            <li class="<?php echo $_crumbName ?>">
-            <?php if($_crumbInfo['link']): ?>
-                <a href="<?php echo $_crumbInfo['link'] ?>" title="<?php echo $this->escapeHtml($_crumbInfo['title']) ?>"><?php echo $this->escapeHtml($_crumbInfo['label']) ?></a>
-            <?php elseif($_crumbInfo['last']): ?>
-                <strong><?php echo $this->escapeHtml($_crumbInfo['label']) ?></strong>
-            <?php else: ?>
-                <?php echo $this->escapeHtml($_crumbInfo['label']) ?>
-            <?php endif; ?>
-            <?php if(!$_crumbInfo['last']): ?>
-                <span>> </span>
-            <?php endif; ?>
-            </li>
-        <?php endforeach; ?>
 
-    </ul>
-
-</div>
-<?php endif; ?>
+    <h4>Newsletter Signup</h4>
+    <form action="<?php echo $this->getFormActionUrl() ?>" method="post" id="newsletter-validate-detail" class="newsletter-form">
+        <div class="form-container">
+		<div class="row">
+            <div class="col-xs-12">
+               <input type="email" name="email" id="newsletter" title="<?php echo $this->__('Sign up for our newsletter') ?>" class="input-text required-entry validate-email email-input input-long form-input white"  placeholder="Email Address"/>
+            </div>
+            <div class="col-xs-12">
+                <button type="submit" title="<?php echo $this->__('Subscribe') ?>" class="newsletter-footer-submit">Subscribe</button>
+            </div>
+		</div>    
+        </div>
+    </form>
+    <script type="text/javascript">
+    //<![CDATA[
+        var newsletterSubscriberFormDetail = new VarienForm('newsletter-validate-detail');
+    //]]>
+    </script>

@@ -1,0 +1,32 @@
+<?php
+/**
+ * Shoping cart sidebar
+ *
+ * @see Mage_Checkout_Block_Cart_Sidebar
+ */
+?>
+<?php if ($this->getIsNeedToDisplaySideBar()): ?>
+<?php
+    $_cartQty = $this->getSummaryCount();
+    if ($_cartQty > 0)
+        $cartTitle = $this->__('View Cart');
+    else
+        $cartTitle = $this->__('You have no items in your shopping cart.');
+    
+    $cartClasses = '';
+    if (!$_cartQty)
+        $cartClasses .= ' is-empty';
+    else
+        $cartClasses .= ' is-not-empty';
+?>
+<div id="mini-cart" class="block-content">
+    <div class="button mini-cart-button" title="<?php echo $cartTitle ?>">
+	    <a href="<?php echo $this->getUrl('checkout/cart') ?>">
+	        <i class="icon-minicart"></i>
+	        <span class="cart-items">(<?php echo ($_cartQty > 0) ? $_cartQty : '0' ?>)</span>
+	    </a>	
+    </div>    
+    <?php $_items = $this->getRecentItems(); ?>
+</div>
+
+<?php endif;?>

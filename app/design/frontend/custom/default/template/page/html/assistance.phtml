@@ -1,0 +1,48 @@
+<?php
+/**
+ * Shoping cart sidebar
+ *
+ * @see Mage_Checkout_Block_Cart_Sidebar
+ */
+?>
+<div class="block block-minicart">
+
+	<div id="mini-cart" class="block-content dropdown assistance">
+	    <div class="button mini-cart-button dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="1000" data-close-others="false" title="<?php echo $cartTitle ?>">
+	        <span class="cart-items">Assistance</span>
+		    <div class="arrow-container"><div class="arrow-up"></div></div>
+	    </div>    
+	
+	        <div class="dropdown-menu">
+	            <div class="block-content">
+	
+	
+					<div class="assistance-title">How may we help you?</div>
+					<div class="assistance-phone">1.718.841.7037</div>
+					<div class="assistance-call">Call 7 days a week</div>
+					<div class="links">
+						<a href="javascript:$zopim.livechat.window.show()" class="chat">Chat with Us</a> &nbsp;&nbsp;|&nbsp;&nbsp; 
+						<a class="email init-emailforward" href="/contact">Email us</a>
+					</div>
+			
+						<hr class="style-one">
+						<ul>										
+								<li><a id="" href="<?php echo Mage::getBaseUrl(); ?>customer-service">Customer Care</a></li>
+								<li><a id="" href="<?php echo Mage::getBaseUrl(); ?>customer-service">Shopping Online</a></li>
+								<li><a id="" href="<?php echo Mage::getBaseUrl(); ?>shipping">Shipping</a></li>
+								<li><a id="" href="<?php echo Mage::getBaseUrl(); ?>returns">Returns</a></li>
+								<li><a id="" href="<?php echo Mage::getBaseUrl(); ?>ordertracking">Order Status</a></li>
+								<li><a id="" href="<?php echo Mage::getBaseUrl(); ?>customer-service">Free Shipping</a></li>
+								<li><a id="" href="<?php echo Mage::getBaseUrl(); ?>returns">Free Returns</a></li>
+								<li><a id="" href="<?php echo Mage::getBaseUrl(); ?>customer-service">Price Match</a></li>
+								<li><a id="" href="<?php echo Mage::getBaseUrl(); ?>customer-service">Price Protection</a></li>
+								<li><a id="" href="<?php echo Mage::getBaseUrl(); ?>contact">Contact Us</a></li>
+								<li><a id="" href="<?php echo Mage::getBaseUrl(); ?>locations">Locations</a></li>
+						</ul>
+	
+	
+	            </div>
+	        </div>
+	</div>
+
+</div>

@@ -50,17 +50,33 @@ Default layout, loads most of the pages
                 <action method="addJs"><script>varien/menu.js</script></action>
                 <action method="addJs"><script>mage/translate.js</script></action>
                 <action method="addJs"><script>mage/cookies.js</script></action>
-                <action method="addJs"><script>responsive-nav/responsive-nav.js</script></action>
+
+				<!-- <block type="core/text" name="bootstrapcss">
+					<action method="setText"><text><![CDATA[<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" type="text/css">]]></text></action>
+				</block> -->
+				<action method="addJs"><script>bootstrap/bootstrap-hover-dropdown.min.js</script></action>
+	            <action method="addJs"><script>bootstrap/bootstrap-select.min.js</script></action>
+	            <action method="addJs"><script>bootstrap/bootstrap.min.js</script></action>
+	            
 				<!-- Speedo Popup Begin -->
 				<action method="addJs"><script>speedo/speedo.popup.min.js</script></action>
 				<!-- <action method="addJs"><script>speedo/speedo.sizechart.js</script></action> -->
 				<action method="addCss"><stylesheet>css/default-speedo.css</stylesheet></action>
 				<!-- Speedo Popup End -->                
 
+				<!-- Sidebar Nav -->
+
+				<action method="addJs"><script>sidebar/sidebar.js</script></action>
+				<action method="addCss"><stylesheet>css/sidebar.min.css</stylesheet></action>
+				
+				<action method="addJs"><script>search/modernizr.custom.js</script></action>
+				<action method="addJs"><script>search/classie.js</script></action>
+				<action method="addJs"><script>search/uisearch.js</script></action>
+
                 <block type="page/js_cookie" name="js_cookies" template="page/js/cookie.phtml"/>
 
                 <action method="addCss"><stylesheet>css/styles.css</stylesheet></action>
-                <action method="addCss"><stylesheet>css/responsive-nav.css</stylesheet></action>
+                <action method="addCss"><stylesheet>css/font-awesome.min.css</stylesheet></action>
                 <action method="addItem"><type>skin_css</type><name>css/styles-ie.css</name><params/><if>lt IE 8</if></action>
                 <action method="addCss"><stylesheet>css/widgets.css</stylesheet></action>
                 <action method="addCss"><stylesheet>css/print.css</stylesheet><params>media="print"</params></action>
@@ -78,6 +94,26 @@ Default layout, loads most of the pages
             <block type="page/html_header" name="header" as="header">
                 <block type="page/template_links" name="top.links" as="topLinks"/>
                 <block type="page/switch" name="store_language" as="store_language" template="page/switch/languages.phtml"/>
+
+	            <block type="core/template" name="socialAccounts" template="beckin/themesettings/socialaccounts.phtml"/>
+	            <!-- add mini cart to the header : new template -->
+	            <block type="checkout/cart_sidebar" name="mobile_cart" template="checkout/cart/mobile_cart.phtml" before="-">
+	                <action method="addItemRender"><type>simple</type><block>checkout/cart_item_renderer</block><template>checkout/cart/sidebar/default.phtml</template></action>
+	                <action method="addItemRender"><type>grouped</type><block>checkout/cart_item_renderer_grouped</block><template>checkout/cart/sidebar/default.phtml</template></action>
+	                <action method="addItemRender"><type>configurable</type><block>checkout/cart_item_renderer_configurable</block><template>checkout/cart/sidebar/default.phtml</template></action>
+	                <block type="core/text_list" name="cart_sidebar.extra_actions" as="extra_actions" translate="label" module="checkout">
+	                    <label>Shopping Cart Sidebar Extra Actions</label>
+	                </block>
+	            </block>
+	            <block type="checkout/cart_sidebar" name="cart_sidebar" template="checkout/cart/mini.phtml" before="-">
+	                <action method="addItemRender"><type>simple</type><block>checkout/cart_item_renderer</block><template>checkout/cart/sidebar/default.phtml</template></action>
+	                <action method="addItemRender"><type>grouped</type><block>checkout/cart_item_renderer_grouped</block><template>checkout/cart/sidebar/default.phtml</template></action>
+	                <action method="addItemRender"><type>configurable</type><block>checkout/cart_item_renderer_configurable</block><template>checkout/cart/sidebar/default.phtml</template></action>
+	                <block type="core/text_list" name="cart_sidebar.extra_actions" as="extra_actions" translate="label" module="checkout">
+	                    <label>Shopping Cart Sidebar Extra Actions</label>
+	                </block>
+	            </block>  
+	            
                 <block type="core/text_list" name="top.menu" as="topMenu" translate="label">
                     <label>Navigation Bar</label>
                     <block type="page/html_topmenu" name="catalog.topnav" template="page/html/topmenu.phtml"/>

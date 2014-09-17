@@ -10,7 +10,7 @@
 	
 	<catalog_product_view>						
 		<reference name="head">
-			<action method="addJs"><script>revolution/jquery-1.10.1.js</script></action>				
+			<!-- <action method="addJs"><script>revolution/jquery-1.10.1.js</script></action>	-->			
 			<!--for newarrivals-->						 			
 			<action method="addJs"><script>productzoom/jquery.carouFredSel-2.6.0.js</script></action>
 			<!--product zoom-->										 
@@ -19,9 +19,9 @@
 			<action method="addCss"><stylesheet>productzoom/carosal.css</stylesheet></action>
 			
 			<!-- Speedo Popup Begin -->
-			<action method="addJs"><script>speedo/speedo.popup.min.js</script></action>
+			<!-- <action method="addJs"><script>speedo/speedo.popup.min.js</script></action> -->
 			<!-- <action method="addJs"><script>speedo/speedo.sizechart.js</script></action> -->
-			<action method="addCss"><stylesheet>css/default-speedo.css</stylesheet></action>
+			<!-- <action method="addCss"><stylesheet>css/default-speedo.css</stylesheet></action> -->
 			<!-- Speedo Popup End -->
 						
 		</reference>

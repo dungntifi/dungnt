@@ -29,13 +29,12 @@ $catalogSearchHelper =  $this->helper('catalogsearch');
 ?>
 <form id="search_mini_form" action="<?php echo $catalogSearchHelper->getResultUrl() ?>" method="get">
     <div class="form-search">
-        <label for="search"><?php echo $this->__('Search:') ?></label>
         <input id="search" type="text" name="<?php echo $catalogSearchHelper->getQueryParamName() ?>" value="<?php echo $catalogSearchHelper->getEscapedQueryText() ?>" class="input-text" maxlength="<?php echo $catalogSearchHelper->getMaxQueryLength();?>" />
-        <button type="submit" title="<?php echo $this->__('Search') ?>" class="button"><span class="notext"><?php echo $this->__('Search') ?></span></button>
+        <button type="submit" title="<?php echo $this->__('Search') ?>" class="button"><i class="fa fa-search"></i></button>
         <div id="search_autocomplete" class="search-autocomplete"></div>
         <script type="text/javascript">
         //<![CDATA[
-            var searchForm = new Varien.searchForm('search_mini_form', 'search', '');
+            var searchForm = new Varien.searchForm('search_mini_form', 'search', '<?php echo $this->__('Find the perfect dress!') ?>');
             searchForm.initAutocomplete('<?php echo $catalogSearchHelper->getSuggestUrl() ?>', 'search_autocomplete');
         //]]>
         </script>

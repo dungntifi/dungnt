@@ -48,10 +48,8 @@ Default layout, loads most of the pages
 
     <default>
         <!-- Mage_Customer -->
-        <reference name="top.links">
-        	<action method="addLink" translate="label title" module="customer"><label>My Account</label><url helper="customer/getAccountUrl"/><title>My Account</title><prepare/><urlParams/><position>10</position></action>
-		    <action method="addLink" translate="label title" module="customer"><label>Help</label><url>http://www.promoutfitters.com/customer-service</url><title>Help</title><prepare/><urlParams/><position>140</position></action>
-		    <action method="addLink" translate="label title" module="customer"><label>Locations</label><url>http://www.promoutfitters.com/locations</url><title>Locations</title><prepare/><urlParams/><position>150</position></action>
+        <reference name="header">
+	        <block type="core/template" name="header_assistance" template="page/html/assistance.phtml"/> 
         </reference>
     </default>
 
@@ -60,8 +58,9 @@ Load this update on every page when customer is logged in
 -->
 
     <customer_logged_in>
-        <reference name="top.links">
-            <action method="addLink" translate="label title" module="customer"><label>Log Out</label><url helper="customer/getLogoutUrl"/><title>Log Out</title><prepare/><urlParams/><position>100</position></action>
+        <reference name="header">
+	        <block type="core/template" name="header_myaccount" template="page/html/myaccount.phtml"/>
+	        <block type="core/template" name="sidebar_in" template="page/html/sidebar_in.phtml"/>
         </reference>
     </customer_logged_in>
 
@@ -73,8 +72,9 @@ Load this update on every page when customer is logged out
         <!---<reference name="right">
             <block type="customer/form_login" name="customer_form_mini_login" before="-" template="customer/form/mini.login.phtml"/>
         </reference>-->
-        <reference name="top.links">
-            
+        <reference name="header">
+	        <block type="core/template" name="header_signin" template="page/html/signin.phtml"/>
+	        <block type="core/template" name="sidebar_out" template="page/html/sidebar_out.phtml"/>
         </reference>
         <remove name="reorder"></remove>
     </customer_logged_out>

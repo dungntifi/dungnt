@@ -1,0 +1,150 @@
+<?php
+/**
+
+ */
+?>
+<div class="mobileSidebar">
+
+	<a href="#" id="navLaunch"><i class="fa fa-bars" id="navLaunch"></i></a>
+	
+	<script type="text/javascript">
+		jQuery.noConflict();
+		
+		// This launch Puma SideBar on form load.
+		jQuery("#navLaunch").on("click",function(){
+		
+			jQuery.PumaSideBar({
+				position: "left",  // Position
+				label: "", // Initial label
+				movebody: true, // if you want to push or not your page
+				avatar: "<?php echo Mage::getBaseUrl(); ?>skin/frontend/custom/default/images/logo-sidebar.png", // Initial avatar.
+				items: [{ // Level one
+							text: "Designers",
+							items: [ // Level two
+									 {	text: "Alyce Paris", link: "<?php echo Mage::getBaseUrl(); ?>alyce-paris"	},
+									 {	text: "Blush Prom", link: "<?php echo Mage::getBaseUrl(); ?>blush-prom"	},
+									 {	text: "Cassandra Stone", link: "<?php echo Mage::getBaseUrl(); ?>cassandra-stone-prom"	},
+									 {	text: "Claudine", link: "<?php echo Mage::getBaseUrl(); ?>claudine"	},
+									 {	text: "Dave & Johnny", link: "<?php echo Mage::getBaseUrl(); ?>dave-and-johnny"	},
+									 {	text: "Faviana", link: "<?php echo Mage::getBaseUrl(); ?>faviana"	},
+									 {	text: "Flirt", link: "<?php echo Mage::getBaseUrl(); ?>flirt"	},
+									 {	text: "GiGi", link: "<?php echo Mage::getBaseUrl(); ?>gigi"	},
+									 {	text: "Hannah S", link: "<?php echo Mage::getBaseUrl(); ?>hannah-s"	},
+									 {	text: "Holt Miami", link: "<?php echo Mage::getBaseUrl(); ?>holt-miami"	},
+									 {	text: "Janique", link: "<?php echo Mage::getBaseUrl(); ?>janique"	},
+									 {	text: "Jasz Couture", link: "<?php echo Mage::getBaseUrl(); ?>jasz-couture"	},
+									 {	text: "Jovani", link: "<?php echo Mage::getBaseUrl(); ?>jovani"	},
+									 {	text: "La Femme", link: "<?php echo Mage::getBaseUrl(); ?>la-femme"	},
+									 {	text: "Lara Designs", link: "<?php echo Mage::getBaseUrl(); ?>lara-designs"	},
+									 {	text: "Mac Duggal", link: "<?php echo Mage::getBaseUrl(); ?>mac-duggal"	},
+									 {	text: "Mori Lee", link: "<?php echo Mage::getBaseUrl(); ?>mori-lee"	},
+									 {	text: "Night Moves", link: "<?php echo Mage::getBaseUrl(); ?>night-moves"	},
+									 {	text: "Nika Formals", link: "<?php echo Mage::getBaseUrl(); ?>nika-formals"	},
+									 {	text: "Panoply Designs", link: "<?php echo Mage::getBaseUrl(); ?>panoply"	},
+									 {	text: "Party Time", link: "<?php echo Mage::getBaseUrl(); ?>party-time"	},
+									 {	text: "Primavera Couture", link: "<?php echo Mage::getBaseUrl(); ?>primavera-couture"	},
+									 {	text: "Rachel Allan", link: "<?php echo Mage::getBaseUrl(); ?>rachel-allan"	},
+									 {	text: "Riva Designs", link: "<?php echo Mage::getBaseUrl(); ?>riva-designs"	},
+									 {	text: "Sherri Hill", link: "<?php echo Mage::getBaseUrl(); ?>sherri-hill"	},
+									 {	text: "Tarik Ediz", link: "<?php echo Mage::getBaseUrl(); ?>tarik-ediz"	},
+									 {	text: "Terani Couture", link: "<?php echo Mage::getBaseUrl(); ?>terani-couture"	},
+									 {	text: "Tiffany Designs", link: "<?php echo Mage::getBaseUrl(); ?>tiffany-designs"	},
+									 {	text: "Tony Bowls", link: "<?php echo Mage::getBaseUrl(); ?>tony-bowls"	},
+									 {	text: "Xcite", link: "<?php echo Mage::getBaseUrl(); ?>xcite-prom"	}
+								   ]
+						},
+						{ // Level one
+							text: "Dresses",
+							items: [ // Level two
+									 {	text: "Prom Dresses", link: "<?php echo Mage::getBaseUrl(); ?>prom-dresses"	},
+									 {	text: "Short Prom", link: "<?php echo Mage::getBaseUrl(); ?>short-prom-dresses"	},
+									 {	text: "High Low Prom", link: "<?php echo Mage::getBaseUrl(); ?>high-low-prom-dresses"	},
+									 {	text: "Long Prom", link: "<?php echo Mage::getBaseUrl(); ?>long-prom-dresses"	},
+									 {	text: "Mermaid Prom", link: "<?php echo Mage::getBaseUrl(); ?>mermaid-prom-dresses"	},
+									 {	text: "Ball Prom Gowns", link: "<?php echo Mage::getBaseUrl(); ?>ball-prom-gowns"	},
+									 {	text: "Print Prom", link: "<?php echo Mage::getBaseUrl(); ?>print-prom-dresses"	},
+									 {	text: "Homecoming", link: "<?php echo Mage::getBaseUrl(); ?>homecoming-dresses"	},
+									 {	text: "Short Homecoming", link: "<?php echo Mage::getBaseUrl(); ?>short-homecoming-dresses"	},
+									 {	text: "High Low Homecoming", link: "<?php echo Mage::getBaseUrl(); ?>high-low-homecoming-dresses"	},
+									 {	text: "Evening Dresses", link: "<?php echo Mage::getBaseUrl(); ?>evening-dresses"	},
+									 {	text: "Formal Gowns", link: "<?php echo Mage::getBaseUrl(); ?>formal-gowns"	},
+									 {	text: "Red Carpet", link: "<?php echo Mage::getBaseUrl(); ?>red-carpet-dresses"	},
+									 {	text: "Special Occasions", link: "<?php echo Mage::getBaseUrl(); ?>special-occasions"	},
+									 {	text: "Cocktail Dresses", link: "<?php echo Mage::getBaseUrl(); ?>cocktail-dresses"	},
+									 {	text: "Club Dresses", link: "<?php echo Mage::getBaseUrl(); ?>club-dresses"	},
+									 {	text: "Holiday Dresses", link: "<?php echo Mage::getBaseUrl(); ?>holiday-dresses"	},
+									 {	text: "Little Black Dresses", link: "<?php echo Mage::getBaseUrl(); ?>little-black-dresses"	},
+									 {	text: "Mini Dresses", link: "<?php echo Mage::getBaseUrl(); ?>mini-dresses"	},
+									 {	text: "New Years Dresses", link: "<?php echo Mage::getBaseUrl(); ?>new-years-eve-dresses"	},
+									 {	text: "Party Dresses", link: "<?php echo Mage::getBaseUrl(); ?>party-dresses"	},
+									 {	text: "Bat Mitzvah", link: "<?php echo Mage::getBaseUrl(); ?>bat-mitzvah-dresses"	},
+									 {	text: "Wedding Dresses", link: "<?php echo Mage::getBaseUrl(); ?>wedding-dresses"	},
+									 {	text: "Bridesmaids", link: "<?php echo Mage::getBaseUrl(); ?>bridesmaid-dresses"	},
+									 {	text: "Pageant", link: "<?php echo Mage::getBaseUrl(); ?>pageant-dresses"	},
+									 {	text: "Quinceanera", link: "<?php echo Mage::getBaseUrl(); ?>quinceanera-dresses"	},
+									 {	text: "Sweet Sixteen", link: "<?php echo Mage::getBaseUrl(); ?>sweet-sixteen-dresses"	}
+								   ]
+						},				
+						{
+							text: "Styles",
+							items: [ // Level two
+									 {	text: "Long", link: "<?php echo Mage::getBaseUrl(); ?>designer-dresses?length=1168"	},
+									 {	text: "Short", link: "<?php echo Mage::getBaseUrl(); ?>designer-dresses?length=1169"	},
+									 {	text: "High Low", link: "<?php echo Mage::getBaseUrl(); ?>designer-dresses?length=1167"	},
+									 {	text: "A Line", link: "<?php echo Mage::getBaseUrl(); ?>designer-dresses?styles=2611"	},
+									 {	text: "Ball Gown", link: "<?php echo Mage::getBaseUrl(); ?>designer-dresses?styles=2610"	},
+									 {	text: "Bandage", link: "<?php echo Mage::getBaseUrl(); ?>designer-dresses?styles=2609"	},
+									 {	text: "Mermaid", link: "<?php echo Mage::getBaseUrl(); ?>designer-dresses?styles=2608"	},
+									 {	text: "Open Back", link: "<?php echo Mage::getBaseUrl(); ?>designer-dresses?styles=2607"	},
+									 {	text: "Pleated", link: "<?php echo Mage::getBaseUrl(); ?>designer-dresses?styles=2606"	},
+									 {	text: "Beaded", link: "<?php echo Mage::getBaseUrl(); ?>designer-dresses?embellishments=2596"	},
+									 {	text: "Embroidery", link: "<?php echo Mage::getBaseUrl(); ?>designer-dresses?embellishments=2595"	},
+									 {	text: "Feathers", link: "<?php echo Mage::getBaseUrl(); ?>designer-dresses?embellishments=2601"	},
+									 {	text: "Flowers", link: "<?php echo Mage::getBaseUrl(); ?>designer-dresses?embellishments=2600"	},
+									 {	text: "Lace", link: "<?php echo Mage::getBaseUrl(); ?>designer-dresses?embellishments=2594"	},
+									 {	text: "Ruffles", link: "<?php echo Mage::getBaseUrl(); ?>designer-dresses?embellishments=2599"	},
+									 {	text: "Sequins", link: "<?php echo Mage::getBaseUrl(); ?>designer-dresses?embellishments=2593"	},
+									 {	text: "Stones", link: "<?php echo Mage::getBaseUrl(); ?>designer-dresses?embellishments=2592"	},
+									 {	text: "Asymmetrical", link: "<?php echo Mage::getBaseUrl(); ?>designer-dresses?neckline=2588"	},
+									 {	text: "Halter", link: "<?php echo Mage::getBaseUrl(); ?>designer-dresses?neckline=2587"	},
+									 {	text: "High Neckline", link: "<?php echo Mage::getBaseUrl(); ?>designer-dresses?neckline=2586"	},
+									 {	text: "Strapless", link: "<?php echo Mage::getBaseUrl(); ?>designer-dresses?neckline=2585"	},
+									 {	text: "V Neck", link: "<?php echo Mage::getBaseUrl(); ?>designer-dresses?neckline=2584"	},
+									 {	text: "Long Sleeve", link: "<?php echo Mage::getBaseUrl(); ?>designer-dresses?sleeve=2582"	},
+									 {	text: "Medium Sleeve", link: "<?php echo Mage::getBaseUrl(); ?>designer-dresses?sleeve=2581"	},
+									 {	text: "Short Sleeve", link: "<?php echo Mage::getBaseUrl(); ?>designer-dresses?sleeve=2580"	},
+									 {	text: "Spaghetti Straps", link: "<?php echo Mage::getBaseUrl(); ?>designer-dresses?sleeve=2578"	},
+									 {	text: "Slit", link: "<?php echo Mage::getBaseUrl(); ?>designer-dresses?slit=2598"	},
+									 {	text: "Train", link: "<?php echo Mage::getBaseUrl(); ?>designer-dresses?train=2605"	},
+									 {	text: "Corset", link: "<?php echo Mage::getBaseUrl(); ?>designer-dresses?waistline=2602"	},
+									 {	text: "Drop Waistline", link: "<?php echo Mage::getBaseUrl(); ?>designer-dresses?waistline=2591"	},
+									 {	text: "Empire", link: "<?php echo Mage::getBaseUrl(); ?>designer-dresses?waistline=2590"	},
+									 {	text: "Fitted", link: "<?php echo Mage::getBaseUrl(); ?>designer-dresses?waistline=2603"	},
+									 {	text: "Natural", link: "<?php echo Mage::getBaseUrl(); ?>designer-dresses?waistline=2589"	}
+								   ]
+						},
+						{
+							text: "Shoes", link: "<?php echo Mage::getBaseUrl(); ?>shoes"
+						},
+						{
+							text: "New", link: "<?php echo Mage::getBaseUrl(); ?>new"
+						},
+						{
+							text: "Sale", link: "<?php echo Mage::getBaseUrl(); ?>sale"
+						},
+						{
+							text: "My Account", link: "<?php echo Mage::getBaseUrl(); ?>customer/account/"
+						},						
+						{
+							text: "Sign Out", link: "<?php echo Mage::helper('customer')->getLogoutUrl(); ?>"
+						},
+						]
+			});
+		
+		
+		});
+		
+		
+		</script>	
+
+</div>

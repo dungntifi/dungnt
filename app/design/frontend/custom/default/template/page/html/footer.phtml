@@ -26,19 +26,113 @@
 ?>
 <div class="footer-container">
     <div class="footer">
-        <?php echo $this->getChildHtml() ?>
-        <address><?php echo $this->getCopyright() ?></address>
-        <div class="logo-footer">&copy; <?php echo date ('Y'); ?>&nbsp;&nbsp;<img src="<?php echo $this->getSkinUrl('images/logo-footer.gif'); ?>" /></div>
-        <div class="address">1001 Flatbush Ave., Brooklyn, NY 11226</div>
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-xs-12 col-sm-4 socialContainer ">
+						<h4>Follow Us</h4>
+						<ul class="footer-social">
+							<li><a target="_blank" href="https://www.facebook.com/PromOutfitters" class="i facebook"><i class="fa fa-facebook fa-fw"></i></a></li>
+							<li><a target="_blank" href="https://twitter.com/PromOutfitters" class="i twitter"><i class="fa fa-twitter fa-fw"></i></a></li>
+							<li><a target="_blank" href="http://instagram.com/promoutfitters" class="i instagram"><i class="fa fa-instagram fa-fw"></i></a></li>
+							<li><a target="_blank" href="https://www.google.com/+Promoutfitters-flatbush-ave" class="i google-plus"><i class="fa fa-google-plus fa-fw"></i></a></li>
+							<li><a target="_blank" href="http://www.pinterest.com/promoutfitters/" class="i pinterest"><i class="fa fa-pinterest fa-fw"></i></a></li>
+						</ul>
+					</div>
+					<div class="col-xs-12 col-sm-4 newsletter">
+						<?php echo $this->getChildHtml('footer.newsletter'); ?>
+					</div>
+					<div class="col-xs-12 col-sm-4 socialContainer2 ">
+						<h4>Spread the Word</h4>
+						<ul class="footer-social2 row">
+							<li class="col-xs-4">
+								    <!-- Facebook Like -->
+								    <?php $magentoCurrentUrl = Mage::helper('core/url')->getCurrentUrl(); ?>
+								    <span class="Facebook"><div class="fb-like" data-href="<?php echo $magentoCurrentUrl; ?>" data-layout="button_count" data-action="like" data-show-faces="true" data-share="false"></div></span>
+					
+													
+
+
+								
+							</li>
+							<li class="col-xs-4">
+					                <span class="twitter">
+						                <a href="https://twitter.com/share" class="twitter-share-button" data-url="<?php echo $magentoCurrentUrl; ?>" data-text="Check out these prom dresses!">Tweet</a>
+										<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+					                </span>								
+							</li>
+							<li class="col-xs-4">
+					                <span class="google">
+										<!-- Place this tag where you want the +1 button to render. -->
+										<div class="g-plusone" data-size="medium" data-href="<?php echo $magentoCurrentUrl; ?>"></div>
+										
+										<!-- Place this tag after the last +1 button tag. -->
+										<script type="text/javascript">
+										  (function() {
+										    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+										    po.src = 'https://apis.google.com/js/platform.js';
+										    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+										  })();
+										</script>
+					                </span>								
+							</li>
+						</ul>
+					</div>
+				</div>
+					<div class="col-xs-12">
+						<div class="footer-customercare mobile-hide">
+							<ul class="">
+								<li><a href="<?php echo Mage::getBaseUrl(); ?>locations">Stores</a></li>
+								<li><a href="<?php echo Mage::getBaseUrl(); ?>customer-service">Customer Care</a></li>
+								<li><a href="<?php echo Mage::getBaseUrl(); ?>ordertracking">Order Status</a></li>					 
+								<li><a href="<?php echo Mage::getBaseUrl(); ?>returns">Returns</a></li>
+								<li><a href="<?php echo Mage::getBaseUrl(); ?>shipping">Shipping</a></li>
+								<li><a href="<?php echo Mage::getBaseUrl(); ?>customer-service">Authenticity</a></li>
+								<li><a href="<?php echo Mage::getBaseUrl(); ?>customer-service">Price Match</a></li>
+								<li><a href="<?php echo Mage::getBaseUrl(); ?>customer-service">Free Gift</a></li>
+								<li><a href="<?php echo Mage::getBaseUrl(); ?>contact">Contact Us</a></li>
+							</ul>
+						</div>
+						<div class="footer-more mobile-show">
+							<form>
+								<select class="drop-down-menu" onChange="if(this.selectedIndex!=0)
+self.location=this.options[this.selectedIndex].value">
+									<option value="" disabled="" selected="">More</option>
+									<option value="<?php echo Mage::getBaseUrl(); ?>locations">Stores</option>
+									<option value="<?php echo Mage::getBaseUrl(); ?>customer-service">Customer Care</option>
+									<option value="<?php echo Mage::getBaseUrl(); ?>ordertracking">Order Status</option>
+									<option value="<?php echo Mage::getBaseUrl(); ?>returns">Returns</option>
+									<option value="<?php echo Mage::getBaseUrl(); ?>shipping">Shipping</option>
+									<option value="<?php echo Mage::getBaseUrl(); ?>customer-service">Authenticity</option>
+									<option value="<?php echo Mage::getBaseUrl(); ?>customer-service">Price Match</option>
+									<option value="<?php echo Mage::getBaseUrl(); ?>customer-service">Free Gift</option>
+									<option value="<?php echo Mage::getBaseUrl(); ?>contact">Contact Us</option>
+								</select>
+							</form>
+						</div>
+						<div class="col-xs-12">
+						
+					        <address><?php echo $this->getCopyright() ?></address>
+					        <div class="logo-footer"><img src="<?php echo $this->getSkinUrl('images/logo-footer.gif'); ?>" /></div>
+					        <div class="address">1001 Flatbush Ave., Brooklyn, NY 11226</div>
+						
+							<ul class="footer-legal">
+								<li class="copyright-wrap">
+									<ul class="copyright">
+										<li>&copy; <?php echo date ('Y'); ?>&nbsp;PromOutfitters.com</li>
+										<li>All rights reserved</li>
+										<li class="privacy"><a href="<?php echo Mage::getBaseUrl(); ?>privacy">Privacy Policy</a></li>
+										<li class="terms"><a href="<?php echo Mage::getBaseUrl(); ?>privacy">Terms &amp; Conditions</a></li>
+									</ul>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div> 
+			</div>
+
+
     </div>
 </div>
-
-<!-- Responsive Nav -->
-<script>
-  var nav = responsiveNav(".nav-collapse");
-</script>
-
-<!-- Responsive Nav End -->
 
 <!-- slider -->
 
