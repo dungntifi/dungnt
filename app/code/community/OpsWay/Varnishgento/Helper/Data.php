@@ -240,7 +240,7 @@ class OpsWay_Varnishgento_Helper_Data extends Mage_Core_Helper_Abstract
 
     public function checkLimitObjectToFlush($objects)
     {
-        if (count($objects) > (int)(Mage::getStoreConfig('opsway_varnishgento/general/limit_to_flush'))){
+        if (count($objects) > (int)(Mage::getStoreConfig('opsway_varnishgento/flushing/limit_to_flush'))){
             if (!$this->isFlushAllActive()){
                 $this->flushAll();
             }
@@ -330,9 +330,9 @@ class OpsWay_Varnishgento_Helper_Data extends Mage_Core_Helper_Abstract
             $categoryIds = $this->_getProductCategory($productIds);
 
             $tagsList = $this->convertIdsToTags($productIds);
-            $tagsList += $this->convertIdsToTags($categoryIds,'catalog_category');
+            $tagsList = array_merge($tagsList, $this->convertIdsToTags($categoryIds,'catalog_category'));
 
-            Mage::dispatchEvent('application_clean_cache', array('tags' => $tagsList));
+            $this->cleanCache($tagsList);//Mage::dispatchEvent('application_clean_cache', array('tags' => $tagsList));
             Mage::getSingleton('opsway_varnishgento/processor')->cleanCache();
         }
     }

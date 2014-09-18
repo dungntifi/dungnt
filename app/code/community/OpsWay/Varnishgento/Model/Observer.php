@@ -327,9 +327,9 @@ class OpsWay_Varnishgento_Model_Observer
      */
     public function processOutOfStockProducts($observer)
     {
-        if (!$this->_isActive()) {
-            return;
-        }
+        //if (!$this->_isActive()) {
+        //    return;
+        //}
         if ($this->_isStockProcessed === false) {
             $this->_isStockProcessed = true;
             $order = $observer->getEvent()->getOrder();
