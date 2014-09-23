@@ -93,7 +93,6 @@ $gaRemarketingPromo = true;
 
 
 <?php //Transferring Data to Rakuten LinkShare ?>
-<var_du></var_du>
 <?php
 $productsIdList = "";
 $productsQtyList = "";
@@ -112,8 +111,8 @@ foreach ($order_details->getItemsCollection() as $item) {
         $productsNamesList .= $item->getName();
     }
 }
-$productsIdList = str_replace(trim($productsIdList), " ", "%20");
-$productsQtyList = str_replace(trim($productsQtyList), " ", "%20");
-$productsNamesList = str_replace(trim($productsNamesList), " ", "%20");
+$productsIdList = str_replace(" ", "%20", trim($productsIdList));
+$productsQtyList = str_replace(" ", "%20", trim($productsQtyList));
+$productsNamesList = str_replace(" ", "%20", trim($productsNamesList));
 ?>
 <img src="http://track.linksynergy.com/ep?mid=39720&ord=<?php echo $this->getOrderId(); ?>&skulist=<?php echo $productsIdList; ?>&qlist=<?php echo $productsQtyList; ?>&amtlist=<?php echo$price * 100; ?>&cur=USD&img=1&namelist=<?php echo $productsNamesList; ?>">
