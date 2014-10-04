@@ -24,9 +24,9 @@
         not be specified in the layout
     -->
     <default>  	
-        <!--
-            New block used to warn users who choose to navigate without Varnish while it's activated.
-        -->
+        <reference name="head">
+			<action method="addItem"><type>skin_css</type><name>css/dtn-dev.css</name><params/></action>
+		</reference>
     </default>
 
 </layout>

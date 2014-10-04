@@ -1,0 +1,6 @@
+/* DTN Styling */
+/*PO-13*/
+.category-products .toolbar-top .amount,
+.category-products .toolbar-top .pages{ display:none;}
+.category-products .toolbar-top .sorter{ float:right;}
+.category-products .toolbar-bottom .sorter{ display:none;}
