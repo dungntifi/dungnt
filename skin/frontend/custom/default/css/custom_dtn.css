@@ -12,6 +12,7 @@
 	font-family:Futura,"Gill Sans","Century Gothic","Dejavu Sans","Trebuchet MS",sans-serif;
 	font-size:16px;
 	font-weight:400;
+	width:4.5%;
 }
 .block-layered-nav dt{ 
 	text-transform:none;
@@ -26,7 +27,9 @@
 .block-layered-nav #narrow-by-list{ 
 	display:inline-block;
 	padding:0;
-	margin-left:15px;
+	margin-left:5px;
+	width:76%;
+	float:left;
 }
 div.block-layered-nav dt.amshopby-collapsed{ 
 	border:1px solid #8c8c8c;
@@ -34,6 +37,49 @@ div.block-layered-nav dt.amshopby-collapsed{
 	margin:0 5px;
 	background:url("../images/amshopby-collapsed.gif") no-repeat scroll right center rgba(0, 0, 0, 0);
 }
-#narrow-by-list table tr td:first-child{ 
+#narrow-by-list table tr td.Price{ 
+	min-width:186px !important ;
 
+}
+#narrow-by-list  td.Designer{ 
+	min-width:171px !important ;
+}
+#narrow-by-list  td.Category{ 
+	min-width:179px !important ;
+}
+#narrow-by-list  td.Waistline,
+#narrow-by-list  td.Length{ 
+	min-width:120px !important ;
+}
+#narrow-by-list  td.Size{ 
+	min-width:110px !important ;
+}
+.toolbar .pager .amount,
+.toolbar .pager .pages{
+	display:none;
+}
+.category-products .toolbar-bottom .toolbar .pager .amount,
+.category-products .toolbar-bottom .toolbar .pager .pages{
+	display:inline;
+}
+.col-main-category{ position:relative;}
+.col-main-category .toolbar { 
+	position:absolute;
+	right:105px;
+	top:68px;
+}
+.col-main-category  .toolbar-bottom .toolbar { 
+	position:inherit;
+}
+.col-main-category .toolbar .sort-by label{
+	font-family:Futura,"Gill Sans","Century Gothic","Dejavu Sans","Trebuchet MS",sans-serif;
+	font-size:16px;
+	font-weight:400;
+	text-transform:uppercase;	
+}
+.col-main-category .toolbar-bottom .toolbar .sort-by label{
+	font-family:inherit;
+	font-size:inherit;
+	font-weight:inherit;
+	text-transform:inherit;	
 }
