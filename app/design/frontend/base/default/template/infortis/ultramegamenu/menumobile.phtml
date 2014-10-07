@@ -1,0 +1,163 @@
+<?php
+/**
+ * Main menu
+ */
+?>
+<?php
+$helper = Mage::helper('ultramegamenu');
+?>
+<?php if ($helper->getCfg('general/enable')): ?>
+
+<?php
+    $mode = $helper->getCfg('general/mode');
+    //-1    = mobile menu only
+    // 0    = both
+    // 1    = regular dropdown menu only
+
+    $categories = $helper->getCfg('general/categories');
+    $linksHtml = $this->getChildHtml('block_nav_links');
+    ?>
+
+
+
+<?php //Mobile menu trigger %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% ?>
+
+<?php if ($mode <= 0): //Mode: mobile or both ?>
+
+    <div class="mobnavs-triggers-wrappers grids-fulls">
+        <a class="mobnav-triggers" href="#">
+            <h3><span><?php echo $this->__('Shop Toys'); ?></span></h3>
+        </a>
+    </div>
+
+    <?php endif; ?>
+
+
+
+<?php //Menu %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% ?>
+
+<ul id="navs" class="<?php echo $helper->getBlocksVisibilityClassOnMobile(); ?>">
+    <?php //Categories ?>
+    <?php if ($categories): ?>
+    <?php echo $this->renderCategoriesMenuHtml(FALSE, 0, 'level-top'); ?>
+    <?php endif; ?>
+</ul>
+
+
+
+<?php //Scripts %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% ?>
+
+<script type="text/javascript">
+//<![CDATA[
+
+
+
+var MegaMenus = {
+
+    mode: <?php echo $mode; ?>
+    , threshold: <?php echo intval($helper->getCfg('mobilemenu/threshold')); ?>
+    , currentState: 'regular'
+
+    , bar: jQuery('#navs')
+    , itemSelector: 'li'
+    , panelSelector: '.nav-panel'
+    , openerSelector: '.opener'
+    , isTouchDevice: ('ontouchstart' in window) || (navigator.msMaxTouchPoints > 0)
+    , ddDelayIn: 150
+    , ddDelayOut: 150
+    , ddAnimationDuration: 300
+
+    , activateMobileMenu : function()
+    {
+        MegaMenus.currentState = 'mobile';
+        jQuery('.mobnav-trigger-wrapper').show();
+        MegaMenus.bar.addClass('nav-mobile acco').removeClass('nav-regular');
+    }
+
+    , activateRegularMenu : function()
+    {
+        MegaMenus.currentState = 'regular';
+        MegaMenus.bar.addClass('nav-regular').removeClass('nav-mobile acco');
+        jQuery('.mobnav-trigger-wrapper').hide();
+    }
+
+    , cleanUpAfterMobileMenu : function()
+    {
+        <?php //Remove display modifications of all panels ?>
+        MegaMenus.bar.find('.nav-panel').css('display', '');
+    }
+
+    , prepareMobileMenu : function()
+    {
+        <?php //Hide all panels ?>
+        MegaMenus.bar.find('.nav-panel').hide();
+
+        <?php //Show panels of items with active class ?>
+        MegaMenus.bar.find('.item-active').each( function() {
+            jQuery(this).children('.nav-panel').show();
+        });
+    }
+
+    , firstInit : function()
+    {
+        if (jQuery(window).width() < MegaMenus.threshold)
+        {
+            MegaMenus.activateMobileMenu();
+        }
+        else
+        {
+            MegaMenus.cleanUpAfterMobileMenu();
+            MegaMenus.activateRegularMenu();
+        }
+    }
+
+    , reinit : function()
+    {
+        if (jQuery(window).width() < MegaMenus.threshold)
+        {
+            <?php //If previous state was regular: ?>
+            if (MegaMenus.currentState === 'regular')
+            {
+                MegaMenus.activateMobileMenu();
+                MegaMenus.prepareMobileMenu();
+            }
+        }
+        else
+        {
+            <?php //If previous state was mobile: ?>
+            if (MegaMenus.currentState === 'mobile')
+            {
+                MegaMenus.activateRegularMenu();
+                MegaMenus.cleanUpAfterMobileMenu();
+            }
+        }
+    }
+}; //end: MegaMenu
+
+
+
+    <?php //Mode: mobile or both ------------------------------------------------- ?>
+    <?php if ($mode <= 0): ?>
+
+    <?php if ($mode == 0): //Mode: both ?>
+
+    MegaMenus.bar.accordion(MegaMenus.panelSelector, MegaMenus.openerSelector, MegaMenus.itemSelector);
+    MegaMenus.firstInit();
+    jQuery(window).on('resize', MegaMenus.reinit);
+
+        <?php else: //Mode: mobile ($mode < 0) ?>
+
+    MegaMenus.bar.accordion(MegaMenus.panelSelector, MegaMenus.openerSelector, MegaMenus.itemSelector);
+    MegaMenus.activateMobileMenu();
+
+        <?php endif; ?>
+
+    <?php endif; //end: mode mobile or both  ?>
+
+
+
+    <?php //Mode: regular or both ------------------------------------------------- ?>
+
+</script>
+
+<?php endif; //end: if 'general/enable' ?>

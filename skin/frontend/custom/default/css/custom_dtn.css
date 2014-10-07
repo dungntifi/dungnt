@@ -1,0 +1,39 @@
+.block-layered-nav {
+	width: 100%;
+	margin: 0 ;
+	padding-bottom: 0;
+	background: #fff;
+	border:0;
+}
+.block .block-subtitle{ 
+	display:inline-block; 
+	float:left; 
+	padding:0; 
+	font-family:Futura,"Gill Sans","Century Gothic","Dejavu Sans","Trebuchet MS",sans-serif;
+	font-size:16px;
+	font-weight:400;
+}
+.block-layered-nav dt{ 
+	text-transform:none;
+	font-weight:400;
+	font-size:13px;
+	border:1px solid #8c8c8c;
+	padding:6px 8px;
+	margin:0 5px;
+	background:url("../images/amshopby-collapsed.gif") no-repeat scroll right center rgba(0, 0, 0, 0);
+	background-position:10px 8px;
+}
+.block-layered-nav #narrow-by-list{ 
+	display:inline-block;
+	padding:0;
+	margin-left:15px;
+}
+div.block-layered-nav dt.amshopby-collapsed{ 
+	border:1px solid #8c8c8c;
+	padding:6px 8px;
+	margin:0 5px;
+	background:url("../images/amshopby-collapsed.gif") no-repeat scroll right center rgba(0, 0, 0, 0);
+}
+#narrow-by-list table tr td:first-child{ 
+
+}
