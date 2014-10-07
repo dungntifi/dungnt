@@ -27,17 +27,15 @@
  * @var Mage_Page_Block_Html_Header $this
  */
 
-$cart_html = $this->getChildHtml('cart_sidebar');
+$cart_html = $this->getChildHtml('topcart');
 $mobile_cart = $this->getChildHtml('mobile_cart');
 ?>
 	<!-- <div style="margin:0;padding:12px;background:black;color:white;text-transform:uppercase;">Our stores, customer service and Shipping Department will be<span style="color:#ff6600"> closed Thursday and Friday</span>. All orders will ship out on Sunday. Thank You for Shopping with us!</div> -->
     <div class="header-container">
         <div class="header">
             
-	<?php echo $this->getChildHtml('sidebar_in'); ?>						
+	<?php echo $this->getChildHtml('sidebar_mobile'); ?>
 
-	<?php echo $this->getChildHtml('sidebar_out'); ?>						
-	
 	<!-- Start Sidebar Nav -->
 	
 		<div class="mobile-search">
@@ -106,17 +104,21 @@ $mobile_cart = $this->getChildHtml('mobile_cart');
 
             <div class="top-right">
 
-                    <?php echo $this->getChildHtml('topLinks') ?>
-					<!-- Sign In -->					                        
-						<?php echo $this->getChildHtml('header_signin'); ?>						
+                    <?php //echo $this->getChildHtml('topLinks') ?>
+					<!-- Sign In -->
+                    <div class="block block-minicart">
+						<?php echo $this->getChildHtml('header_signin'); ?>
+                    </div>
 					<!-- End Sign In -->
 					<!-- My Account -->
-						<?php echo $this->getChildHtml('header_myaccount'); ?>						
+                    <div class="block block-minicart">
+						<?php echo $this->getChildHtml('header_myaccount'); ?>
+                    </div>
 					<!-- End My Account -->
 					<!-- Assistance -->
 						<?php echo $this->getChildHtml('header_assistance'); ?>						
 					<!-- End Assistance -->
-					<div class="block block-minicart block-minicart2">                        
+					<div class="block block-minicart block-minicart2">
 						<?php echo $cart_html; ?>
 					</div>
                     <?php echo $this->getChildHtml('topSearch') ?>
