@@ -93,21 +93,33 @@ $gaRemarketingPromo = true;
 
 
 <?php //Transferring Data to Rakuten LinkShare ?>
-<img src="http://track.linksynergy.com/ep?mid=39720&ord=<?php echo $this->getOrderId(); ?>&skulist=<?php
-$productsIdList = "";
-$productsQtyList = "";
-$productsNamesList = "";
+<?php
+$productsSkuList = '';
+$productsQtyList = '';
+$productsNamesList = '';
+$productsSubTotal = '';
+
 foreach ($order_details->getItemsCollection() as $item) {
     if ($item->getQtyToInvoice() > 0) {
-        if (strlen($productsIdList) > 0) {
-            $productsIdList .= "|";
+        if (strlen($productsSkuList) > 0) {
+            $productsSkuList .= "|";
             $productsQtyList .= "|";
-            $productsNamesList .= "|";
         }
-        $productsIdList .= $item->getProductId();
+        $productsSubTotal[] = $item->getPrice() * $item->getQtyToInvoice() * 100;
+        $productsSkuList .= $item->getSku();
         $productsQtyList .= $item->getQtyToInvoice();
-        $productsNamesList .= $item->getName();
+        $productsNamesList[] = trim($item->getName());
     }
 }
-echo $productsIdList;
-?>&qlist=<?php echo $productsQtyList; ?>&amtlist=<?php echo $order_details->grand_total * 100; ?>&cur=USD&img=1&namelist=<?php echo $productsNamesList; ?>">
+$productsSkuList = str_replace(" ", "%20", trim($productsSkuList));
+$productsQtyList = str_replace(" ", "%20", trim($productsQtyList));
+$discount = '';
+$discountQty = '';
+if($order_details->getData('discount_amount') != 0) {
+    $productsSkuList .= "|Discount";
+    $productsNamesList[] = "Discount";
+    $discount = '|' . $order_details->getData('discount_amount') * 100;
+    $discountQty = '|0';
+}
+?>
+<img src="http://track.linksynergy.com/ep?mid=39720&ord=<?php echo $this->getOrderId(); ?>&skulist=<?php echo $productsSkuList; ?>&qlist=<?php echo $productsQtyList; echo $discountQty; ?>&amtlist=<?php echo implode('|', $productsSubTotal); echo $discount; ?>&cur=USD&img=1&namelist=<?php echo str_replace(" ", "%20", implode('|', $productsNamesList, SORT_STRING)); ?>">
