@@ -96,6 +96,9 @@ Default layout, loads most of the pages
                 <block type="page/switch" name="store_language" as="store_language" template="page/switch/languages.phtml"/>
 
 	            <block type="core/template" name="socialAccounts" template="beckin/themesettings/socialaccounts.phtml"/>
+                <block type="core/template" name="sidebar_mobile" template="page/html/sidebar_mobile.phtml"/>
+                <block type="core/template" name="header_myaccount" template="page/html/myaccount.phtml"/>
+                <block type="core/template" name="header_signin" template="page/html/signin.phtml"/>
 	            <!-- add mini cart to the header : new template -->
 	            <block type="checkout/cart_sidebar" name="mobile_cart" template="checkout/cart/mobile_cart.phtml" before="-">
 	                <action method="addItemRender"><type>simple</type><block>checkout/cart_item_renderer</block><template>checkout/cart/sidebar/default.phtml</template></action>
@@ -105,7 +108,7 @@ Default layout, loads most of the pages
 	                    <label>Shopping Cart Sidebar Extra Actions</label>
 	                </block>
 	            </block>
-	            <block type="checkout/cart_sidebar" name="cart_sidebar" template="checkout/cart/mini.phtml" before="-">
+	            <block type="checkout/cart_sidebar" name="topcart" template="checkout/cart/mini.phtml" before="-">
 	                <action method="addItemRender"><type>simple</type><block>checkout/cart_item_renderer</block><template>checkout/cart/sidebar/default.phtml</template></action>
 	                <action method="addItemRender"><type>grouped</type><block>checkout/cart_item_renderer_grouped</block><template>checkout/cart/sidebar/default.phtml</template></action>
 	                <action method="addItemRender"><type>configurable</type><block>checkout/cart_item_renderer_configurable</block><template>checkout/cart/sidebar/default.phtml</template></action>

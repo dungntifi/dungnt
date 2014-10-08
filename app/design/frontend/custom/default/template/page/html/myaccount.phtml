@@ -4,9 +4,8 @@
  *
  * @see Mage_Checkout_Block_Cart_Sidebar
  */
+if (Mage::helper('customer')->isLoggedIn()):
 ?>
-<div class="block block-minicart">
-
 	<div id="mini-cart" class="block-content dropdown assistance">
 	    <div class="button mini-cart-button dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="1000" data-close-others="false" title="<?php echo $cartTitle ?>">
 	        <span class="cart-items">My Account</span>
@@ -27,4 +26,4 @@
 	        </div>
 	</div>
 
-</div>
+<?php endif; ?>

@@ -57,12 +57,7 @@ Default layout, loads most of the pages
 Load this update on every page when customer is logged in
 -->
 
-    <customer_logged_in>
-        <reference name="header">
-	        <block type="core/template" name="header_myaccount" template="page/html/myaccount.phtml"/>
-	        <block type="core/template" name="sidebar_in" template="page/html/sidebar_in.phtml"/>
-        </reference>
-    </customer_logged_in>
+
 
 <!--
 Load this update on every page when customer is logged out
@@ -72,10 +67,7 @@ Load this update on every page when customer is logged out
         <!---<reference name="right">
             <block type="customer/form_login" name="customer_form_mini_login" before="-" template="customer/form/mini.login.phtml"/>
         </reference>-->
-        <reference name="header">
-	        <block type="core/template" name="header_signin" template="page/html/signin.phtml"/>
-	        <block type="core/template" name="sidebar_out" template="page/html/sidebar_out.phtml"/>
-        </reference>
+
         <remove name="reorder"></remove>
     </customer_logged_out>
 
