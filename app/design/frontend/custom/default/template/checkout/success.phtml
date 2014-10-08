@@ -122,4 +122,4 @@ if($order_details->getData('discount_amount') != 0) {
     $discountQty = '|0';
 }
 ?>
-<img src="http://track.linksynergy.com/ep?mid=39720&ord=<?php echo $this->getOrderId(); ?>&skulist=<?php echo $productsSkuList; ?>&qlist=<?php echo $productsQtyList; echo $discountQty; ?>&amtlist=<?php echo implode('|', $productsSubTotal); echo $discount; ?>&cur=USD&img=1&namelist=<?php echo str_replace(" ", "%20", implode('|', array_unique($productsNamesList, SORT_STRING))); ?>">
+<img src="http://track.linksynergy.com/ep?mid=39720&ord=<?php echo $this->getOrderId(); ?>&skulist=<?php echo $productsSkuList; ?>&qlist=<?php echo $productsQtyList; echo $discountQty; ?>&amtlist=<?php echo implode('|', $productsSubTotal); echo $discount; ?>&cur=USD&img=1&namelist=<?php echo str_replace(" ", "%20", implode('|', $productsNamesList, SORT_STRING)); ?>">
