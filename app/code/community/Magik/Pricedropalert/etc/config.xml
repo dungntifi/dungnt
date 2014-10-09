@@ -1,0 +1,176 @@
+<?xml version="1.0"?>
+<config>
+	<modules>
+		<Magik_Pricedropalert>
+			<version>0.1.0</version>
+		</Magik_Pricedropalert>
+	</modules>
+	<frontend>
+		<routers>
+			<pricedropalert>
+				<use>standard</use>
+				<args>
+					<module>Magik_Pricedropalert</module>
+					<frontName>pricedropalert</frontName>
+				</args>
+			</pricedropalert>
+		</routers>
+		<layout>
+			<updates>
+				<pricedropalert>
+					<file>pricedropalert.xml</file>
+				</pricedropalert>
+			</updates>
+		</layout>
+	</frontend>
+	<global>
+		<helpers>
+			<pricedropalert>
+				<class>Magik_Pricedropalert_Helper</class>
+			</pricedropalert>
+		</helpers>
+		<blocks>
+			<pricedropalert>
+				<class>Magik_Pricedropalert_Block</class>
+			</pricedropalert>
+		</blocks>
+		<models>
+			<pricedropalert>
+				<class>Magik_Pricedropalert_Model</class>
+				<resourceModel>pricedropalert_mysql4</resourceModel>
+			</pricedropalert>
+			<pricedropalert_mysql4>
+				<class>Magik_Pricedropalert_Model_Mysql4</class>
+				<entities>		  
+					<pricedropalert>
+						<table>magik_pricedropalert</table>
+					</pricedropalert>
+				</entities>
+			</pricedropalert_mysql4>
+		</models>
+		<resources>
+			<pricedropalert_setup>
+				<setup>
+					<module>Magik_Pricedropalert</module>
+				</setup>
+				<connection>
+					<use>core_setup</use>
+				</connection>
+			</pricedropalert_setup>
+			<pricedropalert_write>
+				<connection>
+					<use>core_write</use>
+				</connection>
+			</pricedropalert_write>
+			<pricedropalert_read>
+				<connection>
+					<use>core_read</use>
+				</connection>
+			</pricedropalert_read>
+		</resources>
+		<template>
+			<email>
+				<pricedrop_section_pricedrop_general_pricedrop_template  translate="label" module="pricedropalert">
+					<label>Pricedrop Alert Email</label>
+					<file>pricedrop_alert_email.html</file>
+					<type>html</type>
+				</pricedrop_section_pricedrop_general_pricedrop_template>	
+			</email>
+		</template>
+	</global>
+	<admin>
+		<routers>
+			<pricedropalert>
+				<use>admin</use>
+				<args>
+					<module>Magik_Pricedropalert</module>
+					<frontName>pricedropalert</frontName>
+				</args>
+			</pricedropalert>
+		</routers>
+	</admin>
+	<adminhtml>
+		<menu>
+			<pricedropalert module="pricedropalert">
+				<title>Pricedropalert</title>
+				<sort_order>100</sort_order>
+				<children>			
+					<pricedropalert module="pricedropalert">
+						<title>Manage Pricedropalert</title>
+						<sort_order>0</sort_order>
+						<action>pricedropalert/adminhtml_pricedropalert</action>
+					</pricedropalert>
+				</children>
+			</pricedropalert>
+		</menu>
+		<acl>
+			<resources>
+				<all>
+					<title>Allow Everything</title>
+				</all>
+				<admin>
+					<children>
+						<pricedropalert translate="title" module="pricedropalert">
+							<title>Pricedropalert</title>
+							<sort_order>1000</sort_order>
+							<children>								
+								<pricedropalert translate="title">
+									<title>Manage Pricedropalert</title>
+									<sort_order>0</sort_order>
+								</pricedropalert>
+							</children>
+						</pricedropalert>
+					</children>
+				</admin>
+			</resources>
+		</acl>
+		<acl>
+			<resources>
+				<admin>  <!--This is acl based on URL. If you see URL it would be /admin/system_config/ -->
+					<children>
+						<system>
+							<children>
+								<config>
+									<children>
+										<pricedrop_section translate="title" module="pricedropalert">  <!-- This is name of the section created by us -->
+											<title>Pricedrop Alert Section ACL</title>  <!-- Title as shown in User->Roles->Permissions Window -->
+											<sort_order>100</sort_order>
+										</pricedrop_section>
+									</children>
+								</config>
+							</children>
+						</system>
+					</children>
+				</admin>
+			</resources>
+		</acl>	
+		<layout>
+			<updates>
+				<pricedropalert>
+					<file>pricedropalert.xml</file>
+				</pricedropalert>
+			</updates>
+		</layout>
+	</adminhtml>
+	<crontab>
+		<jobs>            
+			<pricedropalert_sendpricedropemails>
+				<schedule><cron_expr>* * * * *</cron_expr></schedule>
+				<run><model>pricedropalert/observer::sendAlert</model></run>
+			</pricedropalert_sendpricedropemails>
+		</jobs>
+	</crontab>
+	<default>
+		<pricedrop_section>
+			<pricedrop_general>
+				<pricedrop_enabled>0</pricedrop_enabled>
+				<pricedrop_description>Keep track of the price drops on this item. Simply enter your email here and we will send you an email alert.</pricedrop_description>
+				<pricedrop_subscribe>You have successfully subscribed!</pricedrop_subscribe>
+				<pricedrop_unsubscribe>You have successfully unsubscribed! You can subscribe any time in future!</pricedrop_unsubscribe>				
+				<pricedrop_template>pricedrop_section_pricedrop_general_pricedrop_template</pricedrop_template>
+				<pricedrop_thanksmsg>Thanks! We will keep you updated on price drops of this item via email.</pricedrop_thanksmsg>
+				<pricedrop_exists_thanksmsg>You are already following price for this item.</pricedrop_exists_thanksmsg>
+			</pricedrop_general>
+		</pricedrop_section>
+	</default>
+</config> 

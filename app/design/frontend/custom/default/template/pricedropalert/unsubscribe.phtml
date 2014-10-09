@@ -1,0 +1,5 @@
+<?php 
+$unsubMsg=Mage::getStoreConfig('pricedrop_section/pricedrop_general/pricedrop_unsubscribe',Mage::app()->getStore());
+if($unsubMsg!='')
+  echo stripslashes($unsubMsg);
+?>

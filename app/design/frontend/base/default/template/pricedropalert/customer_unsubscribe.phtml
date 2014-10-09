@@ -1,0 +1,57 @@
+<?php
+if(!$this->helper('customer')->isLoggedIn()){  
+  header('location:'.Mage::getBaseUrl().'customer/account/login/') ;
+}
+?>
+<div class="page-title">
+    <h1>Pricedrop Alert Subscription</h1>
+</div>
+<?php
+$currency_code = Mage::app()->getStore()->getCurrentCurrencyCode(); 
+$email = Mage::getSingleton('customer/session')->getCustomer()->getEmail();
+$outData=Mage::getModel('pricedropalert/pricedropalert')->getCustomDetails($email);
+if(count($outData) > 0) { 
+?>
+<div id="msgID"></div>
+<div style="padding-bottom:10px;">Product prices you were following</div>
+<table cellspacing="0" border="0" class="data-table cart-table" id="shopping-cart-table">
+    <col width="50%">
+    <col width="25%">
+    <col width="25%">
+    <thead>
+      <tr class="first last">
+      <th rowspan="1" style="padding-left: 15px;">Product</th>
+      <th rowspan="1" style="padding-left: 15px;">Price</th>
+      <th class="last">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+<?php foreach($outData as $key=>$value) {  ?> 
+    <tr class="first odd">    
+      <td style="padding-left: 15px;"><?php echo $value['product_name'];?></td>
+      <td style="padding-left: 15px;"><?php echo Mage::app()->getLocale()->currency( $currency_code )->getSymbol().$value['product_price'];?></td>
+      <td>
+	  <?php if($value['active_status']==0){ ?><a href="#" onClick="return followSubscribe('<?php echo $this->getUrl('pricedropalert/index/unfollow/id/'.$value['id']);?>')">Unsubscribe</a><? } else { ?><a href="#" onClick="return followSubscribe('<?php echo $this->getUrl('pricedropalert/index/follow/id/'.$value['id']);?>')">Subscribe</a><?php } ?>
+      </td>        
+    </tr>
+<?php } ?>	
+		                                                                    
+    </tbody>
+</table>
+<?php
+} else { ?>      
+      <div><?php echo $this->__('You have not following the prices for any product yet.');?></div>
+<?php } ?>
+                                 
+<script language="javascript">
+function followSubscribe(url)
+{
+    new Ajax.Request(url, {method: 'post', parameters:{ },onComplete:callMe}); 
+    return false;	
+}
+function callMe(transport)
+{ 
+    $('msgID').innerHTML = transport.responseText; 
+    setTimeout(document.location.reload(),5000);
+}
+</script>

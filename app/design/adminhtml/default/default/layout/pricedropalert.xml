@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<layout version="0.1.0"> 
+  <pricedropalert_adminhtml_pricedropalert_index>
+	<reference name="content">
+	  <block type="pricedropalert/adminhtml_pricedropalert" name="pricedropalert" />
+	</reference>
+  </pricedropalert_adminhtml_pricedropalert_index>
+</layout>
