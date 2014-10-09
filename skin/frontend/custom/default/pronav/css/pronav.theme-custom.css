@@ -215,8 +215,10 @@ ul#pronav li#mixed-li-id .sub {
 
 .colmenu-left{
 	display:inline-block; 
-	width:34%;
+	width:30%;
 	float:left;
+	border-right:2px solid #ddd;
+	margin-right:2%;
 	}
 .colmenu-right{
 	display:inline-block; 
