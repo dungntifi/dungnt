@@ -49,3 +49,4 @@ pear
 pear/
 pkginfo/
 var/*
+.htaccess
