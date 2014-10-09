@@ -94,9 +94,9 @@ foreach ($_subproducts as $key => $value) {
 
 $_class = 'media_gallery_content';
 $_jsObject = $_class . 'JsObject';
-$_imageTypes = array("base_image_1" => "product['base_image_1']",
-					 "base_image_2" => "product['base_image_2']",
-					 "thumbnail" => "product['thumbnail']");
+$_imageTypes = array("base_image_1" => "simpleimages_type['base_image_1']",
+					 "base_image_2" => "simpleimages_type['base_image_2']",
+					 "thumbnail" => "simpleimages_type['thumbnail']");
 
 foreach ($colors as $colorId => $colorLabel):
 ?>
@@ -129,14 +129,6 @@ foreach ($colors as $colorId => $colorLabel):
 		<div id="<?php echo $_class; ?>" >
 			<div class="grid">
 				<table cellspacing="0" class="data border" id="<?php echo $_class; ?>_grid" width="100%">
-				    <col width="1" />
-				    <col />
-				    <col width="70" />
-				    <col />
-				    <col />
-				    <col />
-				    <col width="70" />
-				    <col width="70" />
 				    <thead>
 				        <tr class="headings">
 				            <th><?php echo Mage::helper('catalog')->__('Image') ?></th>
@@ -209,52 +201,13 @@ foreach ($colors as $colorId => $colorLabel):
 						?>
 				    </tbody>
 				    <tfoot>
-				        <tr>
-				            <td colspan="100" class="last" style="padding:8px">
-				                
-								<?php echo $this->helper('adminhtml/js')->includeScript('lib/flex.js') ?>
-								<?php echo $this->helper('adminhtml/js')->includeScript('mage/adminhtml/flexuploader.js') ?>
-								<?php echo $this->helper('adminhtml/js')->includeScript('lib/FABridge.js') ?>
-
-								<div id="uploadBlock-<?php echo $colorId; ?>" class="uploader">
-								    <div class="buttons">
-								        <?php /* buttons included in flex object */ ?>
-								        <?php  /*echo $this->getBrowseButtonHtml()*/  ?>
-								        <?php  /*echo $this->getUploadButtonHtml()*/  ?>
-								        <div id="uploadBlock-<?php echo $colorId; ?>-install-flash" style="display:none">
-								            <?php echo Mage::helper('media')->__('This content requires last version of Adobe Flash Player. <a href="%s">Get Flash</a>', 'http://www.adobe.com/go/getflash/') ?>
-								        </div>
-								    </div>
-								    <div class="clear"></div>
-								    <div class="no-display" id="uploadBlock-<?php echo $colorId; ?>-template">
-								        <div id="{{id}}" class="file-row">
-								        <span class="file-info">{{name}} ({{size}})</span>
-								        <span class="delete-button"><?php echo $this->getDeleteButtonHtml() ?></span>
-								        <span class="progress-text"></span>
-								        <div class="clear"></div>
-								        </div>
-								    </div>
-								    <div class="no-display" id="uploadBlock-<?php echo $colorId; ?>-template-progress">
-								        {{percent}}% {{uploaded}} / {{total}}
-								    </div>
-								</div>
-
-								<script type="text/javascript">
-								//<![CDATA[
-
-								var maxUploadFileSizeInBytes = <?php echo $this->getDataMaxSizeInBytes() ?>;
-								var maxUploadFileSize = '<?php echo $this->getDataMaxSize() ?>';
-
-								<?php echo $this->getJsObjectName() ?> = new Flex.Uploader('uploadBlock-<?php echo $colorId; ?>', '<?php echo $this->getUploaderUrl('media/uploader.swf') ?>', <?php echo $this->getConfigJson() ?>);
-
-								if (varienGlobalEvents) {
-								    varienGlobalEvents.attachEventHandler('tabChangeBefore', <?php echo $this->getJsObjectName() ?>.onContainerHideBefore);
-								}
-
-								//]]>
-								</script>
-
+				        <tr class="simpleimages-uploader">
+				            <td style="padding:8px">
+				               	<input type="file" name="simpleimages_gallery[<?php echo $colorId; ?>][]">
 				            </td>
+				        	<td colspan="7" style="padding:10px">
+				        		<a href='#' class="upload-one-more-image">Add another image</a>
+				        	</td>
 				        </tr>
 				    </tfoot>
 				</table>
@@ -266,6 +219,18 @@ foreach ($colors as $colorId => $colorLabel):
 
 <script>
 	jQuery(document).ready(function() {
+
+		//add image uploader
+		jQuery('.upload-one-more-image').on('click', function(e) {
+			e.preventDefault();
+			jQuery(this).parents('tfoot').append('<tr><td style="padding:8px"><input type="file" name="simpleimages_gallery[<?php echo $colorId; ?>][]"></td><td colspan="7" style="padding: 10px;"><a href="#" class="remove-uploader">Remove</a></td></tr>');
+		});
+
+		//remove image uploader
+		jQuery('tfoot').on('click', '.remove-uploader', function(e) {
+			e.preventDefault();
+			jQuery(this).parents('tr').remove();
+		});
 
 		jQuery('#add-row select').on('change', function() {
 			var simpleId = jQuery(this).val(),
