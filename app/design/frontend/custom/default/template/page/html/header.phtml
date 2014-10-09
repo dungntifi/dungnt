@@ -134,7 +134,7 @@ $mobile_cart = $this->getChildHtml('mobile_cart');
 
 			<div class="nav-container">
 			
-            <nav>
+          <?php /*?>  <nav>
                 <ul id="pronav">
                     <li>
                         <a href="<?php echo Mage::getBaseUrl(); ?>">Designers</a>
@@ -402,7 +402,7 @@ $mobile_cart = $this->getChildHtml('mobile_cart');
 
                     <li><a rel="" href="<?php echo Mage::getBaseUrl(); ?>sale">Sale</a></li>
                 </ul>
-            </nav>
+            </nav><?php */?>
             </div>
             
             <?php if ($this->getIsHomePage()):?>
@@ -410,5 +410,10 @@ $mobile_cart = $this->getChildHtml('mobile_cart');
             <div class="header-divider"></div>
             <?php endif ?>
         </div>
+         <div class="nav-container">
+        <div class="nav clearer<?php if($navCss) echo " " . implode(" ", $navCss); ?>">
+            <?php echo $this->getChildHtml('topMenu') ?>
+        </div> <!-- end: nav -->
+    </div> <!-- end: nav-container -->
     </div>
     
