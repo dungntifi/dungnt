@@ -1,0 +1,40 @@
+/* DTN Styling */
+/*PO-13*/
+.category-products .toolbar-top .amount,
+.category-products .toolbar-top .pages{ display:none;}
+.category-products .toolbar-top .sorter{ float:right;}
+.category-products .toolbar-bottom .sorter{ display:none;}
+/*PO-20 Tabs in product detail*/
+.product-tabs{ clear:both; position:relative; right:50%; float:left; margin-top:10px; width:600px;}
+.product-tabs .tab-links{ z-index:2; display:block; overflow:hidden;}
+.product-tabs .tab-links li{ float:left; display:inline; margin:0 0; background:#fff; font-weight:400;font-family:Futura,"Gill Sans","Century Gothic","Dejavu Sans","Trebuchet MS",sans-serif; font-size:18px;}
+.product-tabs .tab-links li a{ display:inline-block; padding: 5px 15px;}
+.product-tabs .tab-links li a:hover{ text-decoration:none;}
+.product-tabs .tab-links li.active{ background:#000; color:#fff;}
+.product-tabs .tab-links li.active a{ color:#fff;}
+.product-tabs .tab-content{ z-index:1;border-top:1px solid #b6b6b6; padding:10px 0;}
+.product-tabs .tab-content #designer{ font-family:Futura,"Gill Sans","Century Gothic","Dejavu Sans","Trebuchet MS",sans-serif; font-size:30px;}
+
+.review-form-popup-inner{ text-align:left;} 
+
+.review-form-popup-inner h3{ font-family:Futura,"Gill Sans","Century Gothic","Dejavu Sans","Trebuchet MS",sans-serif; text-transform:none; font-size:15px; margin:0 0 5px; font-weight:400;}
+.review-form-popup-inner > h3, .review-form-popup-inner h3 span{ color:#EA8E45;}
+.review-form-popup-inner .form-list{ clear:both; margin:10px 0 0; float:left;}
+.product-view .box-reviews dl{ margin-top:0;}
+#customer-reviews{position:relative; right:50%; float:right; margin-top:15px; width:345px;}
+#customer-reviews h2{ text-transform:none; border-bottom:1px solid #b6b6b6; font-weight:400; padding:0 0 5px; font-size:18px;font-family:Futura,"Gill Sans","Century Gothic","Dejavu Sans","Trebuchet MS",sans-serif;}
+#customer-reviews dl dt{ font-weight:700; font-size:13px;}
+#customer-reviews dl dd{border-bottom:1px solid #b6b6b6; }
+#customer-reviews dl dd:last-child{ border-bottom:none;}
+#customer-reviews .ratings-table{ margin: 0 0 10px;}
+#customer-reviews .ratings-table th{ display:none;}
+#customer-reviews .rating-content{ margin:0 0 20px;}
+#customer-reviews .date{ font-style:italic; padding:10px 0 20px; color:#777; border-top:1px solid #e4e4e4; font-size:11px;}
+.product-shop .ratings{ font-size:12px;}
+.product-shop .ratings .rating-box{ margin-left:100px;}
+.product-shop .ratings .rating-links{ float:left; display:inline;}
+.review-popup-img{ float: right; margin-top:10px;}
+#customer-reviews .scroll-pane{overflow: hidden; height:300px; min-height:112px;max-height: 300px; width: 345px;}
+#customer-reviews .jspVerticalBar{ width:9px;}
+#customer-reviews .jspTrack{ border:1px solid #000; background:#fff; height:300px !important;}
+#customer-reviews .jspDrag{ background:#000;}
