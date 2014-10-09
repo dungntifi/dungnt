@@ -44,5 +44,11 @@
 			</block>
 		</reference>
 	</catalog_product_view>
+	
+	<review_customer_view translate="label">        
+        <reference name="customers_review">
+			<action method="addReviewSummaryTemplate"><type>default</type><template>review/helper/summary_customer.phtml</template></action>
+        </reference>
+    </review_customer_view>
 
 </layout>
