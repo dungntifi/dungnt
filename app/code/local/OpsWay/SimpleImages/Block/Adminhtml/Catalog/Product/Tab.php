@@ -20,7 +20,7 @@ class OpsWay_SimpleImages_Block_Adminhtml_Catalog_Product_Tab extends Mage_Admin
      */
     public function getTabLabel()
     {
-        return $this->__('Simple product images');
+        return $this->__('Associated Color Images');
     }
      
     /**
@@ -30,7 +30,7 @@ class OpsWay_SimpleImages_Block_Adminhtml_Catalog_Product_Tab extends Mage_Admin
      */
     public function getTabTitle()
     {
-        return $this->__('Click here to view your simple product images');
+        return $this->__('Click here to view your associated color images');
     }
      
     /**

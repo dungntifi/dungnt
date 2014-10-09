@@ -62,41 +62,207 @@
 
 <?php
 //data preset
-$product = Mage::getModel('catalog/product')->load($this->getRequest()->getParam('id')); 
-$childProducts = Mage::getModel('catalog/product_type_configurable')->getUsedProducts(null,$product);   
+//$product = Mage::getModel('catalog/product')->load($this->getRequest()->getParam('id')); 
+$ids = Mage::getModel('catalog/product_type_configurable')->getChildrenIds($this->getRequest()->getParam('id'));   
 
-$simpleOptions = '<option selected="selected">--- Select simple product ---</option>';
-foreach($childProducts as $_simple) {
-    $simpleOptions .= '<option value="' . $_simple->getId() . '">' . $_simple->getName() . '</option>'; 
+$_subproducts = Mage::getModel('catalog/product')->getCollection()
+    ->addAttributeToFilter('entity_id', $ids)
+    ->addAttributeToSelect('color')-> groupByAttribute('color');
+
+//echo "sub<pre>"; print_r($_subproducts->getData()); echo "</pre>";
+
+$colors = '';
+foreach ($_subproducts as $key => $value) {
+	$attr = $value->getResource()->getAttribute("color");
+	if ($attr->usesSource()) {
+		$colors[$value['color']] = $attr->getSource()->getOptionText($value['color']);
+	}
 }
-?>
 
+//echo "colors<pre>"; print_r($colors); echo "</pre>";
+// $attr = $_product->getResource()->getAttribute("color");
+// if ($attr->usesSource()) {
+// echo $color_label = $attr->getSource()->getOptionText("10");
+// }
+
+// $productAttributes = Mage::getSingleton('eav/config')->getAttribute('catalog_product', 'color');
+// if ($productAttributes->usesSource()) {
+//     $allColorAttributes = $productAttributes->getSource()->getAllOptions(false);
+// }
+
+//echo "allColorAttributes<pre>"; print_r($allColorAttributes); echo "</pre>";
+
+$_class = 'media_gallery_content';
+$_jsObject = $_class . 'JsObject';
+$_imageTypes = array("base_image_1" => "product['base_image_1']",
+					 "base_image_2" => "product['base_image_2']",
+					 "thumbnail" => "product['thumbnail']");
+
+foreach ($colors as $colorId => $colorLabel):
+?>
 <div class="entry-edit">
 	<div class="entry-edit-head">
-		<h4 class="icon-head head-edit-form fieldset-legend">Simple product color and image configuration</h4>
+		<h4 class="icon-head head-edit-form fieldset-legend">Associate images with color</h4>
+		<div class="form-buttons"></div>
+	</div>
+	<div class="fieldset fieldset-wide">
+		<div id="<?php echo $_class; ?>_color" >
+			<div class="grid">
+				<table cellspacing="0" class="data border" width="40%">
+					<thead>
+						<tr>
+							<th>Color label</th>
+							<th>Color icon</th>
+							<th>Icon upload</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td class="color-label"><?php echo $colorLabel; ?></td>
+							<td class="color-icon"><?php echo (Mage::helper('amconf')->getImageUrl($colorId) != '') ? '<img src="' . Mage::helper('amconf')->getImageUrl($colorId) . '" width="45" />' : '<p>No icon</p>'; ?></td>
+							<td class="icon-upload"><input type="file" name="amconf_icon['<?php echo $colorId; ?>']"></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div id="<?php echo $_class; ?>" >
+			<div class="grid">
+				<table cellspacing="0" class="data border" id="<?php echo $_class; ?>_grid" width="100%">
+				    <col width="1" />
+				    <col />
+				    <col width="70" />
+				    <col />
+				    <col />
+				    <col />
+				    <col width="70" />
+				    <col width="70" />
+				    <thead>
+				        <tr class="headings">
+				            <th><?php echo Mage::helper('catalog')->__('Image') ?></th>
+				            <th><?php echo Mage::helper('catalog')->__('Label') ?></th>
+				            <th><?php echo Mage::helper('catalog')->__('Sort Order') ?></th>
+				            <th><?php echo Mage::helper('catalog')->__('Base Image 1') ?></th>
+				            <th><?php echo Mage::helper('catalog')->__('Base Image 2') ?></th>
+				            <th><?php echo Mage::helper('catalog')->__('Thumbnail') ?></th>
+				            <th><?php echo Mage::helper('catalog')->__('Exclude') ?></th>
+				            <th class="last"><?php echo Mage::helper('catalog')->__('Remove') ?></th>
+				        </tr>
+				    </thead>
+				    <tbody id="<?php echo $_class; ?>_list">
+						<?php 
+
+							foreach ($_subproducts as $key => $_subproduct) {
+
+								if($_subproduct['color'] == $colorId) { 
+
+									$sub = Mage::getModel('catalog/product')->load($_subproduct['entity_id']); 
+									$gallery = $sub->getMediaGalleryImages();
+
+									// echo "gallery<pre>"; print_r($gallery); echo "</pre>";
+
+									foreach ($gallery as $key => $image) {
+
+									?>
+
+									<tr id="<?php echo $_class; ?>_template" class="template">
+						                <td class="cell-image"><img src="<?php echo $image->getUrl(); ?>" width="120" /></td>
+						                <td class="cell-label"><input type="text" class="input-text" onkeyup="<?php echo $_jsObject; ?>.updateImage('__file__')" onchange="<?php echo $_jsObject; ?>.updateImage('__file__')" value="<?php echo $image->getLabel(); ?>" /></td>
+						                <td class="cell-position"><input type="text" class="input-text validate-number" onkeyup="<?php echo $_jsObject; ?>.updateImage('__file__')" onchange="<?php echo $_jsObject; ?>.updateImage('__file__')" value="<?php echo $image->getPosition(); ?>" /></td>
+						                <?php foreach ($_imageTypes as $typeId=>$type): ?>
+						                	<td class="cell-<?php echo $typeId ?> a-center"><input type="radio" name="<?php echo $type ?>" onclick="<?php echo $_jsObject; ?>.setProductImages('__file__')" value="__file__" /></td>
+						                <?php endforeach; ?>
+						                <td class="cell-disable a-center"><input type="checkbox" onclick="<?php echo $_jsObject; ?>.updateImage('__file__')" /></td>
+						                <td class="cell-remove a-center last"><input type="checkbox" onclick="<?php echo $_jsObject; ?>.updateImage('__file__')" /></td>
+						        	</tr>
+
+								<?
+									}
+									// $sub = Mage::getModel('catalog/product')->load($_subproduct['entity_id']); 
+									// $gallery = $sub->getMediaGalleryImages();
+									// $galleryWidth = count($gallery) * 160; //gallery-item width + margin
+
+									// //data load
+									// $imagesGallery = '<div class="images-gallery" style="width: ' . $galleryWidth . 'px;">';
+
+									// $i = 0;
+									// foreach ($gallery as $key => $image) {
+									// 	$checked = ($i == 0) ? 'checked' : '';
+									// 	$imagesGallery .= '<div class="gallery-item">
+									// 		<img src="' . $image->getUrl() . '" width="120" />
+									// 		<input type="checkbox" style="display:none;" name="simpleimages_gallery[' . $_subproduct['entity_id'] . '][' . $key . ']" value="' . $image->getFile() . '" />
+									// 		<fieldset>
+									// 			<legend>Set image type</legend>
+									// 			<input type="radio" ' . $checked . ' value="' . $key . '" name="simpleimages_type[' . $_subproduct['entity_id'] . '][image]"> Base image<br>
+									// 			<input type="radio" ' . $checked . ' value="' . $key . '" name="simpleimages_type[' . $_subproduct['entity_id'] . '][small_image]"> Small image<br>
+									// 			<input type="radio" ' . $checked . ' value="' . $key . '" name="simpleimages_type[' . $_subproduct['entity_id'] . '][thumbnail]"> Thumbnail
+									// 		</fieldset>
+									// 	</div>';
+									// 	$i++;
+									// }
+									// $imagesGallery .= '</div>';
+									// echo $imagesGallery;
+									// $imagesGallery = '';
+								}
+							}
+
+						?>
+				    </tbody>
+				    <tfoot>
+				        <tr>
+				            <td colspan="100" class="last" style="padding:8px">
+				                
+								<?php echo $this->helper('adminhtml/js')->includeScript('lib/flex.js') ?>
+								<?php echo $this->helper('adminhtml/js')->includeScript('mage/adminhtml/flexuploader.js') ?>
+								<?php echo $this->helper('adminhtml/js')->includeScript('lib/FABridge.js') ?>
+
+								<div id="uploadBlock-<?php echo $colorId; ?>" class="uploader">
+								    <div class="buttons">
+								        <?php /* buttons included in flex object */ ?>
+								        <?php  /*echo $this->getBrowseButtonHtml()*/  ?>
+								        <?php  /*echo $this->getUploadButtonHtml()*/  ?>
+								        <div id="uploadBlock-<?php echo $colorId; ?>-install-flash" style="display:none">
+								            <?php echo Mage::helper('media')->__('This content requires last version of Adobe Flash Player. <a href="%s">Get Flash</a>', 'http://www.adobe.com/go/getflash/') ?>
+								        </div>
+								    </div>
+								    <div class="clear"></div>
+								    <div class="no-display" id="uploadBlock-<?php echo $colorId; ?>-template">
+								        <div id="{{id}}" class="file-row">
+								        <span class="file-info">{{name}} ({{size}})</span>
+								        <span class="delete-button"><?php echo $this->getDeleteButtonHtml() ?></span>
+								        <span class="progress-text"></span>
+								        <div class="clear"></div>
+								        </div>
+								    </div>
+								    <div class="no-display" id="uploadBlock-<?php echo $colorId; ?>-template-progress">
+								        {{percent}}% {{uploaded}} / {{total}}
+								    </div>
+								</div>
+
+								<script type="text/javascript">
+								//<![CDATA[
+
+								var maxUploadFileSizeInBytes = <?php echo $this->getDataMaxSizeInBytes() ?>;
+								var maxUploadFileSize = '<?php echo $this->getDataMaxSize() ?>';
+
+								<?php echo $this->getJsObjectName() ?> = new Flex.Uploader('uploadBlock-<?php echo $colorId; ?>', '<?php echo $this->getUploaderUrl('media/uploader.swf') ?>', <?php echo $this->getConfigJson() ?>);
+
+								if (varienGlobalEvents) {
+								    varienGlobalEvents.attachEventHandler('tabChangeBefore', <?php echo $this->getJsObjectName() ?>.onContainerHideBefore);
+								}
+
+								//]]>
+								</script>
+
+				            </td>
+				        </tr>
+				    </tfoot>
+				</table>
+			</div>
+		</div>
 	</div>
 </div>
-<div class="entry-edit">
-	<div class="fieldset">
-		<table id="color-chooser">
-			<thead>
-				<tr>
-					<th>Selected simple product</th>
-					<th>Assign simple product color</th>
-					<th>Click on image to assign it (loaded from configurable product gallery)</th>
-					<th></th>
-				</tr>
-			</thead>
-			<tbody>
-			</tbody>
-		</table>
-		<div id="add-row">Choose simple product to configure: 
-			<select name="simple_chooser" class="select">
-	    		<?php echo $simpleOptions; ?>
-	    	</select>
-	    </div>
-	</div>
-</div>
+<?php endforeach; ?>
 
 <script>
 	jQuery(document).ready(function() {
