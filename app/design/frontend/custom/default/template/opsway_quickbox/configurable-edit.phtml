@@ -1,0 +1,131 @@
+<?php
+$_product    = $this->getProduct();
+$_attributes = Mage::helper('core')->decorateArray($this->getAllowAttributes());
+$attributeSetName = Mage::getModel('eav/entity_attribute_set')->load($_product->getAttributeSetId())->getAttributeSetName();
+$pre_config_values = $this->getProduct()->getPreconfiguredValues();
+?>
+<?php if ($_product->isSaleable() && count($_attributes)):
+    
+    if ($attributeSetName == "Dresses") {
+        $designer = "";
+        $designer = $_product->getAttributeText('designer');
+                                            
+        include(MAGENTO_ROOT . '/includes/size_chart.php');     
+    
+        $sizechart = sizeDesigner($designer);           
+    } 
+?>
+    <div class="block-select">
+        <?php if(!$_product->isGrouped()): ?>
+            <div class="label">
+                <label for="qty"><?php echo $this->__('Quantity') ?></label>
+            </div>
+            <div class="select-styled">
+                <select name="qty" id="qty">
+                    <?php
+                    $qtyStock = 5;//Mage::getModel('cataloginventory/stock_item')->loadByProduct($_product)->getQty(); Need getting qty for each simple
+                    foreach (range(1, (($qtyStock > 5) ? 5 : $qtyStock)) as $qty): ?>
+                    <option value="<?php echo $qty; ?>"<?php if($qty == (int) $pre_config_values->getQty()/*$this->getProductDefaultQty()*/): ?> selected="selected"<?php endif ?>>
+                        <?php echo $qty ?>
+                    </option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+        <?php endif; ?>
+        <?php foreach($_attributes as $_attribute): ?>
+            <?php $optionLabel = $_attribute->getLabel(); if ($optionLabel != "Size"): ?><div style="display: none;"><?php endif; ?>
+            <div class="label">
+                <?php if ($optionLabel == "Size" && $attributeSetName == "Dresses"){ ?><div class="sizechartlink"><a href="#" onclick='sizePopup()'>Size Chart</a></div><?php } ?>
+                <span>*</span>
+                <label><?php echo $_attribute->getLabel() ?></label>
+            </div>
+            <select name="super_attribute[<?php echo $_attribute->getAttributeId() ?>]" id="attribute<?php echo $_attribute->getAttributeId() ?>" class="required-entry super-attribute-select">
+                <option><?php echo $this->__('Choose an Option...') ?></option>
+            </select>
+            <?php if ($optionLabel != "Size"): ?></div><?php endif; ?>
+        <?php endforeach; ?>
+    </div>
+    <div class="block-color">
+        <b>Select color</b>
+    </div>
+    
+    <div class="product-options-bottom">
+        <button class="button btn-cart" type="submit"><?php echo $this->__('Update Product'); ?></button>
+        <?php $_wishlistSubmitUrl = $this->helper('wishlist')->getAddUrl($_product); ?>
+        <?php if ($this->helper('wishlist')->isAllow()) : ?>
+            <a href="<?php echo $_wishlistSubmitUrl ?>" class="button btn-wishlist add-to-links" onclick="productAddToCartForm.submitLight(this, this.href); return false;" class="link-wishlist"><?php echo $this->__('Save for later') ?></a>
+        <?php endif; ?>
+    </div>
+
+    <script type="text/javascript">
+        var spConfigSingle = new Product.ConfigSingle(<?php echo $this->getJsonConfig() ?>);
+        <?php
+         $arr = array();
+        foreach ($_product->getTypeInstance(true)->getUsedProducts ( null, $_product) as $simple) {
+             $arr[$simple->getId()] = $simple->getData('additionalinfo');
+        }
+        ?>
+        spConfigSingle.simpleOptions = <?php echo Mage::helper('core')->jsonEncode($arr)?>;
+        spConfigSingle.getIdOfSelectedProduct = function () {
+                var existingProducts = new Object();
+                for (var i = this.settings.length - 1; i >= 0; i--) {
+                    var selected = this.settings[i].options[this.settings[i].selectedIndex];
+                    if (selected.config) {
+                        for (var iproducts = 0; iproducts < selected.config.products.length; iproducts++) {
+                            var usedAsKey = selected.config.products[iproducts] + "";
+                            if (existingProducts[usedAsKey] == undefined) {
+                                existingProducts[usedAsKey] = 1;
+                            } else {
+                                existingProducts[usedAsKey] = existingProducts[usedAsKey] + 1;
+                            }
+                        }
+                    }
+                }
+                for (var keyValue in existingProducts) {
+                    for (var keyValueInner in existingProducts) {
+                        if (Number(existingProducts[keyValueInner]) < Number(existingProducts[keyValue])) {
+                            delete existingProducts[keyValueInner];
+                        }
+                    }
+                }
+                var sizeOfExistingProducts = 0;
+                var currentSimpleProductId = "";
+                for (var keyValue in existingProducts) {
+                    currentSimpleProductId = keyValue;
+                    sizeOfExistingProducts = sizeOfExistingProducts + 1
+                }
+                if (sizeOfExistingProducts == 1) {
+                  return this.simpleOptions[currentSimpleProductId];
+                }
+            return false;
+            };
+        spConfigSingle.changeInfo = function(){
+            var textSimple = this.getIdOfSelectedProduct();
+            if (textSimple) {
+                jQuery('p.additional_info_po').html(textSimple);
+            }
+        };
+        spConfigSingle.newEventBind = function(){
+            this.settings.each(function(element){
+                Event.observe(element, 'change', this.changeInfo.bind(this))
+            }.bind(this));
+        };
+        spConfigSingle.newEventBind();
+    </script>
+<?php endif;?>
+
+<script>
+    jQuery(document).ready(function() {
+        if(window.location.href.match(/color=(\d+)/)) {
+            var color = window.location.href.match(/color=(\d+)/);
+            if(jQuery('#amconf-image-' + color[1]).length) {
+                jQuery('#amconf-image-' + color[1]).trigger('click');
+            }
+        }
+    });
+    function sizePopup() {        
+        jQuery.fn.speedoPopup({
+            htmlContent: "<?php echo $sizechart; ?>", window: null, height: null, effectIn: "fade", effectOut: "fade"
+        }); 
+    };
+</script>
