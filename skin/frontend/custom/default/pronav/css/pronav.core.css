@@ -52,15 +52,18 @@ ul#pronav.pn-right li.primary-pronav-item.position-static {
 
 ul#pronav li.primary-pronav-item a.primary-pronav-link {
 	display:block;
+	border:1px solid #fff;
 }
 
-
+ul#pronav li.primary-pronav-item a.primary-pronav-link:hover {
+	border:1px solid #000;
+}
 /*
  * DROPDOWN STYLES
  */
 ul#pronav li.primary-pronav-item .sub,
 ul#pronav li.primary-pronav-item .sub ul li.has-children .child-sub {
-	top:28px;
+	top:34px;
 	position:absolute; /* IMPORTANT - needs to be positioned absolute */
 	z-index:99999;
 	display:none;
@@ -69,16 +72,16 @@ ul#pronav li.primary-pronav-item .sub ul li.has-children .child-sub {
 }
 
 ul#pronav li.primary-pronav-item .sub.sub-align-right {
-	right:0px;
+	right:0px !important;
 }
 
 ul#pronav li.primary-pronav-item .sub.sub-align-left,
 ul#pronav li.primary-pronav-item .sub.sub-align-start {
-	left:0px;
+	left:0px!important;
 }
 
 ul#pronav li.primary-pronav-item .sub.sub-align-end {
-	right:0px;
+	right:0px !important;
 }
 
 /*
@@ -101,11 +104,13 @@ ul#pronav li.primary-pronav-item .sub .row ul {
 	list-style:none;
 	margin:0;
 	padding:15px 0;
-	width:15em; /* IMPORTANT */
+	width:12.5em; /* IMPORTANT */
 	float:left;
 	min-height:100px;
 }
-
+ul#pronav li.primary-pronav-item .sub .row ul.ul-promo {
+	width:100%;
+}
 ul#pronav li.primary-pronav-item .sub .row ul.has-columns,
 ul#pronav li.primary-pronav-item .sub .row ul.columns-split,
 ul#pronav li.primary-pronav-item .sub .row ul.columns-split ul {
@@ -143,7 +148,7 @@ ul#pronav li.primary-pronav-item .sub ul li.level-5 a {
 }
 
 ul#pronav li.primary-pronav-item .sub ul li a {
-	padding:3px 25px;
+	padding:3px 0px;
 	display:block;
 }
 
