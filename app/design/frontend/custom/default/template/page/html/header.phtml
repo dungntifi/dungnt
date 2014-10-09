@@ -27,390 +27,121 @@
  * @var Mage_Page_Block_Html_Header $this
  */
 
-$cart_html = $this->getChildHtml('topcart');
+$cart_html = $this->getChildHtml('cart_sidebar');
 $mobile_cart = $this->getChildHtml('mobile_cart');
 ?>
-	<!-- <div style="margin:0;padding:12px;background:black;color:white;text-transform:uppercase;">Our stores, customer service and Shipping Department will be<span style="color:#ff6600"> closed Thursday and Friday</span>. All orders will ship out on Sunday. Thank You for Shopping with us!</div> -->
-    <div class="header-container">
-        <div class="header">
-            
-	<?php echo $this->getChildHtml('sidebar_mobile'); ?>
+<!-- <div style="margin:0;padding:12px;background:black;color:white;text-transform:uppercase;">Our stores, customer service and Shipping Department will be<span style="color:#ff6600"> closed Thursday and Friday</span>. All orders will ship out on Sunday. Thank You for Shopping with us!</div> -->
+<div class="header-container">
+    <div class="header">
 
-	<!-- Start Sidebar Nav -->
-	
-		<div class="mobile-search">
-			<div id="sb-search" class="sb-search">
-				<form action="<?php echo $this->getUrl('catalogsearch/result') ?>" method="post" id="form-validate">
-					<input class="sb-search-input" placeholder="Find the perfect dress!" type="text" value="" name="q" id="search2">
-					<input class="sb-search-submit" type="submit" value="">
-					<div class="sb-icon-search"><i class="fa fa-search"></i></div>
-				</form>
-			</div>
-		</div>
+        <?php echo $this->getChildHtml('sidebar_in'); ?>
 
-		<script src="<?php echo $this->getUrl('js/search') ?>/classie.js"></script>
-		<script src="<?php echo $this->getUrl('js/search') ?>/uisearch.js"></script>
-		<script>
-			new UISearch( document.getElementById( 'sb-search' ) );
-		</script>
+        <?php echo $this->getChildHtml('sidebar_out'); ?>
 
-				
-<div class="mobile-minicart">
-	<?php echo $mobile_cart; ?>
-</div>						
-            
+        <!-- Start Sidebar Nav -->
 
-            <div class="top-left">
-			
-				<script type="text/javascript">
-					
-					function authenticPopup() {
-					
-					jQuery.fn.speedoPopup({
-						href:"<?php echo Mage::getBaseUrl(); ?>skin/frontend/custom/default/images/100_authentic_popup.gif", width: null, height: null, effectIn: "fade", effectOut: "fade"
-						}); 
-					};
-					
-					function pricePopup() {
-					
-					jQuery.fn.speedoPopup({
-						href:"<?php echo Mage::getBaseUrl(); ?>skin/frontend/custom/default/images/price_match_popup.gif", width: null, height: null, effectIn: "fade", effectOut: "fade"
-						}); 
-					};
-					
-					function giftPopup() {
-					
-					jQuery.fn.speedoPopup({
-						href:"<?php echo Mage::getBaseUrl(); ?>skin/frontend/custom/default/images/free_gift_popup.gif", width: null, height: null, effectIn: "fade", effectOut: "fade"
-						}); 
-					};
-
-					function shippingPopup() {
-					
-					jQuery.fn.speedoPopup({
-						href:"<?php echo Mage::getBaseUrl(); ?>skin/frontend/custom/default/images/free_shipping_popup.gif", width: null, height: null, effectIn: "fade", effectOut: "fade"
-						}); 
-					};															
-				</script>                
-
-				<ul class="top-left-ul">
-					<li><a href="#" onclick='authenticPopup()'>100% Authentic</li>
-					<li><a href="#" onclick='pricePopup()'>Price Match</li>
-					<li><a href="#" onclick='giftPopup()'>Free Gift</li>
-					<li><a href="#" onclick='shippingPopup()'>Free Shipping &amp; Returns</a></li>
-				</ul>
-				
+        <div class="mobile-search">
+            <div id="sb-search" class="sb-search">
+                <form action="<?php echo $this->getUrl('catalogsearch/result') ?>" method="post" id="form-validate">
+                    <input class="sb-search-input" placeholder="Find the perfect dress!" type="text" value="" name="q" id="search2">
+                    <input class="sb-search-submit" type="submit" value="">
+                    <div class="sb-icon-search"><i class="fa fa-search"></i></div>
+                </form>
             </div>
-
-            <div class="top-right">
-
-                    <?php //echo $this->getChildHtml('topLinks') ?>
-					<!-- Sign In -->
-                    <div class="block block-minicart">
-						<?php echo $this->getChildHtml('header_signin'); ?>
-                    </div>
-					<!-- End Sign In -->
-					<!-- My Account -->
-                    <div class="block block-minicart">
-						<?php echo $this->getChildHtml('header_myaccount'); ?>
-                    </div>
-					<!-- End My Account -->
-					<!-- Assistance -->
-						<?php echo $this->getChildHtml('header_assistance'); ?>						
-					<!-- End Assistance -->
-					<div class="block block-minicart block-minicart2">
-						<?php echo $cart_html; ?>
-					</div>
-                    <?php echo $this->getChildHtml('topSearch') ?>
-                    
-            </div>
-
-            <div class="logo">
-                <a href="<?php echo $this->getUrl('') ?>" title="<?php echo $this->getLogoAlt() ?>"><?php echo $this->getLogoAlt() ?><img src="<?php echo $this->getLogoSrc() ?>" alt="<?php echo $this->getLogoAlt() ?>"></a><br>
-
-				<ul class="phone">
-                    <li class="phoneheader">718-841-7037</li>
-                </ul>
-                
-            </div>
-
-			<div class="nav-container">
-			
-            <nav>
-                <ul id="pronav">
-                    <li>
-                        <a href="<?php echo Mage::getBaseUrl(); ?>">Designers</a>
-                        
-						<div class="arrow-container"><div class="arrow-up"></div></div>
-                        
-							<div class="nav-container-4">
-														
-								<div class="nav-column-1">
-									
-
-                                <ul>
-                                    <li><a href="<?php echo Mage::getBaseUrl(); ?>alyce-paris">Alyce Paris</a></li>
-
-                                    <li><a href="<?php echo Mage::getBaseUrl(); ?>blush-prom">Blush Prom</a></li>
-
-                                    <li><a href="<?php echo Mage::getBaseUrl(); ?>cassandra-stone-prom">Cassandra Stone</a></li>
-
-                                    <li><a href="<?php echo Mage::getBaseUrl(); ?>claudine">Claudine</a></li>
-
-                                    <li><a href="<?php echo Mage::getBaseUrl(); ?>dave-and-johnny">Dave &amp; Johnny</a></li>
-
-                                    <li><a href="<?php echo Mage::getBaseUrl(); ?>faviana">Faviana</a></li>
-
-                                    <li><a href="<?php echo Mage::getBaseUrl(); ?>flirt">Flirt</a></li>
-
-                                    <li><a href="<?php echo Mage::getBaseUrl(); ?>gigi">GiGi</a></li>
-
-                                    <li><a href="<?php echo Mage::getBaseUrl(); ?>hannah-s">Hannah S</a></li>
-
-                                    <li><a href="<?php echo Mage::getBaseUrl(); ?>holt-miami">Holt Miami</a></li>
-                                </ul>
-								</div>
-								<div class="nav-column-2">
-                                <ul>
-                                    <li><a href="<?php echo Mage::getBaseUrl(); ?>janique">Janique</a></li>
-
-                                    <li><a href="<?php echo Mage::getBaseUrl(); ?>jasz-couture">Jasz Couture</a></li>
-
-                                    <li><a href="<?php echo Mage::getBaseUrl(); ?>la-femme">La Femme</a></li>
-
-                                    <li><a href="<?php echo Mage::getBaseUrl(); ?>lara-designs">Lara Designs</a></li>
-
-                                    <li><a href="<?php echo Mage::getBaseUrl(); ?>mac-duggal">Mac Duggal</a></li>
-
-                                    <li><a href="<?php echo Mage::getBaseUrl(); ?>mori-lee">Mori Lee</a></li>
-
-                                    <li><a href="<?php echo Mage::getBaseUrl(); ?>night-moves">Night Moves</a></li>
-
-                                    <li><a href="<?php echo Mage::getBaseUrl(); ?>nika-formals">Nika Formals</a></li>
-
-                                    <li><a href="<?php echo Mage::getBaseUrl(); ?>panoply">Panoply Designs</a></li>
-
-                                    <li><a href="<?php echo Mage::getBaseUrl(); ?>party-time">Party Time</a></li>
-
-                                </ul>
-								</div>
-								<div class="nav-column-3">
-                                <ul>
-
-                                    <li><a href="<?php echo Mage::getBaseUrl(); ?>primavera-couture">Primavera Couture</a></li>
-                                    
-                                    <li><a href="<?php echo Mage::getBaseUrl(); ?>rachel-allan">Rachel Allan</a></li>
-
-                                    <li><a href="<?php echo Mage::getBaseUrl(); ?>riva-designs">Riva Designs</a></li>
-
-                                    <li><a href="<?php echo Mage::getBaseUrl(); ?>sherri-hill">Sherri Hill</a></li>
-
-                                    <li><a href="<?php echo Mage::getBaseUrl(); ?>tarik-ediz">Tarik Ediz</a></li>
-
-                                    <li><a href="<?php echo Mage::getBaseUrl(); ?>terani-couture">Terani Couture</a></li>
-
-                                    <li><a href="<?php echo Mage::getBaseUrl(); ?>tiffany-designs">Tiffany Designs</a></li>
-
-                                    <li><a href="<?php echo Mage::getBaseUrl(); ?>tony-bowls">Tony Bowls</a></li>
-
-                                    <li><a href="<?php echo Mage::getBaseUrl(); ?>xcite-prom">Xcite</a></li>
-                                </ul>
-								</div>
-							</div>
-                    </li>
-
-                    <li>
-                        <a href="<?php echo Mage::getBaseUrl(); ?>designer-dresses">Dresses</a>
-                        
-						<div class="arrow-container"><div class="arrow-up"></div></div>                        
-                        
-							<div class="nav-container-4">
-														
-								<div class="nav-column-1">
-									
-
-
-                                <ul>
-                                    <li><a href="<?php echo Mage::getBaseUrl(); ?>prom-dresses">Prom Dresses</a></li>
-
-                                    <li><a href="<?php echo Mage::getBaseUrl(); ?>short-prom-dresses">Short Prom</a></li>
-
-                                    <li><a href="<?php echo Mage::getBaseUrl(); ?>high-low-prom-dresses">High Low Prom</a></li>
-
-                                    <li><a href="<?php echo Mage::getBaseUrl(); ?>long-prom-dresses">Long Prom</a></li>
-
-                                    <li><a href="<?php echo Mage::getBaseUrl(); ?>mermaid-prom-dresses">Mermaid Prom</a></li>
-
-                                    <li><a href="<?php echo Mage::getBaseUrl(); ?>ball-prom-gowns">Ball Prom Gowns</a></li>
-
-                                    <li><a href="<?php echo Mage::getBaseUrl(); ?>print-prom-dresses">Print Prom</a></li>
-                                    
-                                    <li><a href="<?php echo Mage::getBaseUrl(); ?>homecoming-dresses">Homecoming</a></li>
-
-                                    <li><a href="<?php echo Mage::getBaseUrl(); ?>short-homecoming-dresses">Short Homecoming</a></li>
-                                </ul>
-                                
-								</div>
-								<div class="nav-column-2">
-								
-                                <ul>
-
-                                    <li><a href="<?php echo Mage::getBaseUrl(); ?>high-low-homecoming-dresses">High Low Homecoming</a></li>
-
-                                    <li><a href="<?php echo Mage::getBaseUrl(); ?>evening-dresses">Evening Dresses</a></li>
-
-                                    <li><a href="<?php echo Mage::getBaseUrl(); ?>formal-gowns">Formal Gowns</a></li>
-
-                                    <li><a href="<?php echo Mage::getBaseUrl(); ?>red-carpet-dresses">Red Carpet</a></li>
-
-                                    <li><a href="<?php echo Mage::getBaseUrl(); ?>special-occasions">Special Occasions</a></li>
-                                    
-                                    <li><a href="<?php echo Mage::getBaseUrl(); ?>cocktail-dresses">Cocktail Dresses</a></li>
-
-                                    <li><a href="<?php echo Mage::getBaseUrl(); ?>club-dresses">Club Dresses</a></li>
-
-                                    <li><a href="<?php echo Mage::getBaseUrl(); ?>holiday-dresses">Holiday Dresses</a></li>
-
-                                    <li><a href="<?php echo Mage::getBaseUrl(); ?>little-black-dresses">Little Black Dresses</a></li>                                    
-                                </ul>
-
-								</div>
-								<div class="nav-column-3">
-								
-                                <ul>
-
-                                    <li><a href="<?php echo Mage::getBaseUrl(); ?>mini-dresses">Mini Dresses</a></li>
-
-                                    <li><a href="<?php echo Mage::getBaseUrl(); ?>new-years-eve-dresses">New Years Dresses</a></li>
-
-                                    <li><a href="<?php echo Mage::getBaseUrl(); ?>party-dresses">Party Dresses</a></li>
-                                    
-                                    <li><a href="<?php echo Mage::getBaseUrl(); ?>bat-mitzvah-dresses">Bat Mitzvah</a></li>
-
-                                    <li><a href="<?php echo Mage::getBaseUrl(); ?>wedding-dresses">Wedding Dresses</a></li>
-
-                                    <li><a href="<?php echo Mage::getBaseUrl(); ?>bridesmaid-dresses">Bridesmaids</a></li>
-
-                                    <li><a href="<?php echo Mage::getBaseUrl(); ?>pageant-dresses">Pageant</a></li>
-
-                                    <li><a href="<?php echo Mage::getBaseUrl(); ?>quinceanera-dresses">Quinceanera</a></li>
-
-                                    <li><a href="<?php echo Mage::getBaseUrl(); ?>sweet-sixteen-dresses">Sweet Sixteen</a></li>                                    
-                                </ul>
-
-								</div>
-
-							</div>
-                    </li>
-
-                    <li>
-                        <a href="<?php echo Mage::getBaseUrl(); ?>">Styles</a>
-
-						<div class="arrow-container"><div class="arrow-up"></div></div>
-							
-							<div class="nav-container-4">
-							
-								<div class="nav-column-1">
-									
-									
-                                <ul>
-                                    <li><a href="<?php echo Mage::getBaseUrl(); ?>designer-dresses?length=1168">Long</a></li>
-
-                                    <li><a href="<?php echo Mage::getBaseUrl(); ?>designer-dresses?length=1169">Short</a></li>
-
-                                    <li><a href="<?php echo Mage::getBaseUrl(); ?>designer-dresses?length=1167">High Low</a></li>
-
-                                    <li><a href="<?php echo Mage::getBaseUrl(); ?>designer-dresses?styles=2611">A Line</a></li>
-
-                                    <li><a href="<?php echo Mage::getBaseUrl(); ?>designer-dresses?styles=2610">Ball Gown</a></li>
-
-                                    <li><a href="<?php echo Mage::getBaseUrl(); ?>designer-dresses?styles=2609">Bandage</a></li>
-
-                                    <li><a href="<?php echo Mage::getBaseUrl(); ?>designer-dresses?styles=2608">Mermaid</a></li>
-
-                                    <li><a href="<?php echo Mage::getBaseUrl(); ?>designer-dresses?styles=2607">Open Back</a></li>
-
-                                    <li><a href="<?php echo Mage::getBaseUrl(); ?>designer-dresses?styles=2606">Pleated</a></li>
-                                    
-                                    <li><a href="<?php echo Mage::getBaseUrl(); ?>designer-dresses?embellishments=2596">Beaded</a></li>
-
-                                    <li><a href="<?php echo Mage::getBaseUrl(); ?>designer-dresses?embellishments=2595">Embroidery</a></li>                                    
-                                </ul>
-
-								</div>
-								<div class="nav-column-2">
-								
-                                <ul>
-
-                                    <li><a href="<?php echo Mage::getBaseUrl(); ?>designer-dresses?embellishments=2601">Feathers</a></li>
-
-                                    <li><a href="<?php echo Mage::getBaseUrl(); ?>designer-dresses?embellishments=2600">Flowers</a></li>
-
-                                    <li><a href="<?php echo Mage::getBaseUrl(); ?>designer-dresses?embellishments=2594">Lace</a></li>
-
-                                    <li><a href="<?php echo Mage::getBaseUrl(); ?>designer-dresses?embellishments=2599">Ruffles</a></li>
-
-                                    <li><a href="<?php echo Mage::getBaseUrl(); ?>designer-dresses?embellishments=2593">Sequins</a></li>
-
-                                    <li><a href="<?php echo Mage::getBaseUrl(); ?>designer-dresses?embellishments=2592">Stones</a></li>
-
-                                    <li><a href="<?php echo Mage::getBaseUrl(); ?>designer-dresses?neckline=2588">Asymmetrical</a></li>
-                                    
-                                    <li><a href="<?php echo Mage::getBaseUrl(); ?>designer-dresses?neckline=2587">Halter</a></li>
-
-                                    <li><a href="<?php echo Mage::getBaseUrl(); ?>designer-dresses?neckline=2586">High Neckline</a></li>
-
-                                    <li><a href="<?php echo Mage::getBaseUrl(); ?>designer-dresses?neckline=2585">Strapless</a></li>
-
-                                    <li><a href="<?php echo Mage::getBaseUrl(); ?>designer-dresses?neckline=2584">V Neck</a></li>
-                                    
-                                </ul>
-
-								</div>
-								<div class="nav-column-3">
-								
-                                <ul>
-                                    <li><a href="<?php echo Mage::getBaseUrl(); ?>designer-dresses?sleeve=2582">Long Sleeve</a></li>
-
-                                    <li><a href="<?php echo Mage::getBaseUrl(); ?>designer-dresses?sleeve=2581">Medium Sleeve</a></li>
-
-                                    <li><a href="<?php echo Mage::getBaseUrl(); ?>designer-dresses?sleeve=2580">Short Sleeve</a></li>
-
-                                    <li><a href="<?php echo Mage::getBaseUrl(); ?>designer-dresses?sleeve=2578">Spaghetti Straps</a></li>
-
-                                    <li><a href="<?php echo Mage::getBaseUrl(); ?>designer-dresses?slit=2598">Slit</a></li>
-                                    
-                                    <li><a href="<?php echo Mage::getBaseUrl(); ?>designer-dresses?train=2605">Train</a></li>
-
-                                    <li><a href="<?php echo Mage::getBaseUrl(); ?>designer-dresses?waistline=2602">Corset</a></li>
-
-                                    <li><a href="<?php echo Mage::getBaseUrl(); ?>designer-dresses?waistline=2591">Drop Waistline</a></li>
-
-                                    <li><a href="<?php echo Mage::getBaseUrl(); ?>designer-dresses?waistline=2590">Empire</a></li>
-
-                                    <li><a href="<?php echo Mage::getBaseUrl(); ?>designer-dresses?waistline=2603">Fitted</a></li>
-
-                                    <li><a href="<?php echo Mage::getBaseUrl(); ?>designer-dresses?waistline=2589">Natural</a></li>                                    
-                                </ul>
-
-								</div>
-
-							</div>
-                    </li>
-
-                    <li><a href="<?php echo Mage::getBaseUrl(); ?>prom-shoes">Shoes</a></li>
-
-                    <li><a rel="" href="<?php echo Mage::getBaseUrl(); ?>new">New</a></li>
-
-                    <li><a rel="" href="<?php echo Mage::getBaseUrl(); ?>sale">Sale</a></li>
-                </ul>
-            </nav>
-            </div>
-            
-            <?php if ($this->getIsHomePage()):?>
-            <?php else:?>
-            <div class="header-divider"></div>
-            <?php endif ?>
         </div>
+
+        <script src="<?php echo $this->getUrl('js/search') ?>/classie.js"></script>
+        <script src="<?php echo $this->getUrl('js/search') ?>/uisearch.js"></script>
+        <script>
+            new UISearch( document.getElementById( 'sb-search' ) );
+        </script>
+
+
+        <div class="mobile-minicart">
+            <?php echo $mobile_cart; ?>
+        </div>
+
+
+        <div class="top-left">
+
+            <script type="text/javascript">
+
+                function authenticPopup() {
+
+                    jQuery.fn.speedoPopup({
+                        href:"<?php echo Mage::getBaseUrl(); ?>skin/frontend/custom/default/images/100_authentic_popup.gif", width: null, height: null, effectIn: "fade", effectOut: "fade"
+                    });
+                };
+
+                function pricePopup() {
+
+                    jQuery.fn.speedoPopup({
+                        href:"<?php echo Mage::getBaseUrl(); ?>skin/frontend/custom/default/images/price_match_popup.gif", width: null, height: null, effectIn: "fade", effectOut: "fade"
+                    });
+                };
+
+                function giftPopup() {
+
+                    jQuery.fn.speedoPopup({
+                        href:"<?php echo Mage::getBaseUrl(); ?>skin/frontend/custom/default/images/free_gift_popup.gif", width: null, height: null, effectIn: "fade", effectOut: "fade"
+                    });
+                };
+
+                function shippingPopup() {
+
+                    jQuery.fn.speedoPopup({
+                        href:"<?php echo Mage::getBaseUrl(); ?>skin/frontend/custom/default/images/free_shipping_popup.gif", width: null, height: null, effectIn: "fade", effectOut: "fade"
+                    });
+                };
+            </script>
+
+            <ul class="top-left-ul">
+                <li><a href="#" onclick='authenticPopup()'>100% Authentic</li>
+                <li><a href="#" onclick='pricePopup()'>Price Match</li>
+                <li><a href="#" onclick='giftPopup()'>Free Gift</li>
+                <li><a href="#" onclick='shippingPopup()'>Free Shipping &amp; Returns</a></li>
+            </ul>
+
+        </div>
+
+        <div class="top-right">
+
+            <?php echo $this->getChildHtml('topLinks') ?>
+            <!-- Sign In -->
+            <?php echo $this->getChildHtml('header_signin'); ?>
+            <!-- End Sign In -->
+            <!-- My Account -->
+            <?php echo $this->getChildHtml('header_myaccount'); ?>
+            <!-- End My Account -->
+            <!-- Assistance -->
+            <?php echo $this->getChildHtml('header_assistance'); ?>
+            <!-- End Assistance -->
+            <div class="block block-minicart block-minicart2">
+                <?php echo $cart_html; ?>
+            </div>
+            <?php echo $this->getChildHtml('topSearch') ?>
+
+        </div>
+
+        <div class="logo">
+            <a href="<?php echo $this->getUrl('') ?>" title="<?php echo $this->getLogoAlt() ?>"><?php echo $this->getLogoAlt() ?><img src="<?php echo $this->getLogoSrc() ?>" alt="<?php echo $this->getLogoAlt() ?>"></a><br>
+
+            <ul class="phone">
+                <li class="phoneheader">718-841-7037</li>
+            </ul>
+
+        </div>
+
+        <div class="nav-container">
+            <div class="nav clearer<?php if($navCss) echo " " . implode(" ", $navCss); ?>">
+                <?php echo $this->getChildHtml('topMenu') ?>
+            </div> <!-- end: nav -->
+        </div> <!-- end: nav-container -->
+
+        <?php if ($this->getIsHomePage()):?>
+        <?php else:?>
+        <div class="header-divider"></div>
+        <?php endif ?>
     </div>
+</div>
     

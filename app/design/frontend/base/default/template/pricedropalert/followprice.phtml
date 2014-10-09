@@ -1,0 +1,16 @@
+<?php 
+if(Mage::getStoreConfig('pricedrop_section/pricedrop_general/pricedrop_enabled',Mage::app()->getStore())==1)
+{
+	if(Mage::getStoreConfig('pricedrop_section/pricedrop_general/pricedrop_imagefield',Mage::app()->getStore())!='')
+	    $path=Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA)."magikuploaddir/".Mage::getStoreConfig('pricedrop_section/pricedrop_general/pricedrop_imagefield');
+	else
+	    $path=$this->getSkinUrl('images/follow_me_btn.png');
+	?>
+	<div style="margin-top:5px;">
+	<a onclick="javascript:showme();" id="open" style="cursor:pointer;">
+	<img src="<?php echo $path; ?>" align="absmiddle"/></a>
+	</div>
+	<br/>
+<?php
+}
+?>

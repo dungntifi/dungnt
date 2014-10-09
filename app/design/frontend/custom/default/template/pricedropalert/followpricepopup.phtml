@@ -1,0 +1,53 @@
+<?php 
+$productId=Mage::registry('product')->getId();
+$desctxt=Mage::getStoreConfig('pricedrop_section/pricedrop_general/pricedrop_description',Mage::app()->getStore());
+?>
+<div id="fade" style="display:none;"> </div>
+<div class="popup_block" id='lightbox_content' style="display:none;">  
+	<div class="popup">
+		<a href="javascript:hideDiv()" id="popup_block-close" title="close"></a>
+		<div class="top_space1" style="padding:25px 10px; overflow: hidden;" id='msg'>
+
+			<div style="font-size:12px; padding-bottom:20px;"><?php echo $desctxt;?></div>
+			<script language="javascript">
+			var url="<?php  echo $this->getUrl('').'pricedropalert/index';?>";
+			</script>
+			<form name="sample" action="<?php  echo $this->getUrl('').'followprice/index';?>" method="POST" onsubmit="return validate(document.getElementById('email').value);">
+				<div id="err"></div>
+				<label><strong>Email Address</strong> </label>
+				<input type="text" name="email" id="email" value="" class="inputbox">				
+				<input type="hidden" name="product" id='product' value="<?=$productId;?>">				
+				<input type="image" src="<?php echo $this->getSkinUrl('images/follow_me_btn.png');?>" style="vertical-align:top">
+			</form>
+		</div>
+	</div>	
+</div>
+<script type="text/javascript">
+function validate(email)
+{	
+	if(email!='') {	
+		new Ajax.Request(url, {method: 'post', parameters: {'email' : document.getElementById('email').value    , 'product': document.getElementById('product').value },onComplete:closePopup}); 
+		return false;	
+	}
+	else
+	{
+		document.getElementById('err').innerHTML='<div class="error_message">Please Enter Email.</div>';
+		return false;
+	}
+}
+function showme()
+{	
+	document.getElementById('fade').style.display='block';
+	document.getElementById('lightbox_content').style.display='block';
+}
+function hideDiv()
+{
+	document.getElementById('fade').style.display='none';
+	document.getElementById('lightbox_content').style.display='none';
+}
+function closePopup(transport)
+{
+	$('msg').innerHTML = transport.responseText;
+	setTimeout(hideDiv,5000);
+}
+</script>
