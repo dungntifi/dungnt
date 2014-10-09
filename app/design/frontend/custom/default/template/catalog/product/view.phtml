@@ -247,10 +247,23 @@
 					<?php echo $collection;?>
 				</div>
 				<div id="style" class="tab" style="display:none;">
-					<?php echo $styles;?>
+					<?php
+                        $attStyle = explode(',',$styles);
+                        $html = "";
+                        $productModel = Mage::getModel('catalog/product');
+                        $attr = $productModel->getResource()->getAttribute("styles");
+                        if ($attr->usesSource()) {
+                            $html .= "<ul class='styles'>";
+                                foreach($attStyle as $option):
+                                    $html .= '<li>'.$color_label = $attr->getSource()->getOptionText($option).'</li>';
+                                endforeach;
+                            $html .= "</ul>";
+                        }
+                        echo $html;
+                    ?>
 				</div>
 				<div id="size" class="tab" style="display:none;">
-					size chart
+					
 				</div>				
 			</div>
 		</div>	
