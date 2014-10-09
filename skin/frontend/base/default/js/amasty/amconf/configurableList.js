@@ -240,14 +240,14 @@ Product.Config.prototype.fillSelect = function(element){
                     image = document.createElement('img');
                     image = $(image); // fix for IE
                     image.id = 'amconf-image-' + options[i].id + '-' + this.config.productId;
-		            image.src   = options[i].image;
+                    image.src   = options[i].image;
                     image.width = this.config.size;
                     image.height = this.config.size;
                     image.addClassName('amconf-image');
-		            image.alt = options[i].label;
-		            image.title = options[i].label;
+                    image.alt = options[i].label;
+                    image.title = options[i].label;
                     image.observe('click', this.configureImage.bind(this));
-		    		if('undefined' != typeof(buble)){
+                    if('undefined' != typeof(buble)){
                          image.observe('mouseover', buble.showToolTip)
                          image.observe('mouseout', buble.hideToolTip)       
                     }
@@ -292,7 +292,7 @@ Product.Config.prototype.configureElement = function(element)
         var pos = elId.indexOf('-');
         if ('-1' != pos){
             elId = elId.substring(pos+1, elId.lenght);
-            elId = 	parseInt(elId);
+            elId =  parseInt(elId);
             if(prevNextSetting[elId] && prevNextSetting[elId][element.config.id] && prevNextSetting[elId][element.config.id][1] || element.nextSetting){
                  if(prevNextSetting[elId] && prevNextSetting[elId][element.config.id] && prevNextSetting[elId][element.config.id][1]){
                     element.nextSetting = prevNextSetting[elId][element.config.id][1]
@@ -427,18 +427,25 @@ Product.Config.prototype.selectImage = function(element)
 
     var productLink = element.up('.item').down('.product-image');
     if('undefined' != typeof(confData[parentId]['optionProducts'][key]['small_image'])){ 
-         var parUrl = confData[parentId]['optionProducts'][key]['parent_image'];
-         var possl = parUrl.lastIndexOf('/');
-         $$('.product-image img').each(function(img){
-              var posslImg = img.src.lastIndexOf('/');
-              if(img.src.substr(posslImg, img.src.length) == parUrl.substr(possl, parUrl.length) || img.hasClassName('amconf-parent-'+parentId)){
-                  img.src = confData[parentId]['optionProducts'][key]['small_image'];
-                  img.addClassName('amconf-parent-'+parentId);
-                  productLink.href = (productLink.href.match(/color=(\d+)/)) ? productLink.href.replace(/color=(\d+)/, 'color=' + key) : productLink.href + '?color=' + key;
-              }
-         });              
-                    
-      }
+        
+        //clear all images in current item
+        $$('.wrapper-for-product-' + parentId + ' img').each(function(img, index){ 
+            $(img).remove();
+        });
+
+        //adding new images, associated with selected color
+        for (var i = 0; i < confData[parentId]['optionProducts'][key]['small_image'].length; i++) {
+            var counter = i + 1;
+            var productImg = document.createElement('img');
+                productImg = $(productImg); // fix for IE
+                productImg.src = confData[parentId]['optionProducts'][key]['small_image'][i];
+                productImg.addClassName('img' + counter);
+                productImg.addClassName('amconf-parent-' + parentId);
+                productLink.href = (productLink.href.match(/color=(\d+)/)) ? productLink.href.replace(/color=(\d+)/, 'color=' + key) : productLink.href + '?color=' + key;
+                productLink.appendChild(productImg);
+        };
+            
+    }
       
     if ('undefined' != typeof(confData[parentId]) && confData[parentId].useSimplePrice == "1")
     {
@@ -469,10 +476,10 @@ Product.Config.prototype.processEmpty = function()
             holderDiv.id = 'amconf-images-' + attributeId + '-' + this.config.productId;
             if ('undefined' != typeof(confData[me.config.productId]))
             {
-            	holderDiv.innerHTML = confData[me.config.productId].textNotAvailable;
+                holderDiv.innerHTML = confData[me.config.productId].textNotAvailable;
             } else 
             {
-            	holderDiv.innerHTML = "";
+                holderDiv.innerHTML = "";
             }
             holder.insertBefore(holderDiv, select);
         }

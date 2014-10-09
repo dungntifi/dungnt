@@ -98,7 +98,18 @@
                 <div class="quickview">
                     <a class="quickview-btn fancybox.ajax" href="<?php echo $this->getUrl('quickbox/product/view') . '?id='. $_product->getId() ?>"><?php echo $this->__('Quick View') ?></a>
                 </div>
-                <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" class="product-image"><img src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->constrainOnly(TRUE)->keepAspectRatio(TRUE)->keepFrame(FALSE)->resize(190,300); ?>" alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" /></a>
+                
+                <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" class="product-image wrapper-for-product-<?php echo $_product->getId() ?>">
+                    <?php $gallery = Mage::getModel('catalog/product')->load($_product->getId())->getMediaGalleryImages(); 
+                    $j = 1;
+                    foreach ($gallery as $_image) : 
+                        if($j <= 2) : ?>
+
+                        <img src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image', $_image->getFile())->constrainOnly(TRUE)->keepAspectRatio(TRUE)->keepFrame(FALSE)->resize(190,300); ?>" alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" class="img<?php echo $j; ?> amconf-parent-<?php echo $_product->getId() ?>" />
+                        
+                    <?php $j++; endif; 
+                    endforeach; ?>
+                </a>
  
                 <a class="product-subtitle-link" href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($_product->getName(), null, true) ?>"><div class="product-subtitle"><?php echo $this->htmlEscape($_product->getData('subtitle')); ?></div></a>
                      
@@ -170,6 +181,19 @@
     (function($) {
         $(function() {
 
+            $('.product-image').hover(function(){
+                if($(this).children(".img2").length > 0) {
+                    $(this).children(".img1").css('display', 'none');
+                    $(this).children(".img2").css('display', 'block');
+                }
+            }, function() {
+                if($(this).children(".img2").length > 0) {
+                    $(this).children(".img2").css('display', 'none');
+                    $(this).children(".img1").css('display', 'block');
+                }
+            });
+
+            //quickview-btn switcher
             $('.item').hover(function(){
                 $(this).children(":first").css('display', 'block');
             }, function() {

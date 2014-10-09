@@ -139,6 +139,13 @@
 .product-info .block-select .column:first-child{
 	float:left;
 }
+.product-info .block-select .column-one-third{
+	display: inline-block;
+	width: 90px;
+}
+.product-info .block-select .column-one-third .amconf-images-container{
+	display: none;
+}
 .product-info .block-select .label{
 	width:100%;
 	margin:0 0 9px;
@@ -303,7 +310,7 @@
 	right: 0;
 	width: 35px;
 	height: 35px;
-	background:url(../images/btn-close.png) no-repeat 50% 50% #ff6100;
+	background:url(../images/btn-close.png) no-repeat 50% 50% #000000;
 	border: none;
 	cursor: pointer;
 	text-indent: -9999px;

@@ -3671,6 +3671,10 @@ p.create-account {
 	border:0px solid #fff;
 }
 
+.product-image .img2 {
+	display: none;
+}
+
 .products-grid .product-name {
 	margin:0 0;
 	font-weight:700;
@@ -3808,6 +3812,14 @@ p.create-account {
 
 .sizechartlink {
 	float: right;
+	margin-right: 16px;
+}
+
+.sizechart-popup {
+	clear: both;
+	width: 100%;
+	text-align: right;
+	padding-bottom: 10px;
 	margin-right: 16px;
 }
 

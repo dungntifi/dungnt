@@ -50,14 +50,27 @@ class Amasty_Conf_Block_Catalog_Product_View_Type_Configurablel extends Mage_Cat
                         // @todo check settings:
                         // array key here is a combination of choosen options
                         $confData[$strKey] = array();
-                        
+
+                        $gallery = Mage::getModel('catalog/product')->load($simple->getId())->getMediaGalleryImages(); 
                         if(!('no_selection' == $simple->getSmallImage() || '' == $simple->getSmallImage())){
                             if(is_array($imageSizeAtCategoryPage)) {
-				                $confData[$strKey]['small_image'] = (string)($this->helper('catalog/image')->init($simple, 'small_image')->resize($imageSizeAtCategoryPage[0], $imageSizeAtCategoryPage[1]));
-                                $confData[$strKey]['parent_image'] =(string)($this->helper('catalog/image')->init($this->getProduct(), 'small_image')->resize($imageSizeAtCategoryPage[0], $imageSizeAtCategoryPage[1]));
+                                $j = 1; $imagesArr = '';
+                                foreach ($gallery as $_image) : 
+                                    if($j <= 2) : 
+                                        $imagesArr[] = (string)($this->helper('catalog/image')->init($simple, 'small_image', $_image->getFile())->resize($imageSizeAtCategoryPage[0], $imageSizeAtCategoryPage[1]));
+                                    $j++; endif; 
+                                endforeach;
+                                $confData[$strKey]['small_image'] = $imagesArr;
+                                $confData[$strKey]['parent_image'] = (string)($this->helper('catalog/image')->init($this->getProduct(), 'small_image')->resize($imageSizeAtCategoryPage[0], $imageSizeAtCategoryPage[1]));
                             } else {
-                                $confData[$strKey]['small_image'] = (string)($this->helper('catalog/image')->init($simple, 'small_image')->resize($imageSizeAtCategoryPage));
-                                $confData[$strKey]['parent_image'] =(string)($this->helper('catalog/image')->init($this->getProduct(), 'small_image')->resize($imageSizeAtCategoryPage));
+                                $j = 1; $imagesArr = '';
+                                foreach ($gallery as $_image) : 
+                                    if($j <= 2) : 
+                                        $imagesArr[] = (string)($this->helper('catalog/image')->init($simple, 'small_image', $_image->getFile())->resize($imageSizeAtCategoryPage));
+                                    $j++; endif; 
+                                endforeach;
+                                $confData[$strKey]['small_image'] = $imagesArr;
+                                $confData[$strKey]['parent_image'] = (string)($this->helper('catalog/image')->init($this->getProduct(), 'small_image')->resize($imageSizeAtCategoryPage));
                             }
                             if(Mage::getStoreConfig('amconf/general/oneselect_reload')) {
                                 $k = $strKey;
@@ -75,11 +88,23 @@ class Amasty_Conf_Block_Catalog_Product_View_Type_Configurablel extends Mage_Cat
                         }
                         else{
                             if(is_array($imageSizeAtCategoryPage)) {
-                                $confData[$strKey]['small_image'] = (string)($this->helper('catalog/image')->init($this->getProduct(), 'small_image')->resize($imageSizeAtCategoryPage[0], $imageSizeAtCategoryPage[1]));
-                                $confData[$strKey]['parent_image'] =(string)($this->helper('catalog/image')->init($this->getProduct(), 'small_image')->resize($imageSizeAtCategoryPage[0], $imageSizeAtCategoryPage[1])); 
+                                $j = 1; $imagesArr = '';
+                                foreach ($gallery as $_image) : 
+                                    if($j <= 2) : 
+                                        $imagesArr[] = (string)($this->helper('catalog/image')->init($this->getProduct(), 'small_image', $_image->getFile())->resize($imageSizeAtCategoryPage[0], $imageSizeAtCategoryPage[1]));
+                                    $j++; endif; 
+                                endforeach;
+                                $confData[$strKey]['small_image'] = $imagesArr;
+                                $confData[$strKey]['parent_image'] = (string)($this->helper('catalog/image')->init($this->getProduct(), 'small_image')->resize($imageSizeAtCategoryPage[0], $imageSizeAtCategoryPage[1])); 
                             } else {
-                                $confData[$strKey]['small_image'] = (string)($this->helper('catalog/image')->init($this->getProduct(), 'small_image')->resize($imageSizeAtCategoryPage));
-                                $confData[$strKey]['parent_image'] =(string)($this->helper('catalog/image')->init($this->getProduct(), 'small_image')->resize($imageSizeAtCategoryPage)); 
+                                $j = 1; $imagesArr = '';
+                                foreach ($gallery as $_image) : 
+                                    if($j <= 2) : 
+                                        $imagesArr[] = (string)($this->helper('catalog/image')->init($this->getProduct(), 'small_image', $_image->getFile())->resize($imageSizeAtCategoryPage));
+                                    $j++; endif; 
+                                endforeach;
+                                $confData[$strKey]['small_image'] = $imagesArr; 
+                                $confData[$strKey]['parent_image'] = (string)($this->helper('catalog/image')->init($this->getProduct(), 'small_image')->resize($imageSizeAtCategoryPage)); 
                             }
                         }
                         
@@ -176,7 +201,7 @@ class Amasty_Conf_Block_Catalog_Product_View_Type_Configurablel extends Mage_Cat
             else if($attr->getUseImage()){
                 foreach ($attribute['options'] as $i => $option)
                 {
-		    $this->_optionProducts[$attributeId][$option['id']] = $option['products'];
+            $this->_optionProducts[$attributeId][$option['id']] = $option['products'];
                     $config['attributes'][$attributeId]['use_image'] = 1;
                     $config['attributes'][$attributeId]['options'][$i]['image'] = Mage::helper('amconf')->getImageUrl($option['id']);
                 }    
