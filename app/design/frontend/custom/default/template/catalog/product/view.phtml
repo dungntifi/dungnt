@@ -113,7 +113,8 @@
 
 			<?php } ?>
 
-            
+            <?php echo $this->getChildHtml('followprice') ?>
+            <?php echo $this->getChildHtml('followpricepopup') ?>
             <?php echo $this->getPriceHtml($_product) ?>
             <?php echo $this->getChildHtml('product_type_data') ?>
 
@@ -222,7 +223,86 @@
 	<div style="clear:both;"></div>
 	
     <div class="product-collateral">
-
         <?php echo $this->getChildHtml('upsell_products') ?>
     </div>
+	<?php
+	$styles = $_product->getStyles();
+	$_designer = $_product->getAttributeText('designer');
+	$collection = $_product->getCollection();
+	?>
+	<div class="product-tabs">	
+		<div class="tabs">
+			<ul class="tab-links">
+				<li class="active"><a href="#designer"><?php echo $this->__("Designer"); ?></a></li>
+				<li><a href="#collection"><?php echo $this->__("Collection"); ?></a></li>				
+				<li><a href="#style"><?php echo $this->__("Style"); ?></a></li>
+				<li><a href="#size"><?php echo $this->__("Size"); ?></a></li>				
+			</ul>
+
+			<div class="tab-content">				
+				<div id="designer" class="tab active">
+					<?php echo $_designer;?>
+				</div>
+				<div id="collection" class="tab" style="display:none;">
+					<?php echo $collection;?>
+				</div>
+				<div id="style" class="tab" style="display:none;">
+					<?php
+                        $attStyle = explode(',',$styles);
+                        $html = "";
+                        $productModel = Mage::getModel('catalog/product');
+                        $attr = $productModel->getResource()->getAttribute("styles");
+                        if ($attr->usesSource()) {
+                            $html .= "<ul class='styles'>";
+                                foreach($attStyle as $option):
+                                    $html .= '<li>'.$color_label = $attr->getSource()->getOptionText($option).'</li>';
+                                endforeach;
+                            $html .= "</ul>";
+                        }
+                        echo $html;
+                    ?>
+				</div>
+				<div id="size" class="tab" style="display:none;">
+					
+				</div>				
+			</div>
+		</div>	
+	</div>
+	<?php echo $this->getChildHtml('product_additional_data') ?>	
+
+	<div style="display:none">
+		<div id="review-form-popup">
+			<div class="review-form-popup-inner">
+				<?php echo $this->getChildHtml('review_form') ?>				
+			</div>
+		</div>
+	</div>
+	
+	<script type="text/javascript">
+		jQuery(document).ready(function() {
+			jQuery('.tabs .tab-links a').on('click', function(e)  {
+				var currentAttrValue = jQuery(this).attr('href');
+
+				// Show/Hide Tabs
+				jQuery('.tabs ' + currentAttrValue).show().siblings().hide();
+
+				// Change/remove current tab to active
+				jQuery(this).parent().addClass('active').siblings().removeClass('active');
+
+				e.preventDefault();
+			});
+			
+			jQuery('.view-review-list').click(function(){ 					
+				jQuery('html,body').animate({scrollTop: jQuery('#customer-reviews').offset().top},1000);
+			});
+			
+			jQuery('.scroll-pane').jScrollPane();
+		});
+		
+		function reviewPopup() {					
+			jQuery.fn.speedoPopup({
+				htmlContent: jQuery('#review-form-popup').html(), width: 500, height: null, effectIn: "fade", effectOut: "fade", theme: "metro"
+			}); 
+		};
+	</script>
 </div>

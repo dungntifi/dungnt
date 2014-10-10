@@ -1,0 +1,39 @@
+<div class="slideshow cycle-slideshow" 
+            data-cycle-fx=carousel
+            data-cycle-timeout=0
+            data-cycle-carousel-visible=1
+            data-cycle-slides="> div.image-popup"
+            data-cycle-next=".next-popup"
+            data-cycle-prev=".prev-popup"
+            data-cycle-caption=".cycle-caption-popup"
+            data-cycle-caption-template="{{slideNum}} / {{slideCount}}"
+            >
+    <div class="controls">
+        <div class="prev-popup"></div>
+        <div class="next-popup"></div>
+        <div class="cycle-caption-popup"></div>
+    </div>
+    <div class="socials">
+        <a href="" class="like">Like</a>
+        <a href="" class="facebbok">Facebook</a>
+        <a href="" class="pinterest">Pinterest</a>
+        <a href="" class="symbaloo">Symbaloo</a>
+        <a href="" class="twitter">Twitter</a>
+        <a href="" class="google">G+</a>
+        <a href="" class="mail">Mail</a>
+    </div>
+    <?php foreach ($this->getGalleryImages() as $_image): ?>
+    <div class="image-popup easyzoom--overlay">            
+        <a href='<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'thumbnail', $_image->getFile()); ?>'>
+            <img src='<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'thumbnail', $_image->getFile())->keepAspectRatio(TRUE)->keepFrame(FALSE)->resize(475); ?>'>
+        </a>
+    </div>
+    <?php endforeach; ?>
+</div>
+<script type="text/javascript">
+
+    var $easyzoom = jQuery('.slideshow .image-popup').easyZoom();
+    var api = $easyzoom.data('easyZoom');
+    jQuery('.cycle-slideshow').cycle();
+
+</script>

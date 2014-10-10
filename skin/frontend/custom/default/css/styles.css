@@ -2641,7 +2641,6 @@ padding-right: 0;*/
 }
 
 .block-minicart .summary {
-	background:;
 	padding:2px 8px 8px;
 	margin:-1px 0 0;
 	position:relative;
@@ -3500,18 +3499,17 @@ p.create-account {
 	border:0px solid #fff;
 }
 
+.product-image .img2 {
+	display: none;
+}
+
 .products-grid .product-name {
-/*min-height:2.7em;*/
-	/*position:relative;
-	top:-30px;
-	right:8px;*/
 	margin:0 0;
 	font-weight:700;
 	font-size:11px;
 	color:#000;
 	text-align:center;
 	position:relative;
-	top:-50px;	
 }
 
 .products-grid .color-avail {
@@ -3519,8 +3517,7 @@ p.create-account {
 	margin:0 0;
 	word-wrap:normal;
 	font-size: 10px;
-	position:relative;
-	top:-50px;	
+	position:relative;	
 }
 
 .products-grid .product-subtitle {
@@ -3547,7 +3544,6 @@ p.create-account {
 	margin:0;
 	padding:0;
 	position:relative;
-	top:-50px;	
 }
 
 .products-grid .availability {
@@ -3644,6 +3640,14 @@ p.create-account {
 
 .sizechartlink {
 	float: right;
+	margin-right: 16px;
+}
+
+.sizechart-popup {
+	clear: both;
+	width: 100%;
+	text-align: right;
+	padding-bottom: 10px;
 	margin-right: 16px;
 }
 
@@ -4480,7 +4484,6 @@ p.create-account {
 
 .product-options-bottom {
 /*background-color:#fffada;*/
-	padding:15px 20px;
 	border:0 solid #e4e4e4;
 	border-top:0;
 }
@@ -4508,8 +4511,11 @@ p.create-account {
 
 .product-options-bottom .add-to-links {
 	clear:both;
-	padding:5px 0 0;
-	text-align:right;
+	display: block;
+    line-height: 35px;
+}
+.product-options-bottom .add-to-links:hover {
+	text-decoration: none;
 }
 
 .col3-layout .product-options-bottom .price-box {
@@ -7666,6 +7672,7 @@ width: 100%;
 #credit-card-type .MC.active  {background-position: -51px 0px;}
 #credit-card-type .AE.active  {background-position: -102px 0px;}
 #credit-card-type .DI.active  {background-position: -153px 0px;}
+.amconf-block { margin-top: -55px; }
 .product_promotion {color: #cc0000; font-weight: bold;}
 .slider-button {
 	background: rgba(255,255,255,1.0);
@@ -7834,7 +7841,6 @@ position:absolute;
 
 
 /*end of padict css */
-
 .empty-cart-container {
 	width: 100%;
 	text-align: center;

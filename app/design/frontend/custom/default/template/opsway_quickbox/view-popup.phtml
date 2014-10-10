@@ -1,0 +1,119 @@
+<?php
+    $_helper = $this->helper('catalog/output');
+    $_product = $this->getProduct();
+?>
+<script type="text/javascript">
+    var optionsPrice = new Product.OptionsPrice(<?php echo $this->getJsonConfig() ?>);
+</script>
+<div class="view-popup">
+    <div class="popup">
+        <form action="<?php echo $this->getSubmitUrl($_product) ?>" method="post" id="order-form" <?php if($_product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>>
+            <?php echo $this->getBlockHtml('formkey') ?>
+            <div class="no-display">
+                <input type="hidden" name="product" value="<?php echo $_product->getId() ?>" />
+                <input type="hidden" name="related_product" id="related-products-field" value="" />
+            </div>
+
+            <a href="javascript:void(0);" class="close">X</a>
+            <div class="product-img-box">
+                <?php echo $this->getChildHtml('media') ?>
+            </div>
+
+            <div class="product-info">
+                <div class="name">
+                    <b class="title"><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></b>
+                    <span class="pinterest">
+                        <a href="//pinterest.com/pin/create/button/?media=<?php echo $this->helper('catalog/image')->init($_product, 'image'); ?>&description=<?php echo trim(Mage::registry('current_product')->getName()); ?>&url=<?php echo trim(Mage::registry('current_product')->getProductUrl()); ?>" data-pin-do="buttonPin" data-pin-config="none"><img src="//assets.pinterest.com/images/pidgets/pinit_fg_en_rect_gray_20.png" /></a>
+                        <!-- Please call pinit.js only once per page -->
+                        <script type="text/javascript" async src="//assets.pinterest.com/js/pinit.js"></script>
+                    </span>
+                    
+                    <span class="wanelo">
+                       <a class="wanelo-save-button"
+                          href="<?php echo Mage::getBaseUrl(); ?>"
+                          data-url="<?php echo $this->helper('core/url')->getCurrentUrl();?>"
+                          data-title="<?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?>"
+                          data-image="<?php echo $_product->getImageUrl(); ?>"
+                          data-price="<?php echo number_format($_product->getFinalPrice(),2);?>"></a>
+                    </span>
+                    <script async="true" type="text/javascript" src="//cdn-saveit.wanelo.com/bookmarklet/3/save.js"></script>  
+                </div>
+
+                <?php echo $this->getPriceHtml($_product) ?>
+                <?php echo $this->getChildHtml('product_type_data') ?>
+                <?php echo $this->getChildHtml('alert_urls') ?>
+                <?php echo $this->getTierPriceHtml() ?>
+                <?php echo $this->getChildHtml('extrahint') ?>
+
+                <div class="info-holder">
+                    <p><?php echo $this->htmlEscape($_product->getData('short_description')); ?></p>
+                    <button class="button btn-details">VIEW FULL PRODUCT DETAILS</button>
+                    <?php echo $this->getChildHtml('other');?>
+                    <?php if ($_product->isSaleable() && $this->hasOptions()):
+                            $blockForForm = Mage::app()->getLayout()->createBlock('catalog/product_view_type_configurable', 
+                                                                                  'product.info.options.configurable', 
+                                                                                   array('template'=>"opsway_quickbox/configurable.phtml"));
+                            $blockForForm->setProduct($_product);
+                            $blockForForm->setNameInLayout('product.info.options.configurable');
+                            echo $blockForForm->toHtml();
+                    endif;?>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    jQuery('.close').on('click', function() {
+        parent.jQuery.fancybox.close();
+    });
+
+    var productAddToCartForm = new VarienForm('order-form');
+    productAddToCartForm.submit = function(button, url) {
+        if (this.validator.validate()) {
+            var form = this.form;
+            var oldUrl = form.action;
+
+            if (url) {
+               form.action = url;
+            }
+            var e = null;
+            try {
+                this.form.submit();
+            } catch (e) {
+            }
+            this.form.action = oldUrl;
+            if (e) {
+                throw e;
+            }
+
+            if (button && button != 'undefined') {
+                button.disabled = true;
+            }
+        }
+    }.bind(productAddToCartForm);
+
+    productAddToCartForm.submitLight = function(button, url){
+        if(this.validator) {
+            var nv = Validation.methods;
+            delete Validation.methods['required-entry'];
+            delete Validation.methods['validate-one-required'];
+            delete Validation.methods['validate-one-required-by-name'];
+            // Remove custom datetime validators
+            for (var methodName in Validation.methods) {
+                if (methodName.match(/^validate-datetime-.*/i)) {
+                    delete Validation.methods[methodName];
+                }
+            }
+
+            if (this.validator.validate()) {
+                if (url) {
+                    this.form.action = url;
+                }
+                this.form.submit();
+            }
+            Object.extend(Validation.methods, nv);
+        }
+    }.bind(productAddToCartForm);
+</script>

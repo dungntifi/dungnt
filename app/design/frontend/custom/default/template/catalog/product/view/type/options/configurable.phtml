@@ -29,31 +29,63 @@
 $_product    = $this->getProduct();
 $_attributes = Mage::helper('core')->decorateArray($this->getAllowAttributes());
 $attributeSetName = Mage::getModel('eav/entity_attribute_set')->load($_product->getAttributeSetId())->getAttributeSetName();
+$pre_config_values = $this->getProduct()->getPreconfiguredValues();
 ?>
 <?php if ($_product->isSaleable() && count($_attributes)):?>
-    <dl>
-    <?php foreach($_attributes as $_attribute): ?>
-    	<?php $optionLabel = $_attribute->getLabel(); ?>
-        <dt><label class="required"><em>*</em><?php echo $_attribute->getLabel() ?></label><?php if ($optionLabel == "Size" && $attributeSetName == "Dresses"){ ?><div class="sizechartlink"><a href="#" onclick='sizePopup()'>Size Chart</a></div><?php } ?></dt>
-        <dd<?php if ($_attribute->decoratedIsLast){?> class="last"<?php }?>>
-            <div class="input-box">
+    <span class="sale-info"><?php echo $this->htmlEscape($_product->getData('additionalinfo')); ?></span>
+    <div class="product-details"><a href="<?php echo $_product->getProductUrl(); ?>">Jump in product details</a></div>
+    <div class="block-select">
+        <?php foreach($_attributes as $_attribute): ?>
+            <?php $optionLabel = $_attribute->getLabel(); ?>
+            <?php if ($optionLabel == "Size" && $attributeSetName == "Dresses") : ?>
+                <div class="sizechartlink sizechart-popup"><a href="#" onclick='sizePopup()'>Size Chart</a></div>
+            <?php endif; ?>
+        <?php endforeach; ?>
+
+        <?php foreach($_attributes as $_attribute): ?>
+            <div class="column-one-third">
+                <div class="label">
+                    <span>*</span>
+                    <label><?php echo $_attribute->getLabel() ?></label>
+                </div>
                 <select name="super_attribute[<?php echo $_attribute->getAttributeId() ?>]" id="attribute<?php echo $_attribute->getAttributeId() ?>" class="required-entry super-attribute-select">
                     <option><?php echo $this->__('Choose an Option...') ?></option>
-                  </select>
-              </div>
-        </dd>
-    <?php endforeach; ?>
-    </dl>
+                </select>
+            </div>
+        <?php endforeach; ?>
+
+        <?php if(!$_product->isGrouped()): ?>
+            <div class="column-one-third">
+                <div class="label">
+                    <label for="qty"><?php echo $this->__('Quantity') ?></label>
+                </div>
+                <div class="select-styled">
+                    <select name="qty" id="qty">
+                        <?php
+                        $qtyStock = 5;//Mage::getModel('cataloginventory/stock_item')->loadByProduct($_product)->getQty(); Need getting qty for each simple
+                        foreach (range(1, (($qtyStock > 5) ? 5 : $qtyStock)) as $qty): ?>
+                        <option value="<?php echo $qty; ?>"<?php if($qty == (int) $pre_config_values->getQty()/*$this->getProductDefaultQty()*/): ?> selected="selected"<?php endif ?>>
+                            <?php echo $qty ?>
+                        </option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+            </div>
+        <?php endif; ?>
+    </div>
+    <div class="block-color">
+        <b>Select color</b>
+    </div>
     <script type="text/javascript">
-        var spConfig = new Product.Config(<?php echo $this->getJsonConfig() ?>);
+        var spConfigSingle = new Product.ConfigSingle(<?php echo $this->getJsonConfig() ?>);
         <?php
          $arr = array();
         foreach ($_product->getTypeInstance(true)->getUsedProducts ( null, $_product) as $simple) {
              $arr[$simple->getId()] = $simple->getData('additionalinfo');
         }
         ?>
-        spConfig.simpleOptions = <?php echo Mage::helper('core')->jsonEncode($arr)?>;
-        spConfig.getIdOfSelectedProduct = function () {
+        spConfigSingle.simpleOptions = <?php echo Mage::helper('core')->jsonEncode($arr)?>;
+        spConfigSingle.getIdOfSelectedProduct = function () {
                 var existingProducts = new Object();
                 for (var i = this.settings.length - 1; i >= 0; i--) {
                     var selected = this.settings[i].options[this.settings[i].selectedIndex];
@@ -82,23 +114,32 @@ $attributeSetName = Mage::getModel('eav/entity_attribute_set')->load($_product->
                     sizeOfExistingProducts = sizeOfExistingProducts + 1
                 }
                 if (sizeOfExistingProducts == 1) {
-                  // alert(currentSimpleProductId + ' - ' + this.simpleOptions[currentSimpleProductId]);
                   return this.simpleOptions[currentSimpleProductId];
                 }
             return false;
             };
-        spConfig.changeInfo = function(){
+        spConfigSingle.changeInfo = function(){
             var textSimple = this.getIdOfSelectedProduct();
             if (textSimple) {
                 jQuery('p.additional_info_po').html(textSimple);
             }
         };
-        spConfig.newEventBind = function(){
+        spConfigSingle.newEventBind = function(){
             this.settings.each(function(element){
                 Event.observe(element, 'change', this.changeInfo.bind(this))
             }.bind(this));
         };
-        spConfig.newEventBind();
+        spConfigSingle.newEventBind();
     </script>
-    <div class="std"><p class="additional_info_po"><?php echo $this->htmlEscape($_product->getData('additionalinfo')); ?></p></div>
 <?php endif;?>
+
+<script>
+    jQuery(document).ready(function() {
+        if(window.location.href.match(/color=(\d+)/)) {
+            var color = window.location.href.match(/color=(\d+)/);
+            if(jQuery('#amconf-image-' + color[1]).length) {
+                jQuery('#amconf-image-' + color[1]).trigger('click');
+            }
+        }
+    });
+</script>

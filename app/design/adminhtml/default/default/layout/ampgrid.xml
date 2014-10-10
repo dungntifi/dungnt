@@ -19,17 +19,4 @@
             <block type="ampgrid/adminhtml_catalog_product_grid_attributes" name="ampgrid_attributes"></block>
         </reference>
     </adminhtml_catalog_product_index>
-    <adminhtml_catalog_category_edit>
-        <reference name="head">
-            <action method="addJs"><file>amasty/ampgrid/attribute.js</file></action>
-        </reference> 
-        <reference name="content">
-            <block type="ampgrid/adminhtml_catalog_product_grid_attributes" name="ampgrid_attributes">
-                <action method="setData">
-                    <key>attributes_key</key>
-                    <value>categories</value>
-                </action>
-            </block>
-        </reference>
-    </adminhtml_catalog_category_edit>
 </layout>
