@@ -50,9 +50,7 @@ class OpsWay_Varnishgento_Model_Observer
     protected function _isActive()
     {
         $this->isActive = $this->_helper->isActive();
-        if($this->isActive){
-            //$this->isActive = $this->isAllowToCache(Mage::app()->getRequest());
-        }
+        $this->isActive = $this->isAllowToCache(Mage::app()->getRequest());
         return $this->isActive;
     }
 
@@ -64,7 +62,7 @@ class OpsWay_Varnishgento_Model_Observer
     public function isAllowToCache(Zend_Controller_Request_Http $request)
     {
         if (is_null($this->isAllowToCache)) {
-            $this->isAllowToCache = false;
+            $this->isAllowToCache = $this->isActive;
             $configuration = Mage::getConfig()->getNode(self::XML_NODE_ALLOWED_CACHE);
             if ($configuration) {
                 $configuration = $configuration->asArray();
@@ -112,6 +110,9 @@ class OpsWay_Varnishgento_Model_Observer
                 OpsWay_Varnishgento_Model_Processor::CACHE_HEADER_NAME,
                 Mage::getSingleton('opsway_varnishgento/processor')->getCacheHeader($this->_skipCatalogTags)
             );
+            $controller->getResponse()->setHeader('X-Scope-Host',$controller->getRequest()->getHttpHost());
+            $controller->getResponse()->setHeader('X-Scope-Url',$controller->getRequest()->getOriginalRequest()->getRequestUri());
+
         }
 
     }
@@ -207,6 +208,14 @@ class OpsWay_Varnishgento_Model_Observer
         }
         $tags = $observer->getEvent()->getTags();
         $this->_helper->cleanCache($tags);
+    }
+
+    public function cleanCacheEventApi(Varien_Event_Observer $observer){
+        $tags = $observer->getEvent()->getTags();
+        $scopes = $observer->getEvent()->getScopes();
+        //die(print_r($tags,true).print_r($scopes,true));
+        if (empty($tags) && empty($scopes)) return;
+        $this->_helper->addToBanObjectList(array('tags' => $tags, 'scopes' => $scopes));
     }
 
     /**
@@ -327,9 +336,9 @@ class OpsWay_Varnishgento_Model_Observer
      */
     public function processOutOfStockProducts($observer)
     {
-        //if (!$this->_isActive()) {
-        //    return;
-        //}
+        if (!$this->_isActive()) {
+            return;
+        }
         if ($this->_isStockProcessed === false) {
             $this->_isStockProcessed = true;
             $order = $observer->getEvent()->getOrder();
@@ -368,6 +377,11 @@ class OpsWay_Varnishgento_Model_Observer
      * @param Varien_Event_Observer $observer
      */
     public function cleanCacheByTagsAfterImport($observer){
+        $importEntityAdapter = $observer->getEvent()->getAdapter();
+        if (Mage::registry('import_affected_product_ids')){
+            Mage::unregister('import_affected_product_ids');
+        }
+        Mage::register('import_affected_product_ids',$importEntityAdapter->getAffectedEntityIds());
         if (!$this->_isActive()) {
             return;
         }
@@ -375,7 +389,6 @@ class OpsWay_Varnishgento_Model_Observer
             /**
              * @var $importEntityAdapter Mage_ImportExport_Model_Import_Entity_Product
              */
-            $importEntityAdapter = $observer->getEvent()->getAdapter();
             $this->_helper->refreshCacheForProduct($importEntityAdapter->getAffectedEntityIds());
         }
     }
