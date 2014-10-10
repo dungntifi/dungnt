@@ -15,7 +15,8 @@ ul#pronav {
 	padding:0;
 	width:auto;
 	list-style:none;
-	position:relative;	
+	position:relative;
+
 }
 
 ul#pronav.pn-left,
@@ -60,7 +61,8 @@ ul#pronav li.primary-pronav-item a.primary-pronav-link {
 
 }
 
-ul#pronav li.primary-pronav-item a.primary-pronav-link:hover {
+ul#pronav li.primary-pronav-item a.primary-pronav-link:hover,
+ul#pronav li.primary-pronav-item:hover a.primary-pronav-link {
 
 	border-bottom:0;
 	color:#ff8200;
@@ -69,14 +71,13 @@ ul#pronav li.primary-pronav-item a.primary-pronav-link:hover {
  	border:1px solid #000;
 	border-bottom:none;
 	
-	
 }
 /*
  * DROPDOWN STYLES
  */
 ul#pronav li.primary-pronav-item .sub,
 ul#pronav li.primary-pronav-item .sub ul li.has-children .child-sub {
-	top:32px;
+	top:33px;
 	position:absolute; /* IMPORTANT - needs to be positioned absolute */
 	z-index:999;
 	display:none;

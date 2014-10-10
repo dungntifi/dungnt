@@ -31,41 +31,29 @@ $cart_html = $this->getChildHtml('cart_sidebar');
 $mobile_cart = $this->getChildHtml('mobile_cart');
 ?>
 <!-- <div style="margin:0;padding:12px;background:black;color:white;text-transform:uppercase;">Our stores, customer service and Shipping Department will be<span style="color:#ff6600"> closed Thursday and Friday</span>. All orders will ship out on Sunday. Thank You for Shopping with us!</div> -->
+
 <div class="header-container">
-    <div class="header">
-
-        <?php echo $this->getChildHtml('sidebar_in'); ?>
-
-        <?php echo $this->getChildHtml('sidebar_out'); ?>
-
-        <!-- Start Sidebar Nav -->
-
-        <div class="mobile-search">
-            <div id="sb-search" class="sb-search">
-                <form action="<?php echo $this->getUrl('catalogsearch/result') ?>" method="post" id="form-validate">
-                    <input class="sb-search-input" placeholder="Find the perfect dress!" type="text" value="" name="q" id="search2">
-                    <input class="sb-search-submit" type="submit" value="">
-                    <div class="sb-icon-search"><i class="fa fa-search"></i></div>
-                </form>
-            </div>
-        </div>
-
-
-        <script src="<?php echo $this->getUrl('js/search') ?>/classie.js"></script>
-        <script src="<?php echo $this->getUrl('js/search') ?>/uisearch.js"></script>
-        <script>
+  <div class="header"> <?php echo $this->getChildHtml('sidebar_in'); ?> <?php echo $this->getChildHtml('sidebar_out'); ?> 
+    
+    <!-- Start Sidebar Nav -->
+    
+    <div class="mobile-search">
+      <div id="sb-search" class="sb-search">
+        <form action="<?php echo $this->getUrl('catalogsearch/result') ?>" method="post" id="form-validate">
+          <input class="sb-search-input" placeholder="Find the perfect dress!" type="text" value="" name="q" id="search2">
+          <input class="sb-search-submit" type="submit" value="">
+          <div class="sb-icon-search"><i class="fa fa-search"></i></div>
+        </form>
+      </div>
+    </div>
+    <script src="<?php echo $this->getUrl('js/search') ?>/classie.js"></script> 
+    <script src="<?php echo $this->getUrl('js/search') ?>/uisearch.js"></script> 
+    <script>
             new UISearch( document.getElementById( 'sb-search' ) );
         </script>
-
-
-        <div class="mobile-minicart">
-            <?php echo $mobile_cart; ?>
-        </div>
-
-
-        <div class="top-left">
-
-            <script type="text/javascript">
+    <div class="mobile-minicart"> <?php echo $mobile_cart; ?> </div>
+    <div class="top-left"> 
+      <script type="text/javascript">
 
                 function authenticPopup() {
 
@@ -95,74 +83,40 @@ $mobile_cart = $this->getChildHtml('mobile_cart');
                     });
                 };
             </script>
-
-            <ul class="top-left-ul">
-                <li><a href="#" onclick='authenticPopup()'>100% Authentic</li>
-                <li><a href="#" onclick='pricePopup()'>Price Match</li>
-                <li><a href="#" onclick='giftPopup()'>Free Gift</li>
-                <li><a href="#" onclick='shippingPopup()'>Free Shipping &amp; Returns</a></li>
-            </ul>
-
-        </div>
-
-        <div class="top-right">
-
-            <?php echo $this->getChildHtml('topLinks') ?>
-            <!-- Sign In -->
-            <?php echo $this->getChildHtml('header_signin'); ?>
-            <!-- End Sign In -->
-            <!-- My Account -->
-            <?php echo $this->getChildHtml('header_myaccount'); ?>
-            <!-- End My Account -->
-            <!-- Assistance -->
-            <?php echo $this->getChildHtml('header_assistance'); ?>
-            <!-- End Assistance -->
-            <div class="block block-minicart block-minicart2">
-                <?php echo $cart_html; ?>
-            </div>
-            <?php echo $this->getChildHtml('topSearch') ?>
-
-        </div>
-
-        <div class="logo">
-            <a href="<?php echo $this->getUrl('') ?>" title="<?php echo $this->getLogoAlt() ?>"><?php echo $this->getLogoAlt() ?><img src="<?php echo $this->getLogoSrc() ?>" alt="<?php echo $this->getLogoAlt() ?>"></a><br>
-
-            <ul class="phone">
-                <li class="phoneheader">718-841-7037</li>
-            </ul>
-
-        </div>
-
-        <div class="nav-container">
-            <div class="nav clearer<?php if($navCss) echo " " . implode(" ", $navCss); ?>">
-                <?php echo $this->getChildHtml('topMenu') ?>
-            </div> <!-- end: nav -->
-        </div> <!-- end: nav-container -->
-
-        <?php if ($this->getIsHomePage()):?>
-        <?php else:?>
-        <div class="header-divider"></div>
-        <?php endif ?>
-
-            <div class="logo">
-                <a href="<?php echo $this->getUrl('') ?>" title="<?php echo $this->getLogoAlt() ?>"><?php echo $this->getLogoAlt() ?><img src="<?php echo $this->getLogoSrc() ?>" alt="<?php echo $this->getLogoAlt() ?>"></a><br>
-
-				<ul class="phone">
-                    <li class="phoneheader">718-841-7037</li>
-                </ul>
-                
-            </div>
-            
-            <?php if ($this->getIsHomePage()):?>
-            <?php else:?>
-            <div class="header-divider"></div>
-            <?php endif ?>
-        </div>
-         <div class="nav-container">
-        <div class="nav clearer<?php if($navCss) echo " " . implode(" ", $navCss); ?>">
-            <?php echo $this->getChildHtml('topMenu') ?>
-        </div> <!-- end: nav -->
-    </div> <!-- end: nav-container -->
+      <ul class="top-left-ul">
+        <li><a href="#" onclick='authenticPopup()'>100% Authentic</li>
+        <li><a href="#" onclick='pricePopup()'>Price Match</li>
+        <li><a href="#" onclick='giftPopup()'>Free Gift</li>
+        <li><a href="#" onclick='shippingPopup()'>Free Shipping &amp; Returns</a></li>
+      </ul>
     </div>
+    <div class="top-right"> <?php echo $this->getChildHtml('topLinks') ?> 
+      <!-- Sign In --> 
+      <?php echo $this->getChildHtml('header_signin'); ?> 
+      <!-- End Sign In --> 
+      <!-- My Account --> 
+      <?php echo $this->getChildHtml('header_myaccount'); ?> 
+      <!-- End My Account --> 
+      <!-- Assistance --> 
+      <?php echo $this->getChildHtml('header_assistance'); ?> 
+      <!-- End Assistance -->
+      <div class="block block-minicart block-minicart2"> <?php echo $cart_html; ?> </div>
+      <?php echo $this->getChildHtml('topSearch') ?> </div>
+    <div class="header-divider"></div>
+    <div class="logo"> <a href="<?php echo $this->getUrl('') ?>" title="<?php echo $this->getLogoAlt() ?>"><?php echo $this->getLogoAlt() ?><img src="<?php echo $this->getLogoSrc() ?>" alt="<?php echo $this->getLogoAlt() ?>"></a><br>
+      <ul class="phone">
+        <li class="phoneheader">718-841-7037</li>
+      </ul>
+    </div>
+    <?php if ($this->getIsHomePage()):?>
+    <?php else:?>
+    <div class="header-divider"></div>
+    <?php endif ?>
+  </div>
+  <?php echo $this->getChildHtml('topMenu') ?>
+  <?php if ($this->getIsHomePage()):?>
+  <?php else:?>
+  <div class="header-divider"></div>
+  <?php endif ?>
 </div>
-    
+</div>
