@@ -8,6 +8,11 @@
             <action method="addJs"><script>infortis/jquery/jquery-1.7.2.min.js</script></action>
             <action method="addJs"><script>infortis/jquery/jquery-noconflict.js</script></action>
 			<action method="addItem"><type>skin_css</type><name>css/infortis/_shared/accordion.css</name><params/></action>
+			<action method="addItem"><type>skin_css</type><name>css/infortis/_shared/grid12.css</name><params/></action>
+			<action method="addItem"><type>skin_css</type><name>css/infortis/_shared/dropdown.css</name><params/></action>
+		
+			<action method="addItem"><type>skin_css</type><name>css/infortis/ultra-megamenu/wide.css</name></action>
+			<action method="addItem"><type>skin_css</type><name>css/infortis/ultra-megamenu/ultra-megamenu.css</name></action>
 			<action method="addItem"><type>skin_css</type><name>css/infortis/ultra-megamenu/menu.css</name></action>
 			<action method="addItem"><type>skin_css</type><name>css/infortis/ultra-megamenu/menu-accordion.css</name></action>
 			<action method="addItem"><type>skin_css</type><name>css/infortis/ultra-megamenu/menu-dropdown.css</name></action>
@@ -24,7 +29,7 @@
 			<action method="removeItem"><type>js</type><name>varien/menu.js</name><params/></action>
 		</reference>
 
-		<reference name="header">
+		<reference name="top.menu">
 			<action method="unsetChild"><name>catalog.topnav</name></action>
 			<block type="ultramegamenu/navigation" name="catalog.topnav.menu" as="catalog_menu" template="infortis/ultramegamenu/mainmenu.phtml"/>
 		</reference>

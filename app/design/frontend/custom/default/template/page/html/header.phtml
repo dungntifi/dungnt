@@ -50,6 +50,7 @@ $mobile_cart = $this->getChildHtml('mobile_cart');
             </div>
         </div>
 
+
         <script src="<?php echo $this->getUrl('js/search') ?>/classie.js"></script>
         <script src="<?php echo $this->getUrl('js/search') ?>/uisearch.js"></script>
         <script>
@@ -142,6 +143,26 @@ $mobile_cart = $this->getChildHtml('mobile_cart');
         <?php else:?>
         <div class="header-divider"></div>
         <?php endif ?>
+
+            <div class="logo">
+                <a href="<?php echo $this->getUrl('') ?>" title="<?php echo $this->getLogoAlt() ?>"><?php echo $this->getLogoAlt() ?><img src="<?php echo $this->getLogoSrc() ?>" alt="<?php echo $this->getLogoAlt() ?>"></a><br>
+
+				<ul class="phone">
+                    <li class="phoneheader">718-841-7037</li>
+                </ul>
+                
+            </div>
+            
+            <?php if ($this->getIsHomePage()):?>
+            <?php else:?>
+            <div class="header-divider"></div>
+            <?php endif ?>
+        </div>
+         <div class="nav-container">
+        <div class="nav clearer<?php if($navCss) echo " " . implode(" ", $navCss); ?>">
+            <?php echo $this->getChildHtml('topMenu') ?>
+        </div> <!-- end: nav -->
+    </div> <!-- end: nav-container -->
     </div>
 </div>
     

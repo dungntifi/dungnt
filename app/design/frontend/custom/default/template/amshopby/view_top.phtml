@@ -14,7 +14,7 @@
                     <?php if ($_filter instanceof Mage_Catalog_Block_Layer_Filter_Category):?>
                         <td width="100%">
                     <?php else:?>
-                        <td style="max-width:140px" class="<?php echo $_filter->getName()?>">
+                        <td style="min-width:140px" class="<?php echo $_filter->getName()?>">
                     <?php endif;?>
                     <dt><?php echo $this->__($_filter->getName()) ?></dt>
                     <dd style="background:none"><?php echo $_filter->getHtml() ?></dd>

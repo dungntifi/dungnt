@@ -1,3 +1,6 @@
+
+/*----------Filter on Category -----------------*/
+
 .block-layered-nav {
 	width: 100%;
 	margin: 0 ;
@@ -82,4 +85,10 @@ div.block-layered-nav dt.amshopby-collapsed{
 	font-size:inherit;
 	font-weight:inherit;
 	text-transform:inherit;	
+}
+
+
+/*---------------Menu  -----------------*/
+.nav-container{
+	background:#fff;
 }
