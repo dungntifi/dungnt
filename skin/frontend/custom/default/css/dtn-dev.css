@@ -4,7 +4,7 @@
 .category-products .toolbar-top .pages{ display:none;}
 .category-products .toolbar-top .sorter{ float:right;}
 .category-products .toolbar-bottom .sorter{ display:none;}
-<<<<<<< HEAD
+
 /*PO-20 Tabs in product detail*/
 .product-tabs{ clear:both; position:relative; right:50%; float:left; margin-top:10px; width:600px;}
 .product-tabs .tab-links{ z-index:2; display:block; overflow:hidden;}
@@ -39,9 +39,9 @@
 #customer-reviews .jspVerticalBar{ width:9px;}
 #customer-reviews .jspTrack{ border:1px solid #000; background:#fff; height:300px !important;}
 #customer-reviews .jspDrag{ background:#000;}
-=======
+
 /*PO-12*/
 .footer-container #scroll-to-top {position: fixed;right: 0;bottom: 30px;background:#fff ;color: #fff;line-height: 1;padding: 15px 10px; display:none; font-size:13px; font-weight:700; border:1px solid #000; border-right:none; padding:2px 0 2px 2px;}
 .footer-container #scroll-to-top span{ display:inline-block; background:#000; padding:12px 8px;}
 .footer-container #scroll-to-top em{background: url(../images/top-arrow.png) no-repeat 0 center; display:inline-block; width:15px; height:8px; margin-right:5px;}
->>>>>>> origin/PO-12
+
