@@ -23,6 +23,8 @@ class OpsWay_Varnishgento_Helper_Data extends Mage_Core_Helper_Abstract
      */
     protected $_tagsToClean = array();
 
+    protected $_banObjectList = array();
+
     /**
      * Varnish servers list
      * @var array
@@ -60,6 +62,14 @@ class OpsWay_Varnishgento_Helper_Data extends Mage_Core_Helper_Abstract
             $tags = array($tags);
         }
         $this->_tagsToPut = array_merge($this->_tagsToPut, $tags);
+    }
+
+    public function addToBanObjectList(array $banEvent){
+        $this->_banObjectList[] = $banEvent;
+    }
+
+    public function getBanObjectList(){
+        return $this->_banObjectList;
     }
 
     /**
@@ -254,7 +264,7 @@ class OpsWay_Varnishgento_Helper_Data extends Mage_Core_Helper_Abstract
         return Mage::getModel('opsway_varnishgento/flag')->getCollection()->isFlushAllActive();
     }
 
-    protected function addUrlToFlush($url,$iniciatorName = 'varnishgento',$iniciatorLogin = 'system'){
+    public function addUrlToFlush($url,$iniciatorName = 'varnishgento',$iniciatorLogin = 'system'){
         $flag = Mage::getModel('opsway_varnishgento/flag');
         $data = array(
             'set_on' => Mage::getSingleton('core/date')->gmtDate(),
@@ -330,9 +340,9 @@ class OpsWay_Varnishgento_Helper_Data extends Mage_Core_Helper_Abstract
             $categoryIds = $this->_getProductCategory($productIds);
 
             $tagsList = $this->convertIdsToTags($productIds);
-            $tagsList = array_merge($tagsList, $this->convertIdsToTags($categoryIds,'catalog_category'));
+            $tagsList = array_merge($tagsList,$this->convertIdsToTags($categoryIds,'catalog_category'));
 
-            $this->cleanCache($tagsList);//Mage::dispatchEvent('application_clean_cache', array('tags' => $tagsList));
+            $this->cleanCache($tagsList);
             Mage::getSingleton('opsway_varnishgento/processor')->cleanCache();
         }
     }
