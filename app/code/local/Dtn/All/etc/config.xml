@@ -11,6 +11,62 @@
                 <class>Dtn_All_Helper</class>
             </dtn_all>
         </helpers>
+        <models>
+            <dtn_all>
+                <class>Dtn_All_Model</class>
+            </dtn_all>
+        </models>
+        <events>
+            <sales_order_place_before>
+                <observers>
+                    <adding_product_mrp_order>
+                        <type>singleton</type>
+                        <class>Dtn_All_Model_Observer</class>
+                        <method>saveEventDateItem</method>
+                    </adding_product_mrp_order>
+                </observers>
+            </sales_order_place_before>
+
+            <sales_order_invoice_save_before>
+                <observers>
+                    <adding_product_mrp_invoice>
+                        <type>singleton</type>
+                        <class>Dtn_All_Model_Observer</class>
+                        <method>saveEventDateItemInInvoice</method>
+                    </adding_product_mrp_invoice>
+                </observers>
+            </sales_order_invoice_save_before>
+
+            <sales_order_shipment_save_before>
+                <observers>
+                    <adding_product_mrp_shipment>
+                        <type>singleton</type>
+                        <class>Dtn_All_Model_Observer</class>
+                        <method>saveEventDateItemInShipment</method>
+                    </adding_product_mrp_shipment>
+                </observers>
+            </sales_order_shipment_save_before>
+        </events>
+        <resources>
+            <dtnall_setup>
+                <setup>
+                    <module>Dtn_All</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </dtnall_setup>
+            <dtnall_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </dtnall_write>
+            <dtnall_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </dtnall_read>
+        </resources>
         <blocks>
             <dtn_all>
                 <class>Dtn_All_Block</class>
