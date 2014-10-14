@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Dtn_All>
+            <version>1.0.0</version>
+        </Dtn_All>
+    </modules>
+    <global>
+        <helpers>
+            <dtn_all>
+                <class>Dtn_All_Helper</class>
+            </dtn_all>
+        </helpers>
+        <blocks>
+            <dtn_all>
+                <class>Dtn_All_Block</class>
+            </dtn_all>
+        </blocks>
+    </global>
+</config>

@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<config>
+    <tabs>
+        <dtn translate="label">
+            <label>Dtn Extensions</label>
+            <sort_order>100</sort_order>
+        </dtn>
+    </tabs>
+    <sections>
+        <dtn_all translate="label">
+            <label>General Setting</label>
+            <tab>dtn</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>10</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <setting translate="label">
+                    <label>Setting General</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>10</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <review translate="label">
+                            <label>Name Option Review</label>
+                            <comment>Elements separated by slashes ","</comment>
+                            <frontend_type>text</frontend_type>
+                            <show_in_default>1</show_in_default>
+                            <show_in_store>1</show_in_store>
+                            <show_in_website>1</show_in_website>
+                            <sort_order>1</sort_order>
+                        </review>
+                    </fields>
+                </setting>
+            </groups>
+        </dtn_all>
+    </sections>
+</config>
