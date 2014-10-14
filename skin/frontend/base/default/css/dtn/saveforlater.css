@@ -1,0 +1,13 @@
+/** Save for later ext **/
+#save-for-later{ position:fixed; bottom:0; left:0; width:100%; padding:10px 10px 5px; z-index:100; border-top:2px solid #999; background:#fff;}
+#save-for-later .list-product li{ float:left; background:none; padding:0; margin:0 10px 7px 0;}
+#save-for-later .list-product li .product-information{ display:none;}
+#save-for-later .list-product li img{ border:1px solid #dbdbdb;}
+#save-for-later .list-product li a:hover img{ border-color:#000;}
+#save-for-later > h3{ float:left; padding:0 15px 0 0; margin-top:22px; font-size:16px;}
+#save-for-later .list-product{ float:left;}
+
+#save-for-later-table { border:1px solid #ccc; width:100%;border-spacing: 0;   empty-cells: show;}
+#save-for-later-table thead th{vertical-align: middle;  white-space: nowrap;color: #0a263c;  font-weight: bold;border-right: 1px solid #ccc;border-bottom:1px solid #ccc; background:#d9e5ee; padding:5px 10px;}
+#save-for-later-table td{ border-right:1px solid #ccc;  border-bottom:1px solid #ccc; padding:5px 10px;}
+#save-for-later-table tr.last th, #save-for-later-table tr.last td{ border-bottom:none;}
