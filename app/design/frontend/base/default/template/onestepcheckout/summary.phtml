@@ -8,6 +8,7 @@ $checkoutHelper = Mage::helper('onestepcheckout/checkout');
         <tr>
             <th class="name"><?php echo $this->__('Product'); ?></th>
             <th class="qty"><?php echo $this->__('Qty'); ?></th>
+            <th class="event_date"><?php echo $this->__("Event Date"); ?></th>
             <th class="total"><?php echo $this->__('Subtotal'); ?></th>
         </tr>
     </thead>
@@ -51,6 +52,21 @@ $checkoutHelper = Mage::helper('onestepcheckout/checkout');
             <?php endif; ?>
         </td>
         <td class="qty"><?php echo $item->getQty(); ?></td>
+        <td class="event_date">
+            <input type="text" id="event_date_<?php echo $item->getProductId(); ?>" name="event_date[<?php echo $item->getProductId(); ?>]" class="input-text required-entry" size="5"/>
+            <img title="Select date" id="event_date_trig_<?php echo $item->getProductId(); ?>" src="<?php echo $this->getSkinUrl('images/calendar.gif');?>" class="v-middle">
+            <script type="text/javascript">
+                //<![CDATA[
+                Calendar.setup({
+                    inputField : 'event_date_<?php echo $item->getProductId(); ?>',
+                    ifFormat : '%m/%e/%y',
+                    button : 'event_date_trig_<?php echo $item->getProductId(); ?>',
+                    align : 'Bl',
+                    singleClick : true
+                });
+                //]]>
+            </script>
+        </td>
         <td class="total">
             <?php if($checkoutHelper->settings['display_tax_included']): ?>
             <?php echo $this->helper('checkout')->formatPrice($this->helper('checkout')->getSubtotalInclTax($item)); ?>
