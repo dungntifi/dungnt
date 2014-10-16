@@ -13,16 +13,17 @@
 .product-tabs .tab-links li.active{ background:#000; color:#fff;}
 .product-tabs .tab-links li.active a{ color:#fff;}
 .product-tabs .tab-content{ z-index:1;border-top:1px solid #b6b6b6; padding:10px 0;}
-.product-tabs .tab-content #designer{ font-family:Futura,"Gill Sans","Century Gothic","Dejavu Sans","Trebuchet MS",sans-serif; font-size:30px;}
+.product-tabs .tab-content #designer{ font-family:Arial,sans-serif; font-size:30px;}
 
-.review-form-popup-inner{ text-align:left;} 
-
-.review-form-popup-inner h3{ font-family:Futura,"Gill Sans","Century Gothic","Dejavu Sans","Trebuchet MS",sans-serif; text-transform:none; font-size:15px; margin:0 0 5px; font-weight:400;}
+#review-form-popup{ display:none; background:url(../images/overlap-bg.png) repeat; z-index:100000; width:100%; height:100%; position:fixed; visibility:visible; top:0; left:0;}
+#review-form-popup .close{ background:url(../images/close-btn.png) no-repeat scroll center center transparent;cursor: pointer;  height: 30px;  left: auto;  position: absolute;  right: 0;  top: 0; width: 30px;}
+.review-form-popup-inner{ text-align:left; width:500px; left:50%; margin-left:-270px; top:10%; position:absolute; height:auto; background:#fff; padding:20px;} 
+.review-form-popup-inner h3{ font-family:Arial,sans-serif; text-transform:none; font-size:15px; margin:0 0 5px; font-weight:400;}
 .review-form-popup-inner > h3, .review-form-popup-inner h3 span{ color:#EA8E45;}
 .review-form-popup-inner .form-list{ clear:both; margin:10px 0 0; float:left;}
 .product-view .box-reviews dl{ margin-top:0;}
 #customer-reviews{position:relative; right:50%; float:right; margin-top:15px; width:345px;}
-#customer-reviews h2{ text-transform:none; border-bottom:1px solid #b6b6b6; font-weight:400; padding:0 0 5px; font-size:18px;font-family:Futura,"Gill Sans","Century Gothic","Dejavu Sans","Trebuchet MS",sans-serif;}
+#customer-reviews h2{ text-transform:none; border-bottom:1px solid #b6b6b6; font-weight:400; padding:0 0 5px; font-size:18px;font-family:Arial,sans-serif;}
 #customer-reviews dl dt{ font-weight:700; font-size:13px;}
 #customer-reviews dl dd{border-bottom:1px solid #b6b6b6; }
 #customer-reviews dl dd:last-child{ border-bottom:none;}

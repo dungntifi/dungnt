@@ -254,15 +254,14 @@
 			</div>
 		</div>	
 	</div>
-	<?php echo $this->getChildHtml('product_additional_data') ?>	
-
-	<div style="display:none">
-		<div id="review-form-popup">
-			<div class="review-form-popup-inner">
-				<?php echo $this->getChildHtml('review_form') ?>				
-			</div>
+	<?php echo $this->getChildHtml('product_additional_data') ?>
+	
+	<div id="review-form-popup">			
+		<div class="review-form-popup-inner">
+			<div class="close"> </div>
+			<?php echo $this->getChildHtml('review_form') ?>				
 		</div>
-	</div>
+	</div>	
 	
 	<script type="text/javascript">
 		jQuery(document).ready(function() {
@@ -283,12 +282,15 @@
 			});
 			
 			jQuery('.scroll-pane').jScrollPane();
+			
+			jQuery("#review-form-popup div.close").click(function() {
+				jQuery("#review-form-popup").fadeOut("normal");
+			});
 		});
 		
 		function reviewPopup() {					
-			jQuery.fn.speedoPopup({
-				htmlContent: jQuery('#review-form-popup').html(), width: 500, height: null, effectIn: "fade", effectOut: "fade", theme: "metro"
-			}); 
+			jQuery("#review-form-popup").fadeIn(500);
 		};
+		
 	</script>
 </div>
