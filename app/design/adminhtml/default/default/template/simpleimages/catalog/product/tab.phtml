@@ -1,65 +1,3 @@
-<style>
-	#color-chooser {
-		position: relative;
-		display: none;
-		border-bottom: 1px solid #d6d6d6;
-		margin-bottom: 10px;
-	}
-
-	#color-chooser td, th {
-		text-align: center;
-		padding: 5px;
-	}
-
-	#color-chooser .images-gallery {
-		text-align: center;
-	}
-
-	#color-chooser .images-gallery img {
-		width: 144px;
-		margin: 3px 0;
-	}
-
-	#color-chooser .gallery-item {
-		width: 150px;
-		display: inline-block;
-		text-align: center;
-		margin: 0 5px;
-	}
-
-	#color-chooser .gallery-item .checked {
-		border: 3px solid #eb5e00;
-		margin: 0;
-	}
-
-	#color-chooser .gallery-item fieldset {
-		text-align: left; 
-		margin-top: 15px;
-	}
-
-	#color-chooser .gallery-item fieldset legend {
-		display: block; 
-		width: auto; 
-		visibility: visible; 
-		overflow: visible;
-	}
-
-	#color-chooser .selected-images {
-		display: block;
-		max-width: 500px;
-		overflow-y: hidden;
-		position: relative;
-	}
-
-	#color-chooser .selected-remove {
-		vertical-align: middle;
-	}
-
-	#color-chooser .color-icon {
-		margin: 10px 0;
-	}
-</style>
-
 <?php
 //data preset
 //$product = Mage::getModel('catalog/product')->load($this->getRequest()->getParam('id')); 
@@ -120,7 +58,7 @@ foreach ($colors as $colorId => $colorLabel):
 						<tr>
 							<td class="color-label"><?php echo $colorLabel; ?></td>
 							<td class="color-icon"><?php echo (Mage::helper('amconf')->getImageUrl($colorId) != '') ? '<img src="' . Mage::helper('amconf')->getImageUrl($colorId) . '" width="45" />' : '<p>No icon</p>'; ?></td>
-							<td class="icon-upload"><input type="file" name="amconf_icon['<?php echo $colorId; ?>']"></td>
+							<td class="icon-upload"><input type="file" name="amconf_icon[<?php echo $colorId; ?>][]"></td>
 						</tr>
 					</tbody>
 				</table>
@@ -150,8 +88,6 @@ foreach ($colors as $colorId => $colorLabel):
 
 									$sub = Mage::getModel('catalog/product')->load($_subproduct['entity_id']); 
 									$gallery = $sub->getMediaGalleryImages();
-
-									// echo "gallery<pre>"; print_r($gallery); echo "</pre>";
 
 									foreach ($gallery as $key => $image) {
 
@@ -206,7 +142,7 @@ foreach ($colors as $colorId => $colorLabel):
 				               	<input type="file" name="simpleimages_gallery[<?php echo $colorId; ?>][]">
 				            </td>
 				        	<td colspan="7" style="padding:10px">
-				        		<a href='#' class="upload-one-more-image">Add another image</a>
+				        		<a href='#' class="upload-one-more-image" data-color="<?php echo $colorId; ?>">Add another image</a>
 				        	</td>
 				        </tr>
 				    </tfoot>
@@ -223,71 +159,14 @@ foreach ($colors as $colorId => $colorLabel):
 		//add image uploader
 		jQuery('.upload-one-more-image').on('click', function(e) {
 			e.preventDefault();
-			jQuery(this).parents('tfoot').append('<tr><td style="padding:8px"><input type="file" name="simpleimages_gallery[<?php echo $colorId; ?>][]"></td><td colspan="7" style="padding: 10px;"><a href="#" class="remove-uploader">Remove</a></td></tr>');
+			var colorId = jQuery(this).data('color');
+			jQuery(this).parents('tfoot').append('<tr><td style="padding:8px"><input type="file" name="simpleimages_gallery[' + colorId + '][]"></td><td colspan="7" style="padding: 10px;"><a href="#" class="remove-uploader">Remove</a></td></tr>');
 		});
 
 		//remove image uploader
 		jQuery('tfoot').on('click', '.remove-uploader', function(e) {
 			e.preventDefault();
 			jQuery(this).parents('tr').remove();
-		});
-
-		jQuery('#add-row select').on('change', function() {
-			var simpleId = jQuery(this).val(),
-				simpleName = jQuery(this).find('option:selected').text();
-			jQuery('#loading-mask').show();
-
-			jQuery.ajax({
-				url: '<?php echo $this->getUrl("simpleimages/index/index/") ?>',
-				cache: false,
-				data: {'productId': <?php echo $this->getRequest()->getParam('id'); ?>, 'simpleId': simpleId, 'simpleName': simpleName},
-				complete: function (xhr, status) {
-				    if (status === 'error' || !xhr.responseText) {
-				        alert('Error processing request for simple product id = ' + simpleId);
-				        jQuery('#loading-mask').hide();
-				    }
-				    else {
-				        var data = xhr.responseText;
-						jQuery('#loading-mask').hide();
-					    jQuery('#color-chooser').show();
-						jQuery('#color-chooser tbody').append(data);
-					}
-				}
-			});			
-
-			//set "selected" option to default
-			jQuery('#add-row select option').prop("selected", false);
-		});
-
-		//remove
-		jQuery('#color-chooser').on('click', '.selected-remove a', function(){
-			jQuery(this).parents('.row').remove();
-			if(jQuery('#color-chooser tbody tr').length == 0) {
-				jQuery('#color-chooser').hide();
-			}
-		});
-
-		//gallery img click -> checkbox toggle
-		jQuery('#color-chooser').on('click', '.gallery-item img', function() {
-			jQuery(this).toggleClass('checked');
-			jQuery(this).next('input[type="checkbox"]').prop('checked', function (i, value) {
-			    return !value;
-			});
-		});
-
-		//simple product color change -> load color icon
-		jQuery('#color-chooser').on('change', '.selected-color select', function() {
-			var iconUrl = jQuery(this).find('option:selected').data('icon');
-			if(iconUrl.length) {
-				var icon = '<img src="' + iconUrl + '"/>';
-			} else {
-				var icon = '<p>No image</p>';
-			}
-			jQuery(this).next('.color-icon').html(icon);
-		
-			//changing upload data
-			var amconfIcon = 'amconf_icon[' + jQuery(this).find('option:selected').val() + ']';
-			jQuery('.icon-upload input').attr('name', amconfIcon);
 		});
 	});
 </script>
