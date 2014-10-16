@@ -17,44 +17,75 @@ class OpsWay_SimpleImages_Model_Observer
         $this->_uploadProductImages($_FILES);
         
         $simpleImagesGallery = $_FILES['simpleimages_gallery'];
-        $simpleImagesType = $this->_getRequest()->getPost('simpleimages_type');
+        $simpleImagesData = $this->_getRequest()->getPost('simpleimages_data'); //contains label, sort order, exclude, remove options
 
         if(is_array($simpleImagesGallery)) {
 
             // echo "simpleImagesGallery<pre>"; print_r($simpleImagesGallery); echo "</pre>";
             // echo "Files<pre>"; print_r($_FILES); echo "</pre>"; die;
+            // echo "simpleImagesData<pre>"; print_r($simpleImagesData); echo "</pre>";
          
             try {
+
                 $product = $observer->getEvent()->getProduct();
-                $childProducts = Mage::getModel('catalog/product_type_configurable')->getUsedProducts(null,$product);
+                $ids = Mage::getModel('catalog/product_type_configurable')->getChildrenIds($product->getId());   
+
+                $childProducts = Mage::getModel('catalog/product')->getCollection()
+                    ->addAttributeToFilter('entity_id', $ids)
+                    ->addAttributeToSelect('color')-> groupByAttribute('color');
                      
                 foreach($childProducts as $_simple){
                     $colorId = $_simple->getColor();
 
                     //assign uploaded files
                     if(isset($simpleImagesGallery['name'][$colorId][0]) && !empty($simpleImagesGallery['name'][$colorId][0])) {
-                        $_simple->setMediaGallery (array('images'=>array (), 'values'=>array ())); //media gallery initialization
+                        $_simple->setMediaGallery(array('images'=>array (), 'values'=>array ())); //media gallery initialization
                         
                         foreach ($simpleImagesGallery['name'][$colorId] as $key => $name) {
-                            Mage::log('color ' . $colorId . ' media/simpleimages/' . $name);
-                            // $currImageTypes = array();
-                            // //check if current image has images type associated with it
-                            // if(in_array($key, $simpleImagesType[$_simple->getId()])) {
-                            //     foreach ($simpleImagesType[$_simple->getId()] as $imgType => $imgId) {
-                            //         if($imgId == $key) {
-                            //             array_push($currImageTypes, $imgType);
-                            //         }
-                            //     }
-                            // }
-
                             $_simple->addImageToMediaGallery('media/simpleimages/' . $name, null, false, false); //assigning image types to media gallery
                         }
                     }
-                    
+
+                    //set gallery image data
+                    if(is_array($simpleImagesData)) {
+                        // $simpleProduct = Mage::getModel('catalog/product')->load($_simple['entity_id']); 
+                        // $gallery = $simpleProduct->getMediaGalleryImages();
+
+                        $mediaApi = Mage::getModel("catalog/product_attribute_media_api");
+                        $items = $mediaApi->items($_simple['entity_id']);
+                        // foreach($items as $item)
+                        //     $mediaApi->remove($product->getId(), $item[’file’]);
+
+                        //echo "simpleImagesData<pre>"; print_r($simpleImagesData); echo "</pre>";
+
+                        foreach($items as $key => $item) {
+                            //remove
+                            if(isset($simpleImagesData['remove'][$colorId][$key])) {
+                                $mediaApi->remove($_simple->getId(), $item['file']);
+                            }
+
+                            //label
+                            if(isset($simpleImagesData['label'][$colorId][$key])) {
+                                $mediaApi->update($_simple->getId(), $item['file'], array('label' => $simpleImagesData['label'][$colorId][$key]));
+                            }
+
+                            //position
+                            if(isset($simpleImagesData['position'][$colorId][$key])) {
+                                $mediaApi->update($_simple->getId(), $item['file'], array('position' => $simpleImagesData['position'][$colorId][$key]));
+                            }
+
+                            //exclude
+                            if(isset($simpleImagesData['position'][$colorId][$key])) {
+                                $mediaApi->update($_simple->getId(), $item['file'], array('exclude' => $simpleImagesData['exclude'][$colorId][$key]));
+                            }
+                        }
+                    }
+
                     $_simple->save();
                 }
                 
                 $product->save();
+                //die('end');
             }
             catch (Exception $e) {
                 Mage::getSingleton('adminhtml/session')->addError($e->getMessage());

@@ -89,22 +89,27 @@ foreach ($colors as $colorId => $colorLabel):
 									$sub = Mage::getModel('catalog/product')->load($_subproduct['entity_id']); 
 									$gallery = $sub->getMediaGalleryImages();
 
+									// echo "<pre>"; print_r($sub->getData('media_gallery')); echo "</pre>";
+
+									// echo "gallery<pre>"; print_r($gallery); echo "</pre>";
+									$i = 0;
 									foreach ($gallery as $key => $image) {
 
 									?>
 
 									<tr id="<?php echo $_class; ?>_template" class="template">
 						                <td class="cell-image"><img src="<?php echo $image->getUrl(); ?>" width="120" /></td>
-						                <td class="cell-label"><input type="text" class="input-text" onkeyup="<?php echo $_jsObject; ?>.updateImage('__file__')" onchange="<?php echo $_jsObject; ?>.updateImage('__file__')" value="<?php echo $image->getLabel(); ?>" /></td>
-						                <td class="cell-position"><input type="text" class="input-text validate-number" onkeyup="<?php echo $_jsObject; ?>.updateImage('__file__')" onchange="<?php echo $_jsObject; ?>.updateImage('__file__')" value="<?php echo $image->getPosition(); ?>" /></td>
+						                <td class="cell-label"><input type="text" class="input-text" name="simpleimages_data[label][<?=$colorId?>][<?=$i?>]" value="<?php echo $image->getLabel(); ?>" /></td>
+						                <td class="cell-position"><input type="text" class="input-text validate-number" name="simpleimages_data[position][<?=$colorId?>][<?=$i?>]" value="<?php echo $image->getPosition(); ?>" /></td>
 						                <?php foreach ($_imageTypes as $typeId=>$type): ?>
-						                	<td class="cell-<?php echo $typeId ?> a-center"><input type="radio" name="<?php echo $type ?>" onclick="<?php echo $_jsObject; ?>.setProductImages('__file__')" value="__file__" /></td>
+						                	<td class="cell-<?php echo $typeId ?> a-center"><input type="radio" name="<?php echo $type ?>" value="__file__" /></td>
 						                <?php endforeach; ?>
-						                <td class="cell-disable a-center"><input type="checkbox" onclick="<?php echo $_jsObject; ?>.updateImage('__file__')" /></td>
-						                <td class="cell-remove a-center last"><input type="checkbox" onclick="<?php echo $_jsObject; ?>.updateImage('__file__')" /></td>
+						                <td class="cell-disable a-center"><input type="checkbox" name="simpleimages_data[exclude][<?=$colorId?>][<?=$i?>]"</td>
+						                <td class="cell-remove a-center last"><input type="checkbox" name="simpleimages_data[remove][<?=$colorId?>][<?=$i?>]" /></td>
 						        	</tr>
 
 								<?
+										$i++;
 									}
 									// $sub = Mage::getModel('catalog/product')->load($_subproduct['entity_id']); 
 									// $gallery = $sub->getMediaGalleryImages();
