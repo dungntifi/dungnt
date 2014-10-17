@@ -63,7 +63,7 @@ class Amasty_Shopby_Block_Catalog_Layer_View extends Mage_Catalog_Block_Layer_Vi
         
         // images of filter values 
         $optionsCollection = Mage::getResourceModel('amshopby/value_collection')
-            ->addFieldToFilter('option_id', array('in' => $ids)) 
+            ->addFieldToFilter('option_id', array('in' => $ids))
             ->load();
                 
         $options = array();        

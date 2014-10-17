@@ -70,7 +70,7 @@ class Dtn_Saveforlater_IndexController extends Mage_Core_Controller_Front_Action
                         }
                     }
                 }else{
-                    $cookie->set('saveforlater[0]', serialize($request), time()+864000000, '/');
+                    $cookie->set('saveforlater[]', serialize($request), time()+864000000, '/');
                     Mage::getSingleton('core/session')->addSuccess('Add Product to save later success');
                 }
             }
