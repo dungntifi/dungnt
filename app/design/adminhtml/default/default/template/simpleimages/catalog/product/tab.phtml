@@ -75,7 +75,6 @@ foreach ($colors as $colorId => $colorLabel):
 				            <th><?php echo Mage::helper('catalog')->__('Base Image 1') ?></th>
 				            <th><?php echo Mage::helper('catalog')->__('Base Image 2') ?></th>
 				            <th><?php echo Mage::helper('catalog')->__('Thumbnail') ?></th>
-				            <th><?php echo Mage::helper('catalog')->__('Exclude') ?></th>
 				            <th class="last"><?php echo Mage::helper('catalog')->__('Remove') ?></th>
 				        </tr>
 				    </thead>
@@ -104,7 +103,6 @@ foreach ($colors as $colorId => $colorLabel):
 						                <?php foreach ($_imageTypes as $typeId=>$type): ?>
 						                	<td class="cell-<?php echo $typeId ?> a-center"><input type="radio" name="<?php echo $type ?>" value="__file__" /></td>
 						                <?php endforeach; ?>
-						                <td class="cell-disable a-center"><input type="checkbox" name="simpleimages_data[exclude][<?=$colorId?>][<?=$i?>]"</td>
 						                <td class="cell-remove a-center last"><input type="checkbox" name="simpleimages_data[remove][<?=$colorId?>][<?=$i?>]" /></td>
 						        	</tr>
 
