@@ -28,7 +28,6 @@ class OpsWay_SimpleImages_Model_Observer
         if(is_array($simpleImagesGallery) || is_array($simpleImagesData) || is_array($simpleImagesType)) {
 
             try {
-
                 $product = $observer->getEvent()->getProduct();
                 $ids     = Mage::getModel('catalog/product_type_configurable')->getChildrenIds($product->getId());   
                 $childProducts = Mage::getModel('catalog/product')->getCollection()
@@ -36,6 +35,8 @@ class OpsWay_SimpleImages_Model_Observer
                     ->addAttributeToSelect('color');
                     
                 foreach($childProducts as $_simple){
+
+                    //Mage::log('===START ' . $_simple->getId() . '===');
 
                     //preset data
                     $colorId = $_simple->getColor();
@@ -57,8 +58,8 @@ class OpsWay_SimpleImages_Model_Observer
                         $items = $mediaApi->items($_simple->getId());
 
                         //remove images
-                        if(isset($simpleImagesData['remove'][$colorId][$_simple->getId()])) {
-                            foreach ($simpleImagesData['remove'][$colorId][$_simple->getId()] as $file) {
+                        if(isset($simpleImagesData['remove'][$colorId])) {
+                            foreach ($simpleImagesData['remove'][$colorId] as $file) {
                                 $mediaApi->remove($_simple->getId(), $file);
                             }                           
                         }
@@ -76,22 +77,40 @@ class OpsWay_SimpleImages_Model_Observer
                         }
 
                         //STEP 3: update image types
-                        if(isset($simpleImagesType[$colorId][$_simple->getId()])) {
+                        if(isset($simpleImagesType[$colorId])) {
+
+                            $groupedByPath = ''; $fileName = $alias = '';
+                            /**
+                             * NOTE: alias is reducing file name by 2 symbols at the end to allow update all image types
+                             * in case they have equal name in different simple products. 
+                             * For example: /g/o/gold_2_8_1_1.jpg and /g/o/gold_2_8_1_2.jpg will be transformed to /g/o/gold_2_8_1
+                             * and both entries will be updated
+                             */
+
                             //transform data to array('%image_path%' => array('%image_type'))
-                            $groupedByPath = '';
-                            foreach ($simpleImagesType[$colorId][$_simple->getId()] as $type => $path) {
-                                $groupedByPath[$path][] = $type;
+                            foreach ($simpleImagesType[$colorId] as $type => $path) {
+                                $fileName = explode('.', $path);
+                                $alias = substr($fileName[0], 0, -2);
+                                $groupedByPath[$alias][] = $type;
                             }
 
+                            // Mage::log('---STEP3---');
+                            // Mage::log('items' . print_r($items, true));
+                            // Mage::log('groupedByPath' . print_r($groupedByPath, true));
+
+                            $fileName = $alias = '';
                             foreach($items as $key => $item) {
+                                $fileName = explode('.', $item['file']);
+                                $alias = substr($fileName[0], 0, -2);
                                 //update gallery image types
-                                if(isset($groupedByPath[$item['file']])) { 
-                                    $mediaApi->update($_simple->getId(), $item['file'], array('types' => $groupedByPath[$item['file']]));
+                                if(isset($groupedByPath[$alias])) { 
+                                    $mediaApi->update($_simple->getId(), $item['file'], array('types' => $groupedByPath[$alias]));
                                 }
                             }
                         }
                     }
 
+                    //Mage::log('===END ' . $_simple->getId() . '===');
                     $_simple->save();
                 
                 }//endforeach

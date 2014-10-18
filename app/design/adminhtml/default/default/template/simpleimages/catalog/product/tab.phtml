@@ -88,9 +88,9 @@ foreach ($colors as $colorId => $colorLabel):
 							                <td class="cell-position"><input type="text" class="input-text validate-number" name="simpleimages_data[position][<?=$colorId?>][<?=$i?>]" value="<?php echo $image->getPosition(); ?>" /></td>
 							                <?php foreach ($_imageMapping as $typeId => $type): ?>
 							                	<?php $checked = ($sub->getData($type) == $image->getFile()) ? 'checked' : ''; ?>
-							                	<td class="cell-<?php echo $typeId ?> a-center"><input type="radio" <?=$checked?> name="simpleimages_type[<?=$colorId?>][<?=$_childProduct['entity_id']?>][<?=$type?>]" value="<?=$image->getFile()?>" /></td>
+							                	<td class="cell-<?php echo $typeId ?> a-center"><input type="radio" <?=$checked?> name="simpleimages_type[<?=$colorId?>][<?=$type?>]" value="<?=$image->getFile()?>" /></td>
 							                <?php endforeach; ?>
-							                <td class="cell-remove a-center last"><input type="checkbox" name="simpleimages_data[remove][<?=$colorId?>][<?=$_childProduct['entity_id']?>][]" value="<?=$image->getFile()?>" /></td>
+							                <td class="cell-remove a-center last"><input type="checkbox" name="simpleimages_data[remove][<?=$colorId?>][]" value="<?=$image->getFile()?>" /></td>
 							        	</tr>
 
 										<? $i++;
