@@ -53,15 +53,19 @@ class Amasty_Conf_Block_Catalog_Product_View_Type_Configurable extends Mage_Cata
                         // @todo check settings:
                         // array key here is a combination of choosen options
                         $_prod = Mage::getModel('catalog/product')->load($simple->getId());
-                        $small_image = '';
+                        $small_image = $thumbnail = '';
                         if($_prod->getSmallImage()) {
                             $small_image = Mage::getModel('catalog/product_media_config')->getMediaUrl($_prod->getSmallImage());
                         }
+                        if($_prod->getThumbnail()) {
+                            $thumbnail = Mage::getModel('catalog/product_media_config')->getMediaUrl($_prod->getThumbnail());
+                        }   
 
                         $confDataSingle[$strKey] = array(
                             'short_description' => $this->helper('catalog/output')->productAttribute($simple, nl2br($simple->getShortDescription()), 'short_description'),
                             'description'       => $this->helper('catalog/output')->productAttribute($simple, $simple->getDescription(), 'description'),
                             'small_image'       => $small_image,
+                            'thumbnail'         => $thumbnail,
                         );
                          
                         if (Mage::getStoreConfig('amconf/general/reload_name'))
