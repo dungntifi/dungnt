@@ -36,7 +36,7 @@ class OpsWay_SimpleImages_Model_Observer
                     
                 foreach($childProducts as $_simple){
 
-                    //Mage::log('===START ' . $_simple->getId() . '===');
+                    Mage::log('===START ' . $_simple->getId() . '===');
 
                     //preset data
                     $colorId = $_simple->getColor();
@@ -57,13 +57,6 @@ class OpsWay_SimpleImages_Model_Observer
                         $mediaApi = Mage::getModel("catalog/product_attribute_media_api");
                         $items = $mediaApi->items($_simple->getId());
 
-                        //remove images
-                        if(isset($simpleImagesData['remove'][$colorId])) {
-                            foreach ($simpleImagesData['remove'][$colorId] as $file) {
-                                $mediaApi->remove($_simple->getId(), $file);
-                            }                           
-                        }
-
                         foreach($items as $key => $item) {                        
                             //update label  
                             if(isset($simpleImagesData['label'][$colorId][$key])) {
@@ -74,12 +67,30 @@ class OpsWay_SimpleImages_Model_Observer
                             if(isset($simpleImagesData['position'][$colorId][$key])) {
                                 $mediaApi->update($_simple->getId(), $item['file'], array('position' => $simpleImagesData['position'][$colorId][$key]));
                             }
+
+                            //remove images
+                            if(isset($simpleImagesData['remove'][$colorId])) {
+                                $itemName = $itemAlias = $fileName = $fileAlias = $lastCharacter = $offset = '';
+                                foreach ($simpleImagesData['remove'][$colorId] as $file) {
+                                    $itemName = explode('.', $item['file']);
+                                    $lastCharacter = explode('_', $itemName[0]);
+                                    $offset = -1 * (int)strlen(end($lastCharacter));
+                                    $itemAlias = substr($itemName[0], 0, $offset);
+                                    $fileName = explode('.', $file);
+                                    $fileAlias = substr($fileName[0], 0, $offset);
+                                    //reducing /g/o/gold_2_8_1_1.jpg and /g/o/gold_2_8_1_2.jpg to /g/o/gold_2_8_1
+                                    if($itemAlias == $fileAlias) {
+                                        $mediaApi->remove($_simple->getId(), $item['file']);
+                                        $itemName = $itemAlias = $fileName = $fileAlias = $lastCharacter = $offset = '';
+                                    }
+                                }                           
+                            }
                         }
 
                         //STEP 3: update image types
                         if(isset($simpleImagesType[$colorId])) {
 
-                            $groupedByPath = ''; $fileName = $alias = '';
+                            $groupedByPath = ''; $fileName = $alias = $lastCharacter = $offset = '';
                             /**
                              * NOTE: alias is reducing file name by 2 symbols at the end to allow update all image types
                              * in case they have equal name in different simple products. 
@@ -90,7 +101,9 @@ class OpsWay_SimpleImages_Model_Observer
                             //transform data to array('%image_path%' => array('%image_type'))
                             foreach ($simpleImagesType[$colorId] as $type => $path) {
                                 $fileName = explode('.', $path);
-                                $alias = substr($fileName[0], 0, -2);
+                                $lastCharacter = explode('_', $fileName[0]);
+                                $offset = -1 * (int)strlen(end($lastCharacter));
+                                $alias = substr($fileName[0], 0, $offset);
                                 $groupedByPath[$alias][] = $type;
                             }
 
@@ -98,10 +111,12 @@ class OpsWay_SimpleImages_Model_Observer
                             // Mage::log('items' . print_r($items, true));
                             // Mage::log('groupedByPath' . print_r($groupedByPath, true));
 
-                            $fileName = $alias = '';
+                            $fileName = $alias = $lastCharacter = $offset = '';
                             foreach($items as $key => $item) {
                                 $fileName = explode('.', $item['file']);
-                                $alias = substr($fileName[0], 0, -2);
+                                $lastCharacter = explode('_', $fileName[0]);
+                                $offset = -1 * (int)strlen(end($lastCharacter));
+                                $alias = substr($fileName[0], 0, $offset);
                                 //update gallery image types
                                 if(isset($groupedByPath[$alias])) { 
                                     $mediaApi->update($_simple->getId(), $item['file'], array('types' => $groupedByPath[$alias]));
@@ -110,7 +125,7 @@ class OpsWay_SimpleImages_Model_Observer
                         }
                     }
 
-                    //Mage::log('===END ' . $_simple->getId() . '===');
+                    Mage::log('===END ' . $_simple->getId() . '===');
                     $_simple->save();
                 
                 }//endforeach
