@@ -16,7 +16,9 @@ class OpsWay_SimpleImages_Model_Observer
         $this->_uploadIconImages($_FILES);
         $this->_uploadProductImages($_FILES);
         
-        $simpleImagesGallery = $_FILES['simpleimages_gallery'];
+        if(isset($_FILES['simpleimages_gallery'])) {
+            $simpleImagesGallery = $_FILES['simpleimages_gallery'];
+        }
         $simpleImagesData = $this->_getRequest()->getPost('simpleimages_data'); //contains label, sort order, remove options
         $simpleImagesType = $this->_getRequest()->getPost('simpleimages_type');
 
@@ -25,7 +27,7 @@ class OpsWay_SimpleImages_Model_Observer
         // echo "simpleImagesType<pre>"; print_r($simpleImagesType); echo "</pre>";
      
         //proceed only if any data exists
-        if(is_array($simpleImagesGallery) || is_array($simpleImagesData) || is_array($simpleImagesType)) {
+        if(isset($simpleImagesGallery) || is_array($simpleImagesData) || is_array($simpleImagesType)) {
 
             try {
                 $product = $observer->getEvent()->getProduct();
@@ -70,19 +72,68 @@ class OpsWay_SimpleImages_Model_Observer
 
                             //remove images
                             if(isset($simpleImagesData['remove'][$colorId])) {
-                                $itemName = $itemAlias = $fileName = $fileAlias = $lastCharacter = $offset = '';
+                                $itemName = $itemAlias = $fileName = $fileAlias = $itemNameLastCharacter = $itemNameOffset = $fileNameLastCharacter = $fileNameOffset = '';
                                 foreach ($simpleImagesData['remove'][$colorId] as $file) {
+                                    //Mage::log('---------------------------------');
                                     $itemName = explode('.', $item['file']);
-                                    $lastCharacter = explode('_', $itemName[0]);
-                                    $offset = -1 * (int)strlen(end($lastCharacter));
-                                    $itemAlias = substr($itemName[0], 0, $offset);
+                                    //Mage::log('itemName ' . print_r($itemName, true));
                                     $fileName = explode('.', $file);
-                                    $fileAlias = substr($fileName[0], 0, $offset);
+                                    //Mage::log('fileName ' . print_r($fileName, true));
+
+                                    //in case filename has _, like /g/o/gold_2_8_1_1.jpg and /g/o/gold_2_8_1_2.jpg
                                     //reducing /g/o/gold_2_8_1_1.jpg and /g/o/gold_2_8_1_2.jpg to /g/o/gold_2_8_1
-                                    if($itemAlias == $fileAlias) {
-                                        $mediaApi->remove($_simple->getId(), $item['file']);
-                                        $itemName = $itemAlias = $fileName = $fileAlias = $lastCharacter = $offset = '';
+                                    if(strpos($itemName[0], '_') && strpos($fileName[0], '_')) {
+                                        //Mage::log('--- itemName && fileName pathes has _');
+                                        $itemNameLastCharacter = explode('_', $itemName[0]);
+                                        //Mage::log('itemNameLastCharacter ' . print_r($itemNameLastCharacter, true));
+                                        $itemNameOffset = -1 * (int)strlen(end($itemNameLastCharacter));
+                                        //Mage::log('itemNameOffset ' . $itemNameOffset);
+                                        $fileNameLastCharacter = explode('_', $fileName[0]);
+                                        //Mage::log('fileNameLastCharacter ' . print_r($fileNameLastCharacter, true));
+                                        $fileNameOffset = -1 * (int)strlen(end($fileNameLastCharacter));
+                                        //Mage::log('fileNameOffset ' . $fileNameOffset);
+                                        $itemAlias = substr($itemName[0], 0, $itemNameOffset);
+                                        //Mage::log('itemAlias ' . $itemAlias);
+                                        $fileAlias = substr($fileName[0], 0, $fileNameOffset);
+                                        //Mage::log('fileAlias ' . $fileAlias);
+
+                                    } elseif(strpos($itemName[0], '_')) {//check if one path like /7/1/712_1.jpg and other like /7/1/712.jpg - delete if true
+                                        //Mage::log('--- itemName path has _');
+                                        $itemNameLastCharacter = explode('_', $itemName[0]);
+                                        //Mage::log('itemNameLastCharacter ' . print_r($itemNameLastCharacter, true));
+                                        $itemNameOffset = -1 * (int)strlen(end($itemNameLastCharacter));
+                                        //Mage::log('itemNameOffset ' . $itemNameOffset);
+                                        $itemAlias = substr($itemName[0], 0, $itemNameOffset);
+                                        //Mage::log('itemAlias ' . $itemAlias);
+                                        $fileAlias = $fileName[0] . '_'; //adding trailing _ like itemAlias has 
+                                        //Mage::log('fileAlias ' . $fileAlias);
+
+                                    } elseif(strpos($fileName[0], '_')) {//check if one path like /7/1/712_1.jpg and other like /7/1/712.jpg - delete if true
+                                        //Mage::log('--- fileName path has _');
+                                        $fileNameLastCharacter = explode('_', $fileName[0]);
+                                        //Mage::log('fileNameLastCharacter ' . print_r($fileNameLastCharacter, true));
+                                        $fileNameOffset = -1 * (int)strlen(end($fileNameLastCharacter));
+                                        //Mage::log('fileNameOffset ' . $fileNameOffset);
+                                        $fileAlias = substr($fileName[0], 0, $fileNameOffset);
+                                        //Mage::log('fileAlias ' . $fileAlias);
+                                        $itemAlias = $itemName[0] . '_'; //adding trailing _ like fileAlias has 
+                                        //Mage::log('itemAlias ' . $itemAlias);
+
+                                    } else {//we assume that filenames looks like /7/1/712.jpg - whithout _ delimiter
+                                        //Mage::log('--- file pathes has NO _');
+                                        $itemAlias = $itemName[0];
+                                        //Mage::log('itemName ' . $itemName[0]);
+                                        $fileAlias = $fileName[0];
+                                        //Mage::log('fileName ' . $fileName[0]);
                                     }
+                                    
+                                    if($itemAlias == $fileAlias) {
+                                        //Mage::log('itemAlias == fileAlias');
+                                        //Mage::log('removing ' . $item['file']);
+                                        $mediaApi->remove($_simple->getId(), $item['file']);
+                                        $itemName = $itemAlias = $fileName = $fileAlias = $itemNameLastCharacter = $itemNameOffset = $fileNameLastCharacter = $fileNameOffset = '';
+                                    }
+                                    //Mage::log('---------------------------------');
                                 }                           
                             }
                         }
