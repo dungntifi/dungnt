@@ -14,7 +14,7 @@ class Amasty_Conf_Block_Catalog_Product_View_Type_Configurablel extends Mage_Cat
 
         $imageSizeAtCategoryPage = Mage::getStoreConfig('amconf/list/main_image_list_size');
         if(strpos($imageSizeAtCategoryPage, ',') !== false) {
-            $imageSizeAtCategoryPage = split(',', $imageSizeAtCategoryPage);
+            $imageSizeAtCategoryPage = explode(',', $imageSizeAtCategoryPage);
         }
         $html = parent::_afterToHtml($html);
         if ('product.info.options.configurable' == $this->getNameInLayout())
