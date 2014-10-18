@@ -36,7 +36,7 @@ class OpsWay_SimpleImages_Model_Observer
                     
                 foreach($childProducts as $_simple){
 
-                    Mage::log('===START ' . $_simple->getId() . '===');
+                    //Mage::log('===START ' . $_simple->getId() . '===');
 
                     //preset data
                     $colorId = $_simple->getColor();
@@ -125,7 +125,7 @@ class OpsWay_SimpleImages_Model_Observer
                         }
                     }
 
-                    Mage::log('===END ' . $_simple->getId() . '===');
+                    //Mage::log('===END ' . $_simple->getId() . '===');
                     $_simple->save();
                 
                 }//endforeach
