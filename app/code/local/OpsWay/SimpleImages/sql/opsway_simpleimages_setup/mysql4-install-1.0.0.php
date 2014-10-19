@@ -1,39 +1,44 @@
 <?php
-$installer = $this;
-/* @var $installer Mage_Core_Model_Resource_Setup */
-
+$installer = new Mage_Eav_Model_Entity_Setup($this->_resourceName);
 $installer->startSetup();
 
 $attrCode = 'color_position';
-$attrGroupName = 'Dresses';
 $attrLabel = 'Color position';
 $attrNote = 'Sort order of color attribute';
+$attrGroupName = 'Dresses';
 
-$objCatalogEavSetup = Mage::getResourceModel('catalog/eav_mysql4_setup', 'core_setup');
-$attrIdTest = $objCatalogEavSetup->getAttributeId(Mage_Catalog_Model_Product::ENTITY, $attrCode);
+$installer->addAttribute(Mage_Catalog_Model_Product::ENTITY, $attrCode, array(
+    'type'              => 'int',
+    'backend'           => '',
+    'frontend'          => '',
+    'label'             => $attrLabel,
+    'note'              => $attrNote,
+    'input'             => 'text',
+    'class'             => '',
+    'source'            => '',
+    'global'            => Mage_Catalog_Model_Resource_Eav_Attribute::SCOPE_GLOBAL,
+    'visible'           => true,
+    'required'          => false,
+    'user_defined'      => false,
+    'default'           => '0',
+    'searchable'        => false,
+    'filterable'        => false,
+    'comparable'        => false,
+    'visible_on_front'  => false,
+    'unique'            => false,
+    'apply_to'          => 'configurable',
+    'is_configurable'   => false,
+));
+$attributeId = $installer->getAttributeId(Mage_Catalog_Model_Product::ENTITY, $attrCode);
 
-if ($attrIdTest === false) {
-    $objCatalogEavSetup->addAttribute(Mage_Catalog_Model_Product::ENTITY, $attrCode, array(
-        'group' => $attrGroupName,
-        'sort_order' => 7,
-        'type' => 'varchar',
-        'backend' => '',
-        'frontend' => '',
-        'label' => $attrLabel,
-        'note' => $attrNote,
-        'input' => 'text',
-        'class' => '',
-        'source' => '',
-        'global' => Mage_Catalog_Model_Resource_Eav_Attribute::SCOPE_GLOBAL,
-        'visible' => true,
-        'required' => false,
-        'user_defined' => true,
-        'default' => '0',
-        'visible_on_front' => false,
-        'unique' => false,
-        'is_configurable' => true,
-        'used_for_promo_rules' => true
-    ));
+foreach ($installer->getAllAttributeSetIds(Mage_Catalog_Model_Product::ENTITY) as $attributeSetId) 
+{
+    try {
+        $attributeGroupId = $installer->getAttributeGroupId(Mage_Catalog_Model_Product::ENTITY, $attributeSetId, $attrGroupName);
+    } catch (Exception $e) {
+        $attributeGroupId = $installer->getDefaultAttributeGroupId(Mage_Catalog_Model_Product::ENTITY, $attributeSetId);
+    }
+    $installer->addAttributeToSet(Mage_Catalog_Model_Product::ENTITY, $attributeSetId, $attributeGroupId, $attributeId);
 }
 
 $installer->endSetup();
