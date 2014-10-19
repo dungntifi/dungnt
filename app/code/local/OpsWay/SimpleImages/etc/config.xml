@@ -21,6 +21,13 @@
                 <class>OpsWay_SimpleImages_Helper</class>
             </simpleimages>
         </helpers>
+        <resources>
+            <opsway_simpleimages_setup>
+                <setup>
+                    <module>OpsWay_SimpleImages</module>
+                </setup>
+            </opsway_simpleimages_setup>
+        </resources>
     </global>
     <admin>
         <routers>
