@@ -179,6 +179,19 @@ class Amasty_Conf_Block_Catalog_Product_View_Type_Configurablel extends Mage_Cat
         if (Mage::helper('amconf')->getOptionsImageSize()){
              $config['size'] = Mage::helper('amconf')->getOptionsImageSize();
         }
+
+        $ids = Mage::getModel('catalog/product_type_configurable')->getChildrenIds($this->getProduct()->getId());   
+        $simpleProducts = Mage::getModel('catalog/product')->getCollection()
+            ->addAttributeToFilter('entity_id', $ids)
+            ->addAttributeToSelect('color')
+            ->addAttributeToSelect('color_position')
+            ->addAttributeToSort('color_position', 'ASC');
+
+        $colorPosition = '';
+        foreach ($simpleProducts as $key => $value) {
+            $colorPosition[$value->getColor()] = '';
+        }
+
         foreach ($config['attributes'] as $attributeId => $attribute)
         {
             $attr = Mage::getModel('amconf/attribute')->load($attributeId, 'attribute_id');
@@ -201,12 +214,28 @@ class Amasty_Conf_Block_Catalog_Product_View_Type_Configurablel extends Mage_Cat
             else if($attr->getUseImage()){
                 foreach ($attribute['options'] as $i => $option)
                 {
-            $this->_optionProducts[$attributeId][$option['id']] = $option['products'];
+                    $this->_optionProducts[$attributeId][$option['id']] = $option['products'];
                     $config['attributes'][$attributeId]['use_image'] = 1;
                     $config['attributes'][$attributeId]['options'][$i]['image'] = Mage::helper('amconf')->getImageUrl($option['id']);
                 }    
             }
         }
+
+        $newOptions = '';
+        foreach ($config['attributes'] as $attributeId => $attribute)
+        {
+            foreach ($colorPosition as $color => $value) {
+                foreach ($attribute['options'] as $i => $option) {
+                    if($option['id'] == $color) {
+                        $newOptions[] = $option;
+                    }
+                }
+            }   
+        }
+
+        unset($config['attributes'][92]['options']); //removing color options
+        $config['attributes'][92]['options'] = $newOptions;
+
         $this->_jsonConfig = $config;
         return Zend_Json::encode($config);
     }
