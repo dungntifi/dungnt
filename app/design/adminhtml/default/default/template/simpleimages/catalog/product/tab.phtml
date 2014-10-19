@@ -13,13 +13,10 @@ $_childProducts = Mage::getModel('catalog/product')->getCollection()
 $colors = $position = '';
 foreach ($_childProducts as $key => $value) {
 	$attr = $value->getResource()->getAttribute("color");
-	$pos = $value->getResource()->getAttribute("color_position");
 	if ($attr->usesSource()) {
 		$colors[$value['color']] = $attr->getSource()->getOptionText($value['color']);
 	}
-	if ($pos->usesSource()) {
-		$position[$value['color']] = $pos->getSource()->getOptionText($value['color_position']);
-	}
+	$position[$value['color']] = $value->getColorPosition();
 }
 
 $_class = 'media_gallery_content';

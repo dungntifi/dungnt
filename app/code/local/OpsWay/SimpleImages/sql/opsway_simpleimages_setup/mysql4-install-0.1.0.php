@@ -20,7 +20,7 @@ $installer->addAttribute(Mage_Catalog_Model_Product::ENTITY, $attrCode, array(
     'visible'           => true,
     'required'          => false,
     'user_defined'      => true,
-    'default'           => '0',
+    'default'           => 0,
     'searchable'        => false,
     'filterable'        => false,
     'comparable'        => false,

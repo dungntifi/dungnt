@@ -42,7 +42,7 @@ class OpsWay_SimpleImages_Model_Observer
                 foreach($childProducts as $_simple){
 
                     //Mage::log('===START ' . $_simple->getId() . '===');
-
+                    
                     //preset data
                     $colorId = $_simple->getColor();
                     if(isset($simpleImagesGallery['name'][$colorId][0]) || isset($simpleImagesType[$colorId][$_simple->getId()])) {
@@ -179,7 +179,7 @@ class OpsWay_SimpleImages_Model_Observer
                         }
 
                         //STEP 4: set color position
-                        if(isset($colorPosition[$colorId]) && $_simple->getData('color_position')) {
+                        if(isset($colorPosition[$colorId])) {
                             $_simple->setData('color_position', $colorPosition[$colorId]); 
                         }
                     }
