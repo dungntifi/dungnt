@@ -19,14 +19,14 @@ $installer->addAttribute(Mage_Catalog_Model_Product::ENTITY, $attrCode, array(
     'global'            => Mage_Catalog_Model_Resource_Eav_Attribute::SCOPE_GLOBAL,
     'visible'           => true,
     'required'          => false,
-    'user_defined'      => false,
+    'user_defined'      => true,
     'default'           => '0',
     'searchable'        => false,
     'filterable'        => false,
     'comparable'        => false,
     'visible_on_front'  => false,
     'unique'            => false,
-    'apply_to'          => 'configurable',
+    'apply_to'          => 'simple',
     'is_configurable'   => false,
 ));
 $attributeId = $installer->getAttributeId(Mage_Catalog_Model_Product::ENTITY, $attrCode);

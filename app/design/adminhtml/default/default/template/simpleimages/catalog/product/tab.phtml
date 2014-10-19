@@ -6,21 +6,26 @@ $_childProducts = Mage::getModel('catalog/product')->getCollection()
     ->addAttributeToSelect('name')
     ->addAttributeToSelect('price')
     ->addAttributeToSelect('small_image')
+    ->addAttributeToSelect('color_position')
     ->addAttributeToFilter('entity_id', $ids)
     ->addAttributeToSelect('color')->groupByAttribute('color');
 
-$colors = '';
+$colors = $position = '';
 foreach ($_childProducts as $key => $value) {
 	$attr = $value->getResource()->getAttribute("color");
+	$pos = $value->getResource()->getAttribute("color_position");
 	if ($attr->usesSource()) {
 		$colors[$value['color']] = $attr->getSource()->getOptionText($value['color']);
+	}
+	if ($pos->usesSource()) {
+		$position[$value['color']] = $pos->getSource()->getOptionText($value['color_position']);
 	}
 }
 
 $_class = 'media_gallery_content';
 $_imageMapping = array("base_image_1" => "image",
-					 "base_image_2" => "small_image",
-					 "thumbnail" 	=> "thumbnail");
+					   "base_image_2" => "small_image",
+					   "thumbnail"    => "thumbnail");
 
 foreach ($colors as $colorId => $colorLabel):
 ?>
@@ -44,7 +49,7 @@ foreach ($colors as $colorId => $colorLabel):
 						<tr class="template">
 							<td class="color-label"><?php echo $colorLabel; ?></td>
 							<td class="color-icon"><?php echo (Mage::helper('amconf')->getImageUrl($colorId) != '') ? '<img src="' . Mage::helper('amconf')->getImageUrl($colorId) . '" width="45" />' : '<p>No icon</p>'; ?></td>
-							<td class="color-sort"><input type="text" class="input-text" name="amconf_sort[<?php echo $colorId; ?>][]" value="" /></td>
+							<td class="color-sort"><input type="text" class="input-text" name="color_position[<?php echo $colorId; ?>]" value="<?php echo $position[$colorId]; ?>" /></td>
 						</tr>
 					</tbody>
 					<tfoot>

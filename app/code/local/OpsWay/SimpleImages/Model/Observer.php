@@ -21,10 +21,12 @@ class OpsWay_SimpleImages_Model_Observer
         }
         $simpleImagesData = $this->_getRequest()->getPost('simpleimages_data'); //contains label, sort order, remove options
         $simpleImagesType = $this->_getRequest()->getPost('simpleimages_type');
+        $colorPosition = $this->_getRequest()->getPost('color_position');
 
         // echo "simpleImagesGallery<pre>"; print_r($simpleImagesGallery); echo "</pre>";
         // echo "simpleImagesData<pre>"; print_r($simpleImagesData); echo "</pre>";
         // echo "simpleImagesType<pre>"; print_r($simpleImagesType); echo "</pre>";
+        // echo "colorPosition<pre>"; print_r($colorPosition); echo "</pre>";
      
         //proceed only if any data exists
         if(isset($simpleImagesGallery) || is_array($simpleImagesData) || is_array($simpleImagesType)) {
@@ -34,7 +36,8 @@ class OpsWay_SimpleImages_Model_Observer
                 $ids     = Mage::getModel('catalog/product_type_configurable')->getChildrenIds($product->getId());   
                 $childProducts = Mage::getModel('catalog/product')->getCollection()
                     ->addAttributeToFilter('entity_id', $ids)
-                    ->addAttributeToSelect('color');
+                    ->addAttributeToSelect('color')
+                    ->addAttributeToSelect('color_position');
                     
                 foreach($childProducts as $_simple){
 
@@ -173,6 +176,11 @@ class OpsWay_SimpleImages_Model_Observer
                                     $mediaApi->update($_simple->getId(), $item['file'], array('types' => $groupedByPath[$alias]));
                                 }
                             }
+                        }
+
+                        //STEP 4: set color position
+                        if(isset($colorPosition[$colorId]) && $_simple->getData('color_position')) {
+                            $_simple->setData('color_position', $colorPosition[$colorId]); 
                         }
                     }
 
