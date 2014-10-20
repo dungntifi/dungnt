@@ -221,20 +221,27 @@ class Amasty_Conf_Block_Catalog_Product_View_Type_Configurablel extends Mage_Cat
             }
         }
 
-        $newOptions = '';
+        $newColorOptions = $newSizeOptions = '';
         foreach ($config['attributes'] as $attributeId => $attribute)
         {
             foreach ($colorPosition as $color => $value) {
                 foreach ($attribute['options'] as $i => $option) {
                     if($option['id'] == $color) {
-                        $newOptions[] = $option;
+                        $newColorOptions[] = $option;
+                        $newSizeOptions[] = $config['attributes'][151]['options'][$i];
                     }
                 }
             }   
         }
 
-        unset($config['attributes'][92]['options']); //removing color options
-        $config['attributes'][92]['options'] = $newOptions;
+        if(is_array($newColorOptions)) {
+            unset($config['attributes'][92]['options']); //removing old color options
+            $config['attributes'][92]['options'] = $newColorOptions; //adding color options with new sort order
+        }
+        if(is_array($newSizeOptions)) {
+            unset($config['attributes'][151]['options']); //removing old size options
+            $config['attributes'][151]['options'] = $newSizeOptions; //adding color options with new sort order
+        }
 
         $this->_jsonConfig = $config;
         return Zend_Json::encode($config);
