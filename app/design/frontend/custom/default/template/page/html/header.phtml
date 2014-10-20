@@ -26,97 +26,154 @@
 /**
  * @var Mage_Page_Block_Html_Header $this
  */
-
-$cart_html = $this->getChildHtml('cart_sidebar');
-$mobile_cart = $this->getChildHtml('mobile_cart');
 ?>
-<!-- <div style="margin:0;padding:12px;background:black;color:white;text-transform:uppercase;">Our stores, customer service and Shipping Department will be<span style="color:#ff6600"> closed Thursday and Friday</span>. All orders will ship out on Sunday. Thank You for Shopping with us!</div> -->
 
-<div class="header-container">
-  <div class="header"> <?php echo $this->getChildHtml('sidebar_in'); ?> <?php echo $this->getChildHtml('sidebar_out'); ?> 
+    <div class="header-container">
+        <div class="header">
+            <nav class="nav-collapse">
+                <ul class="">
+                    <li >
+                        <a onclick='showSubMenu("sm_item1")' href="#">Designers</a>
+
+                        <ul class="nav-collapse-sub" id="sm_item1">
+							<li><a href="<?php echo Mage::getBaseUrl(); ?>terani-couture">Terani Couture</a></li>
+                            <li><a href="<?php echo Mage::getBaseUrl(); ?>tarik-ediz">Tarik Ediz</a></li>
+                            <li><a href="<?php echo Mage::getBaseUrl(); ?>nika-formals">Nika Formals</a></li>
+							<li><a href="<?php echo Mage::getBaseUrl(); ?>rachel-allan">Rachel Allan</a></li>
+							<li><a href="<?php echo Mage::getBaseUrl(); ?>lara-designs">Lara Designs</a></li>
+							<li><a href="<?php echo Mage::getBaseUrl(); ?>la-femme">La Femme</a></li>
+							<li><a href="<?php echo Mage::getBaseUrl(); ?>tony-bowls">Tony Bowls</a></li>
+							<li><a href="<?php echo Mage::getBaseUrl(); ?>designer-dresses">Other Designers</a></li>
+                        </ul>
+                    </li>
+
+                    <li>
+                    	<a onclick='showSubMenu("sm_item2")' href="#">Events</a>
+						<ul class="nav-collapse-sub" id="sm_item2">
+                            <li><a href="<?php echo Mage::getBaseUrl(); ?>prom-dresses">Prom</a></li>
+                            <li><a href="<?php echo Mage::getBaseUrl(); ?>homecoming-dresses">Homecoming</a></li>
+                            <li><a href="<?php echo Mage::getBaseUrl(); ?>cocktail-dresses">Cocktail Dresses</a></li>
+							<li><a href="<?php echo Mage::getBaseUrl(); ?>pageant-dresses">Pageant</a></li>
+							<li><a href="<?php echo Mage::getBaseUrl(); ?>sweet-sixteen-dresses">Sweet Sixteen</a></li>
+							<li><a href="<?php echo Mage::getBaseUrl(); ?>designer-dresses">Other Events</a></li>
+                        </ul>
+                    </li>
+
+                    <li><a href="<?php echo Mage::getBaseUrl(); ?>sale">Sale</a></li>
+
+                    <li><a href="<?php echo Mage::getBaseUrl(); ?>new">New Arrivals</a></li>
+                    
+                    <li><a href="<?php echo Mage::getBaseUrl(); ?>customer-service">Help</a></li>
+
+                    <li style="background:#000;">
+                        <ul class="header-search-container">
+                            <li><?php echo $this->getChildHtml('topSearch') ?></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+            
+			<div id="newsletter-overlay">
+				<div>
+				    <div class="block block-subscribe">
+				        <form action="<?php echo Mage::getBaseUrl(); ?>newsletter/subscriber/new/" method="post" id="newsletter-validate-detail">
+				            <div class="block-content">
+				                <div class="form-subscribe-header">
+				                    <label for="newsletter">Sign up to receive sale alerts, discounts, and more!</label>
+				                </div>
+				
+				                <div class="input-box">
+				                    <input type="text" name="email" id="newsletter" title="Sign up for our newsletter" class="input-text required-entry validate-email">
+				                </div>
+				
+				                <div class="actions">
+				                    <button type="submit" title="Subscribe" class="button"><span><span>Subscribe</span></span></button>
+				                </div>
+				            </div>
+				        </form>
+				    </div>
+					
+					<div id="newsletter-close"><a href="javascript: void(0);" onclick='newsletterOverlay()'><img src="<?php echo $this->getSkinUrl('images/newsletter-close.png'); ?>"></a></div>
+				</div>
+			</div>
+            
+
+            <div class="top-left">
+                <ul class="top-left-ul">
+                    <li class="phoneheader"><span class="phone-icon"></span>718-841-7037</li>
+
+                    <li><a href="javascript: void(0);" onclick='newsletterOverlay()' class="signup"><span class="icon"></span>Email Signup </a></li>
+
+                    <li class="last-item">
+                        <ul class="socials">
+                            <li class="facebook"><a href="https://www.facebook.com/PromOutfitters" target="_blank" class="notext">Facebook</a></li>
+
+                            <li class="twitter"><a href="https://twitter.com/promoutfitters" target="_blank" class="notext">Twitter</a></li>
+
+                            <li class="instagram"><a href="http://instagram.com/promoutfitters" target="_blank" class="notext">Instagram</a></li>
+
+                            <li class="pinterest"><a href="http://pinterest.com/promoutfitters" target="_blank" class="notext">Pinterest</a></li>
+
+                            <li class="googleplus"><a href="https://plus.google.com/102013198612245512919" target="_blank" class="notext">Pinterest</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <br>
+			
+				<script type="text/javascript">
+					
+					
+					function shippingPopup() {
+					
+					jQuery.fn.speedoPopup({
+						href:"<?php echo $this->getSkinUrl('images/free_shipping_popup.gif'); ?>", width: null, height: null, effectIn: "fade", effectOut: "fade"
+						}); 
+					};
+				</script>                
+				<div class="free_shipping_returns">
+					<a href="#" onclick='shippingPopup()'><img src="<?php echo $this->getSkinUrl('images/free_shipping_returns.png'); ?>"</a>
+				</div>
+            </div>
+
+            <div class="top-right">
+                <div class="top-right-links">
+                    <?php echo $this->getChildHtml('topLinks') ?><?php echo $this->getChildHtml('topSearch') ?>
+                </div>
+            </div>
+
+            <div class="logo">
+                <a href="<?php echo $this->getUrl('') ?>" title="<?php echo $this->getLogoAlt() ?>"><?php echo $this->getLogoAlt() ?><img src="<?php echo $this->getLogoSrc() ?>" alt="<?php echo $this->getLogoAlt() ?>"></a><br>
+                <div class="ups">
+	                <span class="Facebook">
+		                <div class="fb-like" data-href="http://www.promoutfitters.com" data-width="105" data-layout="button_count" data-action="like" data-show-faces="true" data-share="false"></div>              
+	                </span>
+	                
+	                <span class="twitter">
+		                <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://www.promoutfitters.com" data-text="Check out these prom dresses!">Tweet</a>
+						<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+	                </span>
+	                
+	                <span class="google">
+						<!-- Place this tag where you want the +1 button to render. -->
+						<div class="g-plusone" data-size="medium" data-href="http://www.promoutfitters.com"></div>
+						
+						<!-- Place this tag after the last +1 button tag. -->
+						<script type="text/javascript">
+						  (function() {
+						    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+						    po.src = 'https://apis.google.com/js/platform.js';
+						    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+						  })();
+						</script>
+	                </span>
+	                
+                </div>
+            </div>
+            <?php echo $this->getChildHtml('topMenu') ?>
+            <?php if ($this->getIsHomePage()):?>
+            <?php else:?>
+            <div class="header-divider"></div>
+            <?php endif ?>
+        </div>
+    </div>
     
-    <!-- Start Sidebar Nav -->
-    
-    <div class="mobile-search">
-      <div id="sb-search" class="sb-search">
-        <form action="<?php echo $this->getUrl('catalogsearch/result') ?>" method="post" id="form-validate">
-          <input class="sb-search-input" placeholder="Find the perfect dress!" type="text" value="" name="q" id="search2">
-          <input class="sb-search-submit" type="submit" value="">
-          <div class="sb-icon-search"><i class="fa fa-search"></i></div>
-        </form>
-      </div>
-    </div>
-    <script src="<?php echo $this->getUrl('js/search') ?>/classie.js"></script> 
-    <script src="<?php echo $this->getUrl('js/search') ?>/uisearch.js"></script> 
-    <script>
-            new UISearch( document.getElementById( 'sb-search' ) );
-        </script>
-    <div class="mobile-minicart"> <?php echo $mobile_cart; ?> </div>
-    <div class="top-left"> 
-      <script type="text/javascript">
-
-                function authenticPopup() {
-
-                    jQuery.fn.speedoPopup({
-                        href:"<?php echo Mage::getBaseUrl(); ?>skin/frontend/custom/default/images/100_authentic_popup.gif", width: null, height: null, effectIn: "fade", effectOut: "fade"
-                    });
-                };
-
-                function pricePopup() {
-
-                    jQuery.fn.speedoPopup({
-                        href:"<?php echo Mage::getBaseUrl(); ?>skin/frontend/custom/default/images/price_match_popup.gif", width: null, height: null, effectIn: "fade", effectOut: "fade"
-                    });
-                };
-
-                function giftPopup() {
-
-                    jQuery.fn.speedoPopup({
-                        href:"<?php echo Mage::getBaseUrl(); ?>skin/frontend/custom/default/images/free_gift_popup.gif", width: null, height: null, effectIn: "fade", effectOut: "fade"
-                    });
-                };
-
-                function shippingPopup() {
-
-                    jQuery.fn.speedoPopup({
-                        href:"<?php echo Mage::getBaseUrl(); ?>skin/frontend/custom/default/images/free_shipping_popup.gif", width: null, height: null, effectIn: "fade", effectOut: "fade"
-                    });
-                };
-            </script>
-      <ul class="top-left-ul">
-        <li><a href="#" onclick='authenticPopup()'>100% Authentic</li>
-        <li><a href="#" onclick='pricePopup()'>Price Match</li>
-        <li><a href="#" onclick='giftPopup()'>Free Gift</li>
-        <li><a href="#" onclick='shippingPopup()'>Free Shipping &amp; Returns</a></li>
-      </ul>
-    </div>
-    <div class="top-right"> <?php echo $this->getChildHtml('topLinks') ?> 
-      <!-- Sign In --> 
-      <?php echo $this->getChildHtml('header_signin'); ?> 
-      <!-- End Sign In --> 
-      <!-- My Account --> 
-      <?php echo $this->getChildHtml('header_myaccount'); ?> 
-      <!-- End My Account --> 
-      <!-- Assistance --> 
-      <?php echo $this->getChildHtml('header_assistance'); ?> 
-      <!-- End Assistance -->
-      <div class="block block-minicart block-minicart2"> <?php echo $cart_html; ?> </div>
-      <?php echo $this->getChildHtml('topSearch') ?> </div>
-    <div class="header-divider"></div>
-    <div class="logo"> <a href="<?php echo $this->getUrl('') ?>" title="<?php echo $this->getLogoAlt() ?>"><?php echo $this->getLogoAlt() ?><img src="<?php echo $this->getLogoSrc() ?>" alt="<?php echo $this->getLogoAlt() ?>"></a><br>
-      <ul class="phone">
-        <li class="phoneheader">718-841-7037</li>
-      </ul>
-    </div>
-    <?php if ($this->getIsHomePage()):?>
-    <?php else:?>
-    <div class="header-divider"></div>
-    <?php endif ?>
-  </div>
-  <?php echo $this->getChildHtml('topMenu') ?>
-  <?php if ($this->getIsHomePage()):?>
-  <?php else:?>
-  <div class="header-divider"></div>
-  <?php endif ?>
-</div>
-</div>
