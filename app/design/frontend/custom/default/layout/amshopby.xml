@@ -11,10 +11,6 @@
         <reference name="root">
            <action method="setTemplate"><template>page/2columns-left.phtml</template></action>
         </reference>
-
-        <reference name="left">
-           <block type="amshopby/catalog_layer_view" name="amshopby.navleft" before="-" template="catalog/layer/view.phtml"/> 
-        </reference>
         <reference name="content">
             <block type="amshopby/catalog_layer_view_top" name="amshopby.navtop" template="amshopby/view_top.phtml"/>
             <block type="catalog/category_view" name="category.products" template="catalog/category/view.phtml">

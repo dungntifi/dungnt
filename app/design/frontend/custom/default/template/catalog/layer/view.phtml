@@ -33,28 +33,28 @@
 ?>
 <?php if($this->canShowBlock()): ?>
 <div class="block block-layered-nav">
+    <div class="block-title">
+        <strong><span><?php echo $this->__('Shop By') ?></span></strong>
+    </div>
     <div class="block-content">
-
-
         <?php if($this->canShowOptions()): ?>
-            <p class="block-subtitle narrow-subtitle"><?php echo $this->__('Narrow Your Choices') ?></p>
-			<div class="arrow-down" id="layered-arrow"></div>
-	        <?php echo $this->getStateHtml() ?>	        
-		        <?php if ($this->getLayer()->getState()->getFilters()): ?>
-		            <div class="actions"><a href="<?php echo $this->getClearUrl() ?>"><?php echo $this->__('Clear All') ?></a></div>
-		        <?php endif; ?>            
-            
-            <dl id="narrow-by-list">
-                <?php $_filters = $this->getFilters() ?>
-                <?php foreach ($_filters as $_filter): ?>
-                <?php if($_filter->getItemsCount()): ?>
-                    
+        <dl id="narrow-by-list">
+            <?php $_filters = $this->getFilters() ?>
+            <?php foreach ($_filters as $_filter): ?>
+            <?php if($_filter->getItemsCount()): ?>
+                <?php if($_filter->getName()!='All Designer'): ?>
                     <dt><?php echo $this->__($_filter->getName()) ?></dt>
                     <dd><?php echo $_filter->getHtml() ?></dd>
+                    <?php else: ?>
+                    <div class="designer">
+                        <h3><?php echo $this->__("All Designer"); ?></h3>
+                        <div class="content-designer"><?php echo $_filter->getHtml(); ?></div>
+                    </div>
+                    <?php endif; ?>
                 <?php endif; ?>
-                <?php endforeach; ?>
-            </dl>
-            <script type="text/javascript">decorateDataList('narrow-by-list')</script>
+            <?php endforeach; ?>
+        </dl>
+        <script type="text/javascript">decorateDataList('narrow-by-list')</script>
         <?php endif; ?>
     </div>
 </div>

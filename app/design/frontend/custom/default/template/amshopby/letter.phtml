@@ -1,0 +1,17 @@
+<?php $items = $this->getItems() ?>
+<div class="content">
+    <?php if ($items): ?>
+    <table class="silo-table"><caption>By A-Z</caption>
+        <tbody>
+    <?php foreach ($items as $letters): ?>
+        <tr>
+        <?php foreach ($letters as $letter => $options): ?>
+            <td class="designerIndex <?php echo $letter ?>"><a href="<?php echo $this->getUrl('designer/index/index/letter/'.$letter); ?>"><?php echo $letter ?></a></td>
+        <?php endforeach ?>
+    <?php endforeach ?>
+            <td class="designerIndex all" colspan="3"><a href="<?php echo $this->getUrl('designer/index/index/letter/all'); ?>" class="viewall" >View All</a></td>
+        </tr>
+        </tbody>
+    </table>
+    <?php endif ?>
+</div>

@@ -8,6 +8,7 @@ class Amasty_Shopby_Block_List extends Mage_Core_Block_Template
     
     protected function _prepareLayout()
     {
+        $param = $this->getLetter();
         $entityTypeId = Mage::getModel('eav/entity')->setType('catalog_product')->getTypeId();
         $modelName  = Mage::helper('amshopby')->isVersionLessThan(1, 4) ? 'catalog/entity_attribute' : 'catalog/resource_eav_attribute';
         $attribute  = Mage::getModel($modelName) 
@@ -104,12 +105,32 @@ if (is_numeric($i)) { $i = '#'; }
         $col = 0; // current column 
         $num = 0; // current number of items in column
         foreach ($letters as $letter => $items){
-            $this->items[$col][$letter] = $items['items'];
-            $num += $items['count'];
-            $num++;
-            if ($num >= $itemsPerColumn){
-                $num = 0;
-                $col++;
+            if($param != "" && $param == $letter){
+                $this->items[$col][$letter] = $items['items'];
+                $num += $items['count'];
+                $num++;
+                if ($num >= $itemsPerColumn){
+                    $num = 0;
+                    $col++;
+                }
+            }else if($param == ""){
+                if($letter=="#"){
+                    $this->items[$col][$letter] = $items['items'];
+                    $num += $items['count'];
+                    $num++;
+                    if ($num >= $itemsPerColumn){
+                        $num = 0;
+                        $col++;
+                    }
+                }
+            }else if($param == "all"){
+                $this->items[$col][$letter] = $items['items'];
+                $num += $items['count'];
+                $num++;
+                if ($num >= $itemsPerColumn){
+                    $num = 0;
+                    $col++;
+                }
             }
         }
         
