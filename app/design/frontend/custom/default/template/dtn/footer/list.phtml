@@ -1,0 +1,45 @@
+<?php
+    $collection = $this->getProductCollectionForLater();
+?>
+<?php if(count($collection) > 0):?>
+<div id="save-for-later">
+	<h3><?php echo $this->__('Saved Items')?></h3>
+    <ul class="list-product">
+<?php
+    foreach($collection as $product){
+        $_product = $this->getProductCollection($product["product_id"]);
+        $name = $_product->getName();
+        $imgUrl = (string)Mage::helper('catalog/image')->init($_product, 'image')->resize(70,70);
+        $productUrl = $_product->getProductUrl();
+        $option = json_decode($product["option"]);
+?>
+    <li>
+        <a href="<?php echo $productUrl; ?>"><img src="<?php echo $imgUrl; ?>" alt="<?php echo $name; ?>" title="<?php echo $name; ?>"/></a>
+        <div class="product-information">
+            <a href="<?php echo $productUrl; ?>"><h5><?php echo $name; ?></h5></a>
+            <?php if($option && $option != null): ?>
+                <div class="option">
+                    <?php
+                        foreach($option as $key=>$value){
+                            $optionAtt = $this->getTextAttributeAndOptionById($key,$value);
+                            if($value):
+                    ?>
+                            <div class="option-item">
+                                <div class="attribute-text"><?php echo $optionAtt[0]." :"; ?></div>
+                                <div class="option-text"><?php echo $optionAtt[1] ?></div>
+                            </div>
+                    <?php
+                            endif;
+                        }
+                    ?>
+                </div>
+            <?php endif; ?>
+            <div class="action"></div>
+        </div>
+    </li>
+<?php
+    }
+?>
+    </ul>
+</div>
+<?php endif;?>

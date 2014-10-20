@@ -15,7 +15,8 @@ ul#pronav {
 	padding:0;
 	width:auto;
 	list-style:none;
-	position:relative;	
+	position:relative;
+
 }
 
 ul#pronav.pn-left,
@@ -30,7 +31,7 @@ ul#pronav.pn-right {
  */
 ul#pronav li.primary-pronav-item {
 	float:left;
-	margin:0;
+	margin:0 5px 0 0;
 	padding:0;
 	position:relative; /* IMPORTANT - needs to be positioned relative */
 }
@@ -39,6 +40,7 @@ ul#pronav.pn-left li.primary-pronav-item,
 ul#pronav.pn-right li.primary-pronav-item  {
 	float:none;
 	border-bottom:1px solid #000;
+	
 }
 
 ul#pronav li.primary-pronav-item.position-static {
@@ -52,33 +54,49 @@ ul#pronav.pn-right li.primary-pronav-item.position-static {
 
 ul#pronav li.primary-pronav-item a.primary-pronav-link {
 	display:block;
+	background:#fff;
+	z-index:9999 !important;
+ 	border:1px solid #fff;
+	border-bottom:none;	
+
 }
 
+ul#pronav li.primary-pronav-item a.primary-pronav-link:hover,
+ul#pronav li.primary-pronav-item:hover a.primary-pronav-link {
 
+	border-bottom:0;
+	color:#ff8200;
+	background:#fff;
+	position:relative;
+ 	border:1px solid #000;
+	border-bottom:none;
+	
+}
 /*
  * DROPDOWN STYLES
  */
 ul#pronav li.primary-pronav-item .sub,
 ul#pronav li.primary-pronav-item .sub ul li.has-children .child-sub {
-	top:28px;
+	top:33px;
 	position:absolute; /* IMPORTANT - needs to be positioned absolute */
-	z-index:99999;
+	z-index:999;
 	display:none;
 	opacity:0;
 	filter:alpha(opacity=0);	
 }
 
 ul#pronav li.primary-pronav-item .sub.sub-align-right {
-	right:0px;
+	right:0px !important;
 }
 
 ul#pronav li.primary-pronav-item .sub.sub-align-left,
 ul#pronav li.primary-pronav-item .sub.sub-align-start {
-	left:0px;
+	left:0px!important;
+	z-index:1;
 }
 
 ul#pronav li.primary-pronav-item .sub.sub-align-end {
-	right:0px;
+	right:0px !important;
 }
 
 /*
@@ -101,11 +119,13 @@ ul#pronav li.primary-pronav-item .sub .row ul {
 	list-style:none;
 	margin:0;
 	padding:15px 0;
-	width:15em; /* IMPORTANT */
+	width:12.5em; /* IMPORTANT */
 	float:left;
 	min-height:100px;
 }
-
+ul#pronav li.primary-pronav-item .sub .row ul.ul-promo {
+	width:100%;
+}
 ul#pronav li.primary-pronav-item .sub .row ul.has-columns,
 ul#pronav li.primary-pronav-item .sub .row ul.columns-split,
 ul#pronav li.primary-pronav-item .sub .row ul.columns-split ul {
@@ -143,7 +163,7 @@ ul#pronav li.primary-pronav-item .sub ul li.level-5 a {
 }
 
 ul#pronav li.primary-pronav-item .sub ul li a {
-	padding:3px 25px;
+	padding:3px 0px;
 	display:block;
 }
 

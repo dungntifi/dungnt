@@ -65,7 +65,9 @@
                         <?php echo $_helper->productAttribute($_product, $_product->getShortDescription(), 'short_description') ?>
                         <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $_productNameStripped ?>" class="link-learn"><?php echo $this->__('Learn More') ?></a>
                     </div>
-
+                    <div class="quickview">
+                        <a class="quickview-btn" href="<?php echo $_product->getProductUrl() ?>"><?php echo $this->__('Quick View') ?></a>
+                    </div>
                     <ul class="add-to-links">
                         <?php if ($this->helper('wishlist')->isAllow()) : ?>
                             <li><a href="<?php echo $this->helper('wishlist')->getAddUrl($_product) ?>" class="link-wishlist"><?php echo $this->__('Add to Wishlist') ?></a></li>
@@ -84,7 +86,7 @@
     <?php else: ?>
 
     <?php // Grid Mode ?>
-
+    
     <?php $_collectionSize = $_productCollection->count() ?>
     <?php $_columnCount = $this->getColumnCount(); ?>
     <?php $i=0; foreach ($_productCollection as $_product): ?>
@@ -92,15 +94,42 @@
         <ul class="products-grid">
         <?php endif ?>
             <li class="item<?php if(($i-1)%$_columnCount==0): ?> first<?php elseif($i%$_columnCount==0): ?> last<?php endif; ?>">
-            
-                <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" class="product-image"><img src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->constrainOnly(TRUE)->keepAspectRatio(TRUE)->keepFrame(FALSE)->resize(190,300); ?>" alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" /></a>
+                <!-- Colors mod -->
+                <div class="quickview">
+                    <a class="quickview-btn fancybox.ajax" href="<?php echo $this->getUrl('quickbox/product/view') . '?id='. $_product->getId() ?>"><?php echo $this->__('Quick View') ?></a>
+                </div>
+                
+                <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" class="product-image wrapper-for-product-<?php echo $_product->getId() ?>">
+                    <?php $gallery = Mage::getModel('catalog/product')->load($_product->getId())->getMediaGalleryImages(); 
+                    $j = 1;
+                    foreach ($gallery as $_image) : 
+                        if($j <= 2) : ?>
+
+                        <img src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image', $_image->getFile())->constrainOnly(TRUE)->keepAspectRatio(TRUE)->keepFrame(FALSE)->resize(190,300); ?>" alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" class="img<?php echo $j; ?> amconf-parent-<?php echo $_product->getId() ?>" />
+                        
+                    <?php $j++; endif; 
+                    endforeach; ?>
+                </a>
  
                 <a class="product-subtitle-link" href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($_product->getName(), null, true) ?>"><div class="product-subtitle"><?php echo $this->htmlEscape($_product->getData('subtitle')); ?></div></a>
-                               
+                     
+                <div class="amconf-block">
+                    <script>jQuery.noConflict();</script>
+                    <?php
+                        $blockForForm = Mage::app()->getLayout()->createBlock('amconf/catalog_product_view_type_configurablel', 
+                                                                              'amconf.catalog_product_view_type_configurable', 
+                                                                               array('template'=>"amasty/amconf/configurable.phtml"));
+                        $blockForForm->setProduct($_product);
+                        $blockForForm->setNameInLayout('product.info.options.configurable');
+                        echo $blockForForm->toHtml();
+                    ?>
+                </div>     
+
+
                 <h2 class="product-name"><a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($_product->getName(), null, true) ?>"><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></a></h2>
                 
 
-            	
+                
                 <?php if($_product->getRatingSummary()): ?>
                 <?php echo $this->getReviewsSummaryHtml($_product, 'short') ?>
                 <?php endif; ?>
@@ -108,26 +137,26 @@
                 <!-- Colors mod -->
                 <div class="color-avail" > 
                 <?php $attrs  = $_product->getTypeInstance(true)->getConfigurableAttributesAsArray($_product);
-					foreach($attrs as $attr) {
-    				if(0 == strcmp("color", $attr['attribute_code'])) {
-    					print "Available in ";
-        				$options    = $attr['values'];
-        				$total = count($options);
-        				if ($total == 1) {
-        					foreach($options as $option) {
-            				print "{$option['store_label']}";
-        					}
-        				}
-        				else {
-        				print $total;
-        				print " colors";
-        				}	
-    				}
-				}?>
-				</div>
- 				<!-- Colors mod -->
- 				<?php echo $this->getPriceHtml($_product, true) ?>
- 				
+                    foreach($attrs as $attr) {
+                    if(0 == strcmp("color", $attr['attribute_code'])) {
+                        print "Available in ";
+                        $options    = $attr['values'];
+                        $total = count($options);
+                        if ($total == 1) {
+                            foreach($options as $option) {
+                            print "{$option['store_label']}";
+                            }
+                        }
+                        else {
+                        print $total;
+                        print " colors";
+                        }   
+                    }
+                }?>
+                </div>
+                
+                <?php echo $this->getPriceHtml($_product, true) ?>
+                
                 <div class="actions">
                     <?php if($_product->isSaleable()): ?>
                     <?php else: ?>
@@ -147,3 +176,52 @@
     </div>
 </div>
 <?php endif; ?>
+
+<script type="text/javascript">
+    (function($) {
+        $(function() {
+
+            $('.product-image').hover(function(){
+                if($(this).children(".img2").length > 0) {
+                    $(this).children(".img1").css('display', 'none');
+                    $(this).children(".img2").css('display', 'block');
+                }
+            }, function() {
+                if($(this).children(".img2").length > 0) {
+                    $(this).children(".img2").css('display', 'none');
+                    $(this).children(".img1").css('display', 'block');
+                }
+            });
+
+            //quickview-btn switcher
+            $('.item').hover(function(){
+                $(this).children(":first").css('display', 'block');
+            }, function() {
+                $(this).children(":first").css('display', 'none');
+            });
+
+            $('.quickview-btn').each(function() {
+                var link = $(this),
+                    editUrl = link.attr('href');
+                link.fancybox({
+                    titleShow: false,
+                    showNavArrows: false,
+                    modal: true,
+                    padding: 0,
+                    margin: 0,
+                    fitToView: false,
+                    overlayShow: false,
+                    openEffect: 'none',
+                    closeEffect: 'none',
+                    autoDimensions: false,
+                    width: 578,
+                    height: 406,
+                    onComplete: function() {jQuery('css3-container').css('display','none');jQuery('#fancybox-content').css('background-color','#fff');},
+                    onClosed: function() {},
+                    type: 'ajax',
+                    href: editUrl
+                });
+            });
+        });
+    })(jQuery);
+</script>

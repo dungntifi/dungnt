@@ -25,6 +25,9 @@
     -->
     <default>  	
         <reference name="head">
+			<action method="addJs"><script>revolution/jquery.themepunch.plugins.min.js</script></action>
+			<action method="addJs"><script>revolution/jquery.themepunch.revolution.min.js</script></action>	
+		
 			<action method="addItem"><type>skin_css</type><name>css/dtn-dev.css</name><params/></action>
 			
 			<action method="addJs"><script>jscrollpane/jquery.jscrollpane.min.js</script></action>			

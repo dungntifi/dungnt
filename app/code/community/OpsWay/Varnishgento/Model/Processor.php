@@ -27,6 +27,8 @@ class OpsWay_Varnishgento_Model_Processor
      * Cache storage id
      */
     const CACHE_TAGS_STORAGE_ID = 'VARNISH_CACHE_TAGS';
+
+    const BAN_OBJECTS_STORAGE_ID = 'VARNISH_BAN_OBJECTS';
     /**
      * Cache storage counter
      */
@@ -121,11 +123,38 @@ class OpsWay_Varnishgento_Model_Processor
         return $this->_cacheHeaderTags;
     }
 
+    public function saveBanEvent($banObjectList){
+        $banObjectList = array_merge($banObjectList, $this->loadBanEvents());
+        Mage::app()->saveCache(serialize($banObjectList), self::BAN_OBJECTS_STORAGE_ID);
+    }
+
+    public function removeBanEvents($banObjectList){
+        Mage::app()->removeCache(self::BAN_OBJECTS_STORAGE_ID);
+    }
+
+    public function loadBanEvents(){
+        $banObjectList = Mage::app()->loadCache(self::BAN_OBJECTS_STORAGE_ID);
+        if (!empty($banObjectList)) {
+            $banObjectList = unserialize($banObjectList);
+            if (!is_array($banObjectList)) {
+                $banObjectList = array();
+            }
+        } else {
+            $banObjectList = array();
+        }
+        return $banObjectList;
+    }
+
     /**
      * Clean varnish cache
      */
     public function cleanCache()
     {
+        $banObjectList = Mage::helper('opsway_varnishgento')->getBanObjectList();
+        if (!empty($banObjectList)){
+            $this->saveBanEvent($banObjectList);
+        }
+
         $tagsToClean = Mage::helper('opsway_varnishgento')->getTagsToClean();
         if (empty($tagsToClean)) {
             return;
@@ -225,6 +254,48 @@ class OpsWay_Varnishgento_Model_Processor
             return $tags;
         }
         return array_filter($tags,Mage::helper('opsway_varnishgento')->getCompareTagFunc($this->_exceptionTagsList,true));
+    }
+
+    public function runBanEvents($banObjectList){
+        $connector = Mage::getSingleton('opsway_varnishgento/connector');
+        if ($connector->isLocked()) {
+            throw new OpsWay_Varnishgento_Model_Connector_Exception(
+                Mage::helper('opsway_varnishgento')->__('Connector is locked')
+            );
+        }
+        try {
+            $connector->lock();
+            $connector->init(
+                Mage::helper('opsway_varnishgento')->getServers(),
+                Mage::getStoreConfig('opsway_varnishgento/general/debug')
+            );
+            foreach ($banObjectList as $banEvent){
+                $tags = $banEvent['tags'];
+                $scopes = $banEvent['scopes'];
+                $separator = self::CACHE_HEADER_TAG_SEPARATOR;
+                $_tags = array();
+                foreach ($tags as $tag) {
+                    $_tags[] = $separator.$tag.$separator;
+                }
+
+                $banScopes = array();
+                if (!empty($_tags)) $banScopes[] = array('scope' => self::CACHE_HEADER_NAME,'op' => 'match','value' => '"'.join('|', $_tags).'"');
+                foreach (array('match','notmatch') as $op){
+                    if (isset($scopes[$op])){
+                        foreach ($scopes[$op] as $scope => $value){
+                            $banScopes[] = array('scope' => 'X-Scope-'.ucfirst(strtolower($scope)),'op' => $op, 'value' => '"'.implode('|',(array)$value).'"');
+                        }
+                    }
+                }
+
+                $connector->purgeByScopes($banScopes);
+            }
+
+        } catch (Exception $e) {
+            $connector->unlock();
+            throw $e;
+        }
+        $connector->unlock();
     }
 
     /**
@@ -462,6 +533,14 @@ class OpsWay_Varnishgento_Model_Processor
             Mage::app()->saveCache($ret,self::TOP_LEVEL_CATALOG_ARRAY, array('CUSTOM_VARNIGENTO'), 24*60*60);
         }
         $ret = unserialize($ret);
+        if ($category = Mage::registry('current_category')) {
+            $categoryId = $category->getId();
+            $that = $this;
+            $ret = array_filter($ret,function($v) use ($categoryId,$that){
+                    return !in_array($v,array($that::CATALOG_CATEGORY_TAG_PREFIX . $categoryId,
+                        $that::CATALOG_CATEGORY_TAG_PREFIX_SHORT . $categoryId));
+                });
+        }
         return $ret;
     }
 

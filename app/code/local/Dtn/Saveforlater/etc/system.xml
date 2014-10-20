@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<config>
+    <tabs>
+        <dtn translate="label">
+            <label>Dtn Extensions</label>
+            <sort_order>100</sort_order>
+        </dtn>
+    </tabs>
+    <sections>
+        <save_for_later translate="label">
+            <label>Save For Later</label>
+            <tab>dtn</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>10</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <setting translate="label">
+                    <label>Setting</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>10</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <enabled translate="label">
+                            <label>Enable</label>
+                            <comment>Please select yes/no to on/off module</comment>
+                            <frontend_type>select</frontend_type>
+                            <show_in_default>1</show_in_default>
+                            <show_in_store>1</show_in_store>
+                            <show_in_website>1</show_in_website>
+                            <sort_order>1</sort_order>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                        </enabled>
+                        <enabled_jquery>
+                            <label>Enable jQuery</label>
+                            <comment>Please select yes/no to on/off jquery</comment>
+                            <frontend_type>select</frontend_type>
+                            <show_in_default>1</show_in_default>
+                            <show_in_store>1</show_in_store>
+                            <show_in_website>1</show_in_website>
+                            <sort_order>10</sort_order>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                        </enabled_jquery>
+                        <!--<plush_cache>-->
+                            <!--<label>Plush Cache</label>-->
+                            <!--<comment>Please select yes/no to used plush cache</comment>-->
+                            <!--<frontend_type>select</frontend_type>-->
+                            <!--<show_in_default>1</show_in_default>-->
+                            <!--<show_in_store>1</show_in_store>-->
+                            <!--<show_in_website>1</show_in_website>-->
+                            <!--<sort_order>20</sort_order>-->
+                            <!--<source_model>adminhtml/system_config_source_yesno</source_model>-->
+                        <!--</plush_cache>-->
+                    </fields>
+                </setting>
+            </groups>
+        </save_for_later>
+    </sections>
+</config>

@@ -1,20 +1,20 @@
 <?php if($this->canShowBlock()): ?>
 <div class="block block-layered-nav">
-    <div class="block-title">
+<?php /*?>    <div class="block-title">
         <strong><span><?php echo $this->__('Shop By') ?></span></strong>
-    </div>
+    </div><?php */?>
     <div class="block-content">
         <?php echo $this->getStateHtml() ?>
         <?php if($this->canShowOptions()): ?>
-            <p class="block-subtitle"><?php echo $this->__('Shopping Options') ?></p>
+            <p class="block-subtitle"><?php echo $this->__('Filter By') ?></p>
             <dl id="narrow-by-list">
                 <table width="100%"><tr>
-                <?php foreach ($this->getFilters() as $_filter): ?>
+                <?php foreach ($this->getFilters() as $_filter):?>
                 <?php if($_filter->getItemsCount()): ?>
                     <?php if ($_filter instanceof Mage_Catalog_Block_Layer_Filter_Category):?>
                         <td width="100%">
                     <?php else:?>
-                        <td width="165px">
+                        <td style="min-width:140px" class="<?php echo $_filter->getName()?>">
                     <?php endif;?>
                     <dt><?php echo $this->__($_filter->getName()) ?></dt>
                     <dd style="background:none"><?php echo $_filter->getHtml() ?></dd>

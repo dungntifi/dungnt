@@ -55,13 +55,13 @@
         <div class="product-shop">
             <div class="product-name">
                 <h1><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></h1>
-                
+
                 <span class="pinterest">
                 <a href="//pinterest.com/pin/create/button/?media=<?php echo $this->helper('catalog/image')->init($_product, 'image'); ?>&description=<?php echo trim(Mage::registry('current_product')->getName()); ?>&url=<?php echo trim(Mage::registry('current_product')->getProductUrl()); ?>" data-pin-do="buttonPin" data-pin-config="none"><img src="//assets.pinterest.com/images/pidgets/pinit_fg_en_rect_gray_20.png" /></a>
 <!-- Please call pinit.js only once per page -->
 <script type="text/javascript" async src="//assets.pinterest.com/js/pinit.js"></script>
                 </span>
-                
+
 				<span class="wanelo">
 				   <a class="wanelo-save-button"
 				      href="<?php echo Mage::getBaseUrl(); ?>"
@@ -71,49 +71,50 @@
 				      data-price="<?php echo number_format($_product->getFinalPrice(),2);?>"></a>
 
 				</span>
-					  <script async="true" type="text/javascript" src="//cdn-saveit.wanelo.com/bookmarklet/3/save.js"></script> 
+					  <script async="true" type="text/javascript" src="//cdn-saveit.wanelo.com/bookmarklet/3/save.js"></script>
             </div>
 
 			<?php
 
 			$attributeSetName = Mage::getModel('eav/entity_attribute_set')->load($_product->getAttributeSetId())->getAttributeSetName();
-			
+
 			if ($attributeSetName == "Dresses") {
 
 			?>
 
-            <?php 
-            
+            <?php
+
             $designer = "";
 
             $designer = $_product->getAttributeText('designer');
-            										
-            include(MAGENTO_ROOT . '/includes/size_chart.php');     
-            
-			$sizechart = sizeDesigner($designer);			
+
+            include(MAGENTO_ROOT . '/includes/size_chart.php');
+
+			$sizechart = sizeDesigner($designer);
 
              ?>
-           
+
 			<script>
 			jQuery.noConflict();
 			// $j is now an alias to the jQuery function; creating the new alias is optional.
 			</script>
-            
+
             <script type="text/javascript">
-				
-				
+
+
 				function sizePopup() {
-				
+
 				jQuery.fn.speedoPopup({
 					htmlContent: "<?php echo $sizechart; ?>", window: null, height: null, effectIn: "fade", effectOut: "fade"
-					}); 
+					});
 				};
 			</script>
 
 
 			<?php } ?>
 
-            
+            <?php echo $this->getChildHtml('followprice') ?>
+            <?php echo $this->getChildHtml('followpricepopup') ?>
             <?php echo $this->getPriceHtml($_product) ?>
             <?php echo $this->getChildHtml('product_type_data') ?>
 
@@ -138,28 +139,28 @@
                     <?php echo $this->getChildHtml('addto') ?>
                 </div>
             <?php endif; ?>
-            
+
             <div class="std"><p><?php echo $this->htmlEscape($_product->getData('description')); ?></p></div>
             <div class="std product_promotion"><p><?php echo $this->htmlEscape($_product->getData('product_promotion')); ?></p></div>
 			<div class="std product_return"><p><?php echo $this->htmlEscape($_product->getData('product_return')); ?></p></div>
-			
+
             <?php echo $this->getChildHtml('other');?>
 
             <?php if ($_product->isSaleable() && $this->hasOptions()):?>
                 <?php echo $this->getChildChildHtml('container1', '', true, true) ?>
             <?php endif;?>
-			
+
 			<div class="email-wishlist-links">
             <?php if ($this->canEmailToFriend()): ?>
                 <a href="<?php echo $this->helper('catalog/product')->getEmailToFriendUrl($_product) ?>" class="email-friend" ><?php echo $this->__('Email to a Friend') ?></a>
-            <?php endif; ?> | 
+            <?php endif; ?> |
 			<?php echo $this->getChildHtml('addto') ?>
             <?php echo $this->getReviewsSummaryHtml($_product, false, true)?>
 			</div>
-			
+
         </div>
 
-        
+
         <?php if ($_product->isSaleable() && $this->hasOptions()):?>
             <?php echo $this->getChildChildHtml('container2', '', true, true) ?>
         <?php endif;?>
@@ -215,12 +216,12 @@
         }.bind(productAddToCartForm);
     //]]>
     </script>
-    
+
     </div>
-	
-	
+
+
 	<div style="clear:both;"></div>
-	
+
     <div class="product-collateral">
         <?php echo $this->getChildHtml('upsell_products') ?>
     </div>
@@ -229,16 +230,16 @@
 	$_designer = $_product->getAttributeText('designer');
 	$collection = $_product->getCollection();
 	?>
-	<div class="product-tabs">	
+	<div class="product-tabs">
 		<div class="tabs">
 			<ul class="tab-links">
 				<li class="active"><a href="#designer"><?php echo $this->__("Designer"); ?></a></li>
-				<li><a href="#collection"><?php echo $this->__("Collection"); ?></a></li>				
+				<li><a href="#collection"><?php echo $this->__("Collection"); ?></a></li>
 				<li><a href="#style"><?php echo $this->__("Style"); ?></a></li>
-				<li><a href="#size"><?php echo $this->__("Size"); ?></a></li>				
+				<li><a href="#size"><?php echo $this->__("Size"); ?></a></li>
 			</ul>
 
-			<div class="tab-content">				
+			<div class="tab-content">
 				<div id="designer" class="tab active">
 					<?php echo $_designer;?>
 				</div>
@@ -246,23 +247,35 @@
 					<?php echo $collection;?>
 				</div>
 				<div id="style" class="tab" style="display:none;">
-					<?php echo $styles;?>
+					<?php
+                        $attStyle = explode(',',$styles);
+                        $html = "";
+                        $productModel = Mage::getModel('catalog/product');
+                        $attr = $productModel->getResource()->getAttribute("styles");
+                        if ($attr->usesSource()) {
+                            $html .= "<ul class='styles'>";
+                                foreach($attStyle as $option):
+                                    $html .= '<li>'.$color_label = $attr->getSource()->getOptionText($option).'</li>';
+                                endforeach;
+                            $html .= "</ul>";
+                        }
+                        echo $html;
+                    ?>
 				</div>
 				<div id="size" class="tab" style="display:none;">
-					size chart
-				</div>				
+
+				</div>
 			</div>
-		</div>	
+		</div>
 	</div>
 	<?php echo $this->getChildHtml('product_additional_data') ?>
-	
-	<div id="review-form-popup">			
-		<div class="review-form-popup-inner">
-			<div class="close"> </div>
-			<?php echo $this->getChildHtml('review_form') ?>				
+	<div style="display:none">
+		<div id="review-form-popup">
+			<div class="review-form-popup-inner">
+				<?php echo $this->getChildHtml('review_form') ?>
+			</div>
 		</div>
-	</div>	
-	
+	</div>
 	<script type="text/javascript">
 		jQuery(document).ready(function() {
 			jQuery('.tabs .tab-links a').on('click', function(e)  {
@@ -276,20 +289,22 @@
 
 				e.preventDefault();
 			});
-			
-			jQuery('.view-review-list').click(function(){ 					
+
+			jQuery('.view-review-list').click(function(){
 				jQuery('html,body').animate({scrollTop: jQuery('#customer-reviews').offset().top},1000);
 			});
-			
+
 			jQuery('.scroll-pane').jScrollPane();
 			
 			jQuery("#review-form-popup div.close").click(function() {
 				jQuery("#review-form-popup").fadeOut("normal");
 			});
 		});
-		
-		function reviewPopup() {					
-			jQuery("#review-form-popup").fadeIn(500);
+
+		function reviewPopup() {
+			jQuery.fn.speedoPopup({
+				htmlContent: jQuery('#review-form-popup').html(), width: 500, height: null, effectIn: "fade", effectOut: "fade", theme: "metro"
+			});
 		};
 		
 	</script>

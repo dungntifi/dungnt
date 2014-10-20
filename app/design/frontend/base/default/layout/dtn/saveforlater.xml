@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<layout>
+    <default>
+		 <reference name="head">
+            <action method="addJs" ifconfig="save_for_later/setting/enabled_jquery"><script>dtn/jquery/jquery-1.10.2.min.js</script></action>
+			<action method="addItem"><type>skin_css</type><name>css/dtn/saveforlater.css</name><params/></action>
+		</reference>
+        <reference name="footer">            
+            <block ifconfig="save_for_later/setting/enabled" type="saveforlater/head_head" template="dtn/footer/list.phtml"></block>
+        </reference>
+    </default>
+    <catalog_product_view>
+        <reference name='product.info.addto'>
+            <action ifconfig="save_for_later/setting/enabled" method='setTemplate'><template>dtn/product/view/addto.phtml</template></action>
+        </reference>
+    </catalog_product_view>
+    <customer_account>
+        <reference name="customer_account_navigation">
+            <action ifconfig="save_for_later/setting/enabled" method="addLink" translate="label" module="saveforlater">
+                <name>saveforlater</name>
+                <path>saveforlater/index/list</path>
+                <label>Save For Later</label>
+            </action>
+        </reference>
+    </customer_account>
+    <saveforlater_index_list>
+        <update handle="customer_account"/>        
+        <reference name="content">
+            <block ifconfig="save_for_later/setting/enabled" type="saveforlater/drashboad_saveforlater" template="dtn/dashboad/list.phtml" before="customer.account.link.back" />
+        </reference>
+		<reference name="my.account.wrapper">
+            <block ifconfig="save_for_later/setting/enabled" type="customer/account_dashboard" name="customer.account.link.back"
+                   template="customer/account/link/back.phtml" after="-" />
+        </reference>
+    </saveforlater_index_list>
+</layout>

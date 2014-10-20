@@ -1,0 +1,96 @@
+<?php $collection = $this->productCollection(); ?>
+<?php if(count($collection) > 0): ?>
+	<div class="page-title">
+		<h1><?php echo $this->__('Saved Items')?></h1>
+	</div>
+	<br/>
+    <form id="save-for-later-frm">
+        <table class="data-table" id="save-for-later-table" width="100%">
+            <thead>
+            <tr class="first last">
+                <th class="customer-save-item-image"></th>
+                <th class="customer-save-item-info"></th>
+                <th class="customer-save-item-quantity">Quantity</th>
+                <th class="customer-save-item-price">Price</th>
+                <th class="customer-save-item-cart">Add to cart</th>
+                <th class="customer-save-item-remove"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php
+                foreach($collection as $items):
+                    $_product = $this->getProductCollection($items["product_id"]);
+                    $name = $_product->getName();
+                    $imgUrl = (string)Mage::helper('catalog/image')->init($_product, 'image')->resize(80,80);
+                    $productUrl = $_product->getProductUrl();
+                    $option = json_decode($items["option"]);
+            ?>
+                <tr>
+                    <td class="customer-save-item-image">
+                        <a class="product-image" href="<?php echo $productUrl; ?>" title="<?php echo $name; ?>">
+                            <img src="<?php echo $imgUrl; ?>" alt="<?php echo $name; ?>">
+                        </a>
+                    </td>
+                    <td class="customer-save-item-info">
+                        <h3 class="product-name">
+                            <a href="<?php echo $productUrl; ?>" title="<?php echo $name; ?>"><?php echo $name; ?></a>
+                        </h3>
+
+                        <div class="save-for-later-sku">
+                            <span><?php echo $this->__("SKU :"); ?><?php echo $_product->getSku(); ?></span>
+                        </div>
+                        <?php if($option && $option != null): ?>
+                            <div class="option">
+                                <?php
+                                foreach($option as $key=>$value){
+                                    $optionAtt = $this->getTextAttributeAndOptionById($key,$value);
+                                    if($value):
+                                        ?>
+                                        <div class="option-item">
+                                            <div class="attribute-text"><?php echo $optionAtt[0]." :"; ?></div>
+                                            <div class="option-text"><?php echo $optionAtt[1] ?></div>
+                                        </div>
+                                        <?php
+                                    endif;
+                                }
+                                ?>
+                            </div>
+                        <?php endif; ?>
+                    </td>
+                    <td class="customer-save-item-quantity" data-rwd-label="Quantity">
+                        <div class="cart-cell">
+                            <div class="add-to-cart-alt">
+                                <input type="text" pattern="\d*" class="input-text qty validate-not-negative-number" name="qty" value="<?php echo $items['qty']; ?>">
+                            </div>
+                        </div>
+                    </td>
+                    <td class="customer-save-item-price" data-rwd-label="Price">
+                        <div class="cart-cell">
+                            <?php echo $this->getPriceHtml($_product, true); ?>
+                        </div>
+                    </td>
+                    <td class="customer-save-item-cart">
+                        <div class="cart-cell">
+                            <button type="button" title="<?php echo $this->__("Add to Cart"); ?>" onclick="addSaveForLaterItemToCart(<?php echo $items["item_id"]; ?>);" class="button btn-cart"><span><span><?php echo $this->__("Add to Cart"); ?></span></span></button>
+                        </div>
+                     </td>
+                    <td class="customer-save-item-remove last"><a onclick="deleteSaveForLaterItemInList(<?php echo $items["item_id"]; ?>);" title="<?php echo $this->__("Remove Item"); ?>" class="btn-remove btn-remove2"><?php echo $this->__("Remove item"); ?></a></td>
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+    </form>
+<?php else: ?>
+    <?php echo $this->__("There are no items."); ?>
+<?php endif; ?>
+<script>
+    function addSaveForLaterItemToCart(itemId) {
+        var url = "<?php echo $this->getUrl()."saveforlater/index/addproduct/id/"; ?>"+itemId;
+        setLocation(url);
+    }
+
+    function deleteSaveForLaterItemInList(itemId){
+        var url = "<?php echo $this->getUrl()."saveforlater/index/removeitem/id/"; ?>"+itemId;
+        setLocation(url);
+    }
+</script>

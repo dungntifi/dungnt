@@ -58,10 +58,10 @@ clear:both; font-size:0; line-height:0; height:0; overflow:hidden; }
 
 div.block-layered-nav dt {
  cursor:pointer; 
- padding: 1px 0 0 18px;
- background:url(../images/amshopby-expanded.gif) center left no-repeat;
+ padding: 6px 8px;
+ background:url(../images/amshopby-expanded.gif) center right no-repeat;
 }
-div.block-layered-nav dt.amshopby-collapsed {background:url(../images/amshopby-collapsed.gif) center left no-repeat}
+div.block-layered-nav dt.amshopby-collapsed {background:url(../images/amshopby-collapsed.gif) center right no-repeat}
 
 
 div.block-layered-nav div.amshopby-slider {

@@ -8,6 +8,7 @@ $checkoutHelper = Mage::helper('onestepcheckout/checkout');
         <tr>
             <th class="name"><?php echo $this->__('Product'); ?></th>
             <th class="qty"><?php echo $this->__('Qty'); ?></th>
+            <th class="event_date"><?php echo $this->__("Event Date"); ?></th>
             <th class="total"><?php echo $this->__('Subtotal'); ?></th>
         </tr>
     </thead>
@@ -19,7 +20,9 @@ $checkoutHelper = Mage::helper('onestepcheckout/checkout');
     <tr>
         <td class="name">
             <span class="product-image"><img src="<?php echo $image->resize(88,115)->setWatermarkSize('30x10'); ?>" width="88" alt="<?php echo $this->htmlEscape($this->getProductName()) ?>" /></span>
-            <?php echo $item->getName(); ?>
+            <b><?php echo $item->getName(); ?></b>
+            <a href="#" rel="<?php echo $item->getProductId(); ?>-<?php echo $item->getId(); ?>" title="<?php echo $this->__('Edit item parameters') ?>"
+                           class="overlay-window btn_edit edit-cart-item"><?php echo $this->__('Edit') ?></a>
             <?php if($checkoutHelper->settings['show_custom_options']): ?>
                 <?php $options = $item->getProduct()->getTypeInstance(true)->getOrderOptions($item->getProduct()); ?>
                 <?php if(isset($options['options']) && count($options['options']) > 0): ?>
@@ -49,6 +52,21 @@ $checkoutHelper = Mage::helper('onestepcheckout/checkout');
             <?php endif; ?>
         </td>
         <td class="qty"><?php echo $item->getQty(); ?></td>
+        <td class="event_date">
+            <input type="text" id="event_date_<?php echo $item->getProductId(); ?>" name="event_date[<?php echo $item->getProductId(); ?>]" class="input-text required-entry" size="5"/>
+            <img title="Select date" id="event_date_trig_<?php echo $item->getProductId(); ?>" src="<?php echo $this->getSkinUrl('images/calendar.gif');?>" class="v-middle">
+            <script type="text/javascript">
+                //<![CDATA[
+                Calendar.setup({
+                    inputField : 'event_date_<?php echo $item->getProductId(); ?>',
+                    ifFormat : '%m/%e/%y',
+                    button : 'event_date_trig_<?php echo $item->getProductId(); ?>',
+                    align : 'Bl',
+                    singleClick : true
+                });
+                //]]>
+            </script>
+        </td>
         <td class="total">
             <?php if($checkoutHelper->settings['display_tax_included']): ?>
             <?php echo $this->helper('checkout')->formatPrice($this->helper('checkout')->getSubtotalInclTax($item)); ?>
@@ -119,4 +137,26 @@ var total = <?php echo $this->getGrandTotal();?>;
         payment.reloadcallback = false;
     }
 //]]>
+</script>
+<script type="text/javascript">
+    (function($) {
+        $(function() {
+
+            $('.edit-cart-item').each(function() {
+                var link = $(this),
+                    rel = link.attr('rel'), tmp = rel.split('-');
+
+                var productId = tmp[0],
+                    itemId    = tmp[1];
+
+                var editUrl = '<?php echo $this->getUrl('quickbox/product/edit', array('_secure'=>true)); ?>';
+
+                link.fancybox({
+                    closeClick: false,
+                    type: 'ajax',
+                    href: editUrl + '?id=' + productId + '&item=' + itemId + '&area=checkout'
+                });
+            });
+        });
+    })(jQuery);
 </script>

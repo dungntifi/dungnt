@@ -1,0 +1,81 @@
+<?php
+    /** @var $this Mage_Catalog_Block_Product_View */
+    /** @var $_helper Mage_Catalog_Helper_Output */
+    $_helper = $this->helper('catalog/output');
+    /** @var $_product Mage_Catalog_Model_Product */
+    $_product = $this->getProduct();
+
+    /** @var $session Mage_Checkout_Model_Session */
+    $session = Mage::getSingleton('checkout/session');
+    $itemId = Mage::app()->getRequest()->getParam('item');
+    $item = $session->getQuote()->getItemById($itemId);
+    $infoBuyRequest = @unserialize($item->getOptionByCode('info_buyRequest')->getValue());
+?>
+<script type="text/javascript">
+    jQuery.noConflict();
+    var optionsPrice = new Product.OptionsPrice(<?php echo $this->getJsonConfig() ?>);
+</script>
+<div class="view-popup">
+    <div class="popup">
+        <form action="<?php echo $this->getUrl('quickbox/product/replace'); ?>" method="post" id="product_addtocart_form"<?php if($_product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>>
+            <input type="hidden" name="product" value="<?php echo $_product->getId() ?>" />
+            <input type="hidden" name="related_product" id="related-products-field" value="" />
+            <input type="hidden" name="replace_item_id" value="<?php echo $itemId; ?>" />
+
+            <a href="javascript:void(0);" class="close">X</a>
+            <div class="product-img-box">
+                <?php echo $this->getChildHtml('media') ?>
+            </div>
+
+            <div class="product-info">
+                <div class="name">
+                    <b class="title"><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></b>
+                    <span class="pinterest">
+                        <a href="//pinterest.com/pin/create/button/?media=<?php echo $this->helper('catalog/image')->init($_product, 'image'); ?>&description=<?php echo trim(Mage::registry('current_product')->getName()); ?>&url=<?php echo trim(Mage::registry('current_product')->getProductUrl()); ?>" data-pin-do="buttonPin" data-pin-config="none"><img src="//assets.pinterest.com/images/pidgets/pinit_fg_en_rect_gray_20.png" /></a>
+                        <!-- Please call pinit.js only once per page -->
+                        <script type="text/javascript" async src="//assets.pinterest.com/js/pinit.js"></script>
+                    </span>
+                    
+                    <span class="wanelo">
+                       <a class="wanelo-save-button"
+                          href="<?php echo Mage::getBaseUrl(); ?>"
+                          data-url="<?php echo $this->helper('core/url')->getCurrentUrl();?>"
+                          data-title="<?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?>"
+                          data-image="<?php echo $_product->getImageUrl(); ?>"
+                          data-price="<?php echo number_format($_product->getFinalPrice(),2);?>"></a>
+                    </span>
+                    <script async="true" type="text/javascript" src="//cdn-saveit.wanelo.com/bookmarklet/3/save.js"></script>  
+                </div>
+
+                <?php echo $this->getPriceHtml($_product) ?>
+                <?php echo $this->getChildHtml('product_type_data') ?>
+                <?php echo $this->getChildHtml('alert_urls') ?>
+                <?php echo $this->getTierPriceHtml() ?>
+                <?php echo $this->getChildHtml('extrahint') ?>
+
+                <div class="info-holder">
+                    <p><?php echo $this->htmlEscape($_product->getData('short_description')); ?></p>
+                    <div class="buttons">
+                        <a href="<?php echo Mage::getUrl().$_product->getUrlPath(); ?>" class="button btn-details" style="display: block; line-height: 35px;">VIEW FULL PRODUCT DETAILS</a>
+                    </div>
+                    <?php echo $this->getChildHtml('other');?>
+                    <?php if ($_product->isSaleable() && $this->hasOptions()):
+                            $blockForForm = Mage::app()->getLayout()->createBlock('catalog/product_view_type_configurable', 
+                                                                                  'product.info.options.configurable', 
+                                                                                   array('template'=>"opsway_quickbox/configurable-edit.phtml"));
+                            $blockForForm->setProduct($_product);
+                            $blockForForm->setNameInLayout('product.info.options.configurable');
+                            echo $blockForForm->toHtml();
+                    endif;?>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script type="text/javascript">
+
+    jQuery('.close').on('click', function() {
+        parent.jQuery.fancybox.close();
+    });
+
+</script>

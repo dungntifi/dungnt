@@ -50,4 +50,3 @@ pear/
 pkginfo/
 var/*
 .htaccess
-app/etc/local.xml
