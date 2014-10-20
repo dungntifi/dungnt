@@ -21,6 +21,26 @@
                 <class>OpsWay_SimpleImages_Helper</class>
             </simpleimages>
         </helpers>
+        <resources>
+            <opsway_simpleimages_setup>
+                <setup>
+                    <module>OpsWay_SimpleImages</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </opsway_simpleimages_setup>
+            <opsway_simpleimages_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </opsway_simpleimages_write>
+            <opsway_simpleimages_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </opsway_simpleimages_read>
+        </resources>
     </global>
     <admin>
         <routers>

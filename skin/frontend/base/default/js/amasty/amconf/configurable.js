@@ -462,7 +462,7 @@ Product.ConfigSingle.prototype.fillSelect = function(element){
                         }
                     }
 
-                    image.src = confDataSingle.optionProducts[key].small_image;   
+                    image.src = confDataSingle.optionProducts[key].thumbnail;   
                     image.style.width = '59px';
                     image.addClassName('amconf-image');
                     image.alt = options[i].label;
