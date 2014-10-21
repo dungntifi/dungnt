@@ -119,7 +119,7 @@ ul#pronav li.primary-pronav-item .sub .row ul {
 	list-style:none;
 	margin:0;
 	padding:15px 0;
-	width:12.5em; /* IMPORTANT */
+	width:14.5em; /* IMPORTANT */
 	float:left;
 	min-height:100px;
 }
@@ -163,7 +163,7 @@ ul#pronav li.primary-pronav-item .sub ul li.level-5 a {
 }
 
 ul#pronav li.primary-pronav-item .sub ul li a {
-	padding:3px 0px;
+	padding:5px 0px;
 	display:block;
 }
 
