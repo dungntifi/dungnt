@@ -1992,21 +1992,26 @@ p.required {
 }
 
 .catalog-product-view .breadcrumbs {
-	margin:0 0 10px 0px;
-	padding:10px 0 0;
-	/*background: aqua;*/
+/*	margin: 0 0 10px 0px;
+	padding: 10px 0 0;
 	position: relative;
 	float: left;
 	left: 50%;
+*/
+    margin: 0 0 10px;
+    max-width: 848px;
+    padding: 10px 0 0 0;
+    text-align: center;
 }
 
 .catalog-product-view .breadcrumbs ul {
-	/*background: #bfde25;*/
+	/*background: #bfde25;
 	float: left;
 	position: relative;
 	right: 50%;
 	width: 960px;
-	
+	*/
+	display: inline-block;
 }
 
 .catalog-product-view .breadcrumbs li {
@@ -7177,3 +7182,8 @@ width: 100%;
 #credit-card-type .DI.active  {background-position: -153px 0px;}
 .amconf-block { margin-top: -55px; }
 .product_promotion {color: #cc0000; font-weight: bold;}
+
+.message_color {
+	font: 800 18px Arial,Helvetica,sans-serif;
+    text-transform: capitalize;
+}

@@ -3,17 +3,20 @@
     <default>
         <reference name="head">
             <!-- Add these files to show configurable product options in the Quick View -->
-                   <action method="addJs"><script>varien/product.js</script></action>
-                   <action method="addJs"><script>varien/configurable.js</script></action>
+            <action method="addItem"><type>skin_css</type><name>js/tipped/tipped.css</name></action>
+            <action method="addItem"><type>skin_css</type><name>css/slide.css</name></action>
+            <action method="addJs"><script>varien/product.js</script></action>
+            <action method="addJs"><script>varien/configurable.js</script></action>
             <action method="addJs"><script>calendar/calendar.js</script></action>
             <action method="addJs"><script>calendar/calendar-setup.js</script></action>
             <action method="addItem"><type>skin_js</type><name>js/bundle.js</name></action>
             <action method="addItem"><type>skin_js</type><name>js/amasty/amconf/configurable.js</name></action>
             <action method="addItem"><type>skin_css</type><name>js/amasty/amconf/css/amconf.css</name><params/></action>
             <action method="addItem"><type>skin_js</type><name>js/carousel.js</name></action>
+            <action method="addItem"><type>skin_js</type><name>js/jquery.jcarousel.min.js</name></action>
             <action method="addItem"><type>skin_js</type><name>js/easyzoom.js</name></action>
-            <action method="addItem"><type>skin_css</type><name>css/slide.css</name></action> 
-
+            <action method="addItem"><type>skin_js</type><name>js/tipped/tipped.js</name></action>
+            <action method="addItem"><type>skin_js</type><name>js/jquery.imagesloaded.js</name></action>
         </reference>
     </default>
 
@@ -21,6 +24,10 @@
         <reference name="root">
             <action method="setTemplate"><template>page/quickbox.phtml</template></action>
         </reference>
+        <reference name="head">
+            <action method="addItem"><type>skin_js</type><name>js/fancybox/jquery.fancybox.js</name></action>
+            <action method="addItem"><type>skin_css</type><name>js/fancybox/jquery.fancybox.css</name></action>
+        </reference>    
         <reference name="content">
             <block type="catalog/product_view" name="product.info" template="opsway_quickbox/edit.phtml">
                 <!--
@@ -112,7 +119,9 @@
         </reference>
         <reference name="head">
             <action method="addJs"><script>varien/product.js</script></action>
-            <action method="addJs"><script>varien/configurable.js</script></action>                      
+            <action method="addJs"><script>varien/configurable.js</script></action>
+            <action method="addItem"><type>skin_js</type><name>js/fancybox/jquery.fancybox.js</name></action>
+            <action method="addItem"><type>skin_css</type><name>js/fancybox/jquery.fancybox.css</name></action>                      
         </reference>
         <reference name="content">
             <block type="catalog/product_view" name="product.info" template="opsway_quickbox/view-popup.phtml">
@@ -180,7 +189,9 @@
         <reference name="head">
             <action method="addItem"><type>skin_js</type><name>js/carousel.js</name></action>
             <action method="addItem"><type>skin_js</type><name>js/easyzoom.js</name></action>
-            <action method="addItem"><type>skin_css</type><name>css/slide.css</name></action>                        
+            <action method="addItem"><type>skin_css</type><name>css/slide.css</name></action>
+            <action method="addItem"><type>skin_js</type><name>js/fancybox/jquery.fancybox.js</name></action>
+            <action method="addItem"><type>skin_css</type><name>js/fancybox/jquery.fancybox.css</name></action>                        
         </reference>
         
         <reference name="product.info">

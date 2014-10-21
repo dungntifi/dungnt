@@ -1,56 +1,245 @@
-<div class="slideshow cycle-slideshow" 
-    data-cycle-fx="carousel" data-cycle-timeout="0" data-cycle-carousel-visible="2" data-cycle-slides="> div.image" data-cycle-next=".next" data-cycle-prev=".prev" data-cycle-caption=".cycle-caption" data-cycle-caption-template="{{slideNum}} / {{slideCount}}">
+<?php
+$_helper = $this->helper('catalog/output');
+$_product = $this->getProduct();
+
+$page_url = urlencode(Mage::registry('current_product')->getProductUrl());
+$image_url = urlencode($this->helper('catalog/image')->init($_product, 'image'));
+$product_name = urlencode($_helper->productAttribute($_product, $_product->getName(), 'name'));
+$product_descr = urlencode($this->htmlEscape($_product->getData('description')));
+
+// $facebook = 'http://www.facebook.com/dialog/feed?api_key=679916502073648&amp;display=popup&amp;link='.$page_url.'&amp;picture='.$image_url.'&amp;name='.$product_name.'&amp;caption='.$product_descr.'&amp;description='.$product_name.'&amp;redirect_uri='.$page_url;
+
+$facebook = 'http://www.facebook.com/sharer.php?s=100&amp;p[title]='.$product_name.'&amp;p[summary]='.$product_descr.'&amp;p[url]='.$page_url.'&amp;p[images][0]='.$image_url;
+$pinterest = '//pinterest.com/pin/create/button/?media='.$image_url.'&description='.$product_name.'&url='.$page_url;
+$twitter = 'http://twitter.com/share?via=PromOutfitters&text='.$product_name.'&url='.$page_url;
+
+$google = 'http://plus.google.com/share?url='.$page_url;
+   ?>
+<div class="jcarousel slideshow">
     <div class="controls">
-        <div class="prev"></div>
-        <div class="next"></div>
-        <div class="cycle-caption"></div>
+        <a class="slider__button jcarousel-prev prev" href="#">Prev</a>
+        <a class="slider__button jcarousel-next next" href="#">Next</a>
+        <div class="slider__button cycle-caption"></div>
+        <div class="slider__button slider__button_zoom"></div>
+        <div class="slider__button jcarousel-pagination"></div>
     </div>
     <div class="socials">
-        <a href="" class="like">Like</a>
-        <a href="" class="facebbok">Facebook</a>
-        <a href="" class="pinterest">Pinterest</a>
-        <a href="" class="symbaloo">Symbaloo</a>
-        <a href="" class="twitter">Twitter</a>
-        <a href="" class="google">G+</a>
-        <a href="" class="mail">Mail</a>
+        <?php $_wishlistSubmitUrl = $this->helper('wishlist')->getAddUrl($_product); ?>
+        <?php if ($this->helper('wishlist')->isAllow()) : ?>
+            <a href="<?php echo $_wishlistSubmitUrl ?>" class="icon_tooltip like" title="Add to Love List" onclick="productAddToCartForm.submitLight(this, this.href); return false;">Like</a>            
+        <?php endif; ?>
+        <a href="<?php echo $facebook; ?>" class="icon_tooltip facebbok" title="Share on Facebook">Facebook</a>
+        <a href="<?php echo $pinterest; ?>" class="icon_tooltip pinterest" title="Pin on Pinterest"data-pin-do="buttonPin" data-pin-config="none">Pinterest</a>
+        <a href="//wanelo.com" class="icon_tooltip symbaloo" title="Post to Wanelo" data-price="$378.00" data-image="<?php echo $image_url ?>" data-title="<?php echo $product_name?>" data-url="<?php echo $page_url ?>">Wanelo</a>
+        <a href="<?php echo $twitter; ?>" class="icon_tooltip twitter" title="Tweet this">Twitter</a>
+        <a href="<?php echo $google; ?>" class="icon_tooltip google" title="Share on Google+">G+</a>
+        <?php //if ($this->helper('catalog/product')->canEmailToFriend()): ?>
+            <a href="<?php echo $this->helper('catalog/product')->getEmailToFriendUrl($_product) ?>" class="mail" title="">Mail</a>
+        <?php //endif; ?>
     </div>
+    <div class="slideshow__list">
     <?php foreach ($this->getGalleryImages() as $_image): ?>
-    <div class="image easyzoom easyzoom--overlay">            
-        <a href='<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'thumbnail', $_image->getFile()); ?>'>
+        <div class="image">            
             <img src='<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'thumbnail', $_image->getFile())->keepAspectRatio(TRUE)->keepFrame(FALSE)->resize(475); ?>'>
-        </a>
-    </div>
+        </div>
     <?php endforeach; ?>
+    </div>
+</div>
+<div class="zoom__container" style="display: none;">
+    <div class="thumb__container">
+    <?php foreach ($this->getGalleryImages() as $_image): ?>
+        <div class="thumb__items">
+            <a href='<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'image', $_image->getFile()); ?>' class="thumb__item">
+                <img src='<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'thumbnail', $_image->getFile())->keepAspectRatio(TRUE)->keepFrame(FALSE)->resize(475); ?>' width="65" height="98">
+            </a>          
+        </div>
+    <?php endforeach; ?>
+    </div>
+    <div class="image_zoom">
+        <img src="" alt="" style="top: 0; left: 0;">
+    </div>
+    <div class="zoom__controls">
+        <div class="slider__button zoom__close"></div>
+        <div class="slider__button zoom__prev"></div>
+        <div class="slider__button zoom__next"></div>
+        <!-- <div class="slider__button zoom__number"></div> -->
+    </div>
 </div>
 <script type="text/javascript">
     (function(){
-        var window_width = jQuery( window ).width(),
-            image = jQuery('.slideshow img');
+        var slider_width,
+            image = jQuery('.slideshow img'),
+            slider = jQuery('.jcarousel'),
+            slider_img = jQuery('.jcarousel .image'),
+            controls = jQuery('.slideshow .controls'),
+            cycle = jQuery('.cycle-caption'),
+            slider_list = jQuery('.jcarousel-pagination'),
+// Zoom
+            zoom = {
+                thumb_id : 0,
+                zoom_thumbs : jQuery('.thumb__items'),
+                slide_count : jQuery('.thumb__items').length,
+                zoom_container : jQuery('.image_zoom'),
+                zoom_image : jQuery('.image_zoom').find('img'),
+                selected_thumb : '',
+                init: function() {
+                    jQuery('.wrapper').hide();
+                    jQuery('.zoom__container').prependTo(jQuery('body'));
+                    jQuery('.zoom__container').css({
+                        width: jQuery(window).width(),
+                        height : jQuery(window).height()
+                    });
+                    this.show(this.thumb_id);
+                    jQuery('.zoom__container').show();
+                },    
+                move: function () {
+                    this.zoom_container.on('mousemove', function (e) {
+                            e.preventDefault();
+                        var zoomImage = jQuery('.image_zoom img'),
+                            zoomWrapper = jQuery('.image_zoom'),
+                            PageYaxis       = e.pageY,
+                            wrapperHeight   = zoomWrapper.height(),
+                            imgHeight       = zoomImage.outerHeight(),
+                            percentageY     = (PageYaxis * 100) / wrapperHeight,
+                            top             = ((-1) * (percentageY) * ((imgHeight / wrapperHeight)-1)) + "%",
+                            PageXaxis       = e.pageX,
+                            wrapperWidth    = zoomWrapper.width(),
+                            imgWidth        = zoomImage.outerWidth(),
+                            percentageX     = (PageXaxis * 100) / wrapperWidth,
+                            left            = ((-1) * (percentageX) * ((imgWidth / wrapperWidth)-1)) + "%",
+                            actualTop       = 0,
+                            imgTop          = zoomImage.css('top');
+                        
+                        zoomImage.css({
+                            'top': top,
+                            'left': left
+                        });
+                    });
+                },
+                show: function(thumb_id) {
+                    this.selected_thumb = this.zoom_thumbs.find('a').eq(thumb_id);
+                    var zoom_src = jQuery(this.selected_thumb).attr('href'),
+                        zoom_image = this.zoom_image;
+                    
+                    zoom_image.attr('src', zoom_src);
 
-        calc_image(window_width);
-        jQuery('.cycle-slideshow').cycle();
-        
-        jQuery('.easyzoom').each(function() {
-            jQuery(this).easyZoom();
+                    zoom_image.imagesLoaded(function() {
+                            zoom_image.show();
+                            zoom.move();
+                    });
+
+                    // this.zoom_container.append(cache_image);
+                },
+                close: function() {
+                  jQuery('.zoom__container').hide();  
+                  jQuery('.wrapper').show();
+                  zoom.zoom_container.off();
+                }
+            };
+            
+// Zoom init
+        jQuery('.slider__button_zoom').on('click', function (e) {
+            zoom.init();
+            return false;
+        });
+//Thumb select
+        jQuery('.thumb__items').on('click', 'a', function(e) {
+            this.thumb_id = zoom.zoom_thumbs.find('a').index(this);
+            zoom.show(this.thumb_id);
+            e.preventDefault();
+        });
+//Zoom close
+        jQuery('.zoom__close').on('click', function(e) {
+            zoom.close();
+            e.preventDefault();
+        });
+//Previous slide
+        jQuery('.zoom__prev').on('click', function(e) {
+            if (zoom.thumb_id == 0) {
+                zoom.thumb_id = zoom.slide_count - 1;
+            }
+            else {
+                --zoom.thumb_id;
+            }
+            zoom.show(zoom.thumb_id);
+            e.preventDefault();
+        });
+//Next slide
+        jQuery('.zoom__next').on('click', function(e) {
+            if (zoom.thumb_id == zoom.slide_count - 1) {
+                zoom.thumb_id = 0;
+            }
+            else {
+                ++zoom.thumb_id;
+            }
+            zoom.show(zoom.thumb_id);
+            e.preventDefault();
         });
 
+// PDP Slider
         jQuery( window ).resize(function() {
-            window_width = jQuery( window ).width();
-            calc_image(window_width);
+            slider_width = jQuery( slider ).width();
+            calc_image(slider_width);
+        });
+        
+        jQuery('.jcarousel')
+        .on('jcarousel:create jcarousel:reload', function() {
+            var element = jQuery(this),
+                width = element.innerWidth(),
+                slide_count = element.jcarousel("items").length,
+                visible_slider = 1;
+                calc_image(width);
+                cycle.html(visible_slider + "/" + slide_count);
+
+        })
+        .on('jcarousel:animateend', function(event, carousel) {
+            var element = jQuery(this),
+                slide_count = element.jcarousel("items").length,
+                visible_slider = slider_list.find('.active').index() + 1;
+                cycle.html(visible_slider + "/" + slide_count);
+        })
+        .jcarousel({
+            list: '.slideshow__list',
+            items: '.image',
+            wrap: 'circular'
+        });
+
+        jQuery('.jcarousel-prev').jcarouselControl({
+            target: '-=1'
+        });
+
+        jQuery('.jcarousel-next').jcarouselControl({
+            target: '+=1'
+        });
+
+        jQuery('.jcarousel-pagination')
+        .on('jcarouselpagination:active', 'a', function() {
+            jQuery(this).addClass('active');
+        })
+        .on('jcarouselpagination:inactive', 'a', function() {
+            jQuery(this).removeClass('active');
+        })
+        .jcarouselPagination({
+            perPage: 1,
+            item: function(page) {
+                return '<a href="#' + page + '">' + page + '</a>';
+            }
         });
         
         function calc_image(width) {
-            if (width < 848) {
-                image.css({
-                    'width' :   window_width,
-                    'height':   'auto'
-                });
-                jQuery('.slideshow .controls').css({
-                    'left' :   window_width - 42,
-                });
+            if (width > 640) {
+                width = width / 2;
             }
+
+            jQuery(slider_img).each(function(index) {
+                jQuery(this).css('width', width + 'px');
+            });
+
+            controls.css({
+                'left' :   width - 42 + 'px'
+            });
         }
+//Tooltips
+    Tipped.create('.icon_tooltip');
     })();
-
-
 </script>
