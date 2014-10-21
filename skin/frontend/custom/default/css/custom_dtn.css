@@ -15,7 +15,7 @@
 	font-family:Futura,"Gill Sans","Century Gothic","Dejavu Sans","Trebuchet MS",sans-serif;
 	font-size:16px;
 	font-weight:400;
-	width:4.5%;
+	width:5%;
 }
 .block-layered-nav dt{ 
 	text-transform:none;
@@ -26,6 +26,7 @@
 	margin:0 5px;
 	background:url("../images/amshopby-collapsed.gif") no-repeat scroll right center rgba(0, 0, 0, 0);
 	background-position:10px 8px;
+	display:inline-block;	
 }
 .block-layered-nav #narrow-by-list{ 
 	display:inline-block;
@@ -39,23 +40,27 @@ div.block-layered-nav dt.amshopby-collapsed{
 	padding:6px 8px;
 	margin:0 5px;
 	background:url("../images/amshopby-collapsed.gif") no-repeat scroll right center rgba(0, 0, 0, 0);
+	display: inline-block;
 }
-#narrow-by-list table tr td.Price{ 
-	min-width:186px !important ;
+#narrow-by-list  td dt{ 
+	min-width: 140px;
+}
+#narrow-by-list table tr td.Price dt{ 
+	min-width:186px  ;
 
 }
-#narrow-by-list  td.Designer{ 
-	min-width:171px !important ;
+#narrow-by-list  td.Designer dt{ 
+	min-width:171px  ;
 }
-#narrow-by-list  td.Category{ 
-	min-width:179px !important ;
+#narrow-by-list  td.Category dt{ 
+	min-width:179px  ;
 }
-#narrow-by-list  td.Waistline,
-#narrow-by-list  td.Length{ 
-	min-width:120px !important ;
+#narrow-by-list  td.Waistline dt,
+#narrow-by-list  td.Length dt{ 
+	min-width:120px  ;
 }
-#narrow-by-list  td.Size{ 
-	min-width:110px !important ;
+#narrow-by-list  td.Size dt{ 
+	min-width:110px  ;
 }
 .toolbar .pager .amount,
 .toolbar .pager .pages{
@@ -91,6 +96,17 @@ div.block-layered-nav dt.amshopby-collapsed{
 /*---------------Menu  -----------------*/
 .nav-container{
 	background:#fff;
-	max-width:1280px;
 }
-.header-container{background:#fff;}
+
+/*----------------Dropdown of A-Z----------------*/
+ul#pronav li  table.silo-table caption{
+	margin-left:5px;
+	text-transform:uppercase;
+	font-size: 13px;
+}
+ul#pronav li  table.silo-table td{
+	padding: 2px 15px 2px 0px;
+}
+ul#pronav li table.silo-table td a{
+	font-size: 13px;
+}

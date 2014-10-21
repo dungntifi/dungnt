@@ -77,7 +77,7 @@ ul#pronav li.primary-pronav-item:hover a.primary-pronav-link {
  */
 ul#pronav li.primary-pronav-item .sub,
 ul#pronav li.primary-pronav-item .sub ul li.has-children .child-sub {
-	top:33px;
+	top:32px;
 	position:absolute; /* IMPORTANT - needs to be positioned absolute */
 	z-index:999;
 	display:none;

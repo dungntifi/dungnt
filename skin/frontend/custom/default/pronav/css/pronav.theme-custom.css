@@ -1,11 +1,12 @@
 ul#pronav {
 	margin: 0 auto;
 	padding: 0;
-	width: auto;
+	width: 100%;
 	list-style: none;
 	font-size: 1.1em;
 	position: relative;
 	z-index: 999;
+	max-width: 1400px;
 }
 ul#pronav li {
 	float: left;
@@ -37,7 +38,7 @@ ul#pronav li .row ul li, ul#pronav li:hover .row ul li {
 	text-decoration: none;
 	font-size: 16px;
 	text-transform: uppercase;
-	font-family: Futura, "Gill Sans", "Century Gothic", "Dejavu Sans", "Trebuchet MS", sans-serif;
+	font-family:  "Century Gothic", "Trebuchet MS", sans-serif;
 }
 
 ul#pronav li a {
@@ -47,7 +48,7 @@ ul#pronav li a {
 	text-decoration: none;
 	font-size: 16px;
 	text-transform: uppercase;
-	font-family: Futura, "Gill Sans", "Century Gothic", "Dejavu Sans", "Trebuchet MS", sans-serif;
+	font-family:  "Century Gothic",  "Trebuchet MS", sans-serif;
 }
 ul#pronav li a:hover, ul#pronav li:hover a {
 	color: #333;/*background: #6b006b;*/
@@ -240,6 +241,5 @@ ul#pronav li#mixed-li-id .sub {
 	width:100%;	
 	margin-bottom:20px;
 	}	
-table.silo-table td{
-	padding:3px 10px;	
-	}	
+
+	
