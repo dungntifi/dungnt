@@ -55,8 +55,7 @@ $google = 'http://plus.google.com/share?url='.$page_url;
         </div>
     <?php endforeach; ?>
     </div>
-    <div class="image_zoom">
-        <img src="" alt="" style="top: 0; left: 0;">
+    <div class="image_zoom">        
     </div>
     <div class="zoom__controls">
         <div class="slider__button zoom__close"></div>
@@ -119,15 +118,21 @@ $google = 'http://plus.google.com/share?url='.$page_url;
                 show: function(thumb_id) {
                     this.selected_thumb = this.zoom_thumbs.find('a').eq(thumb_id);
                     var zoom_src = jQuery(this.selected_thumb).attr('href'),
-                        zoom_image = this.zoom_image;
-                    
+                        zoom_container = this.zoom_container,
+                        image_tmp = 'img src="" alt="" style="top: 0; left: 0;"',
+                        zoom_image;
+                    zoom_container.html(image_tmp);
+                    zoom_image = zoom_container.find(img);
                     zoom_image.attr('src', zoom_src);
 
                     zoom_image.imagesLoaded(function() {
-                        var imageWidth = zoom_image.width();
+                        var imageWidth = zoom_image.width(),
+                            imageHeight = zoom_image.height();
                             jQuery('.image_zoom').css('width', imageWidth);
                             zoom_image.show();
-                            zoom.move();
+                            if(zoom__container.height() < imageHeight) {
+                                zoom.move();
+                            }                                
                     });
 
                     // this.zoom_container.append(cache_image);
