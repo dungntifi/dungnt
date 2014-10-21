@@ -137,6 +137,11 @@ $pre_config_values = $this->getProduct()->getPreconfiguredValues();
 
 <script>
     jQuery(document).ready(function() {
+
+        if(jQuery('.amconf-image').length) {
+            jQuery('.amconf-image:first').trigger('click');
+        }
+
         if(window.location.href.match(/color=(\d+)/)) {
             var color = window.location.href.match(/color=(\d+)/);
             if(jQuery('#amconf-image-' + color[1]).length) {
