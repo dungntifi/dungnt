@@ -124,6 +124,8 @@ $google = 'http://plus.google.com/share?url='.$page_url;
                     zoom_image.attr('src', zoom_src);
 
                     zoom_image.imagesLoaded(function() {
+                        var imageWidth = zoom_image.width();
+                            jQuery('.image_zoom').css('width', imageWidth);
                             zoom_image.show();
                             zoom.move();
                     });
