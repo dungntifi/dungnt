@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+
+<config>
+ 
+    <acl>
+        <resources>
+            <admin>
+                <children>
+                    <system>
+                        <children>
+                            <config>
+                                <children>
+                                    <link_share_settings translate="title" module="catalog">
+                                        <title>Link Share Settings</title>
+                                    </link_share_settings>
+                                </children>
+                            </config>
+                        </children>
+                    </system>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+</config>
