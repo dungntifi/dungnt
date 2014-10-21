@@ -6,15 +6,17 @@
 .category-products .toolbar-bottom .sorter{ display:none;}
 
 /*PO-20 Tabs in product detail*/
-.product-tabs{ clear:both; position:relative; right:50%; float:left; margin-top:10px; width:600px;}
+.product-tabs{ clear:both; /*position:relative; right:50%;*/ float:left; margin-top:10px; width:70%;}
 .product-tabs .tab-links{ z-index:2; display:block; overflow:hidden;}
 .product-tabs .tab-links li{ float:left; display:inline; margin:0 0; background:#fff; font-weight:400;font-family:Futura,"Gill Sans","Century Gothic","Dejavu Sans","Trebuchet MS",sans-serif; font-size:18px;}
 .product-tabs .tab-links li a{ display:inline-block; padding: 5px 15px;}
 .product-tabs .tab-links li a:hover{ text-decoration:none;}
 .product-tabs .tab-links li.active{ background:#000; color:#fff;}
 .product-tabs .tab-links li.active a{ color:#fff;}
-.product-tabs .tab-content{ z-index:1;border-top:1px solid #b6b6b6; padding:10px 0;}
+.product-tabs .tab-content{ z-index:1;border-top:1px solid #b6b6b6; padding:10px 20px 10px 0;}
 .product-tabs .tab-content #designer{ font-family:Arial,sans-serif; font-size:30px;}
+.product-tabs .tab-content #style{ font-size:20px;}
+.product-tabs .tab-content #style ul{ padding-left:10px;}
 
 #review-form-popup{ display:none; background:url(../images/overlap-bg.png) repeat; z-index:100000; width:100%; height:100%; position:fixed; visibility:visible; top:0; left:0;}
 #review-form-popup .close{ background:url(../images/close-btn.png) no-repeat scroll center center transparent;cursor: pointer;  height: 30px;  left: auto;  position: absolute;  right: 0;  top: 0; width: 30px;}
@@ -23,9 +25,9 @@
 .review-form-popup-inner > h3, .review-form-popup-inner h3 span{ color:#EA8E45;}
 .review-form-popup-inner .form-list{ clear:both; margin:10px 0 0; float:left;}
 .product-view .box-reviews dl{ margin-top:0;}
-#customer-reviews{position:relative; right:50%; float:right; margin-top:15px; width:345px;}
+#customer-reviews{/*position:relative; right:50%;*/ float:right; margin-top:15px; width:30%;}
 #customer-reviews h2{ text-transform:none; border-bottom:1px solid #b6b6b6; font-weight:400; padding:0 0 5px; font-size:18px;font-family:Arial,sans-serif;}
-#customer-reviews dl dt{ font-weight:700; font-size:13px;}
+#customer-reviews dl dt{ font-weight:700; font-size:13px; margin-top:10px;}
 #customer-reviews dl dd{border-bottom:1px solid #b6b6b6; }
 #customer-reviews dl dd:last-child{ border-bottom:none;}
 #customer-reviews .ratings-table{ margin: 0 0 10px;}
@@ -36,9 +38,9 @@
 .product-shop .ratings .rating-box{ margin-left:100px;}
 .product-shop .ratings .rating-links{ float:left; display:inline;}
 .review-popup-img{ float: right; margin-top:10px;}
-#customer-reviews .scroll-pane{overflow: hidden; height:300px; min-height:112px;max-height: 300px; width: 345px;}
+#customer-reviews .scroll-pane{overflow: hidden; height:310px; min-height:112px;max-height: 310px; width: 100%;}
 #customer-reviews .jspVerticalBar{ width:9px;}
-#customer-reviews .jspTrack{ border:1px solid #000; background:#fff; height:300px !important;}
+#customer-reviews .jspTrack{ border:1px solid #000; background:#fff; height:310px !important;}
 #customer-reviews .jspDrag{ background:#000;}
 
 /*PO-12*/
