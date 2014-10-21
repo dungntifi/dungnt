@@ -244,6 +244,9 @@ Product.Config.prototype.fillSelect = function(element){
                     image.width = this.config.size;
                     image.height = this.config.size;
                     image.addClassName('amconf-image');
+                    if(i==0) {//select first color
+                        image.addClassName('amconf-image-selected');
+                    }
                     image.alt = options[i].label;
                     image.title = options[i].label;
                     image.observe('click', this.configureImage.bind(this));
