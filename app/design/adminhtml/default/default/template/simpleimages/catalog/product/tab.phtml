@@ -1,137 +1,154 @@
 <?php
-//data preset
-$ids = Mage::getModel('catalog/product_type_configurable')->getChildrenIds($this->getRequest()->getParam('id'));   
 
-$_childProducts = Mage::getModel('catalog/product')->getCollection()
-    ->addAttributeToSelect('name')
-    ->addAttributeToSelect('price')
-    ->addAttributeToSelect('small_image')
-    ->addAttributeToSelect('color_position')
-    ->addAttributeToFilter('entity_id', $ids)
-    ->addAttributeToSelect('color')->groupByAttribute('color');
+//proceed only if we have created configurable and simple products associated with this configurable
+if($this->getRequest()->getParam('id')) :
+	
+	//data preset
+	$ids = Mage::getModel('catalog/product_type_configurable')->getChildrenIds($this->getRequest()->getParam('id')); 
+	$_childProducts = Mage::getModel('catalog/product')->getCollection()
+	    ->addAttributeToSelect('name')
+	    ->addAttributeToSelect('price')
+	    ->addAttributeToSelect('small_image')
+	    ->addAttributeToSelect('color_position')
+	    ->addAttributeToFilter('entity_id', $ids)
+	    ->addAttributeToSelect('color')->groupByAttribute('color');
 
-$colors = $position = '';
-foreach ($_childProducts as $key => $value) {
-	$attr = $value->getResource()->getAttribute("color");
-	if ($attr->usesSource()) {
-		$colors[$value['color']] = $attr->getSource()->getOptionText($value['color']);
+	//making array from simples, grouped by color, to display color section
+	$colors = $position = '';
+	foreach ($_childProducts as $key => $value) {
+		$attr = $value->getResource()->getAttribute("color");
+		if ($attr->usesSource()) {
+			$colors[$value['color']] = $attr->getSource()->getOptionText($value['color']);
+		}
+		$position[$value['color']] = $value->getColorPosition();
 	}
-	$position[$value['color']] = $value->getColorPosition();
-}
 
-$_class = 'media_gallery_content';
-$_imageMapping = array("base_image_1" => "image",
-					   "base_image_2" => "small_image",
-					   "thumbnail"    => "thumbnail");
+	$_class = 'media_gallery_content';
+	$_imageMapping = array("base_image_1" => "image",
+						   "base_image_2" => "small_image",
+						   "thumbnail"    => "thumbnail");
 
-foreach ($colors as $colorId => $colorLabel):
-?>
-<div class="entry-edit">
-	<div class="entry-edit-head">
-		<h4 class="icon-head head-edit-form fieldset-legend">Associate images with <?= $colorLabel; ?> color</h4>
-		<div class="form-buttons"></div>
-	</div>
-	<div class="fieldset fieldset-wide">
-		<div id="<?php echo $_class; ?>_color" >
-			<div class="grid">
-				<table cellspacing="0" class="data" width="40%">
-					<thead>
-						<tr class="headings">
-							<th>Color label</th>
-							<th>Color icon</th>
-							<th>Color sort order</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr class="template">
-							<td class="color-label"><?php echo $colorLabel; ?></td>
-							<td class="color-icon"><?php echo (Mage::helper('amconf')->getImageUrl($colorId) != '') ? '<img src="' . Mage::helper('amconf')->getImageUrl($colorId) . '" width="45" />' : '<p>No icon</p>'; ?></td>
-							<td class="color-sort"><input type="text" class="input-text" name="color_position[<?php echo $colorId; ?>]" value="<?php echo $position[$colorId]; ?>" /></td>
-						</tr>
-					</tbody>
-					<tfoot>
-						<tr>
-							<td>Icon image upload</td>
-							<td colspan="2" class="icon-upload"><input type="file" name="amconf_icon[<?php echo $colorId; ?>][]"></td>
-						</tr>
-					</tfoot>
-				</table>
-			</div>
+	foreach ($colors as $colorId => $colorLabel):
+	?>
+	<div class="entry-edit">
+		<div class="entry-edit-head">
+			<h4 class="icon-head head-edit-form fieldset-legend">Associate images with <?= $colorLabel; ?> color</h4>
+			<div class="form-buttons"></div>
 		</div>
-		<div id="<?php echo $_class; ?>" >
-			<div class="grid">
-				<table cellspacing="0" class="data border" id="<?php echo $_class; ?>_grid" width="100%">
-				    <thead>
-				        <tr class="headings">
-				            <th><?php echo Mage::helper('catalog')->__('Image') ?></th>
-				            <th><?php echo Mage::helper('catalog')->__('Label') ?></th>
-				            <th><?php echo Mage::helper('catalog')->__('Sort Order') ?></th>
-				            <th><?php echo Mage::helper('catalog')->__('Base Image 1') ?></th>
-				            <th><?php echo Mage::helper('catalog')->__('Base Image 2') ?></th>
-				            <th><?php echo Mage::helper('catalog')->__('Thumbnail') ?></th>
-				            <th class="last"><?php echo Mage::helper('catalog')->__('Remove') ?></th>
-				        </tr>
-				    </thead>
-				    <tbody id="<?php echo $_class; ?>_list">
-						<?php 
-							foreach ($_childProducts as $key => $_childProduct) {
-								if($_childProduct['color'] == $colorId) {
+		<div class="fieldset fieldset-wide">
+			<div id="<?php echo $_class; ?>_color" >
+				<div class="grid">
+					<table cellspacing="0" class="data" width="40%">
+						<thead>
+							<tr class="headings">
+								<th>Color label</th>
+								<th>Color icon</th>
+								<th>Color sort order</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr class="template">
+								<td class="color-label"><?php echo $colorLabel; ?></td>
+								<td class="color-icon"><?php echo (Mage::helper('amconf')->getImageUrl($colorId) != '') ? '<img src="' . Mage::helper('amconf')->getImageUrl($colorId) . '" width="45" />' : '<p>No icon</p>'; ?></td>
+								<td class="color-sort"><input type="text" class="input-text" name="color_position[<?php echo $colorId; ?>]" value="<?php echo $position[$colorId]; ?>" /></td>
+							</tr>
+						</tbody>
+						<tfoot>
+							<tr>
+								<td>Icon image upload</td>
+								<td colspan="2" class="icon-upload"><input type="file" name="amconf_icon[<?php echo $colorId; ?>][]"></td>
+							</tr>
+						</tfoot>
+					</table>
+				</div>
+			</div>
+			<div id="<?php echo $_class; ?>" >
+				<div class="grid">
+					<table cellspacing="0" class="data border" id="<?php echo $_class; ?>_grid" width="100%">
+					    <thead>
+					        <tr class="headings">
+					            <th><?php echo Mage::helper('catalog')->__('Image') ?></th>
+					            <th><?php echo Mage::helper('catalog')->__('Label') ?></th>
+					            <th><?php echo Mage::helper('catalog')->__('Sort Order') ?></th>
+					            <th><?php echo Mage::helper('catalog')->__('Base Image 1') ?></th>
+					            <th><?php echo Mage::helper('catalog')->__('Base Image 2') ?></th>
+					            <th><?php echo Mage::helper('catalog')->__('Thumbnail') ?></th>
+					            <th class="last"><?php echo Mage::helper('catalog')->__('Remove') ?></th>
+					        </tr>
+					    </thead>
+					    <tbody id="<?php echo $_class; ?>_list">
+							<?php 
+								foreach ($_childProducts as $key => $_childProduct) {
+									if($_childProduct['color'] == $colorId) {
 
-									$sub = Mage::getModel('catalog/product')->load($_childProduct['entity_id']); 
-									$gallery = $sub->getMediaGalleryImages();
+										$sub = Mage::getModel('catalog/product')->load($_childProduct['entity_id']); 
+										$gallery = $sub->getMediaGalleryImages();
 
-									$i = 0; 
-									foreach ($gallery as $key => $image) {
-										$checked = '';?>
+										$i = 0; 
+										foreach ($gallery as $key => $image) {
+											$checked = '';?>
 
-										<tr id="<?php echo $_class; ?>_template" class="template">
-							                <td class="cell-image"><img src="<?php echo $image->getUrl(); ?>" width="120" /></td>
-							                <td class="cell-label"><input type="text" class="input-text" name="simpleimages_data[label][<?=$colorId?>][<?=$i?>]" value="<?php echo $image->getLabel(); ?>" /></td>
-							                <td class="cell-position"><input type="text" class="input-text validate-number" name="simpleimages_data[position][<?=$colorId?>][<?=$i?>]" value="<?php echo $image->getPosition(); ?>" /></td>
-							                <?php foreach ($_imageMapping as $typeId => $type): ?>
-							                	<?php $checked = ($sub->getData($type) == $image->getFile()) ? 'checked' : ''; ?>
-							                	<td class="cell-<?php echo $typeId ?> a-center"><input type="radio" <?=$checked?> name="simpleimages_type[<?=$colorId?>][<?=$type?>]" value="<?=$image->getFile()?>" /></td>
-							                <?php endforeach; ?>
-							                <td class="cell-remove a-center last"><input type="checkbox" name="simpleimages_data[remove][<?=$colorId?>][]" value="<?=$image->getFile()?>" /></td>
-							        	</tr>
+											<tr id="<?php echo $_class; ?>_template" class="template">
+								                <td class="cell-image"><img src="<?php echo $image->getUrl(); ?>" width="120" /></td>
+								                <td class="cell-label"><input type="text" class="input-text" name="simpleimages_data[label][<?=$colorId?>][<?=$i?>]" value="<?php echo $image->getLabel(); ?>" /></td>
+								                <td class="cell-position"><input type="text" class="input-text validate-number" name="simpleimages_data[position][<?=$colorId?>][<?=$i?>]" value="<?php echo $image->getPosition(); ?>" /></td>
+								                <?php foreach ($_imageMapping as $typeId => $type): ?>
+								                	<?php $checked = ($sub->getData($type) == $image->getFile()) ? 'checked' : ''; ?>
+								                	<td class="cell-<?php echo $typeId ?> a-center"><input type="radio" <?=$checked?> name="simpleimages_type[<?=$colorId?>][<?=$type?>]" value="<?=$image->getFile()?>" /></td>
+								                <?php endforeach; ?>
+								                <td class="cell-remove a-center last"><input type="checkbox" name="simpleimages_data[remove][<?=$colorId?>][]" value="<?=$image->getFile()?>" /></td>
+								        	</tr>
 
-										<? $i++;
+											<? $i++;
+										}
 									}
 								}
-							}
-						?>
-				    </tbody>
-				    <tfoot>
-				        <tr class="simpleimages-uploader">
-				            <td style="padding:8px">
-				               	<input type="file" name="simpleimages_gallery[<?php echo $colorId; ?>][]">
-				            </td>
-				        	<td colspan="7" style="padding:10px">
-				        		<a href='#' class="upload-one-more-image" data-color="<?php echo $colorId; ?>">Add another image</a>
-				        	</td>
-				        </tr>
-				    </tfoot>
-				</table>
+							?>
+					    </tbody>
+					    <tfoot>
+					        <tr class="simpleimages-uploader">
+					            <td style="padding:8px">
+					               	<input type="file" name="simpleimages_gallery[<?php echo $colorId; ?>][]">
+					            </td>
+					        	<td colspan="7" style="padding:10px">
+					        		<a href='#' class="upload-one-more-image" data-color="<?php echo $colorId; ?>">Add another image</a>
+					        	</td>
+					        </tr>
+					    </tfoot>
+					</table>
+				</div>
 			</div>
 		</div>
 	</div>
-</div>
-<?php endforeach; ?>
+	<?php endforeach; ?>
 
-<script>
-	jQuery(document).ready(function() {
+	<script>
+		jQuery(document).ready(function() {
 
-		//add image uploader
-		jQuery('.upload-one-more-image').on('click', function(e) {
-			e.preventDefault();
-			var colorId = jQuery(this).data('color');
-			jQuery(this).parents('tfoot').append('<tr><td style="padding:8px"><input type="file" name="simpleimages_gallery[' + colorId + '][]"></td><td colspan="7" style="padding: 10px;"><a href="#" class="remove-uploader">Remove</a></td></tr>');
+			//add image uploader
+			jQuery('.upload-one-more-image').on('click', function(e) {
+				e.preventDefault();
+				var colorId = jQuery(this).data('color');
+				jQuery(this).parents('tfoot').append('<tr><td style="padding:8px"><input type="file" name="simpleimages_gallery[' + colorId + '][]"></td><td colspan="7" style="padding: 10px;"><a href="#" class="remove-uploader">Remove</a></td></tr>');
+			});
+
+			//remove image uploader
+			jQuery('tfoot').on('click', '.remove-uploader', function(e) {
+				e.preventDefault();
+				jQuery(this).parents('tr').remove();
+			});
 		});
-
-		//remove image uploader
-		jQuery('tfoot').on('click', '.remove-uploader', function(e) {
-			e.preventDefault();
-			jQuery(this).parents('tr').remove();
-		});
-	});
-</script>
+	</script>
+<?php else: ?>
+	<div class="entry-edit">
+		<ul class="messages custom-template-message-block">
+			<li class="warning-msg">
+				<ul>
+					<li>
+						<span>There is no simple products associated to this configurable. Please add and try again.</span>
+					</li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+<?php endif; ?>
