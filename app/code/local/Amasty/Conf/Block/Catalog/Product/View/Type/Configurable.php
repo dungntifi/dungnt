@@ -196,6 +196,18 @@ class Amasty_Conf_Block_Catalog_Product_View_Type_Configurable extends Mage_Cata
         $jsonConfig = parent::getJsonConfig();
         $config = Zend_Json::decode($jsonConfig);
         $productImagesAttributes = $this->getImagesFromProductsAttributes();
+
+        $ids = Mage::getModel('catalog/product_type_configurable')->getChildrenIds($this->getProduct()->getId());   
+        $simpleProducts = Mage::getModel('catalog/product')->getCollection()
+            ->addAttributeToFilter('entity_id', $ids)
+            ->addAttributeToSelect('color')
+            ->addAttributeToSelect('color_position')
+            ->addAttributeToSort('color_position', 'ASC');
+
+        $colorPosition = '';
+        foreach ($simpleProducts as $key => $value) {
+            $colorPosition[$value->getColor()] = '';
+        }
       
         foreach ($config['attributes'] as $attributeId => $attribute)
         {
@@ -224,6 +236,29 @@ class Amasty_Conf_Block_Catalog_Product_View_Type_Configurable extends Mage_Cata
                     }
                 }
         }
+
+        $newColorOptions = $newSizeOptions = '';
+        foreach ($config['attributes'] as $attributeId => $attribute)
+        {
+            foreach ($colorPosition as $color => $value) {
+                foreach ($attribute['options'] as $i => $option) {
+                    if($option['id'] == $color) {
+                        $newColorOptions[] = $option;
+                        $newSizeOptions[] = $config['attributes'][151]['options'][$i];
+                    }
+                }
+            }   
+        }
+
+        if(is_array($newColorOptions)) {
+            unset($config['attributes'][92]['options']); //removing old color options
+            $config['attributes'][92]['options'] = $newColorOptions; //adding color options with new sort order
+        }
+        if(is_array($newSizeOptions)) {
+            unset($config['attributes'][151]['options']); //removing old size options
+            $config['attributes'][151]['options'] = $newSizeOptions; //adding color options with new sort order
+        }
+        
         Mage::unregister('amconf_images_attrids');
         Mage::register('amconf_images_attrids', $attributeIdsWithImages, true);
 

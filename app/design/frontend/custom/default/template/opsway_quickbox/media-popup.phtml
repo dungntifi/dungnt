@@ -9,9 +9,9 @@
             data-cycle-caption-template="{{slideNum}} / {{slideCount}}"
             >
     <div class="controls">
-        <div class="prev-popup"></div>
-        <div class="next-popup"></div>
-        <div class="cycle-caption-popup"></div>
+        <div class="slider__button prev-popup"></div>
+        <div class="slider__button next-popup"></div>
+        <div class="slider__button cycle-caption-popup"></div>        
     </div>
     <div class="socials">
         <a href="" class="like">Like</a>
@@ -23,17 +23,20 @@
         <a href="" class="mail">Mail</a>
     </div>
     <?php foreach ($this->getGalleryImages() as $_image): ?>
-    <div class="image-popup easyzoom--overlay">            
+    <div class="image-popup easyzoom easyzoom--overlay">
         <a href='<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'thumbnail', $_image->getFile()); ?>'>
-            <img src='<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'thumbnail', $_image->getFile())->keepAspectRatio(TRUE)->keepFrame(FALSE)->resize(475); ?>'>
+            <img src='<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'thumbnail', $_image->getFile())->keepAspectRatio(TRUE)->keepFrame(FALSE)->resize(475); ?>' width="421" height="615" />
         </a>
     </div>
     <?php endforeach; ?>
 </div>
 <script type="text/javascript">
-
-    var $easyzoom = jQuery('.slideshow .image-popup').easyZoom();
-    var api = $easyzoom.data('easyZoom');
+// (function(){
+// 
     jQuery('.cycle-slideshow').cycle();
-
+    jQuery('.slideshow .easyzoom').each(function(index) {
+        jQuery(this).easyZoom();
+    });
+    
+// })();
 </script>
