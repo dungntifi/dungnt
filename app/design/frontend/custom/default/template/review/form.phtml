@@ -38,7 +38,7 @@
                 <span id="input-message-box"></span>
                 <table class="data-table" id="product-review-table">
                     <tbody>
-                    <?php foreach ($this->getRatings() as $_rating): $i=0;?>
+                    <?php foreach ($this->getRatings() as $_rating): $i=0;$j=0;?>
                         <tr>
                             <td colspan='2'>
                                 <?php echo $this->escapeHtml($_rating->getRatingCode()) ?>
@@ -48,13 +48,9 @@
                                         <option value="<?php echo $_option->getId() ?>"><?php echo $this->__($arrayReview[$i]); ?></option>
                                     <?php $i++; endforeach;?>
                                 </select>
-                                <?php
-                                    for($j=0; $j< 5; $j++){
-                                ?>
-                                    <img alt="<?php echo $this->__($arrayReview[$j]); ?>" id="star-<?php echo $j+1 ?>" src="<?php echo $this->getSkinUrl('images/review/star_gray.gif'); ?>" onmouseover="return syncStars(<?php echo $j+1; ?>)" onclick="lockStars(<?php echo $j+1; ?>)" style="cursor:pointer"/>
-                                <?php
-                                    }
-                                ?>
+                                <?php foreach ($_rating->getOptions() as $_option): ?>
+                                    <img alt="<?php echo $this->__($arrayReview[$j]); ?>" id="star-<?php echo $j+1 ?>" src="<?php echo $this->getSkinUrl('images/review/star_gray.gif'); ?>" onmouseover="return syncStars(<?php echo $_option->getId() ?>)" onclick="lockStars(<?php echo $_option->getId() ?>)" style="cursor:pointer"/>
+                                <?php $j++; endforeach;?>
                             </td>
                         </tr>
                     <?php endforeach; ?>
