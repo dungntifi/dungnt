@@ -2,11 +2,11 @@
 <layout>
     <adminhtml_catalog_product_configurable>
         <reference name="head">
-            <action method="addJs"><script>simpleimages/jquery-1.9.1.min.js</script></action>
-            <action method="addCss"><style>simpleimages/fancybox/jquery.fancybox.css</style></action>
-            <action method="addJs"><script>simpleimages/fancybox/jquery.fancybox.js</script></action>
-            <action method="addCss"><style>simpleimages/jcrop/css/jquery.Jcrop.min.css</style></action>
-            <action method="addJs"><script>simpleimages/jcrop/js/jquery.Jcrop.min.js</script></action>
+            <action method="addItem"><type>skin_js</type><name>simpleimages/jquery-1.9.1.min.js</name></action>
+            <action method="addItem"><type>skin_css</type><name>simpleimages/fancybox/jquery.fancybox.css</name></action>
+            <action method="addItem"><type>skin_js</type><name>simpleimages/fancybox/jquery.fancybox.js</name></action>
+            <action method="addItem"><type>skin_css</type><name>simpleimages/jcrop/css/jquery.Jcrop.min.css</name></action>
+            <action method="addItem"><type>skin_js</type><name>simpleimages/jcrop/js/jquery.Jcrop.min.js</name></action>
         </reference>
         <reference name="product_tabs">
             <action method="addTab">
