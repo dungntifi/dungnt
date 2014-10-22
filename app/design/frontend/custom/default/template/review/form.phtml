@@ -49,7 +49,7 @@
                                     <?php $i++; endforeach;?>
                                 </select>
                                 <?php foreach ($_rating->getOptions() as $_option): ?>
-                                    <img alt="<?php echo $this->__($arrayReview[$j]); ?>" id="star-<?php echo $j+1 ?>" src="<?php echo $this->getSkinUrl('images/review/star_gray.gif'); ?>" onmouseover="return syncStars(<?php echo $_option->getId() ?>)" onclick="lockStars(<?php echo $_option->getId() ?>)" style="cursor:pointer"/>
+                                    <img alt="<?php echo $this->__($arrayReview[$j]); ?>" id="star-<?php echo $_option->getId() ?>" src="<?php echo $this->getSkinUrl('images/review/star_gray.gif'); ?>" onmouseover="return syncStars(<?php echo $_option->getId() ?>)" onclick="lockStars(<?php echo $_option->getId() ?>)" style="cursor:pointer"/>
                                 <?php $j++; endforeach;?>
                             </td>
                         </tr>
