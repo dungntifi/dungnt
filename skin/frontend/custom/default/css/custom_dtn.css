@@ -110,3 +110,5 @@ ul#pronav li  table.silo-table td{
 ul#pronav li table.silo-table td a{
 	font-size: 13px;
 }
+
+.header-container{ padding-bottom: 0; margin-bottom:0; background: #fff;}
