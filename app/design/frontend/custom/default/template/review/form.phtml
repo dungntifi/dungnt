@@ -34,7 +34,7 @@
             <?php echo $this->getChildHtml('form_fields_before')?>
             <h3><?php echo $this->__("Title:"); ?> <span><?php echo $this->escapeHtml($this->getProductInfo()->getName()) ?></span></h3>
 			<?php if($styles):?><h3><?php echo $this->__("Style:"); ?> <span><?php echo $styles; ?></span></h3><?php endif;?>
-            <?php if( $this->getRatings() && $this->getRatings()->getSize()): ?>                
+            <?php if( $this->getRatings() && $this->getRatings()->getSize()): $arr = array(); ?>
                 <span id="input-message-box"></span>
                 <table class="data-table" id="product-review-table">
                     <tbody>
@@ -45,6 +45,7 @@
                                 <select id="Review1_ddlRating" name="ratings[<?php echo $_rating->getId() ?>]" onchange="lockStars(this.value);" onkeyup="lockStars(this.value);" >
                                     <option selected="selected" value="0"></option>
                                     <?php foreach ($_rating->getOptions() as $_option): ?>
+                                        <?php $arr[] = $_option->getId(); ?>
                                         <option value="<?php echo $_option->getId() ?>"><?php echo $this->__($arrayReview[$i]); ?></option>
                                     <?php $i++; endforeach;?>
                                 </select>
@@ -124,7 +125,7 @@
         {
             if(locked) return;
             var i;
-            for(i=1; i < 6; i++)
+            for(i=<?php echo $arr[0] ?>; i < <?php echo $arr[count($arr)-1]+1 ?>; i++)
             {
                 if(i <= value)
                 {
@@ -143,7 +144,7 @@
         {
             locked = true;
             var i;
-            for(i=1; i < 6; i++)
+            for(i=<?php echo $arr[0] ?>; i < <?php echo $arr[count($arr)-1]+1 ?>; i++)
             {
                 if(i <= value)
                 {
