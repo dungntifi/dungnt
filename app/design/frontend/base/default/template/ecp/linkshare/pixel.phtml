@@ -16,11 +16,12 @@ foreach ($order->getItemsCollection() as $itemId => $item){
     // $item->getPrice()*$item->getQtyOrdered()*100;//but this will ignore any applied coupons
     // $item->getRowTotal() * 100; //includes discounts and coupons
 }
-
-$skus["d"] = "Discount";
-$names["d"] = "Discount";
-$qtys["d"] = 0                                                                              ;
-$amounts["d"] = round($order->getData("discount_amount")*100);
+if ($order->getData("discount_amount") != 0) {
+    $skus["d"] = "Discount";
+    $names["d"] = "Discount";
+    $qtys["d"] = 0;
+    $amounts["d"] = round($order->getData("discount_amount") * 100);
+}
 
 $skuspipe = implode("|", $skus);
 $namespipe = implode("|", $names);
