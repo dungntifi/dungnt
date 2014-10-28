@@ -7990,18 +7990,25 @@ position:absolute;
 
 @media only screen and (min-width: 640px) /* min-width 641px */ {
     .padiPop4Wrap {
-      max-width: 732px;
-      height:468px !important;
-      margin: 20px auto;
-      text-align: left;
-      position: absolute;
-      left: 25%;
-      right:30%;
-      top: 20%;
-      overflow: visible;
-      height: auto;
-  
-    }
+/*		position: absolute;
+		top: 20%;
+		right: 30%;
+		left: 25%;
+		overflow: visible;
+		max-width: 732px;
+		height: 468px !important;
+		margin: 20px auto;
+		text-align: left;
+*/	
+		position: fixed;
+		overflow: visible;
+		top: 50%;
+		left: 50%;
+		width: 732px;
+		height: 468px !important;
+		text-align: left;
+		margin: -366px 0 0 -266px;
+	}
 }
 
 
