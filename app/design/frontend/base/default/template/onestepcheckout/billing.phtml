@@ -17,11 +17,10 @@ $data = array(
 $dataBilling = $this->getRequest()->getParam('billing', false);
 $dataShipping = $this->getRequest()->getParam('shipping', false);
 if (isset($dataBilling['postcode'])) {
-    $data['melissa'] = array('billing' => Mage::helper('melissa_address')->searchCityStateAction($dataBilling['postcode'],false),
-                             'shipping' => (isset($dataBilling['use_for_shipping']) && $dataBilling['use_for_shipping'] == 1)? false : Mage::helper('melissa_address')->searchCityStateAction($dataShipping['postcode'],false)
+    $data['melissa'] = array('billing' => Mage::helper('rest')->searchCityStateAction($dataBilling['postcode'],false),
+                             'shipping' => (isset($dataBilling['use_for_shipping']) && $dataBilling['use_for_shipping'] == 1)? false : Mage::helper('rest')->searchCityStateAction($dataShipping['postcode'],false)
     );
 }
-
 
 echo Zend_Json::encode($data);
 
