@@ -1,0 +1,31 @@
+<?php $items = $this->getItems();?>
+    <?php if ($items): $arrActive = array(); ?>
+        <?php foreach ($items as $letters): ?>
+            <?php foreach ($letters as $letter => $options): ?>
+                <?php $arrActive[] = $letter; ?>
+            <?php endforeach; ?>
+        <?php endforeach; ?>
+    <?php endif; ?>
+<div id="char-title" class="char-top">
+    <h2><?php echo $this->__("By A-Z"); $i = 0; ?></h2>
+    <table id="char-list" class="display_none">
+        <?php foreach (range('A', 'Z') as $char): ?>
+        <?php if($i%5==0){
+                echo "<tr>";
+            }
+        ?>
+        <td class="brands-filter-title <?php if(in_array($char,$arrActive)){ echo "enable";}else{echo "disable";} ?>"><span><a class="char-list" href="#" data-target="<?php echo $char; ?>" onclick="return false"><?php echo $char; ?></a></span></td>
+        <?php
+            if(($i+1)%count(range('A', 'Z'))==0){
+        ?>
+                <td class="brands-filter-title "><span><a class="char-list" href="#" data-target="#" onclick="return false"><?php echo $this->__("#"); ?></a></span></td>
+        <?php
+            }
+            if(($i+1)%5==0){
+            echo "</tr>";
+            }
+            $i++;
+        ?>
+        <?php endforeach; ?>
+    </table>
+</div>
