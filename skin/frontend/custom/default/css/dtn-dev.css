@@ -6,7 +6,7 @@
 .category-products .toolbar-bottom .sorter{ display:none;}
 
 /*PO-20 Tabs in product detail*/
-.product-tabs{ clear:both; /*position:relative; right:50%;*/ float:left; margin-top:10px; width:70%;}
+.product-tabs{ clear:both; /*position:relative; right:50%;*/ float:left; margin-top:20px; width:70%;}
 .product-tabs .tab-links{ z-index:2; display:block; overflow:hidden;}
 .product-tabs .tab-links li{ float:left; display:inline; margin:0 0; background:#fff; font-weight:400;font-family:Futura,"Gill Sans","Century Gothic","Dejavu Sans","Trebuchet MS",sans-serif; font-size:18px;}
 .product-tabs .tab-links li a{ display:inline-block; padding: 5px 15px;}
@@ -18,25 +18,32 @@
 .product-tabs .tab-content #style{ font-size:20px;}
 .product-tabs .tab-content #style ul{ padding-left:10px;}
 
-#review-form-popup{ display:none; background:url(../images/overlap-bg.png) repeat; z-index:100000; width:100%; height:100%; position:fixed; visibility:visible; top:0; left:0;}
+.product-info .ratings{ margin-top:30px; font-size:12px; font-weight:700;}
+.product-info .ratings .rating-links{ float:left; display:inline;}
+.product-info .no-rating{ clear:both; display:inline-block;margin-top:30px; font-size:12px; font-weight:700;}
+#review-form-popup{ display:none; background:url(../images/overlap-bg.png) repeat; z-index:100000; width:100%; height:100%; position:absolute; visibility:visible; top:0; left:0;}
 #review-form-popup .close{ background:url(../images/close-btn.png) no-repeat scroll center center transparent;cursor: pointer;  height: 30px;  left: auto;  position: absolute;  right: 0;  top: 0; width: 30px;}
 .review-form-popup-inner{ text-align:left; width:500px; left:50%; margin-left:-270px; top:10%; position:absolute; height:auto; background:#fff; padding:20px;} 
-.review-form-popup-inner h3{ font-family:Arial,sans-serif; text-transform:none; font-size:15px; margin:0 0 5px; font-weight:400;}
+.review-form-popup-inner h3{ font-family:Arial,sans-serif; text-transform:none; font-size:15px; margin:0 0 5px; font-weight:700;}
 .review-form-popup-inner > h3, .review-form-popup-inner h3 span{ color:#EA8E45;}
 .review-form-popup-inner .form-list{ clear:both; margin:10px 0 0; float:left;}
+.review-form-popup-inner2{ position:relative;}
 .product-view .box-reviews dl{ margin-top:0;}
-#customer-reviews{/*position:relative; right:50%;*/ float:right; margin-top:15px; width:30%;}
+.review-form-popup-inner #product-review-table{ border:none; padding:0; background:none;}
+.review-form-popup-inner #product-review-table td{ padding: 7px 0; font-size:15px; font-weight:700;}
+.review-form-popup-inner #product-review-table td img{ vertical-align:middle;}
+#review-form .form-list li:after{ content:"";}
+#review-form .form-list label em{ display:none;}
+#review-form .form-list label > span{ color:#ea8e45;}
+#customer-reviews{/*position:relative; right:50%;*/ float:right; margin-top:25px; width:30%;}
 #customer-reviews h2{ text-transform:none; border-bottom:1px solid #b6b6b6; font-weight:400; padding:0 0 5px; font-size:18px;font-family:Arial,sans-serif;}
-#customer-reviews dl dt{ font-weight:700; font-size:13px; margin-top:10px;}
-#customer-reviews dl dd{border-bottom:1px solid #b6b6b6; }
+#customer-reviews dl dt{ font-weight:700; font-size:13px; margin-top:0px;}
+#customer-reviews dl dd{border-bottom:1px solid #b6b6b6; margin-bottom:10px; }
 #customer-reviews dl dd:last-child{ border-bottom:none;}
 #customer-reviews .ratings-table{ margin: 0 0 10px;}
 #customer-reviews .ratings-table th{ display:none;}
-#customer-reviews .rating-content{ margin:0 0 20px;}
-#customer-reviews .date{ font-style:italic; padding:10px 0 20px; color:#777; border-top:1px solid #e4e4e4; font-size:11px;}
-.product-shop .ratings{ font-size:12px;}
-.product-shop .ratings .rating-box{ margin-left:100px;}
-.product-shop .ratings .rating-links{ float:left; display:inline;}
+#customer-reviews .rating-content{ margin:0 5px 25px 0;}
+#customer-reviews .date{ font-style:italic; padding:10px 0 10px; color:#777; border-top:1px solid #e4e4e4; font-size:11px;}
 .review-popup-img{ float: right; margin-top:10px;}
 #customer-reviews .scroll-pane{overflow: hidden; height:310px; min-height:112px;max-height: 310px; width: 100%;}
 #customer-reviews .jspVerticalBar{ width:9px;}
