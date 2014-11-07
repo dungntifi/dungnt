@@ -55,3 +55,22 @@
 .footer-container #scroll-to-top span{ display:inline-block; background:#000; padding:12px 8px;}
 .footer-container #scroll-to-top em{background: url(../images/top-arrow.png) no-repeat 0 center; display:inline-block; width:15px; height:8px; margin-right:5px;}
 
+/*Style Designer*/
+.dtn-all-index-index .main{ overflow:hidden;}
+.dtn-all-index-index .col-left .content{ width:220px; margin:0 0 0 16px;}
+.dtn-all-index-index .col-main{ float:none; margin-left:244px; padding:0 10px 0 8px;}
+.dtn-all-index-index .col-left .silo-table{ width:100%; font-size:13px; margin:0 0 30px;}
+.dtn-all-index-index .col-left .silo-table caption{ font-weight:700; margin:0 0 5px; width:100%; text-transform:uppercase; font-size:13px;}
+.dtn-all-index-index .col-left .silo-table td.designerIndex{ width:20%; padding:7px 0;}
+.dtn-all-index-index .col-left .silo-table td.designerIndex a{ padding:0 5px;}
+.dtn-all-index-index .col-main dl{ margin:0 0 30px;}
+.dtn-all-index-index .col-main dt{ border-bottom:1px solid #e4e4e4; font-size:20px; font-weight:700; padding:0 0 5px; margin:0 0 15px;}
+.dtn-all-index-index .col-main dd li{ line-height:normal; margin:0 0 5px;}
+
+@media only screen and (max-width:767px) {
+.dtn-all-index-index .col-left{ float:none; width:100%; }
+.dtn-all-index-index .col-left .content{ width:96%; margin:0 auto;}
+.dtn-all-index-index .col-main{ float:none; margin:20px 0; padding:0; width:100%; overflow:hidden;}
+.dtn-all-index-index .col-main .content{ width:96%; margin:0 auto;}
+.dtn-all-index-index .col-left .silo-table td.designerIndex a{ font-size:15px; font-weight:700;}
+}
