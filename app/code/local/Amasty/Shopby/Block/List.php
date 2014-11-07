@@ -6,23 +6,18 @@ class Amasty_Shopby_Block_List extends Mage_Core_Block_Template
 {
     private $items = array();
     
-    protected function _prepareLayout()
+    protected function getItems()
     {
-        $param = $this->getLetter();
+        $param = $this->getRequest()->getParam('letter');
         $entityTypeId = Mage::getModel('eav/entity')->setType('catalog_product')->getTypeId();
-        $modelName  = Mage::helper('amshopby')->isVersionLessThan(1, 4) ? 'catalog/entity_attribute' : 'catalog/resource_eav_attribute';
-        $attribute  = Mage::getModel($modelName) 
+        /** @var Mage_Eav_Model_Attribute $attribute */
+        $attribute  = Mage::getModel('catalog/resource_eav_attribute')
                 ->loadByCode($entityTypeId, $this->getAttributeCode());
         
         if (!$attribute->getId()){
             return parent::_prepareLayout();
         }
           
-        //1.3 only
-        if (!$attribute->getSourceModel()){
-            $attribute->setSourceModel('eav/entity_attribute_source_table'); 
-        }
-        
         $options = $attribute->getFrontend()->getSelectOptions();
         array_shift($options);
         
@@ -35,45 +30,29 @@ class Amasty_Shopby_Block_List extends Mage_Core_Block_Template
         $filter->setStoreId(Mage::app()->getStore()->getId());
         $filter->setAttributeModel($attribute);
         
-        $optionsCount = array();
-        if (Mage::helper('amshopby')->isVersionLessThan(1, 4)){
-            $category   = Mage::getModel('catalog/category')->load(Mage::app()->getStore()->getRootCategoryId());
-            $collection = $category->getProductCollection();
-            Mage::getSingleton('catalog/product_status')->addVisibleFilterToCollection($collection);
-            Mage::getSingleton('catalog/product_visibility')->addVisibleInCatalogFilterToCollection($collection);
-            
-            $optionsCount = Mage::getSingleton('catalogindex/attribute')
-                ->getCount($attribute, $collection->getSelect());
-        }
-        else {
-            $optionsCount = Mage::getResourceModel('catalog/layer_filter_attribute')->getCount($filter);
-        }
-        
+        $optionsCount = Mage::getResourceModel('catalog/layer_filter_attribute')->getCount($filter);
+
         usort($options, array($this, '_sortByName'));
-                 
-        // add images
-        $ids = array();
-        foreach ($options as $opt){
-            $ids[] = $opt['value']; 
-        }
-        $collection = Mage::getResourceModel('amshopby/value_collection')
-            ->addFieldToFilter('option_id', array('in'=>$ids))
-            ->load();
-        $images = array();
-        foreach ($collection as $value){
-            $images[$value->getOptionId()] = $value->getImgBig() ? Mage::getBaseUrl('media') . 'amshopby/' . $value->getImgBig() : ''; 
-        }
-        // end add images        
-            
+
+        $images = Mage::getStoreConfig('amshopby/brands/show_images') ? $this->_getOptionImages($options) : null;
+
+        /** @var Amasty_Shopby_Model_Url_Builder $urlBuilder */
+        $urlBuilder = Mage::getModel('amshopby/url_builder');
+        $urlBuilder->reset();
+        $urlBuilder->clearCategory();
+        $urlBuilder->clearModule();
+        $urlBuilder->clearQuery();
+
         $c = 0;
         $letters = array();
-        $hlp    = Mage::helper('amshopby/url');
         foreach ($options as $opt){
             if (!empty($optionsCount[$opt['value']])){
-                
                 $opt['cnt'] = $optionsCount[$opt['value']];
-                $opt['url'] = $hlp->getOptionUrl($attribute->getAttributeCode(), $opt['label'], $opt['value']);  
-                $opt['img'] = isset($images[$opt['value']]) ? $images[$opt['value']] : '';
+                $urlBuilder->changeQuery(array(
+                    $attribute->getAttributeCode() => $opt['value'],
+                ));
+                $opt['url'] = $urlBuilder->getUrl();
+                $opt['img'] = $images ? $images[$opt['value']] : null;
                 
                 //$i = mb_strtoupper(mb_substr($opt['label'], 0, 1, 'UTF-8'));
                 $i = strtoupper(substr($opt['label'], 0, 1));
@@ -133,17 +112,39 @@ if (is_numeric($i)) { $i = '#'; }
                 }
             }
         }
-        
-        return parent::_prepareLayout();
+        return $this->items;
+        //return parent::_prepareLayout();
+    }
+
+    protected function _getOptionImages($options)
+    {
+        $ids = array();
+        foreach ($options as $opt){
+            $ids[] = $opt['value'];
+        }
+        $collection = Mage::getResourceModel('amshopby/value_collection')
+            ->addFieldToFilter('option_id', array('in'=>$ids))
+            ->load();
+        $images = array();
+        foreach ($collection as $value){
+            $images[$value->getOptionId()] = $value->getImgBig() ? Mage::getBaseUrl('media') . 'amshopby/' . $value->getImgBig() : null;
+        }
+        return $images;
     }
     
-    public function getItems()
-    {
-        return $this->items;
-    }
+//    public function getItems()
+//    {
+//        return $this->items;
+//    }
     
     public function _sortByName($a, $b)
     {
+        $a['label'] = trim($a['label']);
+        $b['label'] = trim($b['label']);
+
+        if ($a == '') return 1;
+        if ($b == '') return -1;
+
         $x = substr($a['label'], 0, 1);
         $y = substr($b['label'], 0, 1);
         if (is_numeric($x) && !is_numeric($y)) return 1;

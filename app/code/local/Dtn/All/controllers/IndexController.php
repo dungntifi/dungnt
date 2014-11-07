@@ -10,14 +10,14 @@ class Dtn_All_IndexController extends Mage_Core_Controller_Front_Action{
     public function indexAction(){
         $this->loadLayout();
 //        print_r($this->getLayout()->getUpdate()->getHandles());die;
-        $param = $this->getRequest()->getParam('letter');
-        if($param){
-            $letter = $param;
-        }else{
-            $letter = "";
-        }
-        $block = $this->getLayout()->createBlock('amshopby/list','designer-list',array('letter'=>$letter, 'attribute_code'=>'designer' ,'columns'=>'2', 'template' => 'amshopby/list.phtml'));
-        $this->getLayout()->getBlock('content')->append($block);
+//        $param = $this->getRequest()->getParam('letter');
+//        if($param){
+//            $letter = $param;
+//        }else{
+//            $letter = "";
+//        }
+//        $block = $this->getLayout()->createBlock('amshopby/list','designer-list',array('letter'=>$letter, 'attribute_code'=>'designer' ,'columns'=>'2', 'template' => 'amshopby/list.phtml'));
+//        $this->getLayout()->getBlock('content')->append($block);
         $this->renderLayout();
     }
 }

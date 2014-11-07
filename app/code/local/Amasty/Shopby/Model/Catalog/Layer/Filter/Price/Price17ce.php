@@ -1,19 +1,10 @@
 <?php
 /**
  * @copyright   Copyright (c) 2010 Amasty (http://www.amasty.com)
- */  
-class Amasty_Shopby_Model_Catalog_Layer_Filter_Price_Price17ce extends Mage_Catalog_Model_Layer_Filter_Price
+ */
+
+class Amasty_Shopby_Model_Catalog_Layer_Filter_Price_Price17ce extends Amasty_Shopby_Model_Catalog_Layer_Filter_Price_Price17ce_Parent
 {
-    public function _construct()
-    {    
-        parent::_construct();
-    }  
-      
-    /**
-     * Apply price range filter to collection
-     *
-     * @return Mage_Catalog_Model_Layer_Filter_Price
-     */
     public function apply(Zend_Controller_Request_Abstract $request, $filterBlock)
     {
         if (!$this->calculateRanges()){
@@ -153,5 +144,5 @@ class Amasty_Shopby_Model_Catalog_Layer_Filter_Price_Price17ce extends Mage_Cata
             $this->getLayer()->getAggregator()->saveCacheData($data, $key, $tags);
         }
         return $data;
-    }    
+    }
 }

@@ -1,27 +1,21 @@
 <?php
 
-class Amasty_Shopby_Block_Catalog_Layer_Filter_Attribute extends Mage_Catalog_Block_Layer_Filter_Attribute
+class Amasty_Shopby_Block_Catalog_Layer_Filter_Attribute extends Amasty_Shopby_Block_Catalog_Layer_Filter_Attribute_Adapter
 {
-    public function __construct()
-    {
-        parent::__construct();
-        $this->setTemplate('amshopby/attribute.phtml');
-    }
-    
     public function getItemsAsArray()
     {
-        $items = array(); 
+        $items = array();
         foreach (parent::getItems() as $itemObject){
-            
             $item = array();
+            $item['id'] = $itemObject->getOptionId();
             $item['url']   = $this->htmlEscape($itemObject->getUrl());
-            
+
             if ($this->getSingleChoice()){ /** sinse @version 1.3.0 */
                 $query = array(
                     $this->getRequestValue() => $itemObject->getIsSelected() ? null : $itemObject->getOptionId(),
-                    Mage::getBlockSingleton('page/html_pager')->getPageVarName() => null 
-                ); 
-                $item['url'] = Mage::helper('amshopby/url')->getFullUrl($query);            
+                    Mage::getBlockSingleton('page/html_pager')->getPageVarName() => null
+                );
+                $item['url'] = Mage::helper('amshopby/url')->getFullUrl($query);
             }
             $item['label'] = $itemObject->getLabel();
             $item['descr'] = $itemObject->getDescr();
@@ -31,12 +25,12 @@ class Amasty_Shopby_Block_Catalog_Layer_Filter_Attribute extends Mage_Catalog_Bl
             if (!$this->getHideCounts()) {
                 $item['count']  = ' (' . $itemObject->getCount() . ')';
             }
-            
+
             $item['image'] = '';
             if ($itemObject->getImage()){
                 $item['image'] = Mage::getBaseUrl('media') . 'amshopby/' . $itemObject->getImage();
             }
-            
+
             if ($itemObject->getImageHover()) {
                 $item['image_hover'] = Mage::getBaseUrl('media') . 'amshopby/' . $itemObject->getImageHover();
             }
@@ -53,48 +47,50 @@ class Amasty_Shopby_Block_Catalog_Layer_Filter_Attribute extends Mage_Catalog_Bl
                 }
             }
 
-            if ($this->getSeoRel()){ 
-                $item['css'] .= '" rel="nofollow';  
-            }            
-            
+            $item['rel'] = $this->getSeoRel() ? ' rel="nofollow" ' : '';
+
             $items[] = $item;
         }
-        
+
         $sortBy = $this->getSortBy();
         $functions = array(1 => '_sortByName', 2 => '_sortByCounts');
         if (isset($functions[$sortBy])){
             usort($items, array($this, $functions[$sortBy]));
         }
-        
+
         // add less/more
         $max = $this->getMaxOptions();
         $i   = 0;
         foreach ($items as $k => $item){
             $style = '';
             if ($max && (++$i > $max)){
-                $style = 'style="display:none" class="amshopby-attr-' . $this->getRequestValue() . '"'; 
-            } 
+                $style = 'style="display:none" class="amshopby-attr-' . $this->getRequestValue() . '"';
+            }
             $items[$k]['style'] = $style;
         }
         $this->setShowLessMore($max && ($i > $max));
-        
+
         return $items;
     }
-    
+
     public function _sortByName($a, $b)
     {
-        $x = $a['label'];
-        $y = $b['label'];
+        $x = trim($a['label']);
+        $y = trim($b['label']);
+
+        if ($x == '') return 1;
+        if ($y == '') return -1;
+
         if (is_numeric($x) && is_numeric($y)){
-            if ($x == $y) 
+            if ($x == $y)
                 return 0;
-            return ($x < $y ? 1 : -1);            
+            return ($x < $y ? 1 : -1);
         }
         else {
             return strcmp($x, $y);
         }
     }
-    
+
     public function _sortByCounts($a, $b)
     {
         if ($a['countValue'] == $b['countValue']) {
@@ -103,27 +99,41 @@ class Amasty_Shopby_Block_Catalog_Layer_Filter_Attribute extends Mage_Catalog_Bl
 
         return ($a['countValue'] < $b['countValue'] ? 1 : -1);
     }
-    
+
     public function getRequestValue()
     {
         return $this->_filter->getAttributeModel()->getAttributeCode();
     }
-    
+
     public function getItemsCount()
-     {
+    {
+        $v = Mage::app()->getRequest()->getParam($this->getRequestValue());
+        if (isset($v) && $this->getRequestValue() == trim(Mage::getStoreConfig('amshopby/brands/attr'))){
+            $cat    = Mage::registry('current_category');
+            $rootId = (int) Mage::app()->getStore()->getRootCategoryId();
+            if ($cat && $cat->getId() == $rootId){
+                // and this is not landing page
+                $page = Mage::app()->getRequest()->getParam('am_landing');
+                if (!$page) return 0;
+            }
+        }
+
         $cnt     = parent::getItemsCount();
-        $showAll = !Mage::getStoreConfig('amshopby/general/hide_one_value'); 
+        $showAll = !Mage::getStoreConfig('amshopby/general/hide_one_value');
         return ($cnt > 1 || $showAll) ? $cnt : 0;
-     }
-     
+    }
+
     public function getRemoveUrl()
     {
-        $query = array(
+        /** @var Amasty_Shopby_Model_Url_Builder $urlBuilder */
+        $urlBuilder = Mage::getModel('amshopby/url_builder');
+        $urlBuilder->reset();
+        $urlBuilder->clearPagination();
+        $urlBuilder->changeQuery(array(
             $this->getRequestValue() => null,
-            Mage::getBlockSingleton('page/html_pager')->getPageVarName() => null // exclude current page from urls
-        );
-        
-        $url = Mage::helper('amshopby/url')->getFullUrl($query);
-        return $url;        
+        ));
+
+        $url = $urlBuilder->getUrl();
+        return $url;
     }
 }

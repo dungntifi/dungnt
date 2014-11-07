@@ -7,7 +7,7 @@ class Amasty_Shopby_Block_Catalog_Layer_Filter_Stock extends Mage_Catalog_Block_
     public function __construct()
     {
         parent::__construct();
-        $this->setTemplate('amshopby/attribute.phtml');
+        $this->setTemplate('amasty/amshopby/attribute.phtml');
         $this->_filterModelName = 'amshopby/catalog_layer_filter_stock';
     }
     
@@ -17,6 +17,10 @@ class Amasty_Shopby_Block_Catalog_Layer_Filter_Stock extends Mage_Catalog_Block_
      */
     public function getPosition()
     {
+        if (count($this->getItemsAsArray()) == 0) {
+            return -1;
+        }
+
     	return Mage::getStoreConfig('amshopby/general/stock_filter_pos');
     }
     
@@ -35,6 +39,8 @@ class Amasty_Shopby_Block_Catalog_Layer_Filter_Stock extends Mage_Catalog_Block_
             $item['label'] = $itemObject->getLabel();
             $item['count'] = '';
          	$item['countValue']  = $itemObject->getCount();
+
+            /** @todo Fix item counts */
             if (!$this->getHideCounts()) {
                 $item['count']  = ' (' . $itemObject->getCount() . ')';
             }
@@ -44,17 +50,17 @@ class Amasty_Shopby_Block_Catalog_Layer_Filter_Stock extends Mage_Catalog_Block_
             if (in_array($this->getDisplayType(), array(1,3))) //dropdown and images
                 $item['css'] = '';
 
-            if ($itemObject->getValue() == $this->getRequestValue()){
+            if ($itemObject->getOptionId() == $this->getRequestValue()){
                 $item['css'] .= '-selected';
                 if (3 == $this->getDisplayType()) //dropdown
                     $item['css'] = 'selected';
             }
 
-            if ($this->getSeoRel()){ 
-                $item['css'] .= '" rel="nofollow';  
-            }            
-            
-            $items[] = $item;
+            $item['rel'] = $this->getSeoRel() ? ' rel="nofollow" ' : '';
+
+            if ($item['countValue']) {
+                $items[] = $item;
+            }
         }
         
         return $items;

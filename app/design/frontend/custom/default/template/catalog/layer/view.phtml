@@ -42,15 +42,8 @@
             <?php $_filters = $this->getFilters() ?>
             <?php foreach ($_filters as $_filter): ?>
             <?php if($_filter->getItemsCount()): ?>
-                <?php if($_filter->getName()!='All Designer'): ?>
                     <dt><?php echo $this->__($_filter->getName()) ?></dt>
                     <dd><?php echo $_filter->getHtml() ?></dd>
-                    <?php else: ?>
-                    <div class="designer">
-                        <h3><?php echo $this->__("All Designer"); ?></h3>
-                        <div class="content-designer"><?php echo $_filter->getHtml(); ?></div>
-                    </div>
-                    <?php endif; ?>
                 <?php endif; ?>
             <?php endforeach; ?>
         </dl>

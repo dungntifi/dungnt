@@ -5,7 +5,14 @@
             <action method="setTemplate"><template>page/2columns-left.phtml</template></action>
         </reference>
         <reference name="left">
-            <block type="amshopby/letter" attribute_code="designer" template="amshopby/letter.phtml"/>
+            <block type="amshopby/letter" name="left.letter" as="left.letter" template="amasty/amshopby/letter.phtml">
+                <action method="setData"><key>attribute_code</key><value>designer</value></action>
+            </block>
+        </reference>
+        <reference name="content">
+            <block type="amshopby/list" name="designer-all" as="designer-all" template="amasty/amshopby/list.phtml">
+                <action method="setData"><key>attribute_code</key><value>designer</value></action>
+            </block>
         </reference>
     </dtn_all_index_index>
 </layout>

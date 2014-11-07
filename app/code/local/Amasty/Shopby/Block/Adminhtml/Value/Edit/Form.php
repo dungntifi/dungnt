@@ -48,14 +48,29 @@ class Amasty_Shopby_Block_Adminhtml_Value_Edit_Form extends Mage_Adminhtml_Block
           'label'     => $hlp->__('Title'),
           'name'      => 'title',
         ));
+        $fldMain->addField('url_alias', 'text', array(
+            'label'     => $hlp->__('URL Alias'),
+            'name'      => 'url_alias',
+            'required'  => false,
+        ));
         $fldMain->addField('descr', 'textarea', array(
           'label'     => $hlp->__('Description'),
           'name'      => 'descr',
         ));
-        $fldMain->addField('cms_block', 'text', array(
-          'label'     => $hlp->__('CMS Block'),
-          'name'      => 'cms_block',
+
+        $cmsBlocks = Mage::getResourceModel('cms/block_collection')->load()->toOptionArray();
+        array_unshift($cmsBlocks, array('value' => null, 'label' => $this->__('Please select a static block ...')));
+        $fldMain->addField('cms_block_id', 'select', array(
+            'label'     => $hlp->__('Top CMS Block'),
+            'name'      => 'cms_block_id',
+            'values'    => $cmsBlocks,
         ));
+        $fldMain->addField('cms_block_bottom_id', 'select', array(
+            'label'     => $hlp->__('Bottom CMS Block'),
+            'name'      => 'cms_block_bottom_id',
+            'values'    => $cmsBlocks,
+        ));
+
         $fldMain->addField('meta_title', 'text', array(
           'label'     => $hlp->__('Page Title Tag'),
           'name'      => 'meta_title',
@@ -96,7 +111,7 @@ class Amasty_Shopby_Block_Adminhtml_Value_Edit_Form extends Mage_Adminhtml_Block
         )); 
         
 
-        $fldNav = $form->addFieldset('nav', array('legend'=> $hlp->__('Layered Navigation')));
+        $fldNav = $form->addFieldset('navigation', array('legend'=> $hlp->__('Layered Navigation')));
         $fldNav->addField('img_small', 'file', array(
             'label'     => $hlp->__('Image'),
             'name'      => 'img_small',

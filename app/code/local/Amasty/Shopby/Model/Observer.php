@@ -1,81 +1,98 @@
 <?php
 /**
- * @copyright   Copyright (c) 2009-2011 Amasty (http://www.amasty.com)
- */ 
+ * @copyright   Copyright (c) 2009-2014 Amasty (http://www.amasty.com)
+ */
 class Amasty_Shopby_Model_Observer
 {
-	private $cacheableBlocks = array(
-		'Amasty_Shopby_Block_Catalog_Layer_View', 
-		'Amasty_Shopby_Block_Catalog_Layer_View_Top', 
-		'Amasty_Shopby_Block_Top'
-	);
-	
-	const CUSTOM_CACHE_LIFETIME = 3600;
-	
-    public function handleControllerFrontInitRouters($observer) 
+    public function handleControllerFrontInitRouters($observer)
     {
         $observer->getEvent()->getFront()
             ->addRouter('amshopby', new Amasty_Shopby_Controller_Router());
     }
-    
+
     public function handleCatalogControllerCategoryInitAfter($observer)
     {
-        if (!Mage::getStoreConfig('amshopby/seo/urls'))
-            return;
-            
-        $controller = $observer->getEvent()->getControllerAction();
-        $cat = $observer->getEvent()->getCategory();
-        
-        if (!Mage::helper('amshopby/url')->saveParams($controller->getRequest())){
-            if ($cat->getId()  == Mage::app()->getStore()->getRootCategoryId()){
-                $cat->setId(0);
-                return;
-            } 
-            else { 
-                // no way to tell controler to show 404, do it manually
-                $controller->getResponse()->setHeader('HTTP/1.1','404 Not Found');
-                $controller->getResponse()->setHeader('Status','404 File not found');
-        
-                $pageId = Mage::getStoreConfig(Mage_Cms_Helper_Page::XML_PATH_NO_ROUTE_PAGE);
-                if (!Mage::helper('cms/page')->renderPage($controller, $pageId)) {
-                    header('Location: /');
-                    exit;
-                }  
-                $controller->getResponse()->sendResponse();
-                exit;                
+        if (Mage::getStoreConfig('amshopby/seo/urls')) {
+            if (Mage::getStoreConfig('amshopby/seo/redirects_enabled')) {
+                $this->checkRedirectToSeo();
             }
-        } 
-        
-        if ($cat->getDisplayMode() == 'PAGE' && Mage::registry('amshopby_current_params')){
-            $cat->setDisplayMode('PRODUCTS');
-        }  
+
+            /** @var Mage_Core_Controller_Front_Action $controller */
+            $controller = $observer->getEvent()->getControllerAction();
+            /** @var Mage_Catalog_Model_Category $cat */
+            $cat = $observer->getEvent()->getCategory();
+
+            if (!Mage::helper('amshopby/url')->saveParams($controller->getRequest())){
+                if ($cat->getId()  == Mage::app()->getStore()->getRootCategoryId()){
+                    $cat->setId(0);
+                    return;
+                }
+                else {
+                    Mage::helper('amshopby')->error404();
+                }
+            }
+
+            if ($cat->getDisplayMode() == 'PAGE' && Mage::registry('amshopby_current_params')){
+                $cat->setDisplayMode('PRODUCTS');
+            }
+        }
+
+        Mage::helper('amshopby')->restrictMultipleSelection();
     }
-    
+
+    protected function checkRedirectToSeo()
+    {
+        if (Mage::registry('amshopby_forwarded_category_id')) {
+            // Already forwarded by our router
+            return;
+        }
+
+        /** @var Amasty_Shopby_Model_Url_Builder $urlBuilder */
+        $urlBuilder = Mage::getModel('amshopby/url_builder');
+        $urlBuilder->reset();
+        $seoUrl = $urlBuilder->getUrl();
+
+        $currentUrl = Mage::helper('core/url')->getCurrentUrl();
+
+        if ($currentUrl != $seoUrl) {
+            Mage::app()->getResponse()->setRedirect($seoUrl, 301);
+        }
+    }
+
     public function handleLayoutRender()
     {
+        /** @var Mage_Core_Model_Layout $layout */
         $layout = Mage::getSingleton('core/layout');
         if (!$layout)
             return;
-            
+
         $isAJAX = Mage::app()->getRequest()->getParam('is_ajax', false);
         $isAJAX = $isAJAX && Mage::app()->getRequest()->isXmlHttpRequest();
         if (!$isAJAX)
             return;
-            
-        $layout->removeOutputBlock('root');    
+
+        if ($this->_getDataHelper()->isModuleEnabled('Amasty_Finder')) {
+            //Workaround for amfinder form applying when it added as part of static block
+            $productsBlock = $layout->getBlock('category.products');
+            if (is_object($productsBlock)) {
+                $productsBlock->toHtml();
+            }
+        }
+
+        $layout->removeOutputBlock('root');
         Mage::app()->getFrontController()->getResponse()->setHeader('content-type', 'application/json');
-            
+
         $page = $layout->getBlock('product_list');
         if (!$page){
             $page = $layout->getBlock('search_result_list');
         }
-        
+
         if (!$page)
-            return; 
-            
+            return;
+
         $blocks = array();
         foreach ($layout->getAllBlocks() as $b){
-            if (!in_array($b->getNameInLayout(), array('amshopby.navleft','amshopby.navtop','amshopby.navright', 'amshopby.top'))){
+            if (!in_array($b->getNameInLayout(), array('amshopby.navleft','amshopby.navtop','amshopby.navright', 'amshopby.top', 'amfinder89'))){
                 continue;
             }
             $b->setIsAjax(true);
@@ -90,63 +107,86 @@ class Amasty_Shopby_Model_Observer
                     $html = $queldorei_blocks['block_layered_nav'];
                 }
             }
-            $blocks[$b->getBlockId()] = $this->_removeAjaxParam($html);                        
+            $blocks[$b->getBlockId()] = $this->_removeAjaxParam($html);
         }
-        
+
         if (!$blocks)
             return;
 
         $container = $layout->createBlock('core/template', 'amshopby_container');
         $container->setData('blocks', $blocks);
         $container->setData('page', $this->_removeAjaxParam($page->toHtml()));
-        
+
         $layout->addOutputBlock('amshopby_container', 'toJson');
     }
-    
+
     protected function _removeAjaxParam($html)
     {
-        $sep = Mage::getStoreConfig('amshopby/seo/special_char');
-        $html = str_replace('is' . $sep . 'ajax=1&amp;', '', $html);
-        $html = str_replace('is' . $sep . 'ajax=1&', '', $html);
-        $html = str_replace('is' . $sep . 'ajax=1', '', $html);
-        
+        $html = preg_replace('@[\?&]?is_ajax=1([^&])@', '$1', $html);
+        $html = str_replace('is_ajax=1&amp;', '', $html);
+        $html = str_replace('is_ajax=1&', '', $html);
+
         $html = str_replace('___SID=U', '', $html);
-        
+
         return $html;
     }
-        
-	public function customBlockCache(Varien_Event_Observer $observer)
-	{
-  		try {
-   			$event = $observer->getEvent();
-   			$block = $event->getBlock();
-   			$class = get_class($block);
-   			$url =  'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-   
-		   if (!Mage::registry('amshopby_cache_key')) {
-		   		$patterns = array(		   		
-		   			'/[&,?]p=(\d+)/',
-		   			'/[&,?]limit=(\d+)/',
-		   			'/[&,?]dir=(\w+)/',
-		   			'/[&,?]order=(\w+)/',
-		   		);
-		   		$url = preg_replace($patterns, '', $url);
-		   		if (strpos($url, '?') === false && strpos($url, '&') !== false) {
-		   			$url = preg_replace('/&/', '?', $url, 1);
-		   		}
-		   		Mage::register('amshopby_cache_key', $url);
-		   }
-		   
-		   
-		   foreach ($this->cacheableBlocks as $item) {
-		   		if ($class == $item) {
-					$block->setData('cache_lifetime', self::CUSTOM_CACHE_LIFETIME);
-			    	$block->setData('cache_key',  $class . Mage::registry('amshopby_cache_key'));
-			    	$block->setData('cache_tags', array('amshopby_block_' . $class));
-		   		}
-		   }
-		} catch (Exception $e) {
-			Mage::logException($e);
-		}
- 	}    
+
+    public function handleBlockOutput($observer)
+    {
+        if (!Mage::getStoreConfigFlag('amshopby/block/ajax'))
+            return;
+
+        /* @var $block Mage_Core_Block_Abstract */
+        $block = $observer->getBlock();
+
+        if ($block instanceof Mage_Catalog_Block_Product_List) {
+            $transport = $observer->getTransport();
+            $html = $transport->getHtml();
+
+            if (strpos($html, "amshopby-page-container") === FALSE){
+                $html = '<div class="amshopby-page-container" id="amshopby-page-container">' .
+                            $html .
+                            '<div style="display:none" class="amshopby-overlay"><div></div></div>'.
+                        '</div>';
+
+                $transport->setHtml($html);
+            }
+        }
+    }
+
+    /**
+     * Reset search engine if it is enabled for catalog navigation
+     *
+     * @param Varien_Event_Observer $observer
+     */
+    public function resetCurrentCatalogLayer(Varien_Event_Observer $observer)
+    {
+        if ($this->_getDataHelper()->useSolr()) {
+            Mage::register('_singleton/catalog/layer', Mage::getSingleton('enterprise_search/catalog_layer'));
+        }
+    }
+
+    /**
+     * Reset search engine if it is enabled for search navigation
+     *
+     * @param Varien_Event_Observer $observer
+     */
+    public function resetCurrentSearchLayer(Varien_Event_Observer $observer)
+    {
+        if ($this->_getDataHelper()->useSolr()) {
+            Mage::register('_singleton/catalogsearch/layer', Mage::getSingleton('enterprise_search/search_layer'));
+        }
+    }
+
+    public function flushCache()
+    {
+        $this->_getDataHelper()->flushCache();
+    }
+
+    protected function _getDataHelper()
+    {
+        /** @var Amasty_Shopby_Helper_Data $helper */
+        $helper = Mage::helper('amshopby');
+        return $helper;
+    }
 }
