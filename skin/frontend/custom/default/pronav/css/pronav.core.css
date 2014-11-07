@@ -84,6 +84,12 @@ ul#pronav li.primary-pronav-item .sub ul li.has-children .child-sub {
 	opacity:0;
 	filter:alpha(opacity=0);	
 }
+@-moz-document url-prefix() { 
+	ul#pronav li.primary-pronav-item .sub,
+	ul#pronav li.primary-pronav-item .sub ul li.has-children .child-sub {
+		top:33px;	
+	}
+}
 
 ul#pronav li.primary-pronav-item .sub.sub-align-right {
 	right:0px !important;

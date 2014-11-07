@@ -50,9 +50,9 @@ clear:both; font-size:0; line-height:0; height:0; overflow:hidden; }
 div.block-layered-nav.amshopby-collapse-enabled dt {
  cursor:pointer; 
  padding-left:15px;
- background:url(../images/amshopby-expanded.gif) center left no-repeat;
+ background:url(../images/amshopby-expanded.gif) center right no-repeat;
 }
-div.block-layered-nav.amshopby-collapse-enabled dt.amshopby-collapsed {background:url(../images/amshopby-collapsed.gif) center left no-repeat}
+div.block-layered-nav.amshopby-collapse-enabled dt.amshopby-collapsed {background:url(../images/amshopby-collapsed.gif) center right no-repeat}
 
 
 div.block-layered-nav div.amshopby-slider {
