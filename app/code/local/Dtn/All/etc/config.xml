@@ -34,6 +34,27 @@
                 <class>Dtn_All_Model</class>
             </dtn_all>
         </models>
+        <resources>
+            <dtnall_setup>
+                <setup>
+                    <module>Dtn_All</module>
+                    <class>Mage_Sales_Model_Mysql4_Setup</class>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </dtnall_setup>
+            <dtnall_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </dtnall_write>
+            <dtnall_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </dtnall_read>
+        </resources>
         <events>
             <sales_order_place_before>
                 <observers>
@@ -65,27 +86,6 @@
                 </observers>
             </sales_order_shipment_save_before>
         </events>
-        <resources>
-            <dtnall_setup>
-                <setup>
-                    <module>Dtn_All</module>
-                    <class>Mage_Sales_Model_Mysql4_Setup</class>
-                </setup>
-                <connection>
-                    <use>core_setup</use>
-                </connection>
-            </dtnall_setup>
-            <dtnall_write>
-                <connection>
-                    <use>core_write</use>
-                </connection>
-            </dtnall_write>
-            <dtnall_read>
-                <connection>
-                    <use>core_read</use>
-                </connection>
-            </dtnall_read>
-        </resources>
         <blocks>
             <dtn_all>
                 <class>Dtn_All_Block</class>
