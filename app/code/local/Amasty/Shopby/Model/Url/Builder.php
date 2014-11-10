@@ -229,7 +229,7 @@ class Amasty_Shopby_Model_Url_Builder
         if(Mage::getModel('catalog/layer')->getCurrentCategory()->getId() == $rootId){
             $base = Mage::getBaseUrl();
         }else{
-            $base = Mage::registry('current_category')->getUrl().'/';
+            $base = Mage::registry('current_category')->getUrl().'/'.$reservedKey.'/';
         }
 
         if ($this->isCatalogSearch()){

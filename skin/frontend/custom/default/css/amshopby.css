@@ -180,3 +180,10 @@ div.amshopby-overlay div {
 .btn-remove-inline { background-image: url('../images/am_btn_remove.gif'); background-repeat: no-repeat; width:13px; height:12px; margin-left: 4px; }
 .btn-remove-inline:hover { /* background-position: center bottom; */ }
 .amshopby-hightlighted { background: yellow;}
+#narrow-by-list ol{
+    position: absolute;
+    background: #fff;
+}
+.All.Designer{
+    display: none;
+}
