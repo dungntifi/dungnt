@@ -50,16 +50,11 @@ class Idev_OneStepCheckout_AjaxController extends Mage_Core_Controller_Front_Act
             $data = $customerAddr->getData();
         }
         if($data['country_id'] == "US"){
-            $result = Mage::helper('melissa_address')->melissaCheckAddress($data);
-            if ($result){
-                $result = array('check_errors' => $result, 'address_type' => $validationAddress, 'address_id' => $address_id, 'additional' => $data);
-                $result = Zend_Json::encode($result);
-            } else {
                 $result = Zend_Json::encode(array('verify' => '1'));
-            }
         } else {
             $result = Zend_Json::encode(array('verify' => '1' ));
         }
+
         $this->getResponse()->setBody($result);
     }
 
@@ -397,7 +392,6 @@ class Idev_OneStepCheckout_AjaxController extends Mage_Core_Controller_Front_Act
     public function save_billingAction()
     {
         $helper = Mage::helper('onestepcheckout/checkout');
-
         $billing_data = $this->getRequest()->getPost('billing', array());
         $shipping_data = $this->getRequest()->getPost('shipping', array());
         $customerAddressId = $this->getRequest()->getPost('billing_address_id', false);
@@ -504,7 +498,6 @@ class Idev_OneStepCheckout_AjaxController extends Mage_Core_Controller_Front_Act
         }
 
         $this->loadLayout(false);
-
         if(Mage::helper('onestepcheckout')->isEnterprise() && Mage::helper('customer')->isLoggedIn()){
 
             if (Mage::helper('onestepcheckout')->hasEeCustomerbalanace()) {
@@ -545,7 +538,6 @@ class Idev_OneStepCheckout_AjaxController extends Mage_Core_Controller_Front_Act
                 ->getBlock('choose-payment-method')
                 ->append($giftcardScripts);
         }
-
         $this->renderLayout();
 
     }

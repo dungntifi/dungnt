@@ -89,37 +89,3 @@
 <?php
 global $gaRemarketingPromo;
 $gaRemarketingPromo = true;
-?>
-
-
-<?php //Transferring Data to Rakuten LinkShare ?>
-<?php
-$productsSkuList = '';
-$productsQtyList = '';
-$productsNamesList = '';
-$productsSubTotal = '';
-
-foreach ($order_details->getItemsCollection() as $item) {
-    if ($item->getQtyToInvoice() > 0) {
-        if (strlen($productsSkuList) > 0) {
-            $productsSkuList .= "|";
-            $productsQtyList .= "|";
-        }
-        $productsSubTotal[] = $item->getPrice() * $item->getQtyToInvoice() * 100;
-        $productsSkuList .= $item->getSku();
-        $productsQtyList .= $item->getQtyToInvoice();
-        $productsNamesList[] = trim($item->getName());
-    }
-}
-$productsSkuList = str_replace(" ", "%20", trim($productsSkuList));
-$productsQtyList = str_replace(" ", "%20", trim($productsQtyList));
-$discount = '';
-$discountQty = '';
-if($order_details->getData('discount_amount') != 0) {
-    $productsSkuList .= "|Discount";
-    $productsNamesList[] = "Discount";
-    $discount = '|' . $order_details->getData('discount_amount') * 100;
-    $discountQty = '|0';
-}
-?>
-<img src="http://track.linksynergy.com/ep?mid=39720&ord=<?php echo $this->getOrderId(); ?>&skulist=<?php echo $productsSkuList; ?>&qlist=<?php echo $productsQtyList; echo $discountQty; ?>&amtlist=<?php echo implode('|', $productsSubTotal); echo $discount; ?>&cur=USD&img=1&namelist=<?php echo str_replace(" ", "%20", implode('|', $productsNamesList)); ?>">

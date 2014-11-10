@@ -1,0 +1,34 @@
+
+<!--Code linkshare-->
+<?php
+$lastOrderId = Mage::getSingleton('checkout/session')->getLastOrderId();
+$order = Mage::getSingleton('sales/order');
+$currency = $order->load($lastOrderId)->getBaseCurrencyCode();
+$skus = array();
+$qtys = array();
+$amounts = array();
+foreach ($order->getItemsCollection() as $itemId => $item){
+    if ($item->getParentItem()) continue;
+    $skus[$itemId] = rawurlencode($item->getSku());
+    $names[$itemId] = rawurlencode($item->getName());
+    $qtys[$itemId] = $item->getQtyOrdered() * 1;
+    $amounts[$itemId] = $item->getPrice()*$item->getQtyOrdered()*100;
+    // $item->getPrice()*$item->getQtyOrdered()*100;//but this will ignore any applied coupons
+    // $item->getRowTotal() * 100; //includes discounts and coupons
+}
+if ($order->getData("discount_amount") != 0) {
+    $skus["d"] = "Discount";
+    $names["d"] = "Discount";
+    $qtys["d"] = 0;
+    $amounts["d"] = round($order->getData("discount_amount") * 100);
+}
+
+$skuspipe = implode("|", $skus);
+$namespipe = implode("|", $names);
+$namespipeString = str_replace(" ", "%", $namespipe);
+$qtyspipe = implode("|", $qtys);
+$amountspipe = implode("|", $amounts);
+$merchant_id = Mage::getStoreConfig('link_share_settings/general/merchant_id');
+?>
+<img src="http://track.linksynergy.com/ep?mid=<?php echo $merchant_id ?>&ord=<?php echo $order->getIncrementId() ?>&skulist=<?php echo $skuspipe ?>&qlist=<?php echo $qtyspipe ?>&amtlist=<?php echo $amountspipe ?>&cur=<?php echo  $currency ?>&namelist=<?php echo $namespipe ?>">
+<!--Code linkshare-->

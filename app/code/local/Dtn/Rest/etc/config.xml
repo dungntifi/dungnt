@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Dtn_Rest>
+            <version>1.0.0</version>
+        </Dtn_Rest>
+    </modules>
+    <global>
+        <helpers>
+            <rest>
+                <class>Dtn_Rest_Helper</class>
+            </rest>
+        </helpers>
+    </global>
+    <options>
+        <url>https://addresscheck.melissadata.net/v2/REST/Service.svc/doAddressCheck</url>
+        <port>80</port>
+        <customerID>108957011</customerID>
+    </options>
+</config>

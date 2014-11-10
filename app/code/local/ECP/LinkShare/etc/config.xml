@@ -1,0 +1,98 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <ECP_LinkShare>
+            <version>0.1.0</version>
+        </ECP_LinkShare>
+    </modules>
+    <global>
+        <models>
+            <ecp_linkshare>
+                <class>ECP_LinkShare_Model</class>
+            </ecp_linkshare>
+        </models>
+        <blocks>
+            <ecp_linkshare>
+                <class>ECP_LinkShare_Block</class>
+            </ecp_linkshare>
+        </blocks>
+        <helpers>
+            <ecp_linkshare>
+                <class>ECP_LinkShare_Helper</class>
+            </ecp_linkshare>
+        </helpers>
+        <resources>
+            <ecp_linkshare_setup>
+                <setup>
+                    <module>ECP_LinkShare</module>
+                </setup>
+            </ecp_linkshare_setup>
+        </resources>
+    </global>
+
+    <!-- BASED ON SNIPPET: Static Visuals/Frontend section (config.xml) -->
+    <!-- This section enables static visual changes in store frontend. -->
+    <frontend>
+        <!-- BASED ON SNIPPET: Static Visuals/Layout file support (config.xml) -->
+        <!-- This section registers additional layout XML file with our module-specific layout changes to be loaded
+        and executes during page rendering. -->
+        <layout>
+            <updates>
+                <ecp_linkshare>
+                    <file>ecp_linkshare.xml</file>
+                </ecp_linkshare>
+            </updates>
+        </layout>
+    </frontend>
+
+    <!-- START DEFINED BACKEND ROUTE -->
+    <admin>
+        <routers>
+            <link_share>
+                <use>admin</use>
+                <args>
+                    <module>ECP_LinkShare</module>
+                    <frontName>link_share</frontName>
+                </args>
+            </link_share>
+        </routers>
+    </admin>
+    <adminhtml>
+        <layout>
+            <updates>
+                <link_share>
+                    <file>link_share.xml</file>
+                </link_share>
+            </updates>
+        </layout>
+    </adminhtml>
+    <!-- END DEFINED BACKEND ROUTE -->
+
+    <default>
+        <link_share_settings>
+            <general>
+                <merchant_id></merchant_id>
+            </general>
+            <ftp>
+                <active>yes</active>
+                <host>mftp.linksynergy.com</host>
+                <port>21</port>
+                <user>no</user>
+                <password>no</password>
+                <localPath>var/log</localPath>
+            </ftp>
+        </link_share_settings>
+    </default>
+    <crontab>
+        <jobs>
+            <ecp_linkshare>
+                <schedule>
+                    <cron_expr>45 1 * * *</cron_expr>
+                </schedule>
+                <run>
+                    <model>ecp_linkshare/cron::feedGenerate</model>
+                </run>
+            </ecp_linkshare>
+        </jobs>
+    </crontab>
+</config>
