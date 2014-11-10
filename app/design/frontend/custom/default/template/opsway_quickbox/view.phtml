@@ -110,8 +110,8 @@
 				<?php echo $this->getReviewsSummaryHtml($_product, false, true)?>
                 <?php if ($_product->isSaleable() && $this->hasOptions()):?>
                     <?php echo $this->getChildChildHtml('container1', '', true, true) ?>
-                <?php endif;?>                
-                
+                <?php endif;?>
+                <?php echo $this->getChildHtml('addto') ?>
             </div>
         </div>
     </form>
