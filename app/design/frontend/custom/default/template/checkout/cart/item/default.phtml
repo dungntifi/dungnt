@@ -30,7 +30,7 @@ $isVisibleProduct = $_item->getProduct()->isVisibleInSiteVisibility();
 $canApplyMsrp = Mage::helper('catalog')->canApplyMsrp($_item->getProduct(), Mage_Catalog_Model_Product_Attribute_Source_Msrp_Type::TYPE_BEFORE_ORDER_CONFIRM);
 ?>
 <tr>
-    <td><?php if ($this->hasProductUrl()):?><a href="<?php echo $this->getProductUrl() ?>" title="<?php echo $this->escapeHtml($this->getProductName()) ?>" class="product-image"><?php endif;?><img src="<?php echo $this->getProductThumbnail()->adaptiveResize(100, 100); ?>" width="100" height="100" alt="<?php echo $this->escapeHtml($this->getProductName()) ?>" /><?php if ($this->hasProductUrl()):?></a><?php endif;?></td>
+    <td><?php if ($this->hasProductUrl()):?><a href="<?php echo $this->getProductUrl() ?>" title="<?php echo $this->escapeHtml($this->getProductName()) ?>" class="product-image"><?php endif;?><img src="<?php echo $this->getProductThumbnail()->adaptiveResize(150, 237); ?>" alt="<?php echo $this->escapeHtml($this->getProductName()) ?>" /><?php if ($this->hasProductUrl()):?></a><?php endif;?></td>
     <td>
         <h2 class="product-name">
         <?php if ($this->hasProductUrl()):?>
@@ -67,12 +67,7 @@ $canApplyMsrp = Mage::helper('catalog')->canApplyMsrp($_item->getProduct(), Mage
             <?php echo $addInfoBlock->setItem($_item)->toHtml() ?>
         <?php endif;?>
     </td>
-    <td class="a-center">
-        <?php if ($isVisibleProduct): ?>
-            <a href="#" rel="<?php echo $_item->getProductId(); ?>-<?php echo $_item->getId(); ?>" title="<?php echo $this->__('Edit item parameters') ?>"
-               class="overlay-window btn_edit edit-cart-item"><?php echo $this->__('Edit') ?></a>
-        <?php endif ?>
-    </td>
+    
     <?php if ($this->helper('wishlist')->isAllowInCart()) : ?>
     <td class="a-center">
         <?php if ($isVisibleProduct): ?>
@@ -95,7 +90,7 @@ $canApplyMsrp = Mage::helper('catalog')->canApplyMsrp($_item->getProduct(), Mage
     <?php else: ?>
 
         <?php if ($this->helper('tax')->displayCartPriceExclTax() || $this->helper('tax')->displayCartBothPrices()): ?>
-        <td class="a-right">
+        <td class="a-left">
             <?php if (Mage::helper('weee')->typeOfDisplay($_item, array(1, 4), 'sales') && $_item->getWeeeTaxAppliedAmount()): ?>
                 <span class="cart-tax-total" onclick="taxToggle('eunit-item-tax-details<?php echo $_item->getId(); ?>', this, 'cart-tax-total-expanded');">
             <?php else: ?>
