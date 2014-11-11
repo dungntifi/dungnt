@@ -2,7 +2,7 @@
 <layout>
     <adminhtml_catalog_product_configurable>
         <reference name="head">
-            <action method="addItem"><type>skin_js</type><name>simpleimages/jquery-1.9.1.min.js</name></action>
+            <!--<action method="addItem"><type>skin_js</type><name>simpleimages/jquery-1.9.1.min.js</name></action>-->
             <action method="addItem"><type>skin_css</type><name>simpleimages/fancybox/jquery.fancybox.css</name></action>
             <action method="addItem"><type>skin_js</type><name>simpleimages/fancybox/jquery.fancybox.js</name></action>
             <action method="addItem"><type>skin_css</type><name>simpleimages/jcrop/css/jquery.Jcrop.min.css</name></action>
