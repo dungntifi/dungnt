@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <ECP_LinkShare>
+            <active>true</active>
+            <codePool>local</codePool>
+        </ECP_LinkShare>
+    </modules>
+</config>

@@ -449,10 +449,7 @@ function get_save_billing_function(url, set_methods_url, update_payments, trigge
         parameters['payment_method'] = payment_method;
         parameters['payment[method]'] = payment_method;
 
-        if(update_payments){
-            var payment_methods = $$('div.payment-methods')[0];
-            payment_methods.update('<div class="loading-ajax">&nbsp;</div>');
-        }
+
 
         var totals = get_totals_element();
         totals.update('<div class="loading-ajax">&nbsp;</div>');
@@ -462,16 +459,10 @@ function get_save_billing_function(url, set_methods_url, update_payments, trigge
             method: 'post',
             onSuccess: function(transport)    {
             if(transport.status == 200)    {
-
                 var data = transport.responseText.evalJSON();
-
                 // Update shipment methods
                 if(shipment_methods_found)  {
                     shipment_methods.update(data.shipping_method);
-                }
-
-                if(update_payments){
-                    payment_methods.replace(data.payment_method);
                 }
 
                 totals.update(data.summary);
@@ -479,9 +470,7 @@ function get_save_billing_function(url, set_methods_url, update_payments, trigge
                 if(data.check_shipping == false) {
                     shipping_box.show();
                 }
-
                 if (data.hasOwnProperty('melissa')){
-
                     for (var addr_type in data.melissa){
                         if (data.melissa[addr_type] === false) continue;
                         if (!data.melissa[addr_type].hasOwnProperty('error')){
@@ -499,12 +488,11 @@ function get_save_billing_function(url, set_methods_url, update_payments, trigge
                             }
                         }
                     }
-
-
-
                 }
 
-
+                if(update_payments){
+                    payment_methods.replace(data.payment_method);
+                }
             }
         },
         onComplete: function(transport){
