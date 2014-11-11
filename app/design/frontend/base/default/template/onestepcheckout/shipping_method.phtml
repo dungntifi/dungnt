@@ -58,7 +58,7 @@
         </dl>
     <?php else: ?>
         <dl class="shipment-methods">
-            <select name="shipping_method" class="shipping-methods" >
+            <select name="shipping_method" class="shipping-methods" id="shipping_method">
             <?php foreach ($_shippingRateGroups as $code => $_rates): ?>
 <!--                    <dd>--><?php //echo $this->getCarrierName($code) ?><!--</dd>-->
                     <?php foreach ($_rates as $_rate): ?>

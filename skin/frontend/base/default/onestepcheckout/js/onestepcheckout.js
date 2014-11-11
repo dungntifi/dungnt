@@ -240,6 +240,19 @@ function $RF(el, radioGroup) {
     return (checked) ? $F(checked) : null;
 }
 
+function $SF(el, select) {
+    if($(el).type && $(el).type.toLowerCase() == 'select') {
+        var select = $(el).name;
+        var el = $(el).form;
+    } else if ($(el).tagName.toLowerCase() != 'form') {
+        return false;
+    }
+
+    var checked = $(select).getValue();
+
+    return (checked) ? checked : null;
+}
+
 function $RFF(el, radioGroup) {
     if($(el).type && $(el).type.toLowerCase() == 'radio') {
         var radioGroup = $(el).name;
@@ -498,8 +511,8 @@ function get_save_billing_function(url, set_methods_url, update_payments, trigge
         onComplete: function(transport){
             if(transport.status == 200)    {
                 if(shipment_methods_found)  {
-                    $$('dl.shipment-methods input').invoke('observe', 'click', get_separate_save_methods_function(set_methods_url, update_payments));
-                    $$('dl.shipment-methods input').invoke('observe', 'click', function() {
+                    $$('dl.shipment-methods select').invoke('observe', 'change', get_separate_save_methods_function(set_methods_url, update_payments));
+                    $$('dl.shipment-methods select').invoke('observe', 'change', function() {
                         $$('div.onestepcheckout-shipment-method-error').each(function(item) {
                             new Effect.Fade(item);
                         });
@@ -549,10 +562,9 @@ function get_separate_save_methods_function(url, update_payments)
         }
 
         var form = $('onestepcheckout-form');
-        var shipping_method = $RF(form, 'shipping_method');
+        var shipping_method = $SF(form, 'shipping_method');
         var payment_method = $RF(form, 'payment[method]');
         var totals = get_totals_element();
-
         var freeMethod = $('p_method_free');
         if(freeMethod){
             payment.reloadcallback = true;
