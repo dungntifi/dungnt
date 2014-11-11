@@ -97,6 +97,7 @@ ul#pronav li .sub {
 	-moz-box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
 	-webkit-box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
 }
+ul#pronav li.1column .sub{width: 100% !important; min-width:240px; }
 ul#pronav li .sub li strong,
 ul#pronav li .sub li{
 	font-family: Futura, "Gill Sans", "Century Gothic", "Dejavu Sans", "Trebuchet MS", sans-serif;	
@@ -250,5 +251,6 @@ ul#pronav li#mixed-li-id .sub {
 	}
 	ul#pronav li.primary-pronav-item .sub .row ul{ width: 10.5em;}
 	ul#pronav li .sub{min-width: 600px;    padding: 20px 10px;}
+	ul#pronav li.1column .sub{ min-width: 240px; padding: 20px;}
 	
 }
