@@ -7,7 +7,10 @@
 	padding-bottom: 0;
 	background: #fff;
 	border:0;
+	float:left;
 }
+.toolbar-top .sorter{ margin-left: 0;}
+.toolbar-top .sorter label{ padding-right: 13px;}
 .block .block-subtitle{ 
 	display:inline-block; 
 	float:left; 
@@ -15,7 +18,7 @@
 	font-family:Futura,"Gill Sans","Century Gothic","Dejavu Sans","Trebuchet MS",sans-serif;
 	font-size:16px;
 	font-weight:400;
-	width:5%;
+	
 }
 .block-layered-nav dt{ 
 	text-transform:none;
@@ -43,25 +46,7 @@ div.block-layered-nav dt.amshopby-collapsed{
 	display: inline-block;
 }
 #narrow-by-list  td dt{ 
-	min-width: 113px;
-}
-#narrow-by-list table tr td.Price dt{ 
-	min-width:195px  ;
-
-}
-#narrow-by-list td.Neckline dt{	min-width:111px  ;}
-#narrow-by-list  td.Designer dt{ 
-	min-width:140px  ;
-}
-#narrow-by-list  td.Category dt{ 
-	min-width:144px  ;
-}
-#narrow-by-list  td.Waistline dt,
-#narrow-by-list  td.Length dt{ 
-	min-width:120px  ;
-}
-#narrow-by-list  td.Size dt{ 
-	min-width:110px  ;
+	min-width: 99px;
 }
 .toolbar .pager .amount,
 .toolbar .pager .pages{
@@ -73,9 +58,7 @@ div.block-layered-nav dt.amshopby-collapsed{
 }
 .col-main-category{ position:relative;}
 .col-main-category .toolbar { 
-	position:absolute;
-	right:105px;
-	top:68px;
+	float: left;
 }
 .col-main-category  .toolbar-bottom .toolbar { 
 	position:inherit;
@@ -121,4 +104,12 @@ ul#pronav li table.silo-table td a{
 .left_designer .content{}
 .left_designer .content .bare-list{}
 .left_designer .content .bare-list li{ line-height: 150%; padding: 2px 0; float;left; display: block;}
+
+@media screen and (max-width: 1200px) {
+	div.block-layered-nav.amshopby-collapse-enabled dt{ padding-left: 5px !important;}
+	#narrow-by-list  td{ min-width: 80px !important;}
+	#narrow-by-list  td dt{min-width: 80px;	}
+	.block-layered-nav #narrow-by-list{width: 100%; margin:10px 0 10px 0 !important;}
+	.block .block-subtitle{ width: 100%;}
+}
 

@@ -242,4 +242,13 @@ ul#pronav li#mixed-li-id .sub {
 	margin-bottom:20px;
 	}	
 
+@media screen and (max-width: 1200px) {
+	ul#pronav li a {
+	padding: 8px 6px;
+	font-size: 12px;
+
+	}
+	ul#pronav li.primary-pronav-item .sub .row ul{ width: 10.5em;}
+	ul#pronav li .sub{min-width: 600px;    padding: 20px 10px;}
 	
+}
