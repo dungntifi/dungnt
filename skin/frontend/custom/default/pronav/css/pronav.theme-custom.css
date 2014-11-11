@@ -224,7 +224,7 @@ ul#pronav li#mixed-li-id .sub {
 
 .sub { width:100% !important;}
 
-ul#pronav li.one-column  .sub{width: 100% !important; min-width:240px; border: 1px solid red; }
+ul#pronav li.one-column  .sub{width: 100% !important; min-width:240px;  }
 
 .colmenu-left{
 	display:inline-block; 
