@@ -154,6 +154,15 @@
 </div>
 
 <script type="text/javascript">
+    function changeItemQuantity( id , num ) {
+        var qty_id = "input[name='cart[" + id + "][qty]']";
+        var currentVal = parseInt(jQuery(qty_id).val());
+        if ( currentVal != NaN ){
+            jQuery(qty_id).val(currentVal + num);
+            jQuery(".btn-update").click();
+        }
+    }
+
     (function($) {
         $(function() {
 

@@ -180,7 +180,9 @@ $canApplyMsrp = Mage::helper('catalog')->canApplyMsrp($_item->getProduct(), Mage
         <?php endif; ?>
     <?php endif; ?>
     <td class="a-center">
+        <a onclick="changeItemQuantity(<?php echo $_item->getId() ?>,-1);return false;" class="qty-item <?php if($this->getQty()==1): ?>disablePlus<?php endif; ?>">-</a>
         <input name="cart[<?php echo $_item->getId() ?>][qty]" value="<?php echo $this->getQty() ?>" size="4" title="<?php echo $this->__('Qty') ?>" class="input-text qty" maxlength="12" />
+        <a onclick="changeItemQuantity(<?php echo $_item->getId() ?>,1);return false;" class="qty-item">+</a>
     </td>
     <?php if (($this->helper('tax')->displayCartPriceExclTax() || $this->helper('tax')->displayCartBothPrices()) && !$_item->getNoSubtotal()): ?>
     <td class="a-right">
