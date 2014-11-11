@@ -105,6 +105,9 @@ ul#pronav li table.silo-table td a{
 .left_designer .content .bare-list{}
 .left_designer .content .bare-list li{ line-height: 150%; padding: 2px 0; float;left; display: block;}
 
+/*----------------Price Drop Alert Subcribe in My account ----------------------*/
+.pricedropalert-index-subscribe .main{ max-width: 960px;}
+.pricedropalert-index-subscribe .thanx_message{ width: 100%;}
 @media screen and (max-width: 1200px) {
 	div.block-layered-nav.amshopby-collapse-enabled dt{ padding-left: 5px !important;}
 	#narrow-by-list  td{ min-width: 80px !important;}
