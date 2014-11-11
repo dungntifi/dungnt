@@ -1,8 +1,8 @@
 <?php
-  
+
 class OpsWay_SimpleImages_Model_Observer
 {
- 
+
     /**
      * This method will run when the product is saved from the Magento Admin
      * Use this function to update the product model, process the
@@ -12,10 +12,9 @@ class OpsWay_SimpleImages_Model_Observer
      */
     public function saveProductTabData(Varien_Event_Observer $observer)
     {
-        
         $this->_uploadIconImages($_FILES);
         $this->_uploadProductImages($_FILES);
-        
+
         if(isset($_FILES['simpleimages_gallery'])) {
             $simpleImagesGallery = $_FILES['simpleimages_gallery'];
         }
@@ -27,22 +26,22 @@ class OpsWay_SimpleImages_Model_Observer
         // echo "simpleImagesData<pre>"; print_r($simpleImagesData); echo "</pre>";
         // echo "simpleImagesType<pre>"; print_r($simpleImagesType); echo "</pre>";
         // echo "colorPosition<pre>"; print_r($colorPosition); echo "</pre>";
-     
+
         //proceed only if any data exists
         if(isset($simpleImagesGallery) || is_array($simpleImagesData) || is_array($simpleImagesType)) {
 
             try {
                 $product = $observer->getEvent()->getProduct();
-                $ids     = Mage::getModel('catalog/product_type_configurable')->getChildrenIds($product->getId());   
+                $ids     = Mage::getModel('catalog/product_type_configurable')->getChildrenIds($product->getId());
                 $childProducts = Mage::getModel('catalog/product')->getCollection()
                     ->addAttributeToFilter('entity_id', $ids)
                     ->addAttributeToSelect('color')
                     ->addAttributeToSelect('color_position');
-                    
+
                 foreach($childProducts as $_simple){
 
                     //Mage::log('===START ' . $_simple->getId() . '===');
-                    
+
                     //preset data
                     $colorId = $_simple->getColor();
                     if(isset($simpleImagesGallery['name'][$colorId][0]) || isset($simpleImagesType[$colorId][$_simple->getId()])) {
@@ -50,7 +49,7 @@ class OpsWay_SimpleImages_Model_Observer
                     }
 
                     //STEP 1: assign uploaded files
-                    if(isset($simpleImagesGallery['name'][$colorId][0]) && !empty($simpleImagesGallery['name'][$colorId][0])) {                   
+                    if(isset($simpleImagesGallery['name'][$colorId][0]) && !empty($simpleImagesGallery['name'][$colorId][0])) {
                         foreach ($simpleImagesGallery['name'][$colorId] as $key => $name) {
                             $_simple->addImageToMediaGallery('media/simpleimages/' . $name, null, false, false); //assigning image types to media gallery
                         }
@@ -62,7 +61,7 @@ class OpsWay_SimpleImages_Model_Observer
                         $mediaApi = Mage::getModel("catalog/product_attribute_media_api");
                         $items = $mediaApi->items($_simple->getId());
 
-                        foreach($items as $key => $item) {                        
+                        foreach($items as $key => $item) {
                             //update label  
                             if(isset($simpleImagesData['label'][$colorId][$key])) {
                                 $mediaApi->update($_simple->getId(), $item['file'], array('label' => $simpleImagesData['label'][$colorId][$key]));
@@ -129,7 +128,7 @@ class OpsWay_SimpleImages_Model_Observer
                                         $fileAlias = $fileName[0];
                                         //Mage::log('fileName ' . $fileName[0]);
                                     }
-                                    
+
                                     if($itemAlias == $fileAlias) {
                                         //Mage::log('itemAlias == fileAlias');
                                         //Mage::log('removing ' . $item['file']);
@@ -137,7 +136,7 @@ class OpsWay_SimpleImages_Model_Observer
                                         $itemName = $itemAlias = $fileName = $fileAlias = $itemNameLastCharacter = $itemNameOffset = $fileNameLastCharacter = $fileNameOffset = '';
                                     }
                                     //Mage::log('---------------------------------');
-                                }                           
+                                }
                             }
                         }
 
@@ -147,7 +146,7 @@ class OpsWay_SimpleImages_Model_Observer
                             $groupedByPath = ''; $fileName = $alias = $lastCharacter = $offset = '';
                             /**
                              * NOTE: alias is reducing file name by 2 symbols at the end to allow update all image types
-                             * in case they have equal name in different simple products. 
+                             * in case they have equal name in different simple products.
                              * For example: /g/o/gold_2_8_1_1.jpg and /g/o/gold_2_8_1_2.jpg will be transformed to /g/o/gold_2_8_1
                              * and both entries will be updated
                              */
@@ -172,7 +171,7 @@ class OpsWay_SimpleImages_Model_Observer
                                 $offset = -1 * (int)strlen(end($lastCharacter));
                                 $alias = substr($fileName[0], 0, $offset);
                                 //update gallery image types
-                                if(isset($groupedByPath[$alias])) { 
+                                if(isset($groupedByPath[$alias])) {
                                     $mediaApi->update($_simple->getId(), $item['file'], array('types' => $groupedByPath[$alias]));
                                 }
                             }
@@ -180,13 +179,13 @@ class OpsWay_SimpleImages_Model_Observer
 
                         //STEP 4: set color position
                         if(isset($colorPosition[$colorId])) {
-                            $_simple->setData('color_position', $colorPosition[$colorId]); 
+                            $_simple->setData('color_position', $colorPosition[$colorId]);
                         }
                     }
 
                     //Mage::log('===END ' . $_simple->getId() . '===');
                     $_simple->save();
-                
+
                 }//endforeach
                 $product->save();
             }
@@ -196,7 +195,7 @@ class OpsWay_SimpleImages_Model_Observer
         }
     }
 
-    private function _uploadIconImages($_FILES) {
+    private function _uploadIconImages() {
 
         if (isset($_FILES['amconf_icon']) && isset($_FILES['amconf_icon']['error']))
         {
@@ -216,8 +215,8 @@ class OpsWay_SimpleImages_Model_Observer
         }
     }
 
-    private function _uploadProductImages($_FILES) {
-        
+    private function _uploadProductImages() {
+
         if (isset($_FILES['simpleimages_gallery']) && isset($_FILES['simpleimages_gallery']['error']))
         {
             foreach ($_FILES['simpleimages_gallery']['error'] as $colorId => $error)
@@ -260,7 +259,7 @@ class OpsWay_SimpleImages_Model_Observer
             }
         }
     }
-      
+
     /**
      * Retrieve the product model
      *
@@ -270,7 +269,7 @@ class OpsWay_SimpleImages_Model_Observer
     {
         return Mage::registry('product');
     }
-     
+
     /**
      * Shortcut to getRequest
      *
