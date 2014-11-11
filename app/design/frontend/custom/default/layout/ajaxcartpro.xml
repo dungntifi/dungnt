@@ -12,11 +12,11 @@
             <action method="addJs"><script>aw_ajaxcartpro/updaters/addProductConfirmation.js</script></action>
             <action method="addJs"><script>aw_ajaxcartpro/updaters/removeProductConfirmation.js</script></action>
             <action method="addJs"><script>aw_ajaxcartpro/observers/clickOnButtonInCartPageForm.js</script></action>
-            <action method="addJs"><script>aw_ajaxcartpro/observers/clickOnAddToCartInCategoryList.js</script></action>
-            <action method="addJs"><script>aw_ajaxcartpro/observers/clickOnAddToCartInOptionsPopup.js</script></action>
-            <action method="addJs"><script>aw_ajaxcartpro/observers/clickOnAddToCartInProductPage.js</script></action>
+            <!--<action method="addJs"><script>aw_ajaxcartpro/observers/clickOnAddToCartInCategoryList.js</script></action>-->
+            <!--<action method="addJs"><script>aw_ajaxcartpro/observers/clickOnAddToCartInOptionsPopup.js</script></action>-->
+            <!--<action method="addJs"><script>aw_ajaxcartpro/observers/clickOnAddToCartInProductPage.js</script></action>-->
             <action method="addJs"><script>aw_ajaxcartpro/observers/clickOnDeleteFromCart.js</script></action>
-            <action method="addJs"><script>aw_ajaxcartpro/observers/clickOnAddToCartInMiniWishlist.js</script></action>
+            <!--<action method="addJs"><script>aw_ajaxcartpro/observers/clickOnAddToCartInMiniWishlist.js</script></action>-->
             <action method="addJs"><script>varien/product.js</script></action>
             <action method="addJs"><script>aw_ajaxcartpro/product.js</script></action>
             <action method="addItem"><type>skin_js</type><name>js/bundle.js</name></action>
