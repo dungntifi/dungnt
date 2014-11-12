@@ -2,8 +2,8 @@
     $collection = $this->getProductCollectionForLater();
 ?>
 <?php if(count($collection) > 0):?>
-<div id="save-for-later-title" class="show"><?php echo $this->__("show"); ?></div>
 <div id="save-for-later" style="color: #333 !important;">
+    <div id="save-for-later-title" class="show"><?php echo $this->__("Show"); ?></div>
 	<h3><?php echo $this->__('Saved Items')?></h3>
     <ul class="list-product">
 <?php
@@ -49,8 +49,8 @@
         jQuery("#save-for-later-title").click(function(){
             if($(this).hasClass("show")){
                 $(this).removeClass('show');
-                $(this).addClass("hidden");
-                $(this).text('hidden');
+                $(this).addClass("save-hidden");
+                $(this).text('Hide');
             }else{
                 $(this).text('show');
             }
