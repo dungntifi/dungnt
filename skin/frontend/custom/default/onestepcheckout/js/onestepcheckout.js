@@ -48,6 +48,7 @@ var OneStepCheckoutLoginPopup = Class.create({
 
             new Ajax.Request(url, {
                 method: 'post',
+                evalScripts: true,
                 parameters: parameters,
                 onSuccess: function(transport) {
                     var result = transport.responseText.evalJSON();
@@ -75,6 +76,7 @@ var OneStepCheckoutLoginPopup = Class.create({
 
             new Ajax.Request(url, {
                 method: 'post',
+                evalScripts: true,
                 parameters: { email: email },
                 onSuccess: function(transport) {
                     var result = transport.responseText.evalJSON();
@@ -329,6 +331,7 @@ function get_save_methods_function(url, update_payments)
 
         new Ajax.Request(url, {
             method: 'post',
+            evalScripts: true,
             onSuccess: function(transport)    {
             if(transport.status == 200)    {
                 var data = transport.responseText.evalJSON();
@@ -470,6 +473,7 @@ function get_save_billing_function(url, set_methods_url, update_payments, trigge
 
         new Ajax.Request(url, {
             method: 'post',
+            evalScripts: true,
             onSuccess: function(transport)    {
             if(transport.status == 200)    {
                 var data = transport.responseText.evalJSON();
@@ -596,6 +600,7 @@ function get_separate_save_methods_function(url, update_payments)
 
         new Ajax.Request(url, {
             method: 'post',
+            evalScripts: true,
             onSuccess: function(transport)    {
             if(transport.status == 200)    {
                 var data = transport.responseText.evalJSON();
@@ -635,6 +640,7 @@ function paymentrefresh(url) {
     payment_methods.update('<div class="loading-ajax">&nbsp;</div>');
     new Ajax.Request(url, {
         method: 'get',
+        evalScripts: true,
         onSuccess: function(transport){
             if(transport.status == 200)    {
                     var data = transport.responseText.evalJSON();
