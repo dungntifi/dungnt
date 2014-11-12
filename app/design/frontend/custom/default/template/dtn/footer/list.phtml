@@ -16,7 +16,7 @@
         $option = json_decode($product["option"]);
 ?>
     <li class="item">
-        <div class="quickview">
+        <div class="quickview" style="display: block !important;">
             <a class="quickview-btn fancybox.ajax" href="<?php echo $this->getUrl('quickbox/product/view') . '?id='. $_product->getId() ?>"><?php echo $this->__('Quick View') ?></a>
         </div>
         <a href="<?php echo $productUrl; ?>"><img src="<?php echo $imgUrl; ?>" alt="<?php echo $name; ?>" title="<?php echo $name; ?>"/></a>
