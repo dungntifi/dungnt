@@ -53,12 +53,12 @@
                 $(this).removeClass('show');
                 $(this).addClass("save-hidden");
                 $(this).text('Hide');
-                $(this+" #save-content").css("display",'none');
+                $(this).find("#save-content").css("display",'none');
             }else{
                 $(this).removeClass("save-hidden");
                 $(this).addClass("show");
                 $(this).text('show');
-                $(this+" #save-content").css("display",'block');
+                $(this).find("#save-content").css("display",'block');
             }
         })
     })
