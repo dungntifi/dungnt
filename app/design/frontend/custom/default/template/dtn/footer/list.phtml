@@ -4,6 +4,7 @@
 <?php if(count($collection) > 0):?>
 <div id="save-for-later" style="color: #333 !important;">
     <div id="save-for-later-title" class="show"><?php echo $this->__("Show"); ?></div>
+    <div id="save-content">
 	<h3><?php echo $this->__('Saved Items')?></h3>
     <ul class="list-product">
 <?php
@@ -43,6 +44,7 @@
 ?>
     </ul>
 </div>
+</div>
 <?php endif;?>
 <script>
     jQuery(document).ready(function($){
@@ -52,8 +54,11 @@
                 $(this).addClass("save-hidden");
                 $(this).text('Hide');
             }else{
+                $(this).removeClass("save-hidden");
+                $(this).addClass("show");
                 $(this).text('show');
             }
+            $(this+" #save-content").toggle( "slow" );
         })
     })
 </script>
