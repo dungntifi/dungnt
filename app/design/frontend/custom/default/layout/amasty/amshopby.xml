@@ -10,11 +10,14 @@
     <amshopby_index_index>
         <!-- feel free remove that if you need to use default page layout -->
         <reference name="root">
-           <action method="setTemplate"><template>page/2columns-left.phtml</template></action>
+           <action method="setTemplate"><template>page/2columns-left-category.phtml</template></action>
         </reference>
 
         <reference name="left">
            <block type="amshopby/catalog_layer_view" name="amshopby.navleft" before="-" template="catalog/layer/view.phtml"/> 
+		     <block type="amshopby/letter" name="left.letter" as="left.letter" template="amasty/amshopby/letter.phtml">
+                <action method="setData"><key>attribute_code</key><value>designer</value></action>
+            </block>
         </reference>
         <reference name="content">
             <block type="amshopby/catalog_layer_view_top" name="amshopby.navtop" template="amasty/amshopby/view_top.phtml"/>
@@ -24,11 +27,12 @@
                         <block type="page/html_pager" name="product_list_toolbar_pager"/>
                     </block>
                     <action method="setToolbarBlockName"><name>product_list_toolbar</name></action>
-                    <!--
-                     <action method="setColumnCount"><coulumn>4</coulumn></action>
-                    -->
+                    
+                     <action method="setColumnCount"><coulumn>100</coulumn></action>
+                    
                 </block>
             </block>
+			
     		<block type="amshopby/top" name="amshopby.top" before="category.products" template="amasty/amshopby/top.phtml"/>
         </reference>
     </amshopby_index_index>
