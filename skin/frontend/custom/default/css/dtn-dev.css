@@ -46,9 +46,9 @@
 #customer-reviews .date{ font-style:italic; padding:10px 0 10px; color:#777; border-top:1px solid #e4e4e4; font-size:11px;}
 .review-popup-img{ float: right; margin-top:10px;}
 #customer-reviews .scroll-pane{overflow: hidden; height:310px; min-height:112px;max-height: 310px; width: 100%;}
-#customer-reviews .jspVerticalBar{ width:9px;}
-#customer-reviews .jspTrack{ border:1px solid #000; background:#fff; height:310px !important;}
-#customer-reviews .jspDrag{ background:#000;}
+.scroll-pane .jspVerticalBar{ width:9px;}
+.scroll-pane .jspTrack{ border:1px solid #000; background:#fff; height:310px !important;}
+.scroll-pane .jspDrag{ background:#000;}
 
 /*PO-12*/
 .footer-container #scroll-to-top {position: fixed;right: 0;bottom: 30px;background:#fff ;color: #fff;line-height: 1;padding: 15px 10px; display:none; font-size:13px; font-weight:700; border:1px solid #000; border-right:none; padding:2px 0 2px 2px;}
@@ -88,7 +88,7 @@
 .cart .cart-collaterals > h2{ font-size:14px;padding:8px 10px; font-weight:700; background:#fff; margin:0 -1px;}
 .cart .cart-collaterals .totals{ background:#fff; border-top:1px solid #000; width:100%;}
 .cart button.btn-update,  .cart button.btn-empty{ visibility:hidden;}
-.cart .btn-remove{ background-image:url(../images/btn_remove3.gif); margin-top:3px;}
+.cart .btn-remove, .btn-remove3{ background-image:url(../images/btn_remove3.gif); margin-top:3px;}
 .cart-table .btn-continue span{ background-color:transparent; color:#000;}
 .cart-table .btn-continue span span{ line-height:normal; text-decoration:underline;}
 .cart .totals td{ padding:7px 20px; font-size:15px; text-align:left !important;}
