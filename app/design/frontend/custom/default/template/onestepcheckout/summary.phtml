@@ -142,6 +142,10 @@ var total = <?php echo $this->getGrandTotal();?>;
 //]]>
 </script>
 <script type="text/javascript">
+
+    jQuery(document).ready(function(){
+        jQuery('.scroll-pane').jScrollPane();
+    });
     (function($) {
         $(function() {
 
