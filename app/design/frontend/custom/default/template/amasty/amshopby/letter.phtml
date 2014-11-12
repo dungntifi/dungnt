@@ -1,32 +1,44 @@
 <?php $items = $this->getItems() ?>
+<?php if ($items): $arrActive = array(); ?>
+<?php foreach ($items as $letters): ?>
+    <?php foreach ($letters as $letter => $options): ?>
+        <?php $arrActive[] = $letter; ?>
+        <?php endforeach; ?>
+    <?php endforeach; ?>
+<?php endif; ?>
 <div class="content">
     <?php if ($items): $i = 0;?>
     <table class="silo-table"><caption>ALL DESIGNERS BY A-Z</caption>
         <tbody>
-    <?php foreach ($items as $letters): ?>
-        <?php foreach ($letters as $letter => $options): //$i++; ?>
-            <?php 
-				if($i%5==0){
-					echo "<tr>";
-				}
-				echo '<td class="designerIndex '.$letter.'">';
-				echo '<a href="'.$this->getUrl('designer/index/index/letter/'.$letter).'">'.$letter.'</a>';
-				echo '</td>';
-				if(($i+1)%count($letters)==0){
-					echo '<td class="designerIndex all" colspan="3" >';
-					echo '<a href="'.$this->getUrl('designer/index/index/letter/all').'">'.$this->__("View All").'</a>';
-					echo '</td>';
-				}
-				if(($i+1)%5==0){
-					echo "</tr>";
-				}
-				$i++;
-				
-				
-			?>
-			
+        <?php foreach (range('A', 'Z') as $char): ?>
+            <?php //foreach ($items as $letters): ?>
+                <?php //foreach ($letters as $letter => $options): //$i++; ?>
+                    <?php
+                        if(in_array($char,$arrActive)){
+                            $class = "enable";
+                        }else{
+                            $class = "disable";
+                        }
+                        if($i%5==0){
+                            echo "<tr>";
+                        }
+                        echo '<td class="designerIndex '.$char." ".$class.'">';
+                        echo '<a href="'.$this->getUrl('designer/index/index/letter/'.$char).'">'.$char.'</a>';
+                        echo '</td>';
+                        if(($i+1)%count(range('A', 'Z'))==0){
+                            echo '<td class="designerIndex all" colspan="3" >';
+                            echo '<a href="'.$this->getUrl('designer/index/index/letter/all').'">'.$this->__("View All").'</a>';
+                            echo '</td>';
+                        }
+                        if(($i+1)%5==0){
+                            echo "</tr>";
+                        }
+                        $i++;
+                    ?>
+
+                <?php //endforeach ?>
+            <?php //endforeach ?>
         <?php endforeach ?>
-    <?php endforeach ?>
         </tbody>
     </table>
     <?php endif ?>
