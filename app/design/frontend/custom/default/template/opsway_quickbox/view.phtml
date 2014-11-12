@@ -119,7 +119,7 @@
 	<?php
 	$styles = $_product->getStyles();
 	$_designer = $_product->getAttributeText('designer');
-	$collection = $_product->getCollection();
+	$collection = $_product->getPoCollection();
 	?>
 	<div class="product-tabs">
 		<div class="tabs">
@@ -132,25 +132,42 @@
 
 			<div class="tab-content">
 				<div id="designer" class="tab active">
-					<?php echo $_designer;?>
+					<?php if($_designer):echo $_designer;endif;?>
 				</div>
 				<div id="collection" class="tab" style="display:none;">
-					
+                    <?php
+                        if($collection){
+                            $attCollections = explode(',',$collection);
+                            $html = "";
+                            $productModel = Mage::getModel('catalog/product');
+                            $poCollection = $productModel->getResource()->getAttribute("po_collection");
+                            if ($poCollection->usesSource()) {
+                                $html .= "<ul class='collection'>";
+                                foreach($attCollections as $option):
+                                    $html .= '<li>'.$color_label = $attr->getSource()->getOptionText($option).'</li>';
+                                endforeach;
+                                $html .= "</ul>";
+                            }
+                            echo $html;
+                        }
+                    ?>
 				</div>
 				<div id="style" class="tab" style="display:none;">
 					<?php
-					$attStyle = explode(',',$styles);
-					$html = "";
-					$productModel = Mage::getModel('catalog/product');
-					$attr = $productModel->getResource()->getAttribute("styles");
-					if ($attr->usesSource()) {
-						$html .= "<ul class='styles'>";
-						foreach($attStyle as $option):
-							$html .= '<li>'.$color_label = $attr->getSource()->getOptionText($option).'</li>';
-						endforeach;
-						$html .= "</ul>";
-					}
-					echo $html;
+                    if($styles):
+                        $attStyle = explode(',',$styles);
+                        $html = "";
+                        $productModel = Mage::getModel('catalog/product');
+                        $attr = $productModel->getResource()->getAttribute("styles");
+                        if ($attr->usesSource()) {
+                            $html .= "<ul class='styles'>";
+                            foreach($attStyle as $option):
+                                $html .= '<li>'.$color_label = $attr->getSource()->getOptionText($option).'</li>';
+                            endforeach;
+                            $html .= "</ul>";
+                        }
+                        echo $html;
+                    endif;
 					?>
 				</div>
 				<div id="size" class="tab" style="display:none;">
