@@ -84,7 +84,7 @@
 .cart-table .qty-item + input + .qty-item{ background:#CCCCCC;}
 .cart-table .qty-item:hover{ text-decoration:none;}
 .cart-table input.qty{ float:left; width:30px !important; height:30px; text-align:center; line-height:30px;}
-.cart .cart-collaterals{ width:25%;  display:table-cell; padding:0; border:1px solid #000; border-top:none; vertical-align:top;}
+.cart .cart-collaterals{ width:25%;  display:table-cell; padding:0; border:1px solid #000; border-top:none; vertical-align:top; height:100%; background:#fff;}
 .cart .cart-collaterals > h2{ font-size:14px;padding:8px 10px; font-weight:700; background:#fff; margin:0 -1px;}
 .cart .cart-collaterals .totals{ background:#fff; border-top:1px solid #000; width:100%;}
 .cart button.btn-update,  .cart button.btn-empty{ visibility:hidden;}
@@ -105,6 +105,11 @@
 .cart-text-content ul li p a{ text-decoration:underline;}
 
 
+
+@media only screen and (max-width:960px) {
+.cart .cart-inner > form{ display:block; width:100%; float:none;}
+.cart .cart-collaterals{ display:block; width:100%; float:none;}
+}
 
 @media only screen and (max-width:767px) {
 .dtn-all-index-index .col-left{ float:none; width:100%; }

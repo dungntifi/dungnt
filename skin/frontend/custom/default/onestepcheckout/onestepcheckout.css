@@ -302,10 +302,11 @@ div.checkoutcontainer div.input-address-short .input-text, div.checkoutcontainer
     width: 100%;
 }
 
-div.checkoutcontainer div.input-address,div.checkoutcontainer div.input-city,div.checkoutcontainer li.taxvat div.input-box
+div.checkoutcontainer div.input-address,div.checkoutcontainer li.taxvat div.input-box
     {
     width: 100% !important;
 }
+div.checkoutcontainer div.input-city{ width:49%; margin-right:2%; float:left;}
 
 div.checkoutcontainer div.input-address .input-text,div.checkoutcontainer div.input-city .input-text
     {
@@ -313,16 +314,16 @@ div.checkoutcontainer div.input-address .input-text,div.checkoutcontainer div.in
 }
 
 div.checkoutcontainer div.input-postcode {
-    width: 39%;
+    width: 23.5%;
     float: left;
 }
 
 div.checkoutcontainer div.input-postcode .input-text {
-    width: 70%;
+    width: 100%;
 }
 
 div.checkoutcontainer div.input-region {
-    width: 60%;
+    width: 23.5%; margin-right:2%;
     float: left;
 }
 
@@ -331,7 +332,7 @@ div.checkoutcontainer div.input-region .input-text {
 }
 
 div.checkoutcontainer div.input-country {
-    width: 100%;
+    width: 49%; margin-right:2%; float:left;
 }
 
 div.checkoutcontainer div.input-country select {
@@ -339,7 +340,7 @@ div.checkoutcontainer div.input-country select {
 }
 
 div.checkoutcontainer div.input-region select {
-    width: 77% !important;
+    width: 100%;
 }
 
 fieldset.group-select {
@@ -843,3 +844,8 @@ div.onestepcheckout-shipping-method .shipment-methods select{ width:49%;}
 p.onestepcheckout-numbers-4{ margin-bottom:10px;}
 .osc-event_date input.input-text{ height:16px; line-height:normal; vertical-align:top; background:none; border:none; font-weight:700; padding-bottom:0;}
 .onestepcheckout-totals td{ border-bottom:none;padding-left: 10px; padding-right: 10px;}
+.onestepcheckout-coupons #couponblock{ margin:10px 0 0; overflow:hidden;}
+.onestepcheckout-coupons label{ display:block; padding:0 0 5px;}
+.onestepcheckout-coupons input#id_couponcode{ float:left; margin-right:5px;}
+button#onestepcheckout-coupon-add{ float:left;}
+.checkout-agreements{ clear:both;}
