@@ -151,6 +151,21 @@
         }
     }
 
+    jQuery(document).ready(function($){
+        var myArray = new Array();
+        $(window).scroll(function(){
+            var p = $(".cart-collaterals");
+            var position = p.position();
+            myArray.push(position.top);
+            if($(window).scrollTop() >= myArray[0]){
+                p.css('position','fixed');
+                p.css('top',0);
+            }else{
+                p.css('position','');
+            }
+        })
+    })
+
     (function($) {
         $(function() {
 
