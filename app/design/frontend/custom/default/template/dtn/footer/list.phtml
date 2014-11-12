@@ -2,7 +2,7 @@
     $collection = $this->getProductCollectionForLater();
 ?>
 <?php if(count($collection) > 0):?>
-<div id="save-for-later-title" class="show"></div>
+<div id="save-for-later-title" class="show"><?php echo $this->__("show"); ?></div>
 <div id="save-for-later" style="color: #333 !important;">
 	<h3><?php echo $this->__('Saved Items')?></h3>
     <ul class="list-product">
