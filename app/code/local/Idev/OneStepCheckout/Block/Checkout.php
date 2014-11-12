@@ -1034,11 +1034,13 @@ class Idev_OneStepCheckout_Block_Checkout extends Mage_Checkout_Block_Onepage_Ab
 
         $fieldsAvailable = array(
             'name' => array('fields' => array('firstname','lastname')),
-            'email-phone' => array('fields' =>array('email','telephone')),
+            'email' => array(),
             'street' => array(),
             'country_id' => array(),
-            'postcode-regionid' => array('fields' =>array('postcode','region_id')),
+            'region_id' => array(),
+            'postcode' => array(),
             'city' => array(),
+            'telephone' => array(),
             'company-fax' => array('fields' => array('company','fax')),
             'taxvat' => array(),
             'dob' => array(),
