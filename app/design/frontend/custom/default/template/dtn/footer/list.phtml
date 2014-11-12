@@ -15,7 +15,7 @@
         $productUrl = $_product->getProductUrl();
         $option = json_decode($product["option"]);
 ?>
-    <li>
+    <li class="item">
         <div class="quickview">
             <a class="quickview-btn fancybox.ajax" href="<?php echo $this->getUrl('quickbox/product/view') . '?id='. $_product->getId() ?>"><?php echo $this->__('Quick View') ?></a>
         </div>
@@ -65,4 +65,33 @@
             }
         })
     })
+</script>
+<script type="text/javascript">
+    (function($) {
+        $(function() {
+
+            $('.quickview-btn').each(function() {
+                var link = $(this),
+                        editUrl = link.attr('href');
+                link.fancybox({
+                    titleShow: false,
+                    showNavArrows: false,
+                    modal: true,
+                    padding: 0,
+                    margin: 0,
+                    fitToView: false,
+                    overlayShow: false,
+                    openEffect: 'none',
+                    closeEffect: 'none',
+                    autoDimensions: false,
+                    width: 578,
+                    height: 406,
+                    onComplete: function() {jQuery('css3-container').css('display','none');jQuery('#fancybox-content').css('background-color','#fff');},
+                    onClosed: function() {},
+                    type: 'ajax',
+                    href: editUrl
+                });
+            });
+        });
+    })(jQuery);
 </script>
