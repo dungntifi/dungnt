@@ -16,6 +16,9 @@
         $option = json_decode($product["option"]);
 ?>
     <li>
+        <div class="quickview">
+            <a class="quickview-btn fancybox.ajax" href="<?php echo $this->getUrl('quickbox/product/view') . '?id='. $_product->getId() ?>"><?php echo $this->__('Quick View') ?></a>
+        </div>
         <a href="<?php echo $productUrl; ?>"><img src="<?php echo $imgUrl; ?>" alt="<?php echo $name; ?>" title="<?php echo $name; ?>"/></a>
         <div class="product-information">
             <a href="<?php echo $productUrl; ?>"><h5><?php echo $name; ?></h5></a>
@@ -52,12 +55,12 @@
             if($(this).hasClass("show")){
                 $(this).removeClass('show');
                 $(this).addClass("save-hidden");
-                $(this).text('Hide');
+                $(this).text('Show');
                 $("#save-content").css("display",'none');
             }else{
                 $(this).removeClass("save-hidden");
                 $(this).addClass("show");
-                $(this).text('Show');
+                $(this).text('Hide');
                 $("#save-content").css("display",'block');
             }
         })
