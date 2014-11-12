@@ -2,7 +2,9 @@
     $collection = $this->getProductCollectionForLater();
 ?>
 <?php if(count($collection) > 0):?>
-<div id="save-for-later">
+<div id="save-for-later" style="color: #333 !important;">
+    <div id="save-for-later-title" class="show"><?php echo $this->__("Show"); ?></div>
+    <div id="save-content">
 	<h3><?php echo $this->__('Saved Items')?></h3>
     <ul class="list-product">
 <?php
@@ -13,7 +15,10 @@
         $productUrl = $_product->getProductUrl();
         $option = json_decode($product["option"]);
 ?>
-    <li>
+    <li class="item">
+        <div class="quickview" style="display: block !important;position: relative">
+            <a style="color: #fff" class="quickview-btn fancybox.ajax" href="<?php echo $this->getUrl('quickbox/product/view') . '?id='. $_product->getId() ?>"><?php echo $this->__('Quick View') ?></a>
+        </div>
         <a href="<?php echo $productUrl; ?>"><img src="<?php echo $imgUrl; ?>" alt="<?php echo $name; ?>" title="<?php echo $name; ?>"/></a>
         <div class="product-information">
             <a href="<?php echo $productUrl; ?>"><h5><?php echo $name; ?></h5></a>
@@ -42,4 +47,51 @@
 ?>
     </ul>
 </div>
+</div>
 <?php endif;?>
+<script>
+    jQuery(document).ready(function($){
+        jQuery("#save-for-later-title").click(function(){
+            if($(this).hasClass("show")){
+                $(this).removeClass('show');
+                $(this).addClass("save-hidden");
+                $(this).text('Show');
+                $("#save-content").css("display",'none');
+            }else{
+                $(this).removeClass("save-hidden");
+                $(this).addClass("show");
+                $(this).text('Hide');
+                $("#save-content").css("display",'block');
+            }
+        })
+    })
+</script>
+<script type="text/javascript">
+    (function($) {
+        $(function() {
+
+            $('.quickview-btn').each(function() {
+                var link = $(this),
+                        editUrl = link.attr('href');
+                link.fancybox({
+                    titleShow: false,
+                    showNavArrows: false,
+                    modal: true,
+                    padding: 0,
+                    margin: 0,
+                    fitToView: false,
+                    overlayShow: false,
+                    openEffect: 'none',
+                    closeEffect: 'none',
+                    autoDimensions: false,
+                    width: 578,
+                    height: 406,
+                    onComplete: function() {jQuery('css3-container').css('display','none');jQuery('#fancybox-content').css('background-color','#fff');},
+                    onClosed: function() {},
+                    type: 'ajax',
+                    href: editUrl
+                });
+            });
+        });
+    })(jQuery);
+</script>
