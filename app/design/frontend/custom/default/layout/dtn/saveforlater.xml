@@ -2,18 +2,16 @@
 <layout>
     <default>
 		 <reference name="head">
-            <action method="addJs" ifconfig="save_for_later/setting/enabled_jquery"><script>dtn/jquery/jquery-1.10.2.min.js</script></action>
-			<action method="addItem"><type>skin_css</type><name>css/dtn/saveforlater.css</name><params/></action>
+             <action method="addJs" ifconfig="save_for_later/setting/enabled_jquery"><script>dtn/jquery/jquery-1.10.2.min.js</script></action>
+			 <action method="addItem"><type>skin_css</type><name>css/dtn/saveforlater.css</name><params/></action>
+             <action method="addItem"><type>skin_js</type><name>js/fancybox/jquery.fancybox.js</name></action>
+             <action method="addItem"><type>skin_css</type><name>js/fancybox/jquery.fancybox.css</name></action>
 		</reference>
         <reference name="footer">            
             <block ifconfig="save_for_later/setting/enabled" name="saveforlater" as="saveforlater" type="saveforlater/head_head" template="dtn/footer/list.phtml"></block>
         </reference>
     </default>
     <catalog_product_view>
-        <reference name="head">
-            <action method="addItem"><type>skin_js</type><name>js/fancybox/jquery.fancybox.js</name></action>
-            <action method="addItem"><type>skin_css</type><name>js/fancybox/jquery.fancybox.css</name></action>
-        </reference>
         <reference name='product.info.addto'>
             <action ifconfig="save_for_later/setting/enabled" method='setTemplate'><template>dtn/product/view/addto.phtml</template></action>
         </reference>
