@@ -77,10 +77,8 @@
                     
                     $designer = "";
                     $designer = $_product->getAttributeText('designer');
-                                                        
-                    include(MAGENTO_ROOT . '/includes/size_chart.php');     
-                
-                    $sizechart = sizeDesigner($designer);           
+
+                    $sizechart = Mage::helper('dtn_all')->getSizeChartByDesigner($_product->getDesigner());
             ?>   
             <script type="text/javascript">
                 jQuery.noConflict();
