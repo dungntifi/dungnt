@@ -48,7 +48,7 @@
                 <col width="1" />
             <?php endif ?>
             <?php if ($this->helper('tax')->displayCartPriceExclTax() || $this->helper('tax')->displayCartBothPrices()): ?>
-                <col width="15%" />
+                <col width="20%" />
             <?php endif; ?>            
                 <col width="1" />
             <?php if ($this->helper('tax')->displayCartPriceExclTax() || $this->helper('tax')->displayCartBothPrices()): ?>
@@ -159,7 +159,10 @@
             myArray.push(position.top);
             if($(window).scrollTop() >= myArray[0]){
                 p.css('position','fixed');
-                p.css('top',0);
+                p.css('top','30px');
+				p.css('max-width','320px');
+				p.css('height','auto');
+				p.css('min-height','470px');
             }else{
                 p.css('position','');
             }
