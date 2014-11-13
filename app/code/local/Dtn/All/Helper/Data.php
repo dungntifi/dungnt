@@ -30,7 +30,7 @@ class Dtn_All_Helper_Data extends Mage_Core_Helper_Data{
             $html .= '<div id="eu" class="tab_content">'.addslashes($collection->getSizeChartEu()).'</div>';
             $html .= '</div>';
             $html .= '</div>';
-            $html .= '<script>';
+            $html .= '<\script>';
             $html .= 'jQuery(document).ready(function($) {
 
                         //Default Action
