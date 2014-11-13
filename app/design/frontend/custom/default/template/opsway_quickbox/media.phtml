@@ -1,11 +1,17 @@
+<script type="text/javascript" src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS); ?>advancedmedia/flowplayer5.3.2.js"></script>
+<link rel="stylesheet" type="text/css" href="<?php echo $this->getSkinUrl('advancedmedia/css/minimalist.css') ?>" />
 <?php
 $_helper = $this->helper('catalog/output');
 $_product = $this->getProduct();
-
+$advancedMedia = Mage::getModel('advancedmedia/advancedmedia')
+    ->getCollection()
+    ->addFieldToFilter('product_id', $_product->getId())
+    ->addFieldToFilter('is_exclude', 0);
 $page_url = urlencode(Mage::registry('current_product')->getProductUrl());
 $image_url = urlencode($this->helper('catalog/image')->init($_product, 'image'));
 $product_name = urlencode($_helper->productAttribute($_product, $_product->getName(), 'name'));
 $product_descr = urlencode($this->htmlEscape($_product->getData('description')));
+$pathImageVideo = Mage::getStoreConfig('advancedmedia/thumbnail/video_thumbnail');
 
 // $facebook = 'http://www.facebook.com/dialog/feed?api_key=679916502073648&amp;display=popup&amp;link='.$page_url.'&amp;picture='.$image_url.'&amp;name='.$product_name.'&amp;caption='.$product_descr.'&amp;description='.$product_name.'&amp;redirect_uri='.$page_url;
 
@@ -38,11 +44,37 @@ $google = 'http://plus.google.com/share?url='.$page_url;
         <?php //endif; ?>
     </div>
     <div class="slideshow__list">
-    <?php foreach ($this->getGalleryImages() as $_image): ?>
-        <div class="image">            
-            <img src='<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'thumbnail', $_image->getFile())->keepAspectRatio(TRUE)->keepFrame(FALSE)->resize(475); ?>'>
-        </div>
-    <?php endforeach; ?>
+        <?php foreach ($this->getGalleryImages() as $_image): ?>
+            <div class="image">
+                <img src='<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'thumbnail', $_image->getFile())->keepAspectRatio(TRUE)->keepFrame(FALSE)->resize(475); ?>'>
+            </div>
+        <?php endforeach; ?>
+        <?php if(count($advancedMedia)>0):?>
+            <?php $j=0;foreach ($advancedMedia as $_media):$j++; ?>
+                <div class="image advancedmedia-<?php echo $_media->getMediaPosition() ?>">
+                    <?php if($_media->getUseType()==2): ?>
+                    <div style="position:relative">
+                        <?php echo $_media->getMediaEmbed() ?>
+                    </div>
+                    <?php else: ?>
+                    <div>
+                        <a id="player_<?php echo $_media->getId() ?>" style="display:block;width:100%;height:500px" href="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).$_media->getMediaSrc(); ?>">
+                            <object width="100%" height="100%" type="application/x-shockwave-flash" data="http://web.com/promoutfitters/media/advancedmedia/flowplayer-3.2.7.swf" id="player_<?php echo $_media->getId() ?>_api" autoplay="false">
+                                <param value="true" name="allowfullscreen">
+                                <param value="always" name="allowscriptaccess">
+                                <param value="high" name="quality">
+                                <param name="autoplay" value="false" />
+                                <param name="autoload" value="false" />
+                                <param value="false" name="cachebusting">
+                                <param value="#000000" name="bgcolor">
+                                <param value='config={"playerId":"player_<?php echo $_media->getId() ?>","clip":{"url":"<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).$_media->getMediaSrc(); ?>","autoPlay":false},"playlist":[{"url":"<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).$_media->getMediaSrc(); ?>"}]}&autoPlay=false' name="flashvars">
+                            </object>
+                        </a>
+                    </div>
+                    <?php endif ?>
+                </div>
+            <?php endforeach; ?>
+        <?php endif ?>
     </div>
 </div>
 <div class="zoom__container" style="display: none;">
@@ -64,6 +96,39 @@ $google = 'http://plus.google.com/share?url='.$page_url;
         <!-- <div class="slider__button zoom__number"></div> -->
     </div>
 </div>
+<script type="text/javascript">
+    OrderDIV(1);
+    function changeImage(href,src){
+        ahtjQuery('#zoomClickButton').attr('lang',href);
+        ahtjQuery('#image').attr('src',src);
+        ahtjQuery('#wrap').show();
+        ahtjQuery('#product-image-container').hide();
+        ahtjQuery('#product-image-container').html('');
+    }
+    function changeVideo(id, type,href){
+        ahtjQuery.ajax({
+            url: '<?php echo $this->getUrl('advancedmedia/index/video') ?>',
+            data: "id="+id,
+            beforeSend: function(){
+                ahtjQuery('#wrap').hide();
+                ahtjQuery('.advancedmedia-loading').show();
+            },
+            success: function(response){
+                ahtjQuery('#zoomClickButton').attr('lang',href);
+                ahtjQuery('#product-image-container').show();
+                ahtjQuery('#product-image-container').html(response);
+                ahtjQuery('#product-image-container iframe').width(<?php echo $mainImageWidth; ?>);
+                ahtjQuery('#product-image-container iframe').height(<?php echo $mainImageHeight; ?>);
+                if(type==1)
+                    flowplayer("player", "<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) ?>advancedmedia/flowplayer-3.2.7.swf");
+                ahtjQuery('.advancedmedia-loading').hide();
+            }
+        });
+    }
+    function lightBox(id){
+        ahtjQuery('#'+id).click();
+    }
+</script>
 <script type="text/javascript">
     (function(){
         var slider_width,
