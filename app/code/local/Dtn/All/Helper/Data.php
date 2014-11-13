@@ -30,28 +30,28 @@ class Dtn_All_Helper_Data extends Mage_Core_Helper_Data{
             $html .= '<div id="eu" class="tab_content">'.addslashes($collection->getSizeChartEu()).'</div>';
             $html .= '</div>';
             $html .= '</div>';
-            $html .= '<\script>';
-            $html .= 'jQuery(document).ready(function($) {
-
-                        //Default Action
-                        $(".tab_content").hide(); //Hide all content
-                        $("ul.tabs li:first").addClass("active").show().find("label input:radio").attr("checked",""); //Activate first tab
-                        $(".tab_content:first").show(); //Show first tab content
-
-                        //On Click Event
-                        $("ul.tabs li").click(function() {
-                            $("ul.tabs li").removeClass("active"); //Remove any "active" class
-                            $("ul.tabs li").find("label input:radio").attr("checked","");
-                            $(this).addClass("active").find("label input:radio").attr("checked","checked");
-                            $(".tab_content").hide(); //Hide all tab content
-                            var activeTab = $(this).find("label input:radio").val(); //Find the href attribute value to identify the active tab + content
-                            $("#" + activeTab).fadeIn(); //Fade in the active ID content
-                            return false;
-
-                        });
-
-                    });';
-            $html .= '<\/script>';
+//            $html .= '<\script>';
+//            $html .= 'jQuery(document).ready(function($) {
+//
+//                        //Default Action
+//                        $(".tab_content").hide(); //Hide all content
+//                        $("ul.tabs li:first").addClass("active").show().find("label input:radio").attr("checked",""); //Activate first tab
+//                        $(".tab_content:first").show(); //Show first tab content
+//
+//                        //On Click Event
+//                        $("ul.tabs li").click(function() {
+//                            $("ul.tabs li").removeClass("active"); //Remove any "active" class
+//                            $("ul.tabs li").find("label input:radio").attr("checked","");
+//                            $(this).addClass("active").find("label input:radio").attr("checked","checked");
+//                            $(".tab_content").hide(); //Hide all tab content
+//                            var activeTab = $(this).find("label input:radio").val(); //Find the href attribute value to identify the active tab + content
+//                            $("#" + activeTab).fadeIn(); //Fade in the active ID content
+//                            return false;
+//
+//                        });
+//
+//                    });';
+//            $html .= '<\/script>';
             return $html;
         }
     }
