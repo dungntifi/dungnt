@@ -102,11 +102,13 @@ ul#pronav li .sub li strong,
 ul#pronav li .sub li{
 	font-family: Futura, "Gill Sans", "Century Gothic", "Dejavu Sans", "Trebuchet MS", sans-serif;	
 }
-ul#pronav li .sub li strong{
+ul#pronav li .sub li strong,ul#pronav li .sub .title-feature-designer strong, ul#pronav .silo-table caption{
 	font-weight:400;
 	color:#666;	
 	font-size:14px;
+	text-transform: uppercase;
 	}
+ul#pronav li .sub .title-feature-designer{ margin-top: 20px;}	
 ul#pronav li .row { /*--If needed to break out into rows--*/
 	clear: both;
 	/*float: left;*/
@@ -169,7 +171,7 @@ ul#pronav .sub ul li a {
 	text-align: left;
 	font-weight: normal;
 	text-transform:none;
-	font-size: 11px;
+	font-size: 12px;
 }
 ul#pronav .sub ul li strong{
 	text-transform:uppercase;
@@ -226,7 +228,6 @@ ul#pronav li#mixed-li-id .sub {
 
 ul#pronav li.one-column  .sub{width: 100% !important; min-width:240px;  }
 
-ul#pronav li.designers ul:last-child li.first-li{margin-top: 29px;}
 .colmenu-left{
 	display:inline-block; 
 	width:30%;
