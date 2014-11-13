@@ -1,7 +1,12 @@
-<li class="amshopby-featured-wrapper">
-<?php foreach ($this->getItems() as $item):?>
-    <a href="<?php echo $item->getUrl()?>">
-        <?php echo $this->htmlEscape($item->getTitle())?>
-    </a>
+<div class="title-feature-designer"><strong>Featured Designers</strong></div>
+<?php foreach ($this->getItems() as $items): ?>
+    <ul>
+        <?php foreach ($items as $item): ?>
+            <li class="amshopby-featured-wrapper">
+                <a href="<?php echo $item->getUrl()?>">
+                    <?php echo $this->htmlEscape($item->getTitle())?>
+                </a>
+            </li>
+        <?php endforeach ?>
+    </ul>
 <?php endforeach ?>
-</li>

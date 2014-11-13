@@ -36,7 +36,12 @@ class Amasty_Shopby_Block_Featured extends Mage_Core_Block_Template
             $urlBuilder->clearModule();
             $urlBuilder->clearQuery();
             $base = Mage::getBaseUrl('media') . 'amshopby/';
+            $col = 0;
+            $number = 0;
+            $count = count($items);
+            $feature = array();
             foreach ($items as $item){
+                $number++;
                 if ($item->getImgBig())
                     $item->setImgBig($base . $item->getImgBig());
 
@@ -44,8 +49,13 @@ class Amasty_Shopby_Block_Featured extends Mage_Core_Block_Template
                     $this->getAttributeCode() => $item->getOptionId(),
                 ));
                 $item->setUrl($urlBuilder->getUrl());
+                if($number <= ceil($count/2)){
+                    $feature[0][] = $item;
+                }else{
+                    $feature[1][] = $item;
+                }
             }
         }
-        return $items;
+        return $feature;
     }
 }
