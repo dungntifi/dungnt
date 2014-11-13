@@ -18,7 +18,8 @@
 .col-main-category  .toolbar-bottom .toolbar {	position:inherit;}
 .col-main-category .toolbar .sort-by label{font-family:Futura,"Gill Sans","Century Gothic","Dejavu Sans","Trebuchet MS",sans-serif;font-size:16px;	font-weight:400;text-transform:uppercase;	}
 .col-main-category .toolbar-bottom .toolbar .sort-by label{	font-family:inherit;font-size:inherit;	font-weight:inherit;text-transform:inherit;	}
-
+.dtn-all-index-index .col-left .silo-table td.designerIndex.disable a,
+ul#pronav li table.silo-table td.disable a{ color: #999; text-decoration: none;  cursor:inherit;}
 
 /*---------------Menu  -----------------*/
 .nav-container{	background:#fff;}
