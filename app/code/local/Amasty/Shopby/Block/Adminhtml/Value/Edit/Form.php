@@ -94,8 +94,22 @@ class Amasty_Shopby_Block_Adminhtml_Value_Edit_Form extends Mage_Adminhtml_Block
             'label'     => $hlp->__('Remove Image'),
             'name'      => 'remove_img_big',
             'value'     => 1,
-        )); 
-        
+        ));
+        $sizechart = $form->addFieldset('sizechart',array('legend'=> $hlp->__('Size Chart')));
+        $sizechart->addField('size_chart_us', 'textarea', array(
+            'label'     => $hlp->__('US'),
+            'name'      => 'size_chart_us',
+        ));
+
+        $sizechart->addField('size_chart_uk', 'textarea', array(
+            'label'     => $hlp->__('UK'),
+            'name'      => 'size_chart_uk',
+        ));
+
+        $sizechart->addField('size_chart_eu', 'textarea', array(
+            'label'     => $hlp->__('EU'),
+            'name'      => 'size_chart_eu',
+        ));
         
         $fldView = $form->addFieldset('view', array('legend'=> $hlp->__('Product View Page')));
         $fldView->addField('img_medium', 'file', array(

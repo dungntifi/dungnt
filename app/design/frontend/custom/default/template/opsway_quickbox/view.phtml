@@ -40,25 +40,25 @@
 
 <div id="messages_product_view"><?php echo $this->getMessagesBlock()->getGroupedHtml() ?></div>
 <div class="block-product">
-    <div class="message_color"></div>
-    <form action="<?php echo $this->getSubmitUrl($_product) ?>" method="post" id="product_addtocart_form"<?php if($_product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>>
-        <?php echo $this->getBlockHtml('formkey') ?>
-        <div class="no-display">
-            <input type="hidden" name="product" value="<?php echo $_product->getId() ?>" />
-            <input type="hidden" name="related_product" id="related-products-field" value="" />
-        </div>
-        
-        <div class="product-img-box">
-            <?php echo $this->getChildHtml('media') ?>
-        </div>
+<div class="message_color"></div>
+<form action="<?php echo $this->getSubmitUrl($_product) ?>" method="post" id="product_addtocart_form"<?php if($_product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>>
+    <?php echo $this->getBlockHtml('formkey') ?>
+    <div class="no-display">
+        <input type="hidden" name="product" value="<?php echo $_product->getId() ?>" />
+        <input type="hidden" name="related_product" id="related-products-field" value="" />
+    </div>
 
-        <div class="product-info">
-            <div class="name">
-                <b class="title"><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></b>
-                <!-- <span class="pinterest">
+    <div class="product-img-box">
+        <?php echo $this->getChildHtml('media') ?>
+    </div>
+
+    <div class="product-info">
+        <div class="name">
+            <b class="title"><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></b>
+            <!-- <span class="pinterest">
                     <a href="//pinterest.com/pin/create/button/?media=<?php echo $this->helper('catalog/image')->init($_product, 'image'); ?>&description=<?php echo trim(Mage::registry('current_product')->getName()); ?>&url=<?php echo trim(Mage::registry('current_product')->getProductUrl()); ?>" data-pin-do="buttonPin" data-pin-config="none"><img src="//assets.pinterest.com/images/pidgets/pinit_fg_en_rect_gray_20.png" /></a>
                     <!-- Please call pinit.js only once per page -->
-                    <!--<script type="text/javascript" async src="//assets.pinterest.com/js/pinit.js"></script>
+            <!--<script type="text/javascript" async src="//assets.pinterest.com/js/pinit.js"></script>
                 </span>
                 
                 <span class="wanelo">
@@ -70,219 +70,230 @@
                       data-price="<?php echo number_format($_product->getFinalPrice(),2);?>"></a>
                 </span>
                 <script async="true" type="text/javascript" src="//cdn-saveit.wanelo.com/bookmarklet/3/save.js"></script> -->
-            </div>
-            <?php
-                $attributeSetName = Mage::getModel('eav/entity_attribute_set')->load($_product->getAttributeSetId())->getAttributeSetName();
-                if ($attributeSetName == "Dresses") {
-                    
-                    $designer = "";
-                    $designer = $_product->getAttributeText('designer');
+        </div>
+        <?php
+        $attributeSetName = Mage::getModel('eav/entity_attribute_set')->load($_product->getAttributeSetId())->getAttributeSetName();
+        if ($attributeSetName == "Dresses") {
 
-                    $sizechart = Mage::helper('dtn_all')->getSizeChartByDesigner($_product->getDesigner());
-            ?>   
+            $designer = "";
+            $designer = $_product->getAttributeText('designer');
+
+            $sizechart = Mage::helper('dtn_all')->getSizeChartByDesigner($_product->getDesigner());
+            ?>
             <script type="text/javascript">
                 jQuery.noConflict();
                 // $j is now an alias to the jQuery function; creating the new alias is optional.
                 function sizePopup() {
                     jQuery.fn.speedoPopup({
-                        htmlContent: '<?php echo $sizechart; ?>', window: null, height: null, effectIn: "fade", effectOut: "fade"
-                    }); 
-                };
-                jQuery(document).ready(function($) {
-                    //Default Action
-                    $(".tab_content").hide(); //Hide all content
-                    $("ul.tabs li:first").addClass("active").show().find("label input:radio").attr("checked",""); //Activate first tab
-                    $(".tab_content:first").show(); //Show first tab content
-
-                    //On Click Event
-                    $("ul.tabs li").click(function() {
-                        $("ul.tabs li").removeClass("active"); //Remove any "active" class
-                        $("ul.tabs li").find("label input:radio").attr("checked","");
-                        $(this).addClass("active").find("label input:radio").attr("checked","checked");
-                        $(".tab_content").hide(); //Hide all tab content
-                        var activeTab = $(this).find("label input:radio").val(); //Find the href attribute value to identify the active tab + content
-                        $("#" + activeTab).fadeIn(); //Fade in the active ID content
-                        return false;
-
+                        htmlContent: "<?php echo $sizechart; ?>", window: null, height: null, effectIn: "fade", effectOut: "fade",
+                        onComplete: function(el){
+                            jQuery('.tab_content').hide();
+                            jQuery("#tabs-size-chart label:first").addClass("active").show().find("input:radio").attr("checked","");
+                            jQuery(".tab_content:first").show();
+                        }
                     });
+                };
+                jQuery(document).ready(function($){
+                    $('.tab_content').hide();
+                    $("#tabs-size-chart label:first").addClass("active").show().find("input:radio").attr("checked","");
+                    $(".tab_content:first").show();
+                    $('#tabs-size-chart input[type=radio]').change(function() {
+                        $("#tabs-size-chart input[type=radio]").attr("checked","");
+                        $(this).attr("checked","checked");
+                        $(".tab_content").hide();
+                        var  activeTab = $(this).val();
+                        $("#"+activeTab).fadeIn();
+                        return false;
+                    });
+                })
 
-                });
             </script>
 
             <?php } ?>
-            <?php echo $this->getChildHtml('followprice') ?>
-            <?php echo $this->getChildHtml('followpricepopup') ?>
-            <?php echo $this->getPriceHtml($_product) ?>
-            <?php echo $this->getChildHtml('product_type_data') ?>
-            <?php echo $this->getChildHtml('alert_urls') ?>
-            <?php echo $this->getTierPriceHtml() ?>
-            <?php echo $this->getChildHtml('extrahint') ?>
+        <?php echo $this->getChildHtml('followprice') ?>
+        <?php echo $this->getChildHtml('followpricepopup') ?>
+        <?php echo $this->getPriceHtml($_product) ?>
+        <?php echo $this->getChildHtml('product_type_data') ?>
+        <?php echo $this->getChildHtml('alert_urls') ?>
+        <?php echo $this->getTierPriceHtml() ?>
+        <?php echo $this->getChildHtml('extrahint') ?>
 
-            <div class="info-holder">
-                <p><?php echo $this->htmlEscape($_product->getData('description')); ?></p>
-                <div class="std product_promotion"><p><?php echo $this->htmlEscape($_product->getData('product_promotion')); ?></p></div>
-                <div class="std product_return"><p><?php echo $this->htmlEscape($_product->getData('product_return')); ?></p></div>
-                <?php echo $this->getChildHtml('other');?>
-				
-				<?php echo $this->getReviewsSummaryHtml($_product, false, true)?>
-                <?php if ($_product->isSaleable() && $this->hasOptions()):?>
-                    <?php echo $this->getChildChildHtml('container1', '', true, true) ?>
-                <?php endif;?>
-                <?php echo $this->getChildHtml('addto') ?>
+        <div class="info-holder">
+            <p><?php echo $this->htmlEscape($_product->getData('description')); ?></p>
+            <div class="std product_promotion"><p><?php echo $this->htmlEscape($_product->getData('product_promotion')); ?></p></div>
+            <div class="std product_return"><p><?php echo $this->htmlEscape($_product->getData('product_return')); ?></p></div>
+            <?php echo $this->getChildHtml('other');?>
+
+            <?php echo $this->getReviewsSummaryHtml($_product, false, true)?>
+            <?php if ($_product->isSaleable() && $this->hasOptions()):?>
+            <?php echo $this->getChildChildHtml('container1', '', true, true) ?>
+            <?php endif;?>
+            <?php echo $this->getChildHtml('addto') ?>
+        </div>
+    </div>
+</form>
+
+<?php
+$styles = $_product->getStyles();
+$_designer = $_product->getAttributeText('designer');
+$collection = $_product->getPoCollection();
+?>
+<div class="product-tabs">
+    <div class="tabs">
+        <ul class="tab-links">
+            <li class="active"><a href="#designer"><?php echo $this->__("Designer"); ?></a></li>
+            <li><a href="#collection"><?php echo $this->__("Collection"); ?></a></li>
+            <li><a href="#style"><?php echo $this->__("Style"); ?></a></li>
+            <li><a href="#size"><?php echo $this->__("Size"); ?></a></li>
+        </ul>
+
+        <div class="tab-content">
+            <div id="designer" class="tab active">
+                <?php if($_designer):echo $_designer;endif;?>
+            </div>
+            <div id="collection" class="tab" style="display:none;">
+                <?php
+                if($collection){
+                    $attCollections = explode(',',$collection);
+                    $html = "";
+                    $productModel = Mage::getModel('catalog/product');
+                    $poCollection = $productModel->getResource()->getAttribute("po_collection");
+                    if ($poCollection->usesSource()) {
+                        $html .= "<ul class='collection'>";
+                        foreach($attCollections as $option):
+                            $html .= '<li>'.$color_label = $attr->getSource()->getOptionText($option).'</li>';
+                        endforeach;
+                        $html .= "</ul>";
+                    }
+                    echo $html;
+                }
+                ?>
+            </div>
+            <div id="style" class="tab" style="display:none;">
+                <?php
+                if($styles):
+                    $attStyle = explode(',',$styles);
+                    $html = "";
+                    $productModel = Mage::getModel('catalog/product');
+                    $attr = $productModel->getResource()->getAttribute("styles");
+                    if ($attr->usesSource()) {
+                        $html .= "<ul class='styles'>";
+                        foreach($attStyle as $option):
+                            $html .= '<li>'.$color_label = $attr->getSource()->getOptionText($option).'</li>';
+                        endforeach;
+                        $html .= "</ul>";
+                    }
+                    echo $html;
+                endif;
+                ?>
+            </div>
+            <div id="size" class="tab" style="display:none;">
+                <?php $collection = Mage::getModel('amshopby/value')->load($_product->getDesigner(), 'option_id'); ?>
+                <div id="size-chart-by-country">
+                <div id="tabs-size-chart">
+                    <label><?php echo $this->__("US") ?><input name="tab" type="radio" value="us" /></label>
+                    <label><?php echo $this->__("UK") ?><input name="tab" type="radio" value="uk" /></label>
+                    <label><?php echo $this->__("EU") ?><input name="tab" type="radio" value="eu" /></label>
+                </div>
+                <div class="tab_container">
+                    <div id="us" class="tab_content"><?php echo addslashes($collection->getSizeChartUs()) ?></div>
+                    <div id="uk" class="tab_content"><?php echo addslashes($collection->getSizeChartUk()) ?></div>
+                    <div id="eu" class="tab_content"><?php echo addslashes($collection->getSizeChartEu()) ?></div>
+                </div>
+                </div>
             </div>
         </div>
-    </form>
-	
-	<?php
-	$styles = $_product->getStyles();
-	$_designer = $_product->getAttributeText('designer');
-	$collection = $_product->getPoCollection();
-	?>
-	<div class="product-tabs">
-		<div class="tabs">
-			<ul class="tab-links">
-				<li class="active"><a href="#designer"><?php echo $this->__("Designer"); ?></a></li>
-				<li><a href="#collection"><?php echo $this->__("Collection"); ?></a></li>
-				<li><a href="#style"><?php echo $this->__("Style"); ?></a></li>
-				<li><a href="#size"><?php echo $this->__("Size"); ?></a></li>
-			</ul>
+    </div>
+</div>
+<?php echo $this->getChildHtml('product_additional_data') ?>
 
-			<div class="tab-content">
-				<div id="designer" class="tab active">
-					<?php if($_designer):echo $_designer;endif;?>
-				</div>
-				<div id="collection" class="tab" style="display:none;">
-                    <?php
-                        if($collection){
-                            $attCollections = explode(',',$collection);
-                            $html = "";
-                            $productModel = Mage::getModel('catalog/product');
-                            $poCollection = $productModel->getResource()->getAttribute("po_collection");
-                            if ($poCollection->usesSource()) {
-                                $html .= "<ul class='collection'>";
-                                foreach($attCollections as $option):
-                                    $html .= '<li>'.$color_label = $attr->getSource()->getOptionText($option).'</li>';
-                                endforeach;
-                                $html .= "</ul>";
-                            }
-                            echo $html;
-                        }
-                    ?>
-				</div>
-				<div id="style" class="tab" style="display:none;">
-					<?php
-                    if($styles):
-                        $attStyle = explode(',',$styles);
-                        $html = "";
-                        $productModel = Mage::getModel('catalog/product');
-                        $attr = $productModel->getResource()->getAttribute("styles");
-                        if ($attr->usesSource()) {
-                            $html .= "<ul class='styles'>";
-                            foreach($attStyle as $option):
-                                $html .= '<li>'.$color_label = $attr->getSource()->getOptionText($option).'</li>';
-                            endforeach;
-                            $html .= "</ul>";
-                        }
-                        echo $html;
-                    endif;
-					?>
-				</div>
-				<div id="size" class="tab" style="display:none;">
-
-				</div>
-			</div>
-		</div>
-	</div>
-    <?php echo $this->getChildHtml('product_additional_data') ?>
-	
-	<div id="review-form-popup">			
-		<div class="review-form-popup-inner">
-			<div class="close"> </div>
-			<?php echo $this->getChildHtml('review_form') ?>				
-		</div>
-	</div>	
-	
-	<script type="text/javascript">
-		jQuery(document).ready(function() {
-			jQuery('.tabs .tab-links a').on('click', function(e)  {
-				var currentAttrValue = jQuery(this).attr('href');
-
-				// Show/Hide Tabs
-				jQuery('.tabs ' + currentAttrValue).show().siblings().hide();
-
-				// Change/remove current tab to active
-				jQuery(this).parent().addClass('active').siblings().removeClass('active');
-
-				e.preventDefault();
-			});
-			
-			jQuery('.view-review-list').click(function(){ 					
-				jQuery('html,body').animate({scrollTop: jQuery('#customer-reviews').offset().top},1000);
-			});
-			
-			jQuery('.scroll-pane').jScrollPane();
-			
-			jQuery("#review-form-popup div.close").click(function() {
-				jQuery("#review-form-popup").fadeOut("normal");
-			});
-		});
-		
-		function reviewPopup() {					
-			jQuery("#review-form-popup").fadeIn(500);
-		};
-		
-	</script>
-    <script type="text/javascript">
-    //<![CDATA[
-        var productAddToCartForm = new VarienForm('product_addtocart_form');
-        productAddToCartForm.submit = function(button, url) {
-            if (this.validator.validate()) {
-                var form = this.form;
-                var oldUrl = form.action;
-
-                if (url) {
-                   form.action = url;
-                }
-                var e = null;
-                try {
-                    this.form.submit();
-                } catch (e) {
-                }
-                this.form.action = oldUrl;
-                if (e) {
-                    throw e;
-                }
-
-                if (button && button != 'undefined') {
-                    button.disabled = true;
-                }
-            }
-        }.bind(productAddToCartForm);
-
-        productAddToCartForm.submitLight = function(button, url){
-            if(this.validator) {
-                var nv = Validation.methods;
-                delete Validation.methods['required-entry'];
-                delete Validation.methods['validate-one-required'];
-                delete Validation.methods['validate-one-required-by-name'];
-                // Remove custom datetime validators
-                for (var methodName in Validation.methods) {
-                    if (methodName.match(/^validate-datetime-.*/i)) {
-                        delete Validation.methods[methodName];
-                    }
-                }
-
-                if (this.validator.validate()) {
-                    if (url) {
-                        this.form.action = url;
-                    }
-                    this.form.submit();
-                }
-                Object.extend(Validation.methods, nv);
-            }
-        }.bind(productAddToCartForm);
-        
-    //]]>
-    </script>
+<div id="review-form-popup">
+    <div class="review-form-popup-inner">
+        <div class="close"> </div>
+        <?php echo $this->getChildHtml('review_form') ?>
+    </div>
 </div>
 
+<script type="text/javascript">
+    jQuery(document).ready(function() {
+        jQuery('.tabs .tab-links a').on('click', function(e)  {
+            var currentAttrValue = jQuery(this).attr('href');
+
+            // Show/Hide Tabs
+            jQuery('.tabs ' + currentAttrValue).show().siblings().hide();
+
+            // Change/remove current tab to active
+            jQuery(this).parent().addClass('active').siblings().removeClass('active');
+
+            e.preventDefault();
+        });
+
+        jQuery('.view-review-list').click(function(){
+            jQuery('html,body').animate({scrollTop: jQuery('#customer-reviews').offset().top},1000);
+        });
+
+        jQuery('.scroll-pane').jScrollPane();
+
+        jQuery("#review-form-popup div.close").click(function() {
+            jQuery("#review-form-popup").fadeOut("normal");
+        });
+    });
+
+    function reviewPopup() {
+        jQuery("#review-form-popup").fadeIn(500);
+    };
+
+</script>
+<script type="text/javascript">
+    //<![CDATA[
+    var productAddToCartForm = new VarienForm('product_addtocart_form');
+    productAddToCartForm.submit = function(button, url) {
+        if (this.validator.validate()) {
+            var form = this.form;
+            var oldUrl = form.action;
+
+            if (url) {
+                form.action = url;
+            }
+            var e = null;
+            try {
+                this.form.submit();
+            } catch (e) {
+            }
+            this.form.action = oldUrl;
+            if (e) {
+                throw e;
+            }
+
+            if (button && button != 'undefined') {
+                button.disabled = true;
+            }
+        }
+    }.bind(productAddToCartForm);
+
+    productAddToCartForm.submitLight = function(button, url){
+        if(this.validator) {
+            var nv = Validation.methods;
+            delete Validation.methods['required-entry'];
+            delete Validation.methods['validate-one-required'];
+            delete Validation.methods['validate-one-required-by-name'];
+            // Remove custom datetime validators
+            for (var methodName in Validation.methods) {
+                if (methodName.match(/^validate-datetime-.*/i)) {
+                    delete Validation.methods[methodName];
+                }
+            }
+
+            if (this.validator.validate()) {
+                if (url) {
+                    this.form.action = url;
+                }
+                this.form.submit();
+            }
+            Object.extend(Validation.methods, nv);
+        }
+    }.bind(productAddToCartForm);
+
+    //]]>
+</script>
+</div>

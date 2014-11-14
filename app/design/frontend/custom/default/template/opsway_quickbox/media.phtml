@@ -97,39 +97,6 @@ $google = 'http://plus.google.com/share?url='.$page_url;
     </div>
 </div>
 <script type="text/javascript">
-    OrderDIV(1);
-    function changeImage(href,src){
-        ahtjQuery('#zoomClickButton').attr('lang',href);
-        ahtjQuery('#image').attr('src',src);
-        ahtjQuery('#wrap').show();
-        ahtjQuery('#product-image-container').hide();
-        ahtjQuery('#product-image-container').html('');
-    }
-    function changeVideo(id, type,href){
-        ahtjQuery.ajax({
-            url: '<?php echo $this->getUrl('advancedmedia/index/video') ?>',
-            data: "id="+id,
-            beforeSend: function(){
-                ahtjQuery('#wrap').hide();
-                ahtjQuery('.advancedmedia-loading').show();
-            },
-            success: function(response){
-                ahtjQuery('#zoomClickButton').attr('lang',href);
-                ahtjQuery('#product-image-container').show();
-                ahtjQuery('#product-image-container').html(response);
-                ahtjQuery('#product-image-container iframe').width(<?php echo $mainImageWidth; ?>);
-                ahtjQuery('#product-image-container iframe').height(<?php echo $mainImageHeight; ?>);
-                if(type==1)
-                    flowplayer("player", "<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) ?>advancedmedia/flowplayer-3.2.7.swf");
-                ahtjQuery('.advancedmedia-loading').hide();
-            }
-        });
-    }
-    function lightBox(id){
-        ahtjQuery('#'+id).click();
-    }
-</script>
-<script type="text/javascript">
     (function(){
         var slider_width,
             image = jQuery('.slideshow img'),
