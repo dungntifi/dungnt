@@ -76,7 +76,7 @@ $checkoutHelper = Mage::helper('onestepcheckout/checkout');
 				<?php endif; ?>
 			</div>
         </div>
-		<a href="<?php echo $this->getDeleteUrl()?>" title="<?php echo $this->__('Remove item')?>" class="btn-remove btn-remove3"><?php echo $this->__('Remove item')?></a>
+		<a href="#" onclick="removeItemInCheckOut(<?php echo $item->getProductId(); ?>);return false;" title="<?php echo $this->__('Remove item')?>" class="btn-remove btn-remove3"><?php echo $this->__('Remove item')?></a>
     </li>
     <?php endforeach; ?>
 </ul>
@@ -142,6 +142,27 @@ var total = <?php echo $this->getGrandTotal();?>;
 //]]>
 </script>
 <script type="text/javascript">
+    function removeItemInCheckOut(id){
+        var url = '<?php echo $this->getUrl("onestepcheckout/ajax/removeItem"); ?>';
+        var summary = $$('div.onestepcheckout-summary').first();
+        summary.update('<div class="loading-ajax">&nbsp;</div>');
+        var parameters = {item: id};
+            new Ajax.Request(url, {
+                method: 'post',
+                parameters: parameters,
+                onSuccess: function(transport) {
+                    if(transport.status == 200) {
+                        var response = transport.responseText.evalJSON();
+                        if(response.success) {
+                            summary.update(response.summary);
+                        }
+                        else    {
+                            summary.update(response.summary);
+                        }
+                    }
+                }
+            });
+    }
 
     jQuery(document).ready(function(){
         jQuery('.scroll-pane').jScrollPane();

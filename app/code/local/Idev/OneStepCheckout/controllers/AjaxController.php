@@ -866,4 +866,24 @@ class Idev_OneStepCheckout_AjaxController extends Mage_Core_Controller_Front_Act
         }
         return $successUrl;
     }
+
+    public function removeItemAction(){
+        $id = $this->getRequest()->getParam('item');
+        $cartHelper = Mage::helper('checkout/cart');
+        $items = $cartHelper->getCart()->getItems();
+        foreach($items as $item):
+            if($item->getProduct()->getId() == $id):
+                $itemId = $item->getItemId();
+                $cartHelper->getCart()->removeItem($itemId)->save();
+                break;
+            endif;
+        endforeach;
+        $html = $this->getLayout()
+            ->createBlock('onestepcheckout/summary')
+            ->setTemplate('onestepcheckout/summary.phtml')
+            ->toHtml();
+
+        $response['summary'] = $html;
+        $this->getResponse()->setBody(Zend_Json::encode($response));
+    }
 }
