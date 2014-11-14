@@ -3,7 +3,11 @@
 ?>
 <?php if(count($collection) > 0):?>
 <div id="save-for-later" style="color: #333 !important;">
-    <div id="save-for-later-title" class="show"><?php echo $this->__("Show"); ?></div>
+    <div class="save-for-later-press">
+		<div id="save-for-later-title" class="show">
+			<?php echo $this->__("Hide Saved Items"); ?>
+		</div>
+	</div>
     <div id="save-content">
 	<h3><?php echo $this->__('Saved Items')?></h3>
     <ul class="list-product">
@@ -16,7 +20,7 @@
         $option = json_decode($product["option"]);
 ?>
     <li class="item">
-        <div class="quickview" style="display: block !important;position: relative">
+        <div class="quickview" style="display: block;">
             <a style="color: #fff" class="quickview-btn fancybox.ajax" href="<?php echo $this->getUrl('quickbox/product/view') . '?id='. $_product->getId() ?>"><?php echo $this->__('Quick View') ?></a>
         </div>
         <a href="<?php echo $productUrl; ?>"><img src="<?php echo $imgUrl; ?>" alt="<?php echo $name; ?>" title="<?php echo $name; ?>"/></a>
@@ -55,12 +59,12 @@
             if($(this).hasClass("show")){
                 $(this).removeClass('show');
                 $(this).addClass("save-hidden");
-                $(this).text('Show');
+                $(this).text('Show Saved Items');
                 $("#save-content").css("display",'none');
             }else{
                 $(this).removeClass("save-hidden");
                 $(this).addClass("show");
-                $(this).text('Hide');
+                $(this).text('Hide Saved Items');
                 $("#save-content").css("display",'block');
             }
         })
