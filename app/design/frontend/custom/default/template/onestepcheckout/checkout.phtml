@@ -131,8 +131,8 @@ $helper = Mage::helper('onestepcheckout/checkout');
             </ul>
         </div>
     <?php endif; ?>
-	
-	<div class="onestepcheckout-column-methods">
+	</div>
+	<div class="onestepcheckout-column-middle">
 
         <?php if(!$this->isVirtual()): ?>
             <?php if(Mage::getStoreConfig('onestepcheckout/general/hide_shipping_method')):?>
@@ -197,7 +197,7 @@ $helper = Mage::helper('onestepcheckout/checkout');
             </div>
         <?php endif; ?>
     </div>
-</div>
+
 
     
 
@@ -227,7 +227,8 @@ $helper = Mage::helper('onestepcheckout/checkout');
 		</script>
         <div class="onestepcheckout-coupons">
             <div id="coupon-notice" style="display: none;"></div>
-            <input id="couponcheckbox" type="checkbox" name="coupon_question" />&nbsp;&nbsp;I want to use a promo code
+            <input id="couponcheckbox" type="checkbox" name="coupon_question" />
+			<label for="couponcheckbox">I want to use a promo code</label>
             <div id="couponblock">
             <?php $_couponcode = $this->getQuote()->getCouponCode(); ?>
             <label for="id_couponcode"><?php echo $this->__('Coupon code:'); ?></label>
@@ -802,7 +803,7 @@ $helper = Mage::helper('onestepcheckout/checkout');
                         $$('.checkout-agreements li p label').each(
                             function(elem){
                                 elem.up().insert('<a href="javascript:void(0);" onclick="termsmodals[\'' + elem.htmlFor + '\'].open();">' + elem.innerHTML + '</a>');
-                                elem.hide();
+                            //   elem.hide();
                             }
                         );
                         $$('div.agreement-content').each(

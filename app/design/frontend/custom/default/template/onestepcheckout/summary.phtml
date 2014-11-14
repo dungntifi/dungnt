@@ -2,7 +2,7 @@
 $_coreHelper = $this->helper('core');
 $checkoutHelper = Mage::helper('onestepcheckout/checkout');
 ?>
-<div class="scroll-pane">
+<div class="<?php if (count($this->getItems()) > 2):?>scroll-pane<?php endif;?>">
 <ul class="onestepcheckout-summary scroll-content">
     
     <?php foreach($this->getItems() as $item):
