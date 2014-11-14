@@ -80,10 +80,11 @@
 .cart-table tbody td{ border-bottom:1px solid #d9d9d9; padding:15px;}
 .cart-table tbody tr td:first-child{ padding:0;}
 .cart-table tfoot td{ padding:10px;}
-.cart-table .qty-item {float: left; height: 30px;   text-align: center;  width: 30px; background:#E5E5E5; font-size:16px; cursor:pointer;}
+.cart-table .qty-item {float: left; height: 30px; line-height:30px;   text-align: center;  width: 30px; background:#E5E5E5; font-size:16px; cursor:pointer;}
+.cart-table .qty-item:first-child{ line-height:27px;}
 .cart-table .qty-item + input + .qty-item{ background:#CCCCCC;}
 .cart-table .qty-item:hover{ text-decoration:none;}
-.cart-table input.qty{ float:left; width:30px !important; height:30px; text-align:center; line-height:30px;}
+.cart-table input.qty{ float:left; width:30px !important; height:30px; text-align:center; line-height:30px;pointer-events: none;}
 .cart .cart-collaterals{ width:25%;  display:table-cell; padding:0; border:1px solid #000; border-top:none; vertical-align:top; height:100%; background:#fff;}
 .cart .cart-collaterals > h2{ font-size:14px;padding:8px 10px; font-weight:700; background:#fff; margin:0 -1px;}
 .cart .cart-collaterals .totals{ background:#fff; border-top:1px solid #000; width:100%;}
@@ -96,6 +97,8 @@
 .cart .totals tfoot th strong, .cart .totals tfoot td strong{ font-size:16px;}
 .cart .totals tfoot td{border-bottom: 1px solid #eee;  padding-bottom: 20px;}
 .cart-table .product-name{ font-size:16px;}
+.cart-table .item-msg{ clear:both;}
+.cart-table .item-options{ overflow:hidden;}
 .cart-table .item-options dt{ float:left; display:inline; clear:left; padding-right:5px; font-weight:400;}
 .cart-table .item-options dd{ float:left; display:inline; font-weight:700; text-transform:uppercase;}
 .cart-text-content{overflow: hidden; padding: 4% 11.5% 10px;}
@@ -103,12 +106,14 @@
 .cart-text-content ul li h3{ font-size:15px; margin:0 0 10px;}
 .cart-text-content ul li p{ margin:0;}
 .cart-text-content ul li p a{ text-decoration:underline;}
+.cart .totals .checkout-types li{ text-align:center;}
 
 
 
-@media only screen and (max-width:960px) {
+@media only screen and (max-width:959px) {
 .cart .cart-inner > form{ display:block; width:100%; float:none;}
-.cart .cart-collaterals{ display:block; width:100%; float:none;}
+.cart .cart-collaterals{ display:block; width:100%; float:none; position:inherit !important; height:auto; overflow:hidden; border:none; margin-top:20px;}
+.cart-text-content{ padding-left:2%; padding-right:2%;}
 }
 
 @media only screen and (max-width:767px) {
@@ -117,4 +122,5 @@
 .dtn-all-index-index .col-main{ float:none; margin:20px 0; padding:0; width:100%; overflow:hidden;}
 .dtn-all-index-index .col-main .content{ width:96%; margin:0 auto;}
 .dtn-all-index-index .col-left .silo-table td.designerIndex a{ font-size:15px; font-weight:700;}
+.product-tabs, #customer-reviews{ width:96%; margin-left:auto; margin-right:auto; display:block; float:none; clear:both;}
 }

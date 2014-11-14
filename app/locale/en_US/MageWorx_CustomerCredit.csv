@@ -75,7 +75,7 @@ groups not used if empty,groups not used if empty
 ID,ID
 In Order #%s,In Order #%s
 Internal Balance Changed,Internal Balance Changed
-Internal Credit,Internal Credit
+"Internal Credit","Store Credit"
 Is Active,Is Active
 Hide Customer Credit on the Front-end until First Use,Hide Customer Credit on the Front-end until First Use
 Last Used,Last Used
