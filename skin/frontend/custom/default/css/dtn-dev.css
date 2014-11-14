@@ -4,6 +4,7 @@
 .category-products .toolbar-top .pages{ display:none;}
 .category-products .toolbar-top .sorter{ float:right;}
 .category-products .toolbar-bottom .sorter{ display:none;}
+.category-products .toolbar .pager .pages li.current{ font-weight:700;}
 
 /*PO-20 Tabs in product detail*/
 .product-tabs{ clear:both; /*position:relative; right:50%;*/ float:left; margin-top:20px; width:70%;}

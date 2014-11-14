@@ -30,7 +30,7 @@
 .category-products .toolbar-bottom .toolbar .pager .amount,
 .category-products .toolbar-bottom .toolbar .pager .pages{display:inline;}
 .col-main-category{ position:relative;}
-.col-main-category .toolbar {float: left;}
+.col-main-category .toolbar-top .toolbar {float: left;}
 .col-main-category  .toolbar-bottom .toolbar {	position:inherit;}
 .col-main-category .toolbar .sort-by label{font-family:Futura,"Gill Sans","Century Gothic","Dejavu Sans","Trebuchet MS",sans-serif;font-size:16px;	font-weight:400;text-transform:uppercase;	}
 .col-main-category .toolbar-bottom .toolbar .sort-by label{	font-family:inherit;font-size:inherit;	font-weight:inherit;text-transform:inherit;	}
