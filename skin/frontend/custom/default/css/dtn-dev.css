@@ -4,6 +4,7 @@
 .category-products .toolbar-top .pages{ display:none;}
 .category-products .toolbar-top .sorter{ float:right;}
 .category-products .toolbar-bottom .sorter{ display:none;}
+.category-products .toolbar .pager .pages li.current{ font-weight:700;}
 
 /*PO-20 Tabs in product detail*/
 .product-tabs{ clear:both; /*position:relative; right:50%;*/ float:left; margin-top:20px; width:70%;}
@@ -108,6 +109,8 @@
 .cart-text-content ul li p a{ text-decoration:underline;}
 .cart .totals .checkout-types li{ text-align:center;}
 
+#save-for-later-title{ background:url(../images/caret.png) no-repeat left -39px; padding-left:17px; cursor:pointer; display:inline-block; font-weight:700;}
+#save-for-later-title.save-hidden{ background-position:0 6px;}
 
 
 @media only screen and (max-width:959px) {
