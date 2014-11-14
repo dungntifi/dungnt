@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Dtn_All>
-            <version>1.0.0</version>
+            <version>1.0.1</version>
         </Dtn_All>
     </modules>
     <frontend>

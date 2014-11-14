@@ -9,8 +9,10 @@
 #size-chart-by-country .tab_container table tr:nth-child(even),
 #size-chart-by-country-popup .tab_container_popup table tr:nth-child(even){background: #F7FBFA}
 #tabs-size-chart-popup{ margin-top: 20px;}
-#tabs-size-chart-popup label{}
+#popup_content label{ padding: 0 10px 0 0;}
+#popup_content label input{ margin: -3px 0px 0 5px;}
 #size-chart-by-country .tab_container table td strong,#size-chart-by-country-popup .tab_container_popup table td strong{ color: #333; }
+#popup_content{ font-size: 12px;}
 
 
 /*----------Filter on Category -----------------*/
