@@ -58,7 +58,7 @@ $google = 'http://plus.google.com/share?url='.$page_url;
                     </div>
                     <?php else: ?>
                     <div>
-                        <a id="player_<?php echo $_media->getId() ?>" style="display:block;width:100%;height:500px" href="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).$_media->getMediaSrc(); ?>">
+                        <a id="player_<?php echo $_media->getId() ?>" style="display:block;width:100%;height:800px" href="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).$_media->getMediaSrc(); ?>">
                             <object width="100%" height="100%" type="application/x-shockwave-flash" data="http://web.com/promoutfitters/media/advancedmedia/flowplayer-3.2.7.swf" id="player_<?php echo $_media->getId() ?>_api" autoplay="false">
                                 <param value="true" name="allowfullscreen">
                                 <param value="always" name="allowscriptaccess">
