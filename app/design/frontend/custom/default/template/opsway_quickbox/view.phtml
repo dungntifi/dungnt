@@ -185,9 +185,9 @@ $collection = $_product->getPoCollection();
                             <label><?php echo $this->__("EU") ?><input name="tab" type="radio" value="eu" /></label>
                         </div>
                         <div class="tab_container">
-                            <div id="us" class="tab_content"><?php echo addslashes($collection->getSizeChartUs()) ?></div>
-                            <div id="uk" class="tab_content"><?php echo addslashes($collection->getSizeChartUk()) ?></div>
-                            <div id="eu" class="tab_content"><?php echo addslashes($collection->getSizeChartEu()) ?></div>
+                            <div id="us" class="tab_content"><?php echo $collection->getSizeChartUs() ?></div>
+                            <div id="uk" class="tab_content"><?php echo $collection->getSizeChartUk() ?></div>
+                            <div id="eu" class="tab_content"><?php echo $collection->getSizeChartEu() ?></div>
                         </div>
                     </div>
                 </div>

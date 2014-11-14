@@ -53,9 +53,9 @@ $pre_config_values = $this->getProduct()->getPreconfiguredValues();
                         <label><?php echo $this->__("EU") ?><input name="tabs" type="radio" value="eu_popup" /></label>
                     </div>
                     <div class="tab_container_popup">
-                        <div id="us_popup" class="tab_content_popup"><?php echo addslashes($collection->getSizeChartUs()) ?></div>
-                        <div id="uk_popup" class="tab_content_popup"><?php echo addslashes($collection->getSizeChartUk()) ?></div>
-                        <div id="eu_popup" class="tab_content_popup"><?php echo addslashes($collection->getSizeChartEu()) ?></div>
+                        <div id="us_popup" class="tab_content_popup"><?php echo $collection->getSizeChartUs() ?></div>
+                        <div id="uk_popup" class="tab_content_popup"><?php echo $collection->getSizeChartUk() ?></div>
+                        <div id="eu_popup" class="tab_content_popup"><?php echo $collection->getSizeChartEu() ?></div>
                     </div>
                 </div>
             </div>
