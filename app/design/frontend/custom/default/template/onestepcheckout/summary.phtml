@@ -153,8 +153,8 @@ var total = <?php echo $this->getGrandTotal();?>;
                 onSuccess: function(transport) {
                     if(transport.status == 200) {
                         var response = transport.responseText.evalJSON();
-                        if(response.success) {
-                            summary.update(response.summary);
+                        if(response.checkout) {
+                            location.reload();
                         }
                         else    {
                             summary.update(response.summary);

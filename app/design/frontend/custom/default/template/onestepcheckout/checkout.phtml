@@ -199,7 +199,7 @@ $helper = Mage::helper('onestepcheckout/checkout');
     </div>
 
 
-    
+
 
     <div class="onestepcheckout-column-right">
 
@@ -233,7 +233,7 @@ $helper = Mage::helper('onestepcheckout/checkout');
             <?php $_couponcode = $this->getQuote()->getCouponCode(); ?>
             <label for="id_couponcode"><?php echo $this->__('Coupon code:'); ?></label>
             <input class="input-text" type="text" name="onestepcheckout-couponcode" id="id_couponcode" value="<?php echo Mage::helper('core')->escapeHtml($_couponcode); ?>" />
-            
+
             <button id="onestepcheckout-coupon-add" class="form-button-alt button" type="button"><span><span><?php echo $this->__('Apply Coupon'); ?></span></span></button>
             <button id="onestepcheckout-coupon-remove" class="form-button-alt button" type="button" style="<?php if($_couponcode == '') { echo 'display: none;'; } ?>"><span><span><?php echo $this->__('Cancel Coupon'); ?></span></span></button>
             </div>
