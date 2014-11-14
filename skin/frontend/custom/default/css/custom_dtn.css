@@ -1,4 +1,18 @@
 
+/*----------Size Chart-----------------*/
+#size-chart-by-country .tab_container table,#size-chart-by-country-popup .tab_container_popup table { margin: 20px 0; width: 100%; border: 1px solid #ccc; border-radius: 5px;}
+#size-chart-by-country .tab_container table td,#size-chart-by-country-popup .tab_container_popup table td{  border: 1px solid #ccc; padding: 7px 10px; width: 9%; color: #717171; border-top: none; border-right: none; background: #fff;}
+#size-chart-by-country .tab_container table td:first-child,#size-chart-by-country-popup .tab_container_popup table td:first-child{width: 18%; border-left: none;}
+#size-chart-by-country .tab_container table tr:last-child td, #size-chart-by-country-popup .tab_container_popup table tr:last-child td{ border-bottom: none;}
+#size-chart-by-country .tab_container p img,#size-chart-by-country-popup .tab_container_popup p { text-align: center;}
+#size-chart-by-country .tab_container p img,#size-chart-by-country-popup .tab_container_popup p img{ text-align: center;}
+#size-chart-by-country .tab_container table tr:nth-child(even),
+#size-chart-by-country-popup .tab_container_popup table tr:nth-child(even){background: #F7FBFA}
+#tabs-size-chart-popup{ margin-top: 20px;}
+#tabs-size-chart-popup label{}
+#size-chart-by-country .tab_container table td strong,#size-chart-by-country-popup .tab_container_popup table td strong{ color: #333; }
+
+
 /*----------Filter on Category -----------------*/
 .block-layered-nav {	width: 100%;margin: 0 ;	padding-bottom: 0;background: #fff;	border:0;float:left;}
 .toolbar-top .sorter{ margin-left: 0;}
