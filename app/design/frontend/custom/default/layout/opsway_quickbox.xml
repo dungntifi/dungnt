@@ -17,6 +17,8 @@
             <action method="addItem"><type>skin_js</type><name>js/easyzoom.js</name></action>
             <action method="addItem"><type>skin_js</type><name>js/tipped/tipped.js</name></action>
             <action method="addItem"><type>skin_js</type><name>js/jquery.imagesloaded.js</name></action>
+            <action method="addJs"><script>dtn/jquery/script.js</script></action>
+            <action method="addItem"><type>skin_css</type><name>css/dtn/style.css</name><params/></action>
         </reference>
     </default>
 
