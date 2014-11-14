@@ -19,10 +19,44 @@ $pre_config_values = $this->getProduct()->getPreconfiguredValues();
         <?php foreach($_attributes as $_attribute): ?>
             <?php $optionLabel = $_attribute->getLabel(); ?>
             <?php if ($optionLabel == "Size" && $attributeSetName == "Dresses") : ?>
-                <div class="sizechartlink sizechart-popup"><a href="#" onclick='sizePopup()'>Size Chart</a></div>
+                <div class="sizechartlink sizechart-popup"><a href="#" class="topopup">Size Chart</a></div>
             <?php endif; ?>
         <?php endforeach; ?>
+        <div id="toPopup">
+            <div class="close"></div>
+            <span class="ecs_tooltip">Press Esc to close <span class="arrow"></span></span>
+            <div id="popup_content">
+                <?php $collection = Mage::getModel('amshopby/value')->load($_product->getDesigner(), 'option_id'); ?>
+                <div id="size-chart-by-country-popup">
+                    <div id="tabs-size-chart-popup">
+                        <label><?php echo $this->__("US") ?><input name="tabs" type="radio" value="us_popup" /></label>
+                        <label><?php echo $this->__("UK") ?><input name="tabs" type="radio" value="uk_popup" /></label>
+                        <label><?php echo $this->__("EU") ?><input name="tabs" type="radio" value="eu_popup" /></label>
+                    </div>
+                    <div class="tab_container_popup">
+                        <div id="us_popup" class="tab_content_popup"><?php echo addslashes($collection->getSizeChartUs()) ?></div>
+                        <div id="uk_popup" class="tab_content_popup"><?php echo addslashes($collection->getSizeChartUk()) ?></div>
+                        <div id="eu_popup" class="tab_content_popup"><?php echo addslashes($collection->getSizeChartEu()) ?></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript">
+            jQuery(document).ready(function($){
+                $('.tab_content_popup').hide();
+                $("#tabs-size-chart-popup label:first").addClass("active").show().find("input:radio").attr("checked","");
+                $(".tab_content_popup:first").show();
+                $('#tabs-size-chart-popup input[type=radio]').change(function() {
+                    $("#tabs-size-chart-popup input[type=radio]").attr("checked","");
+                    $(this).attr("checked","checked");
+                    $(".tab_content_popup").hide();
+                    var  activeTab = $(this).val();
+                    $("#"+activeTab).fadeIn();
+                    return false;
+                });
+            })
 
+        </script>
         <?php foreach($_attributes as $_attribute): ?>
             <div class="column-one-third">
                 <div class="label">

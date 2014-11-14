@@ -81,18 +81,6 @@
             $sizechart = Mage::helper('dtn_all')->getSizeChartByDesigner($_product->getDesigner());
             ?>
             <script type="text/javascript">
-                jQuery.noConflict();
-                // $j is now an alias to the jQuery function; creating the new alias is optional.
-                function sizePopup() {
-                    jQuery.fn.speedoPopup({
-                        htmlContent: "<?php echo $sizechart; ?>", window: null, height: null, effectIn: "fade", effectOut: "fade",
-                        onComplete: function(el){
-                            jQuery('.tab_content').hide();
-                            jQuery("#tabs-size-chart label:first").addClass("active").show().find("input:radio").attr("checked","");
-                            jQuery(".tab_content:first").show();
-                        }
-                    });
-                };
                 jQuery(document).ready(function($){
                     $('.tab_content').hide();
                     $("#tabs-size-chart label:first").addClass("active").show().find("input:radio").attr("checked","");
@@ -188,18 +176,20 @@ $collection = $_product->getPoCollection();
                 ?>
             </div>
             <div id="size" class="tab" style="display:none;">
-                <?php $collection = Mage::getModel('amshopby/value')->load($_product->getDesigner(), 'option_id'); ?>
-                <div id="size-chart-by-country">
-                <div id="tabs-size-chart">
-                    <label><?php echo $this->__("US") ?><input name="tab" type="radio" value="us" /></label>
-                    <label><?php echo $this->__("UK") ?><input name="tab" type="radio" value="uk" /></label>
-                    <label><?php echo $this->__("EU") ?><input name="tab" type="radio" value="eu" /></label>
-                </div>
-                <div class="tab_container">
-                    <div id="us" class="tab_content"><?php echo addslashes($collection->getSizeChartUs()) ?></div>
-                    <div id="uk" class="tab_content"><?php echo addslashes($collection->getSizeChartUk()) ?></div>
-                    <div id="eu" class="tab_content"><?php echo addslashes($collection->getSizeChartEu()) ?></div>
-                </div>
+                <div id="popup_content">
+                    <?php $collection = Mage::getModel('amshopby/value')->load($_product->getDesigner(), 'option_id'); ?>
+                    <div id="size-chart-by-country">
+                        <div id="tabs-size-chart">
+                            <label><?php echo $this->__("US") ?><input name="tab" type="radio" value="us" /></label>
+                            <label><?php echo $this->__("UK") ?><input name="tab" type="radio" value="uk" /></label>
+                            <label><?php echo $this->__("EU") ?><input name="tab" type="radio" value="eu" /></label>
+                        </div>
+                        <div class="tab_container">
+                            <div id="us" class="tab_content"><?php echo addslashes($collection->getSizeChartUs()) ?></div>
+                            <div id="uk" class="tab_content"><?php echo addslashes($collection->getSizeChartUk()) ?></div>
+                            <div id="eu" class="tab_content"><?php echo addslashes($collection->getSizeChartEu()) ?></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
