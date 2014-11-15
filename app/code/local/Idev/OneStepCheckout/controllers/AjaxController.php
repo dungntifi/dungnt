@@ -878,12 +878,22 @@ class Idev_OneStepCheckout_AjaxController extends Mage_Core_Controller_Front_Act
                 break;
             endif;
         endforeach;
-        $html = $this->getLayout()
-            ->createBlock('onestepcheckout/summary')
-            ->setTemplate('onestepcheckout/summary.phtml')
-            ->toHtml();
+        $count = count($items->getData());
+        if($count > 0){
+            $html = $this->getLayout()
+                ->createBlock('onestepcheckout/summary')
+                ->setTemplate('onestepcheckout/summary.phtml')
+                ->toHtml();
 
-        $response['summary'] = $html;
+            $response['summary'] = $html;
+        }else{
+            $html = $this->getLayout()
+                ->createBlock('onestepcheckout/checkout')
+                ->setTemplate('onestepcheckout/checkout.phtml')
+                ->toHtml();
+
+            $response['checkout'] = $html;
+        }
         $this->getResponse()->setBody(Zend_Json::encode($response));
     }
 }
