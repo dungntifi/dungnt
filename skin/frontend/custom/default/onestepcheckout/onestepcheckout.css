@@ -836,7 +836,7 @@ div.onestepcheckout-shipping-method .shipment-methods select{ width:49%;}
 .onestepcheckout-summary{ margin:0 0 20px; /*background:#fafafa; */padding:0 0 10px;}
 .onestepcheckout-summary > li{ vertical-align:top; text-transform:uppercase; padding:5px 10px 25px; position:relative; overflow:hidden;}
 .onestepcheckout-summary .product-name{ font-weight:700; font-size:13px; margin:0 0 5px;}
-.onestepcheckout-summary .product-detail .label{ margin-right:5px; width:50%; display:inline-block; float:left;}
+.onestepcheckout-summary .product-detail .label{ margin-right:5px; width:36%; display:inline-block; float:left;}
 .onestepcheckout-summary .product-detail .value{ display:inline-block; float:left; font-weight:700;}
 .osc-cart-quantity, .osc-event_date{ overflow:hidden; padding:0 0 3px;}
 .onestepcheckout-summary .onestepcheckout-custom-options{ margin:0; list-style:none;}

@@ -112,6 +112,9 @@
 .cart-text-content ul li p{ margin:0;}
 .cart-text-content ul li p a{ text-decoration:underline;}
 .cart .totals .checkout-types li{ text-align:center;}
+#shopping-cart-totals-table tr.summary-total .summary-collapse{ float:left;}
+#shopping-cart-totals-table tr.summary-details-first td{ border-top:none;}
+#shopping-cart-totals-table tr.summary-details td{ background-color:transparent;}
 
 /*Save for later*/
 .link-save-for-later{ font-weight:700;}
