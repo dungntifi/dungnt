@@ -48,14 +48,14 @@ $pre_config_values = $this->getProduct()->getPreconfiguredValues();
                 <?php $collection = Mage::getModel('amshopby/value')->load($_product->getDesigner(), 'option_id'); ?>
                 <div id="size-chart-by-country-popup">
                     <div id="tabs-size-chart-popup">
-                        <label><?php echo $this->__("US") ?><input name="tabs" type="radio" value="us_popup" /></label>
-                        <label><?php echo $this->__("UK") ?><input name="tabs" type="radio" value="uk_popup" /></label>
-                        <label><?php echo $this->__("EU") ?><input name="tabs" type="radio" value="eu_popup" /></label>
+                        <?php if($collection->getSizeChartUs()): ?><label><?php echo $this->__("US") ?><input name="tabs" type="radio" value="us_popup" /></label><?php endif; ?>
+                        <?php if($collection->getSizeChartUk()): ?><label><?php echo $this->__("UK") ?><input name="tabs" type="radio" value="uk_popup" /></label><?php endif; ?>
+                        <?php if($collection->getSizeChartEu()): ?><label><?php echo $this->__("EU") ?><input name="tabs" type="radio" value="eu_popup" /></label><?php endif; ?>
                     </div>
                     <div class="tab_container_popup">
-                        <div id="us_popup" class="tab_content_popup"><?php echo $collection->getSizeChartUs() ?></div>
-                        <div id="uk_popup" class="tab_content_popup"><?php echo $collection->getSizeChartUk() ?></div>
-                        <div id="eu_popup" class="tab_content_popup"><?php echo $collection->getSizeChartEu() ?></div>
+                        <?php if($collection->getSizeChartUs()): ?><div id="us_popup" class="tab_content_popup"><?php echo $collection->getSizeChartUs() ?></div><?php endif; ?>
+                        <?php if($collection->getSizeChartUk()): ?><div id="uk_popup" class="tab_content_popup"><?php echo $collection->getSizeChartUk() ?></div><?php endif; ?>
+                        <?php if($collection->getSizeChartEu()): ?><div id="eu_popup" class="tab_content_popup"><?php echo $collection->getSizeChartEu() ?></div><?php endif; ?>
                     </div>
                 </div>
             </div>
