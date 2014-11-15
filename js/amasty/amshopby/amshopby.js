@@ -193,7 +193,6 @@ function amshopby_filter_show(evt){
         dt.next('dd').down('ol').setStyle({display:'none'});
         dt.removeClassName('amshopby-collapsed');
     }else{
-        $$('.block-layered-nav.amshopby-collapse-enabled dt').removeClassName('amshopby-collapsed');
         dt.next('dd').down('ol').toggle();
         dt.toggleClassName('amshopby-collapsed');
     }

@@ -47,8 +47,6 @@ $pre_config_values = $this->getProduct()->getPreconfiguredValues();
                 $("#tabs-size-chart-popup label:first").addClass("active").show().find("input:radio").attr("checked","");
                 $(".tab_content_popup:first").show();
                 $('#tabs-size-chart-popup input[type=radio]').change(function() {
-                    $("#tabs-size-chart-popup input[type=radio]").attr("checked","");
-                    $(this).attr("checked","checked");
                     $(".tab_content_popup").hide();
                     var  activeTab = $(this).val();
                     $("#"+activeTab).fadeIn();

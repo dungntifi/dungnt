@@ -86,8 +86,6 @@
                     $("#tabs-size-chart label:first").addClass("active").show().find("input:radio").attr("checked","");
                     $(".tab_content:first").show();
                     $('#tabs-size-chart input[type=radio]').change(function() {
-                        $("#tabs-size-chart input[type=radio]").attr("checked","");
-                        $(this).attr("checked","checked");
                         $(".tab_content").hide();
                         var  activeTab = $(this).val();
                         $("#"+activeTab).fadeIn();
