@@ -35,12 +35,14 @@ $pre_config_values = $this->getProduct()->getPreconfiguredValues();
     <span class="sale-info"><?php echo $this->htmlEscape($_product->getData('additionalinfo')); ?></span>
     <div class="product-details"><a href="<?php echo $_product->getProductUrl(); ?>">Jump in product details</a></div>
     <div class="block-select">
+        <?php if($_product->getDisableChart()): ?>
         <?php foreach($_attributes as $_attribute): ?>
             <?php $optionLabel = $_attribute->getLabel(); ?>
             <?php if ($optionLabel == "Size" && $attributeSetName == "Dresses") : ?>
                 <div class="sizechartlink sizechart-popup"><a href="#" class="topopup">Size Chart</a></div>
-            <?php endif; ?>
-        <?php endforeach; ?>
+                <?php endif; ?>
+            <?php endforeach; ?>
+        <?php endif; ?>
         <div id="toPopup">
             <div class="close"></div>
             <span class="ecs_tooltip">Press Esc to close <span class="arrow"></span></span>
