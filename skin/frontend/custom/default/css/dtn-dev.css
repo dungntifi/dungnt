@@ -109,8 +109,13 @@
 .cart-text-content ul li p a{ text-decoration:underline;}
 .cart .totals .checkout-types li{ text-align:center;}
 
+/*Save for later*/
+.link-save-for-later{ font-weight:700;}
 #save-for-later-title{ background:url(../images/caret.png) no-repeat left -39px; padding-left:17px; cursor:pointer; display:inline-block; font-weight:700;}
 #save-for-later-title.save-hidden{ background-position:0 6px;}
+.saveforlater-index-list .main{ max-width:960px; margin:0 auto; padding:0; text-align:left;}
+.saveforlater-index-list .col-main{ width:750px;}
+.saveforlater-index-list #save-for-later-table{ border-collapse:collapse;}
 
 
 @media only screen and (max-width:959px) {
