@@ -50,7 +50,7 @@ ul#pronav li table.silo-table td a{font-size: 13px;}
 .left_designer{ margin-left: 50px;}
 .left_designer .page-head{ margin-top: 30px;}
 .left_designer .page-head h3{ font-size: 12px; font-weight: 400;}
-.left_designer .content .bare-list li{ line-height: 150%; padding: 2px 0; float;left; display: block;}
+.left_designer .content .bare-list li{ line-height: 150%; padding: 2px 0;  display: block;}
 
 /*----------------Price Drop Alert Subcribe in My account ----------------------*/
 .pricedropalert-index-subscribe .main{ max-width: 960px;}
