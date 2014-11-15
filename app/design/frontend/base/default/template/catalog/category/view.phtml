@@ -72,7 +72,15 @@
 <script>
     jQuery(document).ready(function(){
         jQuery('.block-layered-nav.amshopby-collapse-enabled dt').click(function(){
-            jQuery('.block-layered-nav.amshopby-collapse-enabled dt').removeClass('amshopby-collapsed');
+            if(jQuery(this).hasClass('amshopby-collapsed')){
+                jQuery(this).removeClass('amshopby-collapsed');
+                jQuery(this).next().find('ol').css('display','none');
+            }else{
+                jQuery('.block-layered-nav.amshopby-collapse-enabled dt').removeClass('amshopby-collapsed');
+                jQuery('.block-layered-nav.amshopby-collapse-enabled ol').css('display','none');
+                jQuery(this).next().find('ol').toggle();
+                jQuery(this).addClass('amshopby-collapsed');
+            }
         });
     });
 </script>

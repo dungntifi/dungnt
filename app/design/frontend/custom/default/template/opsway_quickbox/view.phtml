@@ -130,7 +130,7 @@ $collection = $_product->getPoCollection();
             <li class="active"><a href="#designer"><?php echo $this->__("Designer"); ?></a></li>
             <li><a href="#collection"><?php echo $this->__("Collection"); ?></a></li>
             <li><a href="#style"><?php echo $this->__("Style"); ?></a></li>
-            <?php if($_product->getDisableChart()): ?>
+            <?php if(!$_product->getDisableChart()): ?>
                 <li><a href="#size"><?php echo $this->__("Size"); ?></a></li>
             <?php endif; ?>
         </ul>
@@ -175,7 +175,7 @@ $collection = $_product->getPoCollection();
                 endif;
                 ?>
             </div>
-            <?php if($_product->getDisableChart()): ?>
+            <?php if(!$_product->getDisableChart()): ?>
                 <div id="size" class="tab" style="display:none;">
                     <div id="popup_content">
                         <?php $collection = Mage::getModel('amshopby/value')->load($_product->getDesigner(), 'option_id'); ?>
