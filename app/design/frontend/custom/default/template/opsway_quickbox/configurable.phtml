@@ -16,7 +16,7 @@ $pre_config_values = $this->getProduct()->getPreconfiguredValues();
     } 
 ?>
     <div class="block-select">
-        <?php if($_product->getDisableChart()): ?>
+        <?php if(!$_product->getDisableChart()): ?>
             <?php foreach($_attributes as $_attribute): ?>
                 <?php $optionLabel = $_attribute->getLabel(); ?>
                 <?php if ($optionLabel == "Size" && $attributeSetName == "Dresses") : ?>

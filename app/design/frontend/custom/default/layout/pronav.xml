@@ -2,8 +2,6 @@
 <layout version="0.1.0">
 	<default>
 		 <reference name="head">
-			<action method="addJs"><script>pronav/jquery-1.7.js</script></action>
-			<action method="addJs"><script>pronav/jquery.noConflict.js</script></action>
 			<action method="addCss" ifconfig="pronav/pronavconfig/pronav_status"><stylesheet>pronav/css/pronav.core.css</stylesheet></action>
 			<block type="page/html_head" name="pronav_theme_inclusion" as="pronav_theme_inclusion" template="pronav/pronav_theme_inclusion.phtml"/>
 			<action method="addItem" ifconfig="pronav/pronavconfig/pronav_status"><type>skin_css</type><name>pronav/css/pronav.patches.ie.css</name><params/><if>lt IE 8</if></action>
