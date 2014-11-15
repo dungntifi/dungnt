@@ -187,6 +187,7 @@ function amshopby_category_show(evt){
 }
 
 function amshopby_filter_show(evt){
+    $$('.block-layered-nav.amshopby-collapse-enabled ol').invoke('hide');
     var dt = Event.findElement(evt, 'dt');
 
     dt.next('dd').down('ol').toggle();
