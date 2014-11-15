@@ -1,5 +1,5 @@
-"Zip/Postal Code","Zip Code"
-"State/Province","State"
+"Zip/Postal Code","Zip or Postal Code"
+"State/Province","State or Province"
 "Billing address","Billing address"
 "Already registered? Click here to login.","Already registered? Click here to login."
 "Create an account for later use","Create an account for later use"
@@ -47,3 +47,5 @@
 "Please choose","Please choose"
 "Other","Other"
 "Please specify:","Please specify:"
+"Address","Street Address"
+"Telephone","Phone"
