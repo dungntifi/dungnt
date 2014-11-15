@@ -166,6 +166,11 @@ var total = <?php echo $this->getGrandTotal();?>;
 
     jQuery(document).ready(function(){
         jQuery('.scroll-pane').jScrollPane();
+        if(jQuery("#p_method_paypal_express").is(":checked")) {
+            jQuery('#onestepcheckout-place-order span span').text('<?php echo $this->__("Continue With Paypal"); ?>');
+        }else{
+            jQuery('#onestepcheckout-place-order span span').text('<?php echo $this->__("Place Order Now"); ?>');
+        }
     });
     (function($) {
         $(function() {

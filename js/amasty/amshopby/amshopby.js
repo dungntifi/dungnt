@@ -187,10 +187,15 @@ function amshopby_category_show(evt){
 }
 
 function amshopby_filter_show(evt){
+    $$('.block-layered-nav.amshopby-collapse-enabled ol').invoke('hide');
     var dt = Event.findElement(evt, 'dt');
-
-    dt.next('dd').down('ol').toggle();
-    dt.toggleClassName('amshopby-collapsed');
+    if(dt.hasClassName('amshopby-collapsed')){
+        dt.next('dd').down('ol').setStyle({display:'none'});
+        dt.removeClassName('amshopby-collapsed');
+    }else{
+        dt.next('dd').down('ol').toggle();
+        dt.toggleClassName('amshopby-collapsed');
+    }
 
     Event.stop(evt);
     return false;

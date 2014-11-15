@@ -69,3 +69,10 @@
 <?php else: ?>
     <?php echo $this->getProductListHtml() ?>
 <?php endif; ?>
+<script>
+    jQuery(document).ready(function(){
+        jQuery('.block-layered-nav.amshopby-collapse-enabled dt').click(function(){
+            jQuery('.block-layered-nav.amshopby-collapse-enabled dt').removeClass('amshopby-collapsed');
+        });
+    });
+</script>
