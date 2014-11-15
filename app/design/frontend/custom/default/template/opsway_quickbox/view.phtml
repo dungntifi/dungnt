@@ -149,7 +149,7 @@ $collection = $_product->getPoCollection();
                     if ($poCollection->usesSource()) {
                         $html .= "<ul class='collection'>";
                         foreach($attCollections as $option):
-                            $html .= '<li>'.$color_label = $attr->getSource()->getOptionText($option).'</li>';
+                            $html .= '<li>'.$color_label = $poCollection->getSource()->getOptionText($option).'</li>';
                         endforeach;
                         $html .= "</ul>";
                     }
