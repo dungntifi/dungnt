@@ -43,39 +43,42 @@ $google = 'http://plus.google.com/share?url='.$page_url;
             <a href="<?php echo $this->helper('catalog/product')->getEmailToFriendUrl($_product) ?>" class="mail" title="">Mail</a>
         <?php //endif; ?>
     </div>
+    <div id="view-video"><?php echo $this->__("View Video"); ?></div>
     <div class="slideshow__list">
         <?php foreach ($this->getGalleryImages() as $_image): ?>
             <div class="image">
                 <img src='<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'thumbnail', $_image->getFile())->keepAspectRatio(TRUE)->keepFrame(FALSE)->resize(475); ?>'>
             </div>
         <?php endforeach; ?>
-        <?php if(count($advancedMedia)>0):?>
-            <?php $j=0;foreach ($advancedMedia as $_media):$j++; ?>
-                <div class="image advancedmedia-<?php echo $_media->getMediaPosition() ?>">
-                    <?php if($_media->getUseType()==2): ?>
-                    <div style="position:relative">
-                        <?php echo $_media->getMediaEmbed() ?>
-                    </div>
-                    <?php else: ?>
-                    <div>
-                        <a id="player_<?php echo $_media->getId() ?>" style="display:block;width:100%;height:800px" href="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).$_media->getMediaSrc(); ?>">
-                            <object width="100%" height="100%" type="application/x-shockwave-flash" data="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA)?>advancedmedia/flowplayer-3.2.7.swf" id="player_<?php echo $_media->getId() ?>_api" autoplay="false">
-                                <param value="true" name="allowfullscreen">
-                                <param value="always" name="allowscriptaccess">
-                                <param value="high" name="quality">
-                                <param name="autoplay" value="false" />
-                                <param name="autoload" value="false" />
-                                <param value="false" name="cachebusting">
-                                <param value="#000000" name="bgcolor">
-                                <param value='config={"playerId":"player_<?php echo $_media->getId() ?>","clip":{"url":"<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).$_media->getMediaSrc(); ?>","autoPlay":false},"playlist":[{"url":"<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).$_media->getMediaSrc(); ?>"}]}&autoPlay=false' name="flashvars">
-                            </object>
-                        </a>
-                    </div>
-                    <?php endif ?>
-                </div>
-            <?php endforeach; ?>
-        <?php endif ?>
     </div>
+</div>
+<div id="video-advanced">
+    <?php if(count($advancedMedia)>0):?>
+    <?php $j=0;foreach ($advancedMedia as $_media):$j++; ?>
+        <div class="image advancedmedia-<?php echo $_media->getMediaPosition() ?>" style="display: none;width: 423px;position: absolute">
+            <?php if($_media->getUseType()==2): ?>
+            <div style="position:relative">
+                <?php echo $_media->getMediaEmbed() ?>
+            </div>
+            <?php else: ?>
+            <div>
+                <a id="player_<?php echo $_media->getId() ?>" style="display:block;width:100%;height:780px" href="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).$_media->getMediaSrc(); ?>">
+                    <object width="100%" height="100%" type="application/x-shockwave-flash" data="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA)?>advancedmedia/flowplayer-3.2.7.swf" id="player_<?php echo $_media->getId() ?>_api" autoplay="false">
+                        <param value="true" name="allowfullscreen">
+                        <param value="always" name="allowscriptaccess">
+                        <param value="high" name="quality">
+                        <param value="false" name="cachebusting">
+                        <param value="#000000" name="bgcolor">
+                        <param value='config={"playerId":"player_<?php echo $_media->getId() ?>","play":{"replayLabel":null},"clip":{"scaling":"fit","url":"<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).$_media->getMediaSrc(); ?>"},"playlist":[{"url":"<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).$_media->getMediaSrc(); ?>"}]}' name="flashvars">
+                    </object>
+                </a>
+            </div>
+            <?php endif ?>
+            <div id="hide-video"><?php echo $this->__("Close Video"); ?></div>
+        </div>
+        <?php if($j>=1) break; ?>
+        <?php endforeach; ?>
+    <?php endif ?>
 </div>
 <div class="zoom__container" style="display: none;">
     <div class="thumb__container">
@@ -281,4 +284,17 @@ $google = 'http://plus.google.com/share?url='.$page_url;
 //Tooltips
     Tipped.create('.icon_tooltip');
     })();
+
+    jQuery(document).ready(function(){
+        jQuery('#view-video').click(function(){
+            jQuery('#video-advanced .image').show();
+            jQuery(this).hide();
+            jQuery('.controls').hide();
+        })
+        jQuery('#hide-video').click(function(){
+            jQuery('#video-advanced .image').hide();
+            jQuery('#view-video').show();
+            jQuery('.controls').show()
+        })
+    })
 </script>
