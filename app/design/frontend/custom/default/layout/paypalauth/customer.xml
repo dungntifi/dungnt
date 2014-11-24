@@ -1,0 +1,103 @@
+<?xml version="1.0"?>
+
+<layout version="0.1.0">
+
+    <default>
+        <!-- Mage_Customer -->
+        <reference name="head">
+        	<!--<action method="addItem"><type>skin_js</type><name>js/paypalauth/jquery-1.10.2.min.js</name><params/></action>	-->
+            <action method="addItem"><type>skin_js</type><name>js/paypalauth/paypalauth.js</name><params/></action>
+        </reference>
+        <reference name="after_body_start">
+			<block type="paypalauth_identity/js" name="paypal.lightbox.js" template="paypalauth/js.phtml" />
+		</reference>
+    </default>
+
+    <customer_logged_in>
+        <reference name="top.links">
+            <action method="removeLinkByUrl" ><url helper="customer/getLogoutUrl"/></action>
+            <action method="addLink" translate="label title" module="customer" ><label>Log Out</label><url helper="customer/getLogoutUrl"/><title>Log Out</title><prepare/><urlParams/><position>100</position><liParams/><aParams><id>paypalout</id><onclick>return logOutFromPaypal()</onclick></aParams></action>
+        </reference>
+    </customer_logged_in>
+
+    <customer_logged_out>
+        <reference name="top.links">
+            <action method="addLink" translate="label title" module="customer" ifconfig="customer/startup/paypalauth_enabled"><label></label><url helper="paypalauth_identity/getPopUpLoginUrl"/><title>Log In With Paypal</title><prepare/><urlParams/><position>100</position><liParams/><aParams><id>topPayPalIn</id><class>top-link-paypalauth</class><onclick>return payPalPopUp()</onclick></aParams></action>
+        </reference>
+        <reference name="head">
+            <action method="addItem" ifconfig="customer/startup/paypalauth_enabled"><type>skin_css</type><name>css/paypalauth/styles.css</name><params/></action>
+        </reference>
+    </customer_logged_out>
+
+    <customer_account_index>
+        <!-- Mage_Review -->
+        <reference name="customer_account_dashboard_info">
+            <block type="paypalauth_identity/customer_account_dashboard_info" name="customer_account_dashboard_info_paypalauth_identity" as="paypalauth_dashboard" template="paypalauth/customer/account/dashboard/info.phtml"/>
+        </reference>
+    </customer_account_index>
+
+    <customer_account_login>
+        <reference name="customer_form_login">
+            <action method="setTemplate"><template>paypalauth/customer/form/login.phtml</template></action>
+            <block type="paypalauth_identity/form_paypal_login" name="paypalauth.login" template="paypalauth/paypal_login.phtml" />
+            <block type="persistent/form_remember" name="persistent.remember.me" template="persistent/remember_me.phtml" />
+            <block type="core/template" name="persistent.remember.me.tooltip" template="persistent/remember_me_tooltip.phtml" />
+        </reference>
+    </customer_account_login>
+
+    <customer_account_create>
+        <reference name="customer_form_register">
+            <action method="setTemplate"><template>paypalauth/customer/form/register.phtml</template></action>
+            <block type="paypalauth_identity/form_paypal_login" name="paypalauth.register" template="paypalauth/paypal_register.phtml" />
+            <block type="persistent/form_remember" name="persistent.remember.me" template="persistent/remember_me.phtml" />
+            <block type="core/template" name="persistent.remember.me.tooltip" template="persistent/remember_me_tooltip.phtml" />
+        </reference>
+    </customer_account_create>
+
+    <checkout_onepage_index>
+        <reference name="checkout.onepage.login">
+            <action method="setTemplate"><template>paypalauth/checkout/onepage/login.phtml</template></action>
+            <block type="paypalauth_identity/form_paypal_login" name="paypalauth.checkout.guest" template="paypalauth/paypal_checkout.phtml" />
+            <block type="persistent/form_remember" name="persistent.remember.me" template="persistent/remember_me.phtml" />
+        </reference>
+    </checkout_onepage_index>
+
+   <paypalauth_identity_openidconnect_asklink>
+        <reference name="root">
+            <action method="setTemplate"><template>page/1column.phtml</template></action>
+        </reference>
+         <reference name="content">
+             <block type="paypalauth_identity/customer_account_asklink" name="paypalauth" template="paypalauth/customer/account/asklink.phtml"/>
+         </reference>
+    </paypalauth_identity_openidconnect_asklink>
+    
+    <catalog_product_view>
+        <reference name="product.info.addtocart">
+            <block type="page/html_wrapper" name="product.info.addtocart.paypal.wrapper" translate="label">
+                <label>PayPal Express Checkout Shortcut Wrapper</label>
+                <block type="paypal/express_shortcut" name="product.info.addtocart.paypal" template="paypalauth/paypal/express/shortcut.phtml">
+                    <action method="setIsInCatalogProduct"><value>1</value></action>
+                </block>
+            </block>
+        </reference>
+    </catalog_product_view>
+    
+    <checkout_cart_index>
+        <reference name="checkout.cart.top_methods">
+        	<remove name="checkout.cart.methods.paypal_express.top"  ifconfig="payment/lightbox/enable"/>
+            <block type="paypal/express_shortcut" name="ppl.checkout.cart.methods.paypal_express.top" before="-" template="paypalauth/paypal/express/shortcut.phtml">
+                <action method="setIsQuoteAllowed"><value>1</value></action>
+            </block>
+        </reference>
+
+        <reference name="checkout.cart.methods">
+        	<remove name="checkout.cart.methods.paypal_express.bottom"  ifconfig="payment/lightbox/enable"/>
+            <block type="paypal/express_shortcut" name="ppl.checkout.cart.methods.paypal_express.bottom" before="-" template="paypalauth/paypal/express/shortcut.phtml">
+                <action method="setIsQuoteAllowed"><value>1</value></action>
+            </block>
+        </reference>
+
+        <update handle="SHORTCUT_popup" />
+    </checkout_cart_index>
+    
+</layout>

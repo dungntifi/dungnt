@@ -1,0 +1,126 @@
+<?xml version="1.0"?>
+<config>
+
+	<modules>
+		<Paypalauth_Identity>
+			<version>1.0.9</version>
+		</Paypalauth_Identity>
+	</modules>
+	
+	<global>
+		<models>
+		
+			<paypal>
+				<rewrite>
+					<api_nvp>Paypalauth_Identity_Model_Api_Nvp</api_nvp>
+					<express>Paypalauth_Identity_Model_Express</express>
+					<config>Paypalauth_Identity_Model_Paypal_Config</config>
+				</rewrite>
+			</paypal>
+
+			<paypalauth_identity>
+				<class>Paypalauth_Identity_Model</class>
+				<resourceModel>paypalauth_identity_mysql4</resourceModel>
+			</paypalauth_identity>
+			
+			<paypalauth_identity_mysql4>
+				<class>Paypalauth_Identity_Model_Mysql4</class>
+				<entities>
+					<customer>
+						<table>paypalauth_customer</table>
+					</customer>
+				</entities>
+			</paypalauth_identity_mysql4>
+		</models>
+		
+		<blocks>
+			<paypalauth_identity>
+				<class>Paypalauth_Identity_Block</class>
+			</paypalauth_identity>
+			<customer>
+				<rewrite>
+					<account_dashboard_info>Paypalauth_Identity_Block_Customer_Account_Dashboard_Info</account_dashboard_info>
+				</rewrite>
+			</customer>
+		</blocks>
+		
+		<resources>
+			<paypalauth_identity_setup>
+				<setup>
+					<module>Paypalauth_Identity</module>
+					<class>Mage_Catalog_Model_Resource_Eav_Mysql4_Setup</class>
+				</setup>
+			</paypalauth_identity_setup>
+		</resources>
+		
+		<helpers>
+			<paypalauth_identity>
+				<class>Paypalauth_Identity_Helper</class>
+			</paypalauth_identity>
+		</helpers>
+		
+	</global>
+	
+	<adminhtml>
+		<translate>
+			<modules>
+				<Paypalauth_Identity>
+					<files>
+						<default>Paypalauth_Identity.csv</default>
+					</files>
+				</Paypalauth_Identity>
+			</modules>
+		</translate>
+		<events>
+			<admin_system_config_changed_section_web>
+				<observers>
+					<paypalauth_identity>
+						<class>paypalauth_identity/observer</class>
+						<method>saveSystemConfig</method>
+					</paypalauth_identity>
+				</observers>
+			</admin_system_config_changed_section_web>
+		</events>
+	</adminhtml>
+	
+	<frontend>
+		<translate>
+			<modules>
+				<Paypalauth_Identity>
+					<files>
+						<default>Paypalauth_Identity.csv</default>
+					</files>
+				</Paypalauth_Identity>
+			</modules>
+		</translate>
+		<routers>
+			<paypalauth_identity>
+				<use>standard</use>
+				<args>
+					<module>Paypalauth_Identity</module>
+					<frontName>login</frontName>
+				</args>
+			</paypalauth_identity>
+		</routers>
+		<layout>
+			<updates>
+				<identity>
+					<file>paypalauth/customer.xml</file>
+				</identity>
+			</updates>
+		</layout>
+		
+		<events>
+        <checkout_cart_add_product_complete>
+	        	<observers>
+	        		<checkout_cart_add_product_complete>
+	        			<type>singleton</type>
+	                    <class>paypalauth_identity/observer</class>
+	                    <method>checkoutCartAddProductComplete</method>
+	        		</checkout_cart_add_product_complete>
+	        	</observers>
+	        </checkout_cart_add_product_complete>
+	    </events>
+	</frontend>
+	
+</config>
