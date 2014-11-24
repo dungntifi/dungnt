@@ -43,7 +43,7 @@ $google = 'http://plus.google.com/share?url='.$page_url;
             <a href="<?php echo $this->helper('catalog/product')->getEmailToFriendUrl($_product) ?>" class="mail" title="">Mail</a>
         <?php //endif; ?>
     </div>
-    <div id="view-video"><?php echo $this->__("View Video"); ?></div>
+    <?php if(count($advancedMedia)>0):?><div id="view-video"><?php echo $this->__("View Video"); ?></div><?php endif; ?>
     <div class="slideshow__list">
         <?php foreach ($this->getGalleryImages() as $_image): ?>
             <div class="image">
