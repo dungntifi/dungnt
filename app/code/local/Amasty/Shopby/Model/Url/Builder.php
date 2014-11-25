@@ -231,7 +231,6 @@ class Amasty_Shopby_Model_Url_Builder
         }else{
             $base = Mage::registry('current_category')->getUrl().'/'.$reservedKey.'/';
         }
-
         if ($this->isCatalogSearch()){
             $url = $base . 'catalogsearch/result/';
         }
@@ -275,7 +274,6 @@ class Amasty_Shopby_Model_Url_Builder
         }
         elseif ($this->getCategoryId() == $rootId) {
             $url = $base;
-
             switch ($this->mode) {
                 case Amasty_Shopby_Model_Source_Url_Mode::MODE_DISABLED:
                     $needUrlKey = true;
@@ -290,11 +288,12 @@ class Amasty_Shopby_Model_Url_Builder
                     $needUrlKey = true;
             }
             if ($needUrlKey) {
-                $url.= $reservedKey;
+                //$url.= $reservedKey;
                 if ($seoAttributePartExist) {
-                    $url .=  '/';
+                    $url .=  '';
                 }
             }
+            //var_dump($url);die;
         }
         else { // we have a valid category
             $url = $this->getCategoryObject()->getUrl();

@@ -1,0 +1,16 @@
+<?php $items = $this->getItems(); $request = $this->getRequest()->getParam('category_filter'); ?>
+<div class="left_designer left_category">
+    <div class="page-head">
+
+    </div>
+    <div class="content">
+    </div>
+</div>
+<script>
+    jQuery(window).load(function(){
+        jQuery('.left_category .page-head').append('<h3><?php echo $this->__("All Category")?></h3>');
+        jQuery('.left_category .content').append(jQuery('.Category dd ol'));
+        jQuery('.left_category .content ol').show();
+        jQuery('.Category').hide();
+    })
+</script>

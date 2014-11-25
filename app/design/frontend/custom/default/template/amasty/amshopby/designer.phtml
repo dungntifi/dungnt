@@ -1,29 +1,15 @@
 <?php $items = $this->getItems(); $request = $this->getRequest()->getParam('designer'); ?>
-<div class="left_designer">
+<div class="left_designer left_attribute_designer">
 <div class="page-head">
-    <h3><?php echo $this->__("All Designer")?></h3>
+    
 </div>
 <div class="content">
-    <?php if ($items):?>
-    <?php $width = floor(100/count($items)) ?>
-    <ul class="bare-list">
-    <?php foreach ($items as $letters): ?>
-            <?php foreach ($letters as $letter => $options): ?>
-                    <?php foreach ($options as $o): ?>
-                    <li <?php if($o['value'] == $request): ?>class="active"<?php endif; ?>>
-                        <a href="<?php echo $o['url'] ?>">
-                            <?php if ($o['img']): ?>
-                            <img src="<?php echo $o['img'] ?>" />
-                            <?php else: ?>
-                            <?php echo $this->htmlEscape($o['label']) ?>
-                            <?php endif ?>
-                        </a>
-                        <?php if ($this->getShowCounts()) { echo '('.$o['cnt'].')'; } ?>
-                    </li>
-                    <?php endforeach ?>
-            <?php endforeach ?>
-        <?php endforeach ?>
-    </ul>
-    <?php endif ?>
 </div>
 </div>
+    <script>
+        jQuery(window).load(function(){
+            jQuery('.left_attribute_designer .page-head').append('<h3><?php echo $this->__("All Designer")?></h3>');
+            jQuery('.left_attribute_designer .content').append(jQuery('.Designer dd ol'));
+            jQuery('.left_attribute_designer .content ol').show();
+        })
+    </script>
