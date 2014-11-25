@@ -24,7 +24,6 @@
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 ?>
-<?php $styles = $this->escapeHtml($this->getProductInfo()->getStyles()); ?>
 <?php $arrayReview = $this->helper("dtn_all")->getcfgReview(); ?>
 <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('product_review_introtext')->toHtml() ?>
 <div class="form-add">    
@@ -32,8 +31,7 @@
     <form action="<?php echo $this->getAction() ?>" method="post" id="review-form">
         <fieldset>
             <?php echo $this->getChildHtml('form_fields_before')?>
-            <h3><?php echo $this->__("Title:"); ?> <span><?php echo $this->escapeHtml($this->getProductInfo()->getName()) ?></span></h3>
-			<?php if($styles):?><h3><?php echo $this->__("Style:"); ?> <span><?php echo $styles; ?></span></h3><?php endif;?>
+            <h3><?php echo $this->__("Title:"); ?> <span><?php echo $this->escapeHtml($this->getProductInfo()->getName()) ?></span></h3>			
             <?php if( $this->getRatings() && $this->getRatings()->getSize()): $arr = array(); ?>
                 <span id="input-message-box"></span>
                 <table class="data-table" id="product-review-table">
@@ -74,13 +72,13 @@
                         </div>
                     </li>
                     <li>
-                        <label for="review_field" class="required"><em>*</em><?php echo $this->__('Your Review') ?></label>
+                        <label for="review_field" class="required"><em>*</em><?php echo $this->__('Your Review:') ?></label>
                         <div class="input-box">
                             <textarea name="detail" id="review_field" cols="5" rows="3" class="required-entry"><?php echo $this->escapeHtml($data->getDetail()) ?></textarea>
                         </div>
                     </li>
 					<li>
-                        <label for="review_field" class="required"><em>*</em><?php echo $this->__('Email Address:') ?> <span>(<?php echo $this->__('optional') ?>)</span></label>
+                        <label for="review_field" class="required"><em>*</em><?php echo $this->__('Email Address:') ?></label>
                         <div class="input-box">
                             <input type="text" name="email" id="email_field" class="input-text" value="<?php echo $this->escapeHtml($data->getEmail()) ?>" />
                         </div>
