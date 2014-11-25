@@ -14,10 +14,11 @@
 .product-tabs .tab-links li a:hover{ text-decoration:none;}
 .product-tabs .tab-links li.active{ background:#000; color:#fff;}
 .product-tabs .tab-links li.active a{ color:#fff;}
-.product-tabs .tab-content{ z-index:1;border-top:1px solid #b6b6b6; padding:10px 20px 10px 0;}
-.product-tabs .tab-content #designer{ font-family:Arial,sans-serif; font-size:30px;}
-.product-tabs .tab-content #style{ font-size:20px;}
+.product-tabs .tab-content{ z-index:1;border-top:1px solid #b6b6b6; padding:10px 20px 10px 0; font-size:20px; text-align:center;}
+.product-tabs .tab-content #designer{ font-family:Arial,sans-serif; }
+.product-tabs .tab-content #style, .product-tabs .tab-content #collection{ font-size:20px;}
 .product-tabs .tab-content #style ul{ padding-left:10px;}
+.product-tabs .tab-content #tabs-size-chart label{ font-size:14px; font-weight:700;}
 
 .product-info .ratings{ margin-top:30px; font-size:12px; font-weight:700;}
 .product-info .ratings .rating-links{ float:left; display:inline;}
