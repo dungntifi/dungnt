@@ -8,8 +8,10 @@
 </div>
     <script>
         jQuery(window).load(function(){
-            jQuery('.left_attribute_designer .page-head').append('<h3><?php echo $this->__("All Designer")?></h3>');
-            jQuery('.left_attribute_designer .content').append(jQuery('.Designer dd ol'));
-            jQuery('.left_attribute_designer .content ol').show();
+            if(jQuery('.Designer dd ol li').length > 0){
+                jQuery('.left_attribute_designer .page-head').append('<h3><?php echo $this->__("All Designer")?></h3>');
+                jQuery('.left_attribute_designer .content').append(jQuery('.Designer dd ol'));
+                jQuery('.left_attribute_designer .content ol').show();
+            }
         })
     </script>

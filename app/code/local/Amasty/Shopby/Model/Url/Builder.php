@@ -87,6 +87,20 @@ class Amasty_Shopby_Model_Url_Builder
         return $url;
     }
 
+    public function getUrlDesignerOfCategoryInMenu($categoryId){
+        $this->updateEffectiveQuery();
+        $reservedKey = Mage::getStoreConfig('amshopby/seo/key');
+        $collection = Mage::getModel('catalog/category')->load($categoryId);
+        $paramPart = $this->getParamPart();
+        $basePart = $collection->getUrl()."/".$reservedKey."/";
+
+        $url = $basePart . $paramPart;
+        //var_dump($url);die;
+        $url = preg_replace('|(^:)/{2,}|', '$1/', $url);
+
+        return $url;
+    }
+
     protected function updateEffectiveQuery()
     {
         $this->effectiveQuery = $this->query;

@@ -49,7 +49,7 @@ class Amasty_Shopby_Block_Designer extends Mage_Core_Block_Template
                 $urlBuilder->changeQuery(array(
                     $attribute->getAttributeCode() => $opt['value'],
                 ));
-                $opt['url'] = $urlBuilder->getUrl();
+                $opt['url'] = $urlBuilder->getUrlDesignerOfCategoryInMenu($this->getCategoryId());
                 $opt['img'] = $images ? $images[$opt['value']] : null;
 
                 //$i = mb_strtoupper(mb_substr($opt['label'], 0, 1, 'UTF-8'));

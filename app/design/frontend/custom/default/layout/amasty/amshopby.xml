@@ -42,7 +42,7 @@
         <remove name="enterprisecatalog.leftnav"/> 
         <reference name="left">
            <block type="amshopby/catalog_layer_view" name="amshopby.navleft" before="-" template="catalog/layer/view.phtml"/>
-            <block type="amshopby/designer" name="amshopby.designer" before="-" template="amasty/amshopby/designer.phtml"/>
+            <block type="amshopby/category" name="amshopby.designer" before="-" template="amasty/amshopby/designer.phtml"/>
             <block type="amshopby/category" name="amshopby.category-attribute" before="-" template="amasty/amshopby/category-attribute.phtml"/>
         </reference>
         <reference name="content">
