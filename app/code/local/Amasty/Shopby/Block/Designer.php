@@ -23,7 +23,7 @@ class Amasty_Shopby_Block_Designer extends Mage_Core_Block_Template
         $filter = new Varien_Object();
         // important when used at category pages
         $layer = Mage::getModel('catalog/layer')
-            ->setCurrentCategory(Mage::getModel('catalog/layer')->getCurrentCategory()->getId());
+            ->setCurrentCategory($this->getCategoryId());
         $filter->setLayer($layer);
         $filter->setStoreId(Mage::app()->getStore()->getId());
         $filter->setAttributeModel($attribute);
