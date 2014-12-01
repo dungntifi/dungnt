@@ -124,7 +124,20 @@
 .saveforlater-index-list .main{ max-width:960px; margin:0 auto; padding:0; text-align:left;}
 .saveforlater-index-list .col-main{ width:750px;}
 .saveforlater-index-list #save-for-later-table{ border-collapse:collapse;}
+/*PO-40*/
+.category-products{ width:96%;}
+.products-grid li.item{ width:25%;box-sizing: border-box; padding-left:12px; padding-right:0; margin-right:0;}
+.products-grid .product-image{ width:100%;}
+.products-grid .product-image img{ width:100%;}
+.products-grid .color-avail{ width:auto; text-align:center;}
 
+
+
+
+@media only screen and (max-width:1023px) {
+.catalog-category-view .col-left{ display:none;}
+.catalog-category-view .col-main-category{ margin-left:20px;}
+}
 
 @media only screen and (max-width:959px) {
 .cart .cart-inner > form{ display:block; width:100%; float:none;}
@@ -139,4 +152,11 @@
 .dtn-all-index-index .col-main .content{ width:96%; margin:0 auto;}
 .dtn-all-index-index .col-left .silo-table td.designerIndex a{ font-size:15px; font-weight:700;}
 .product-tabs, #customer-reviews{ width:96%; margin-left:auto; margin-right:auto; display:block; float:none; clear:both;}
+
+.products-grid li.item{ width:33.3%;}
+}
+
+@media only screen and (max-width:679px) {
+.catalog-category-view .col-main-category{ margin-left:5px;}
+.products-grid li.item{ width:50%;}
 }
