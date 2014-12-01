@@ -30,6 +30,9 @@ $_product    = $this->getProduct();
 $_attributes = Mage::helper('core')->decorateArray($this->getAllowAttributes());
 $attributeSetName = Mage::getModel('eav/entity_attribute_set')->load($_product->getAttributeSetId())->getAttributeSetName();
 $pre_config_values = $this->getProduct()->getPreconfiguredValues();
+if($pre_config_values['super_attribute']){
+    $childProduct = Mage::getModel('catalog/product_type_configurable')->getProductByAttributes($pre_config_values['super_attribute'], $_product);
+}
 ?>
 <?php if ($_product->isSaleable() && count($_attributes)):?>
     <span class="sale-info"><?php echo $this->htmlEscape($_product->getData('additionalinfo')); ?></span>
@@ -110,12 +113,15 @@ $pre_config_values = $this->getProduct()->getPreconfiguredValues();
     <div class="block-color">
         <b>Select color</b>
     </div>
+    <div class="simple-product-id"><input type="hidden" name="simple-product-id" id="simple-product-id" value="<?php if($pre_config_values['super_attribute']){echo $childProduct->getId();} ?>"/></div>
     <script type="text/javascript">
         var spConfigSingle = new Product.ConfigSingle(<?php echo $this->getJsonConfig() ?>);
         <?php
          $arr = array();
         foreach ($_product->getTypeInstance(true)->getUsedProducts ( null, $_product) as $simple) {
-             $arr[$simple->getId()] = $simple->getData('additionalinfo');
+            $arr[$simple->getId()][0] = $simple->getData('additionalinfo');
+            $arr[$simple->getId()][1] = Mage::helper('cutomstockstatus')->getCustomStockStatus($simple);
+            $arr[$simple->getId()][2] = $simple->getId();
         }
         ?>
         spConfigSingle.simpleOptions = <?php echo Mage::helper('core')->jsonEncode($arr)?>;
@@ -148,7 +154,7 @@ $pre_config_values = $this->getProduct()->getPreconfiguredValues();
                     sizeOfExistingProducts = sizeOfExistingProducts + 1
                 }
                 if (sizeOfExistingProducts == 1) {
-                  return this.simpleOptions[currentSimpleProductId];
+                  return this.simpleOptions[currentSimpleProductId];//currentSimpleProductId;
                 }
             delete window['console'];
             console.log(this.simpleOptions[currentSimpleProductId]);
@@ -157,7 +163,9 @@ $pre_config_values = $this->getProduct()->getPreconfiguredValues();
         spConfigSingle.changeInfo = function(){
             var textSimple = this.getIdOfSelectedProduct();
             if (textSimple) {
-                jQuery('p.additional_info_po').html(textSimple);
+                jQuery('#simple-product-id').val(textSimple[2]);
+                jQuery('p.additional_info_po').html(textSimple[0]);
+                jQuery('p.availability').html('Availability: <span>'+textSimple[1]+'</span>');
             }
         };
         spConfigSingle.newEventBind = function(){
