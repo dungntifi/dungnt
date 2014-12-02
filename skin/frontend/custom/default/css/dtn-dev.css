@@ -32,8 +32,9 @@
 .review-form-popup-inner2{ position:relative;}
 .product-view .box-reviews dl{ margin-top:0;}
 .review-form-popup-inner #product-review-table{ border:none; padding:0; background:none;}
-.review-form-popup-inner #product-review-table td{ padding: 7px 0; font-size:15px; font-weight:700;}
+.review-form-popup-inner #product-review-table td{ padding: 7px 0; font-size:15px; font-weight:700; position:relative;}
 .review-form-popup-inner #product-review-table td img{ vertical-align:middle;}
+.review-form-popup-inner #product-review-table td select + .validation-advice{ position:absolute; left:0; bottom:-9px;}
 #review-form .form-list li:after{ content:"";}
 #review-form .form-list label em{ display:none;}
 #review-form .form-list label > span{ color:#ea8e45;}

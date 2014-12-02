@@ -40,8 +40,8 @@
                         <tr>
                             <td colspan='2'>
                                 <?php echo $this->escapeHtml($_rating->getRatingCode()) ?>
-                                <select id="Review1_ddlRating" name="ratings[<?php echo $_rating->getId() ?>]" onchange="lockStars(this.value);" onkeyup="lockStars(this.value);" >
-                                    <option selected="selected" value="0"></option>
+                                <select class="validate-select required-entry" id="Review1_ddlRating" name="ratings[<?php echo $_rating->getId() ?>]" onchange="lockStars(this.value);" onkeyup="lockStars(this.value);" >
+                                    <option> </option>
                                     <?php foreach ($_rating->getOptions() as $_option): ?>
                                         <?php $arr[] = $_option->getId(); ?>
                                         <option value="<?php echo $_option->getId() ?>"><?php echo $this->__($arrayReview[$i]); ?></option>
