@@ -165,6 +165,10 @@ if($pre_config_values['super_attribute']){
             if (textSimple) {
                 jQuery('#simple-product-id').val(textSimple[2]);
                 jQuery('p.additional_info_po').html(textSimple[0]);
+                if(textSimple[1] == 'Out of Stock'){
+                    jQuery('p.availability').addClass('out-of-stock');
+                    jQuery('.product-options-bottom').hide();
+                }
                 jQuery('p.availability').html('Availability: <span>'+textSimple[1]+'</span>');
             }
         };

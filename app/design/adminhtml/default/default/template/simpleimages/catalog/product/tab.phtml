@@ -2,9 +2,9 @@
 
 //proceed only if we have created configurable and simple products associated with this configurable
 if($this->getRequest()->getParam('id')) :
-	
+
 	//data preset
-	$ids = Mage::getModel('catalog/product_type_configurable')->getChildrenIds($this->getRequest()->getParam('id')); 
+	$ids = Mage::getModel('catalog/product_type_configurable')->getChildrenIds($this->getRequest()->getParam('id'));
 	$_childProducts = Mage::getModel('catalog/product')->getCollection()
 	    ->addAttributeToSelect('name')
 	    ->addAttributeToSelect('price')
@@ -32,7 +32,7 @@ if($this->getRequest()->getParam('id')) :
 	?>
 	<div class="entry-edit">
 		<div class="entry-edit-head">
-			<h4 class="icon-head head-edit-form fieldset-legend">Associate images with <?= $colorLabel; ?> color</h4>
+			<h4 class="icon-head head-edit-form fieldset-legend">Associate images with <?php $colorLabel; ?> color</h4>
 			<div class="form-buttons"></div>
 		</div>
 		<div class="fieldset fieldset-wide">
@@ -77,29 +77,29 @@ if($this->getRequest()->getParam('id')) :
 					        </tr>
 					    </thead>
 					    <tbody id="<?php echo $_class; ?>_list">
-							<?php 
+							<?php
 								foreach ($_childProducts as $key => $_childProduct) {
 									if($_childProduct['color'] == $colorId) {
 
-										$sub = Mage::getModel('catalog/product')->load($_childProduct['entity_id']); 
+										$sub = Mage::getModel('catalog/product')->load($_childProduct['entity_id']);
 										$gallery = $sub->getMediaGalleryImages();
 
-										$i = 0; 
+										$i = 0;
 										foreach ($gallery as $key => $image) {
 											$checked = '';?>
 
 											<tr id="<?php echo $_class; ?>_template" class="template">
 								                <td class="cell-image"><img src="<?php echo $image->getUrl(); ?>" width="120" /></td>
-								                <td class="cell-label"><input type="text" class="input-text" name="simpleimages_data[label][<?=$colorId?>][<?=$i?>]" value="<?php echo $image->getLabel(); ?>" /></td>
-								                <td class="cell-position"><input type="text" class="input-text validate-number" name="simpleimages_data[position][<?=$colorId?>][<?=$i?>]" value="<?php echo $image->getPosition(); ?>" /></td>
+								                <td class="cell-label"><input type="text" class="input-text" name="simpleimages_data[label][<?php$colorId?>][<?php$i?>]" value="<?php echo $image->getLabel(); ?>" /></td>
+								                <td class="cell-position"><input type="text" class="input-text validate-number" name="simpleimages_data[position][<?php$colorId?>][<?php$i?>]" value="<?php echo $image->getPosition(); ?>" /></td>
 								                <?php foreach ($_imageMapping as $typeId => $type): ?>
 								                	<?php $checked = ($sub->getData($type) == $image->getFile()) ? 'checked' : ''; ?>
-								                	<td class="cell-<?php echo $typeId ?> a-center"><input type="radio" <?=$checked?> name="simpleimages_type[<?=$colorId?>][<?=$type?>]" value="<?=$image->getFile()?>" /></td>
+								                	<td class="cell-<?php echo $typeId ?> a-center"><input type="radio" <?php $checked ?> name="simpleimages_type[<?php $colorId ?>][<?php$type?>]" value="<?php$image->getFile()?>" /></td>
 								                <?php endforeach; ?>
-								                <td class="cell-remove a-center last"><input type="checkbox" name="simpleimages_data[remove][<?=$colorId?>][]" value="<?=$image->getFile()?>" /></td>
+								                <td class="cell-remove a-center last"><input type="checkbox" name="simpleimages_data[remove][<?php$colorId?>][]" value="<?php$image->getFile()?>" /></td>
 								        	</tr>
 
-											<? $i++;
+											<?php $i++;
 										}
 									}
 								}
@@ -120,7 +120,7 @@ if($this->getRequest()->getParam('id')) :
 			</div>
 		</div>
 	</div>
-	<?php endforeach; ?>
+	<?php endforeach ?>
 
 	<script>
 		jQuery(document).ready(function() {

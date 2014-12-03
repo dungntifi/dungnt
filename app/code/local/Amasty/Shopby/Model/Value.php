@@ -23,4 +23,10 @@ class Amasty_Shopby_Model_Value extends Mage_Core_Model_Abstract
     {    
         $this->_init('amshopby/value');
     }
+
+    public function loadByOption($option){
+        $collection = $this->getCollection();
+        $collection->getSelect()->where("`option_id` = $option");
+        return $collection->getData()[0];
+    }
 }
