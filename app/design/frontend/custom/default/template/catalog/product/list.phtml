@@ -114,7 +114,7 @@
                         foreach ($gallery as $_image) : 
                             if($j <= 2) : ?>
 
-                            <img src="<?php echo $this->helper('catalog/image')->init($_simple, 'small_image', $_image->getFile())->constrainOnly(TRUE)->keepAspectRatio(TRUE)->keepFrame(FALSE)->resize(190,300); ?>" alt="<?php echo $this->stripTags($this->getImageLabel($_simple, 'small_image'), null, true) ?>" class="img<?php echo $j; ?> amconf-parent-<?php echo $_simple->getId() ?>" />
+                            <img src="<?php echo $this->helper('catalog/image')->init($_simple, 'small_image', $_image->getFile())->constrainOnly(TRUE)->keepAspectRatio(TRUE)->keepFrame(FALSE)->resize(290,458); ?>" alt="<?php echo $this->stripTags($this->getImageLabel($_simple, 'small_image'), null, true) ?>" class="img<?php echo $j; ?> amconf-parent-<?php echo $_simple->getId() ?>" />
                             
                         <?php $j++; endif; 
                         endforeach; 
