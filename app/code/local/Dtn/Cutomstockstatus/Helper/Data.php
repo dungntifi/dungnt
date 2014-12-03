@@ -85,25 +85,32 @@ class Dtn_Cutomstockstatus_Helper_Data extends Mage_Core_Helper_Url{
         $special = array($product->getEnableSpecialorderstock(), $product->getQtySpecialorderstock(), 'status_specialorderstock', 'date_specialorderstock', 'numberofdays_stock');
         $unknown = array($product->getEnableUnknown(), $product->getQtyUnknown(), 'status_unknown');
         $array = array($instock,$vendor,$preoder,$vendorPreOder,$special,$unknown);
-        foreach($array as $item){
-            if($item[0]==1 && $item[1] > 0){
-                $status .= $product->getData($item[2]);
-                if ($item[3] && false !== strpos($status, '{date}')){
-                    if(!$item[4]){
-                        $status = str_replace('{date}', date('Y-m-d', strtotime($product->getData($item[3]))), $status);
-                    }else{
-                        if(Mage::getModel('core/date')->date('Y-m-d') < date('Y-m-d', strtotime($product->getData($item[3])))){
-                            $newdate = $product->getData($item[3]);
+        $total = $this->getTotalQtyOfItem($product);
+        $j = 0;
+        if($total):
+            foreach($array as $item){ $j++;
+                if($item[0]==1 && $item[1] > 0){
+                    $status = $product->getData($item[2]);
+                    if ($item[3] && false !== strpos($status, '{date}')){
+                        if(!$item[4]){
+                            $status = str_replace('{date}', date('Y-m-d', strtotime($product->getData($item[3]))), $status);
                         }else{
-                            $newdate = date("Y-m-d", strtotime($product->getData($item[3]))) . " + ".(int)$product->getData($item[4])." days";
+                            if(Mage::getModel('core/date')->date('Y-m-d') < date('Y-m-d', strtotime($product->getData($item[3])))){
+                                $newdate = $product->getData($item[3]);
+                            }else{
+                                $newdate = date("Y-m-d", strtotime($product->getData($item[3]))) . " + ".(int)$product->getData($item[4])." days";
+                            }
+                            $status = str_replace('{date}', date('Y-m-d', strtotime($newdate)), $status);
                         }
-                        $status = str_replace('{date}', date('Y-m-d', strtotime($newdate)), $status);
                     }
+                    return $status;
+                }else{
+                    continue;
                 }
-                return $status;
-            }else{
-                continue;
             }
-        }
+        else:
+            $status = $this->__("Out of Stock");
+            return $status;
+        endif;
     }
 }
