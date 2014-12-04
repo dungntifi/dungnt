@@ -123,6 +123,7 @@
 $styles = $_product->getStyles();
 $_designer = $_product->getAttributeText('designer');
 $collection = $_product->getPoCollection();
+$helper_ifi = Mage::helper('dtn_all');
 ?>
 <div class="product-tabs">
     <div class="tabs">
@@ -139,7 +140,7 @@ $collection = $_product->getPoCollection();
             <div id="designer" class="tab active">
                 <?php if($_designer):echo '<h3>'.$_designer.'</h3>';endif;?>
                 <div class="description">
-                    <?php $desig = Mage::getModel('amshopby/value')->loadByOption($_product->getDesigner()); ?>
+                    <?php $desig = $helper_ifi->getCollectionByOption($_product->getDesigner()); ?>
                     <?php if($desig['descr']) echo $desig['descr']; ?>
                 </div>
             </div>
@@ -153,7 +154,7 @@ $collection = $_product->getPoCollection();
                     if ($poCollection->usesSource()) {
                         $html .= "<ul class='collection'>";
                         foreach($attCollections as $option):
-                            $desig = Mage::getModel('amshopby/value')->loadByOption($option);
+                            $desig = $helper_ifi->getCollectionByOption($option);
                             $html .= '<li><h3>'.$color_label = $poCollection->getSource()->getOptionText($option).'</h3>';
                             $html .= '<div class="description">'.$desig['descr'].'</div>'.'</li>';
                         endforeach;
@@ -173,7 +174,7 @@ $collection = $_product->getPoCollection();
                     if ($attr->usesSource()) {
                         $html .= "<ul class='styles'>";
                         foreach($attStyle as $option):
-                            $style = Mage::getModel('amshopby/value')->loadByOption($option);
+                            $style = $helper_ifi->getCollectionByOption($option);
                             $html .= '<li><h3>'.$color_label = $attr->getSource()->getOptionText($option).'</h3>';
                             $html .= '<div class="description">'.$style['descr'].'</div>'.'</li>';
                         endforeach;

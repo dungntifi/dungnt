@@ -33,4 +33,10 @@ class Dtn_All_Helper_Data extends Mage_Core_Helper_Data{
             return $html;
         }
     }
+
+    public function getCollectionByOption($option){
+        $collection = Mage::getModel('amshopby/value')->getCollection();
+        $collection->getSelect()->where("`option_id` = $option");
+        return $collection->getData()[0];
+    }
 }
